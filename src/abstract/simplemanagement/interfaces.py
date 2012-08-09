@@ -27,6 +27,11 @@ class IIteration(form.Schema):
     end = schema.Date(title=_(u"End"))
 
 
+class IEpic(form.Schema):
+
+    estimate = schema.Int(title=_(u"Estimate (man days)"))
+
+
 class IStory(form.Schema):
 
     text = schema.Text(title=_(u"Text"))
@@ -37,12 +42,6 @@ class IStory(form.Schema):
         source=ObjPathSourceBinder(object_provides=[IEpic.__identifier__, ]),
         required=False
     )
-
-
-class IEpic(form.Schema):
-
-    estimate = schema.Int(title=_(u"Estimate (man days)"))
-
 
 class IBooking(form.Schema):
 
