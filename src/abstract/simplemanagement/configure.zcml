@@ -1,0 +1,16 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           xmlns:gs="http://namespaces.zope.org/genericsetup"
+           i18n_domain="abstract.simplemanagement">
+
+  <includeDependencies package="." />
+
+  <gs:registerProfile
+      name="default"
+      title="Simple Management"
+      directory="profiles/default"
+      description="Project management made simple"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+</configure>

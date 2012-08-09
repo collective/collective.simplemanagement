@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object meta_type="Plone Types Tool" name="portal_types">
+
+ <object meta_type="Dexterity FTI" name="Project" />
+ <object meta_type="Dexterity FTI" name="Iteration" />
+ <object meta_type="Dexterity FTI" name="Story" />
+ <object meta_type="Dexterity FTI" name="Epic" />
+ <object meta_type="Dexterity FTI" name="Booking" />
+
+</object>
