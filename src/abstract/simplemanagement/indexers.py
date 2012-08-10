@@ -6,9 +6,9 @@ from .interfaces import IIteration
 
 @indexer(IIteration)
 def start(obj):
-    return DateTime(obj.start)
+    return DateTime(obj.start.isoformat())
 
 
 @indexer(IIteration)
 def end(obj):
-    return DateTime(obj.end)
+    return DateTime(obj.end.isoformat())
