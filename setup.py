@@ -32,7 +32,8 @@ setup(
         'plone.app.collection',
         'plone.app.dexterity',
         'plone.app.relationfield',
-        'plone.namedfile [blobs]'
+        'plone.namedfile [blobs]',
+        'Products.Poi'
     ],
     extras_require={
         'test': [

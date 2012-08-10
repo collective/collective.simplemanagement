@@ -19,7 +19,7 @@
    <element value="PoiTracker"/>
  </property>
  <property name="allow_discussion">False</property>
- <property name="default_view">project_view</property>
+ <property name="default_view">view</property>
  <property name="view_methods">
   <element value="document_view"/>
   <element value="folder_summary_view"/>

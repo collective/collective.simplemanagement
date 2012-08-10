@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="portal_catalog" meta_type="Plone Catalog Tool">
+    <!-- indexes -->
+    <index name="assigned_to" meta_type="KeywordIndex">
+      <indexed_attr value="assigned_to"/>
+    </index>
+
+    <!-- metadata -->
+    <column value="assigned_to"/>
+ </object>

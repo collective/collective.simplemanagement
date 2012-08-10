@@ -1,0 +1,157 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="abstract.simplemanagement">
+<body>
+
+<metal:content-core fill-slot="content-core">
+    <metal:block define-macro="content-core">
+
+      <!-- TODO: add i18n everywhere -->
+      <div class="row"
+           tal:define="portal_state nocall:context/@@plone_portal_state">
+        <div class="cell width-6 position-0">
+          <h4>Dashboard</h4>
+          <div id="project-dashboard"
+               tal:condition="not:portal_state/anonymous"
+               tal:define="dashboard view/dashboard">
+            <h5>My stories</h5>
+            <ul tal:condition="dashboard/stories">
+              <li tal:repeat="story dashboard/stories">
+                <a href=""
+                   title=""
+                   tal:content="story/Title"
+                   tal:attributes="href story/getURL;
+                                   title story/Title"></a>
+              </li>
+            </ul>
+            <p class="discreet"
+               tal:condition="not:dashboard/stories">
+              You have no stories assigned
+            </p>
+            <p class="discreet"
+               tal:condition="dashboard/stories_n">
+              And <em tal:content="dashboard/stories_n"></em> more
+            </p>
+            <h5>My tickets</h5>
+            <ul tal:condition="dashboard/tickets">
+              <li tal:repeat="ticket dashboard/tickets">
+                <a href=""
+                   title=""
+                   tal:attributes="href ticket/getURL;
+                                   title ticket/Title">
+                  <span tal:content="ticket/Title"></span>
+                  (# <span tal:content="ticket/getId"></span>)
+                </a>
+              </li>
+            </ul>
+            <p class="discreet"
+               tal:condition="not:dashboard/tickets">
+              You have no tickets assigned
+            </p>
+            <p class="discreet"
+               tal:condition="dashboard/tickets_n">
+              And <em tal:content="dashboard/tickets_n"></em> more
+            </p>
+          </div>
+          <div id="project-dashboard"
+               tal:condition="portal_state/anonymous">
+            <p class="discreet">
+              You must be authenticated to see your dashboard
+            </p>
+          </div>
+        </div>
+        <div class="cell width-6 position-6">
+          <h4>Info</h4>
+          <div id="project-info">
+            TODO
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="cell width-6 position-0">
+          <h4>Iterations</h4>
+          <div id="project-iterations"
+               tal:define="iterations view/iterations">
+            <h5>Past</h5>
+            <ul tal:condition="iterations/past">
+              <li tal:repeat="iteration iterations/past">
+                <a href=""
+                   title=""
+                   tal:content="iteration/title"
+                   tal:attributes="href iteration/absolute_url;
+                                   title iteration/title"></a>
+              </li>
+            </ul>
+            <p class="discreet" tal:condition="not:iterations/past">
+              There are no past iterations
+            </p>
+            <h5>Current</h5>
+            <ul tal:condition="iterations/current">
+              <li tal:repeat="iteration iterations/current">
+                <a href=""
+                   title=""
+                   tal:content="iteration/title"
+                   tal:attributes="href iteration/absolute_url;
+                                   title iteration/title"></a>
+              </li>
+            </ul>
+            <p class="discreet" tal:condition="not:iterations/current">
+              There are no current iterations
+            </p>
+            <h5>Future</h5>
+            <ul tal:condition="iterations/future">
+              <li tal:repeat="iteration iterations/future">
+                <a href=""
+                   title=""
+                   tal:content="iteration/title"
+                   tal:attributes="href iteration/absolute_url;
+                                   title iteration/title"></a>
+              </li>
+            </ul>
+            <p class="discreet" tal:condition="not:iterations/future">
+              There are no past iterations
+            </p>
+          </div>
+        </div>
+        <div class="cell width-6 position-6">
+          <h4>Last documents</h4>
+          <div id="project-documents"
+               tal:define="documents view/documents">
+            <ul tal:condition="documents/last">
+              <li tal:repeat="document documents/last">
+                <a href=""
+                   title=""
+                   tal:content="document/Title"
+                   tal:attributes="href document/getURL;
+                                   title document/Title"></a>
+              </li>
+            </ul>
+            <p class="discreet"
+               tal:condition="python: documents['folder'] and not documents['last']">
+              This project doesn't contain any documents
+            </p>
+            <a href=""
+               title="Documents folder"
+               tal:condition="documents/folder"
+               tal:attributes="href document/folder/absolute_url">
+              Go to the documents folder
+            </a>
+            <p class="discreet"
+               tal:condition="not:documents/folder">
+              There are no documents in this project
+              because the designated area is missing.
+              We suggest to create it.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </metal:block>
+</metal:content-core>
+
+</body>
+</html>

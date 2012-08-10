@@ -1,9 +1,23 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:i18n="http://namespaces.zope.org/i18n"
            xmlns:gs="http://namespaces.zope.org/genericsetup"
+           xmlns:grok="http://namespaces.zope.org/grok"
            i18n_domain="abstract.simplemanagement">
 
   <includeDependencies package="." />
+
+  <grok:grok package="." />
+
+  <subscriber for=".interfaces.IProject
+                   zope.app.container.interfaces.IObjectAddedEvent"
+              handler=".events.create_project_collaterals" />
+
+  <subscriber for=".interfaces.IProject
+                   zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+              handler=".events.update_tracker_managers" />
+
+  <adapter name="start" factory=".indexers.start" />
+  <adapter name="end" factory=".indexers.end" />
 
   <gs:registerProfile
       name="default"
