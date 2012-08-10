@@ -10,7 +10,22 @@
 <metal:content-core fill-slot="content-core">
     <metal:block define-macro="content-core">
 
-      <p>TODO</p>
+    <dl>
+      <dt>Date</dt>
+      <dd tal:content="context/date"></dd>
+      <dt>Time</dt>
+      <dd tal:content="context/time"></dd>
+      <tal:block condition="view/has_related">
+      <dt>Related</dt>
+      <dd>
+        <a href=""
+           title=""
+           tal:content="context/related/title"
+           tal:attributes="href context/related/absolute_url;
+                           title context/related/description"></a>
+      </dd>
+      </tal:block>
+    </dl>
 
     </metal:block>
 </metal:content-core>

@@ -10,7 +10,55 @@
 <metal:content-core fill-slot="content-core">
     <metal:block define-macro="content-core">
 
-      <p>TODO</p>
+      <div class="row">
+        <div class="cell width-8 position-0"
+             tal:content="context/text">
+        </div>
+        <div class="cell width-4 position-8">
+          <dl>
+            <dt>Timing</dt>
+            <dd>
+              <table class="listing" summary="Timing">
+                <thead>
+                  <tr>
+                    <th class="nosort column">Estimate</th>
+                    <th class="nosort column">Resource time</th>
+                    <th class="nosort column">Difference</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr tal:define="timing view/timing">
+                    <td tal:content="timing/estimate"></td>
+                    <td tal:content="timing/resource_time"></td>
+                    <td tal:content="timing/difference"
+                        tal:attributes="class timing/status"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </dd>
+            <dt>Assignees</dt>
+            <dd>
+              <ul tal:condition="context/assigned_to">
+                <li tal:repeat="assignee context/assigned_to"
+                    tal:content="assignee"></li>
+              </ul>
+              <em tal:condition="not:context/assigned_to">
+                Unassigned
+              </em>
+            </dd>
+            <tal:block condition="view/has_epic">
+            <dt>Epic</dt>
+            <dd>
+              <a href=""
+                 title=""
+                 tal:attributes="href context/epic/absolute_url;
+                                 title context/epic/description"
+                 tal:content="context/epic/title"></a>
+            </dd>
+            </tal:block>
+          </dl>
+        </div>
+      </div>
 
     </metal:block>
 </metal:content-core>

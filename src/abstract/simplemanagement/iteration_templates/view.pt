@@ -10,7 +10,61 @@
 <metal:content-core fill-slot="content-core">
     <metal:block define-macro="content-core">
 
-      <p>TODO</p>
+      <table class="listing" summary="Stories">
+        <thead>
+          <tr>
+            <th class="nosort column">Story</th>
+            <th class="nosort column">Estimate</th>
+            <th class="nosort column">Actual hours</th>
+            <th class="nosort column">Difference</th>
+            <th class="nosort column">Assignees</th>
+            <th class="nosort column">Epic</th>
+          </tr>
+        </thead>
+        <tbody tal:condition="view/stories">
+          <tr tal:repeat="story view/stories"
+              tal:attributes="class story/status">
+            <td>
+              <a href=""
+                 title=""
+                 tal:attributes="href story/url;
+                                 title story/description"
+                 tal:content="story/title"></a>
+            </td>
+            <td tal:content="story/estimate"></td>
+            <td tal:content="story/hours"></td>
+            <td tal:attributes="class story/time_status"
+                tal:content="story/difference">
+            </td>
+            <td>
+              <ul tal:condition="story/assignees">
+                <li tal:repeat="assignee story/assignees"
+                    tal:content="assignee"></li>
+              </ul>
+              <em tal:condition="not:story/assignees">
+                Unassigned
+              </em>
+            </td>
+            <td>
+              <a href=""
+                 title=""
+                 tal:condition="story/epic"
+                 tal:attributes="href story/epic/url;
+                                 title story/epic/title"
+                 tal:content="story/epic/title"></a>
+              <em tal:condition="not:story/epic">None</em>
+            </td>
+          </tr>
+        </tbody>
+        <tbody tal:condition="not:view/stories">
+          <tr>
+            <td class="discreet" colspan="6">
+              No stories in this iteration.
+              Add a new one or bring them in via the iteration planner.
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
     </metal:block>
 </metal:content-core>

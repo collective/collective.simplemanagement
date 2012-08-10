@@ -23,20 +23,23 @@
  </state>
  <transition transition_id="complete" title="Complete" new_state="done" trigger="USER" before_script="" after_script="">
   <description>Work on the story is finished</description>
-  
+  <action url="%(content_url)s/content_status_modify?workflow_action=complete" category="workflow" icon="">Complete</action>
   <guard>
+   <guard-permission>Review portal content</guard-permission>
   </guard>
  </transition>
  <transition transition_id="start" title="Start" new_state="in_progress" trigger="USER" before_script="" after_script="">
   <description>Start working on the story</description>
-  
+  <action url="%(content_url)s/content_status_modify?workflow_action=start" category="workflow" icon="">Start</action>
   <guard>
+   <guard-permission>Review portal content</guard-permission>
   </guard>
  </transition>
  <transition transition_id="suspend" title="Suspend" new_state="suspended" trigger="USER" before_script="" after_script="">
   <description>Put the story on hold to be resumed later</description>
-  
+  <action url="%(content_url)s/content_status_modify?workflow_action=suspend" category="workflow" icon="">Suspend</action>
   <guard>
+   <guard-permission>Review portal content</guard-permission>
   </guard>
  </transition>
  <worklist worklist_id="reviewer_queue" title="">

@@ -7,4 +7,6 @@
 
     <!-- metadata -->
     <column value="assigned_to"/>
+    <column value="time"/>
+    <column value="estimate"/>
  </object>
