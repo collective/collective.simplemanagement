@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 from zope.component import getMultiAdapter
 from five import grok
 from plone.memoize.instance import memoize
@@ -73,12 +73,12 @@ class View(grok.View):
             'sort_on': 'start',
             'sort_order': 'ascending'
         })
-        now = datetime.now()
+        now = date.today()
         for iteration_brain in raw_iterations:
             iteration = iteration_brain.getObject()
             if iteration.end < now:
                 iterations['past'].append(iteration)
-            elif iteration.end >= now and iteration.start < now:
+            elif iteration.end >= now and iteration.start <= now:
                 iterations['current'].append(iteration)
             else:
                 iterations['future'].append(iteration)
