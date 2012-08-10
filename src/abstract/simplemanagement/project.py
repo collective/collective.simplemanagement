@@ -46,7 +46,7 @@ class View(grok.View):
                  'tickets'),
                 ({ 'portal_type': 'Story',
                    'assigned_to': user.getId(),
-                   'review_state': ('open', 'in-progress') },
+                   'review_state': ('todo', 'suspended', 'in_progress') },
                  'stories')
             ]
             for query, result_key in searches:

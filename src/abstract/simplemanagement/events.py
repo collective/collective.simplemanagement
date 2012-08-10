@@ -27,7 +27,7 @@ def create_project_collaterals(obj, event):
                 'project_name': obj.title
             }
         )
-        tracker.setManagers(obj.operatives)
+        tracker.setManagers([ o.user_id for o in obj.operatives ])
         tracker.reindexObject()
     if DOCUMENTS_ID not in obj:
         obj.invokeFactory('Folder', DOCUMENTS_ID)
@@ -54,8 +54,8 @@ def update_tracker_managers(obj, event):
         tracker_managers = tracker.getManagers()
         changed = False
         for operative in obj.operatives:
-            if operative not in tracker_managers:
-                tracker_managers.append(operative)
+            if operative.user_id not in tracker_managers:
+                tracker_managers.append(operative.user_id)
                 changed = True
         if changed:
             tracker.setManagers(tracker_managers)
