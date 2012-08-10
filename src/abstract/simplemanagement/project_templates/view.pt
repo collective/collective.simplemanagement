@@ -196,7 +196,7 @@
             <a href=""
                title="Documents folder"
                tal:condition="documents/folder"
-               tal:attributes="href document/folder/absolute_url">
+               tal:attributes="href documents/folder/absolute_url">
               Go to the documents folder
             </a>
             <p class="discreet"

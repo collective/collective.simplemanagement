@@ -18,7 +18,7 @@ class View(grok.View):
     def portal_state(self):
         return getMultiAdapter(
             (self.context, self.request),
-            'plone_portal_state'
+            name='plone_portal_state'
         )
 
     @memoize
@@ -57,7 +57,7 @@ class View(grok.View):
                 result[result_key] = results[:self.MAX_ELEMENTS]
                 result['%s_n' % result_key] = total = len(results)
                 if total <= self.MAX_ELEMENTS:
-                    del result['%s_n' % result_key]
+                    result['%s_n' % result_key] = False
         return result
 
     def iterations(self):
