@@ -21,10 +21,7 @@
  <property name="allow_discussion">False</property>
  <property name="default_view">view</property>
  <property name="view_methods">
-  <element value="document_view"/>
-  <element value="folder_summary_view"/>
-  <element value="folder_full_view"/>
-  <element value="folder_tabular_view"/>
+  <element value="view"/>
   <element value="folder_listing"/>
  </property>
  <property name="default_view_fallback">False</property>

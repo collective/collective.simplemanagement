@@ -67,7 +67,66 @@
         <div class="cell width-6 position-6">
           <h4>Info</h4>
           <div id="project-info">
-            TODO
+            <dl>
+              <dt>Customer</dt>
+              <dd tal:content="context/customer"></dd>
+              <dt>Budget <small>as is by offer</small></dt>
+              <dd><span tal:content="context/budget"></span> man days</dd>
+              <dt>
+                Estimate
+                <small>at the beginning, by the project manager</small>
+              </dt>
+              <dd>
+                <span tal:content="context/initial_estimate"></span>
+                man days
+              </dd>
+              <dt>Milestones</dt>
+              <dd>
+                <ul>
+                  <li tal:repeat="milestone context/milestones">
+                    <span tal:content="milestone/name"></span>
+                    (<em tal:content="milestone/status"></em>)
+                  </li>
+                </ul>
+              </dd>
+              <dt>Repositories</dt>
+              <dd>
+                <ul>
+                  <li tal:repeat="repository context/repositories">
+                    <a href=""
+                       tal:attributes="href repository"
+                       tal:content="repository"></a>
+                  </li>
+                </ul>
+              </dd>
+              <dt>Environments</dt>
+              <dd>
+                <ul>
+                  <li tal:repeat="env context/environments">
+                    <a href=""
+                       title=""
+                       tal:attributes="href env/url;
+                                       title env/name">
+                      <span tal:content="env/name"></span>
+                      (<em tal:content="env/env_type"></em>)
+                    </a>
+                  </li>
+                </ul>
+              </dd>
+              <dt>Operatives</dt>
+              <dd>
+                <ul>
+                  <li tal:repeat="operative context/operatives">
+                    <span tal:content="operative/user_id"></span>
+                    (<em tal:content="operative/role"></em>)
+                  </li>
+                </ul>
+              </dd>
+              <tal:block condition="context/notes">
+              <dt>Notes</dt>
+              <dd tal:content="context/notes"></dd>
+              </tal:block>
+            </dl>
           </div>
         </div>
       </div>

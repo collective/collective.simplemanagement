@@ -55,7 +55,7 @@ class IProject(form.Schema):
         title=_(u"Repositories"),
         description=_(u"The HTTP URLs of the repositories "
                       u"(e.g. https://github.com/company/my.repository/)"),
-        value_type=schema.TextLine()
+        value_type=schema.URI()
     )
     environments = schema.List(
         title=_(u"URLs"),
