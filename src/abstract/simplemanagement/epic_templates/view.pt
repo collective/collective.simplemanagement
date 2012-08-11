@@ -74,6 +74,32 @@
           </p>
         </div>
       </div>
+
+            <tal:block condition="view/contained">
+      <h4>Contained epics</h4>
+      <table class="listing" summary="Contained">
+        <thead>
+          <tr>
+            <th>Epic</th>
+            <th>Estimate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr tal:repeat="item view/contained">
+            <td>
+              <a href=""
+                 title=""
+                 tal:content="item/title"
+                 tal:attributes="href item/url;
+                                 title item/description"></a>
+            </td>
+            <td tal:content="item/estimate">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </tal:block>
+
     </metal:block>
 </metal:content-core>
 
