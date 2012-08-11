@@ -51,9 +51,9 @@
             <dd>
               <a href=""
                  title=""
-                 tal:attributes="href context/epic/absolute_url;
-                                 title context/epic/description"
-                 tal:content="context/epic/title"></a>
+                 tal:attributes="href context/epic/to_object/absolute_url;
+                                 title context/epic/to_object/description"
+                 tal:content="context/epic/to_object/title"></a>
             </dd>
             </tal:block>
           </dl>

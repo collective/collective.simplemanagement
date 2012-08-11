@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="abstract.simplemanagement">
+<body>
+
+<metal:content-core fill-slot="content-core">
+    <metal:block define-macro="content-core">
+
+      <div class="row">
+        <div class="cell column-8 position-0"
+             tal:content="context/text">
+        </div>
+        <div class="cell column-4 position-8">
+          <h5>Timings</h5>
+          <table class="listing" summary="Timings"
+                 tal:define="timings view/timings;
+                             estimates timings/estimates;
+                             time_spent timings/time_spent;
+                             differences timings/differences;
+                             classes timings/classes">
+            <thead>
+              <tr>
+                <th class="nosort column">Type</th>
+                <th class="nosort column">Difference from initial</th>
+                <th class="nosort column">Value (man hours)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="big header" colspan="2">
+                  Initial estimate
+                </td>
+                <td class="big">
+                  <strong tal:content="estimates/epic"></strong>
+                </td>
+              </tr>
+              <tr tal:condition="estimates/contained">
+                <td>Contained epics</td>
+                <td tal:attributes="class classes/contained"
+                    tal:content="differences/contained"></td>
+                <td tal:content="estimates/contained"></td>
+              </tr>
+              <tr>
+                <td>Associated stories</td>
+                <td tal:attributes="class classes/stories"
+                    tal:content="differences/stories"></td>
+                <td tal:content="estimates/stories"></td>
+              </tr>
+              <tr>
+                <td>Time spent</td>
+                <td tal:attributes="class classes/spent"
+                    tal:content="differences/spent"></td>
+                <td tal:content="time_spent"></td>
+              </tr>
+            </tbody>
+          </table>
+          <h5>Stories</h5>
+          <ul tal:condition="view/stories">
+            <li tal:repeat="story view/stories">
+              <a href=""
+                 title=""
+                 tal:content="story/title"
+                 tal:attributes="href story/absolute_url;
+                                 title story/description"></a>
+            </li>
+          </ul>
+          <p class="discreet"
+             tal:condition="not:view/stories">
+            No stories associated
+          </p>
+        </div>
+      </div>
+    </metal:block>
+</metal:content-core>
+
+</body>
+</html>
