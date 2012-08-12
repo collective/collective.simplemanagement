@@ -10,15 +10,15 @@
 <metal:content-core fill-slot="content-core">
     <metal:block define-macro="content-core">
 
-      <!-- TODO: add i18n everywhere -->
-      <div class="row"
-           tal:define="portal_state nocall:context/@@plone_portal_state">
+      <div tal:define="portal_state nocall:context/@@plone_portal_state;
+              css_class python:context.is_external and 'row external' or 'row internal'"
+           tal:attributes="class css_class">
         <div class="cell width-6 position-0">
-          <h4>Dashboard</h4>
+          <h4 i18n:translate="">Dashboard</h4>
           <div id="project-dashboard"
                tal:condition="not:portal_state/anonymous"
                tal:define="dashboard view/dashboard">
-            <h5>My stories</h5>
+            <h5 i18n:translate="">My stories</h5>
             <ul tal:condition="dashboard/stories">
               <li tal:repeat="story dashboard/stories">
                 <a href=""
@@ -29,14 +29,16 @@
               </li>
             </ul>
             <p class="discreet"
-               tal:condition="not:dashboard/stories">
+               tal:condition="not:dashboard/stories"
+               i18n:translate="">
               You have no stories assigned
             </p>
             <p class="discreet"
-               tal:condition="dashboard/stories_n">
-              And <em tal:content="dashboard/stories_n"></em> more
+               tal:condition="dashboard/stories_n"
+               i18n:translate="">
+              And <em i18n:name="stories_n" tal:content="dashboard/stories_n"></em> more
             </p>
-            <h5>My tickets</h5>
+            <h5 i18n:translate="">My tickets</h5>
             <ul tal:condition="dashboard/tickets">
               <li tal:repeat="ticket dashboard/tickets">
                 <a href=""
@@ -49,38 +51,41 @@
               </li>
             </ul>
             <p class="discreet"
-               tal:condition="not:dashboard/tickets">
+               tal:condition="not:dashboard/tickets"
+               i18n:translate="">
               You have no tickets assigned
             </p>
             <p class="discreet"
-               tal:condition="dashboard/tickets_n">
-              And <em tal:content="dashboard/tickets_n"></em> more
+               tal:condition="dashboard/tickets_n"
+               i18n:translate="">
+              And <em i18n:name="ticket_n" tal:content="dashboard/tickets_n"></em> more
             </p>
           </div>
           <div id="project-dashboard"
                tal:condition="portal_state/anonymous">
-            <p class="discreet">
+            <p class="discreet"
+               i18n:translate="">
               You must be authenticated to see your dashboard
             </p>
           </div>
         </div>
         <div class="cell width-6 position-6">
-          <h4>Info</h4>
+          <h4 i18n:translate="">Info</h4>
           <div id="project-info">
             <dl>
-              <dt>Customer</dt>
+              <dt i18n:translate="">Customer</dt>
               <dd tal:content="context/customer"></dd>
-              <dt>Budget <small>as is by offer</small></dt>
-              <dd><span tal:content="context/budget"></span> man days</dd>
-              <dt>
+              <dt i18n:translate="budget_label">Budget <small>as is by offer</small></dt>
+              <dd i18n:translate=""><span  i18n:name="budget" tal:content="context/budget"></span> man days</dd>
+              <dt i18n:translate="estimate_label">
                 Estimate
                 <small>at the beginning, by the project manager</small>
               </dt>
-              <dd>
-                <span tal:content="context/initial_estimate"></span>
+              <dd i18n:translate="">
+                <span  i18n:name="initial_estimate" tal:content="context/initial_estimate"></span>
                 man days
               </dd>
-              <dt>Milestones</dt>
+              <dt i18n:translate="">Milestones</dt>
               <dd>
                 <ul>
                   <li tal:repeat="milestone context/milestones">
@@ -89,7 +94,7 @@
                   </li>
                 </ul>
               </dd>
-              <dt>Repositories</dt>
+              <dt i18n:translate="">Repositories</dt>
               <dd>
                 <ul>
                   <li tal:repeat="repository context/repositories">
@@ -99,7 +104,7 @@
                   </li>
                 </ul>
               </dd>
-              <dt>Environments</dt>
+              <dt i18n:translate="">Environments</dt>
               <dd>
                 <ul>
                   <li tal:repeat="env context/environments">
@@ -113,7 +118,7 @@
                   </li>
                 </ul>
               </dd>
-              <dt>Operatives</dt>
+              <dt i18n:translate="">Operatives</dt>
               <dd>
                 <ul>
                   <li tal:repeat="operative context/operatives">
@@ -123,7 +128,7 @@
                 </ul>
               </dd>
               <tal:block condition="context/notes">
-              <dt>Notes</dt>
+              <dt i18n:translate="">Notes</dt>
               <dd tal:content="context/notes"></dd>
               </tal:block>
             </dl>
@@ -132,10 +137,10 @@
       </div>
       <div class="row">
         <div class="cell width-6 position-0">
-          <h4>Iterations</h4>
+          <h4 i18n:translate="">Iterations</h4>
           <div id="project-iterations"
                tal:define="iterations view/iterations">
-            <h5>Past</h5>
+            <h5 i18n:translate="">Past</h5>
             <ul tal:condition="iterations/past">
               <li tal:repeat="iteration iterations/past">
                 <a href=""
@@ -145,10 +150,11 @@
                                    title iteration/title"></a>
               </li>
             </ul>
-            <p class="discreet" tal:condition="not:iterations/past">
+            <p class="discreet" tal:condition="not:iterations/past"
+              i18n:translate="">
               There are no past iterations
             </p>
-            <h5>Current</h5>
+            <h5 i18n:translate="">Current</h5>
             <ul tal:condition="iterations/current">
               <li tal:repeat="iteration iterations/current">
                 <a href=""
@@ -158,10 +164,11 @@
                                    title iteration/title"></a>
               </li>
             </ul>
-            <p class="discreet" tal:condition="not:iterations/current">
+            <p class="discreet" tal:condition="not:iterations/current"
+               i18n:translate="">
               There are no current iterations
             </p>
-            <h5>Future</h5>
+            <h5 i18n:translate="">Future</h5>
             <ul tal:condition="iterations/future">
               <li tal:repeat="iteration iterations/future">
                 <a href=""
@@ -171,13 +178,14 @@
                                    title iteration/title"></a>
               </li>
             </ul>
-            <p class="discreet" tal:condition="not:iterations/future">
+            <p class="discreet" tal:condition="not:iterations/future"
+               i18n:translate="">
               There are no past iterations
             </p>
           </div>
         </div>
         <div class="cell width-6 position-6">
-          <h4>Last documents</h4>
+          <h4 i18n:translate="">Last documents</h4>
           <div id="project-documents"
                tal:define="documents view/documents">
             <ul tal:condition="documents/last">
@@ -190,17 +198,21 @@
               </li>
             </ul>
             <p class="discreet"
-               tal:condition="python: documents['folder'] and not documents['last']">
+               tal:condition="python: documents['folder'] and not documents['last']"
+               i18n:translate="">
               This project doesn't contain any documents
             </p>
             <a href=""
                title="Documents folder"
                tal:condition="documents/folder"
-               tal:attributes="href documents/folder/absolute_url">
+               tal:attributes="href documents/folder/absolute_url"
+               i18n:translate=""
+               i18n:attributes="title">
               Go to the documents folder
             </a>
             <p class="discreet"
-               tal:condition="not:documents/folder">
+               tal:condition="not:documents/folder"
+               i18n:translate="">
               There are no documents in this project
               because the designated area is missing.
               We suggest to create it.
