@@ -1,7 +1,8 @@
 from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IStory
-from .configure import WARNING_DELTA
+# TODO: harmonize differences display and warning display
+from .configure import WARNING_DELTA, WARNING_DELTA_PERCENT
 
 
 def get_timings(context, portal_catalog=None):
@@ -13,20 +14,16 @@ def get_timings(context, portal_catalog=None):
     if IStory.providedBy(context):
         estimate = context.estimate
     else:
-        estimate = 0
         stories = pc.searchResults({
             'path': '/'.join(context.getPhysicalPath()),
             'portal_type': 'Story'
         })
-        for story in stories:
-            estimate += story.estimate
-    hours = 0
+        estimate = sum([ s.estimate for s in stories ])
     bookings = pc.searchResults({
         'path': '/'.join(context.getPhysicalPath()),
         'portal_type': 'Booking'
     })
-    for booking in bookings:
-        hours += booking.time
+    hours = sum([ b.time for b in bookings ])
     # TODO: the delta should be a percentage and probably differentiate more
     difference = estimate - hours
     difference_status = 'success'
@@ -40,3 +37,9 @@ def get_timings(context, portal_catalog=None):
         'difference': difference,
         'status': difference_status
     }
+
+
+def get_difference_class(a, b):
+    if (abs(float(a - b)) / float(max(a, b))) > WARNING_DELTA_PERCENT:
+        return 'danger'
+    return 'success'

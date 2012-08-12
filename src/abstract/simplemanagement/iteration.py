@@ -28,8 +28,8 @@ class View(grok.View):
             epic = None
             if story.epic and not story.epic.isBroken():
                 epic = {
-                    'url': epic.absolute_url(),
-                    'title': epic.title
+                    'url': story.epic.to_object.absolute_url(),
+                    'title': story.epic.to_object.title
                 }
             stories.append({
                 'status': brain.review_state,

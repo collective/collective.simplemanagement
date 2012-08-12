@@ -90,13 +90,15 @@ class View(grok.View):
         if DOCUMENTS_ID in self.context:
             documents_folder = self.context[DOCUMENTS_ID]
             pc = self.tools()['portal_catalog']
+            folder_path = '/'.join(documents_folder.getPhysicalPath())
             last_stuff = pc.searchResults({
-                'path': '/'.join(documents_folder.getPhysicalPath())+'/',
+                'path': folder_path,
                 'sort_on': 'modified',
                 'sort_order': 'descending'
             })
-            for item in last_stuff[:self.MAX_ELEMENTS]:
-                last_documents.append(item)
+            for item in last_stuff[:self.MAX_ELEMENTS+1]:
+                if item.getPath() != folder_path:
+                    last_documents.append(item)
         return {
             'last': last_documents,
             'folder': documents_folder

@@ -107,6 +107,7 @@ class IIteration(form.Schema):
 
 class IEpic(form.Schema):
 
+    text = schema.Text(title=_(u"Text"))
     estimate = schema.Int(title=_(u"Estimate (man days)"))
 
 
