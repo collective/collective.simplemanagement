@@ -56,5 +56,3 @@ class Milestone(SimpleItem):
 
 
 registerFactoryAdapter(IMilestone, Milestone)
-
-
