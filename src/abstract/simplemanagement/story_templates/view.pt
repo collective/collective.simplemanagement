@@ -11,19 +11,19 @@
     <metal:block define-macro="content-core">
 
       <div class="row">
-        <div class="cell width-8 position-0"
-             tal:content="context/text">
+        <div class="cell width-8 position-0">
+            <div tal:content="context/text" />
         </div>
         <div class="cell width-4 position-8">
           <dl>
-            <dt>Timing</dt>
+            <dt i18n:translate="">Timing</dt>
             <dd>
               <table class="listing" summary="Timing">
                 <thead>
                   <tr>
-                    <th class="nosort column">Estimate</th>
-                    <th class="nosort column">Resource time</th>
-                    <th class="nosort column">Difference</th>
+                    <th class="nosort column" i18n:translate="">Estimate</th>
+                    <th class="nosort column" i18n:translate="">Resource time</th>
+                    <th class="nosort column" i18n:translate="">Difference</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -36,18 +36,19 @@
                 </tbody>
               </table>
             </dd>
-            <dt>Assignees</dt>
+            <dt i18n:translate="">Assignees</dt>
             <dd>
               <ul tal:condition="context/assigned_to">
                 <li tal:repeat="assignee context/assigned_to"
                     tal:content="assignee"></li>
               </ul>
-              <em tal:condition="not:context/assigned_to">
+              <em tal:condition="not:context/assigned_to"
+                i18n:translate="">
                 Unassigned
               </em>
             </dd>
             <tal:block condition="view/has_epic">
-            <dt>Epic</dt>
+            <dt i18n:translate="">Epic</dt>
             <dd>
               <a href=""
                  title=""
@@ -59,7 +60,43 @@
           </dl>
         </div>
       </div>
-
+      <div class="row booking">
+        <div class="cell position-0 width-full">
+          <table class="listing">
+            <thead>
+              <tr>
+                <th i18n:translate="">Title</th>
+                <th i18n:translate="">Date</th>
+                <th i18n:translate="">Time</th>
+                <th i18n:translate="">Assignee</th>
+                <th i18n:translate="">Related</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr tal:repeat="booking view/get_booking">
+                <td><a tal:attributes="href booking/href"
+                  tal:content="booking/title" /></td>
+                <td tal:content="booking/date" />
+                <td tal:content="booking/time" />
+                <td tal:content="booking/creator" />
+                <td tal:define="related booking/related">
+                  <span tal:condition="related">
+                    <a href=""
+                      tal:attributes="
+                        href related/href;
+                        title related/title"
+                      tal:content="related/title"/>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="booking-form">
+            <h2 i18n:translate="">Add Booking</h2>
+            <div tal:content="structure view/form_contents" />
+          </div>
+        </div>
+      </div>
     </metal:block>
 </metal:content-core>
 

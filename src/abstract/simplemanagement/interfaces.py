@@ -51,12 +51,20 @@ class IProject(form.Schema):
             u"as initially estimated by the project manager"
         )
     )
+    is_external = schema.Bool(
+        title=_(u'Is external?'),
+        description=_(
+            u'Check this field if this project is visible to customer.'),
+        required=True,
+        default=True,
+    )
     repositories = schema.List(
         title=_(u"Repositories"),
         description=_(u"The HTTP URLs of the repositories "
                       u"(e.g. https://github.com/company/my.repository/)"),
         value_type=schema.URI()
     )
+
     environments = schema.List(
         title=_(u"URLs"),
         description=_(u"The URLs of the various online environments "
