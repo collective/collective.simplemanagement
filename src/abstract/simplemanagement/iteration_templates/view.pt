@@ -10,15 +10,16 @@
 <metal:content-core fill-slot="content-core">
     <metal:block define-macro="content-core">
 
-      <table class="listing" summary="Stories">
+      <table class="listing" summary="Stories"
+           i18n:attributes="summary">
         <thead>
           <tr>
-            <th class="nosort column">Story</th>
-            <th class="nosort column">Estimate</th>
-            <th class="nosort column">Actual hours</th>
-            <th class="nosort column">Difference</th>
-            <th class="nosort column">Assignees</th>
-            <th class="nosort column">Epic</th>
+            <th class="nosort column" i18n:translate="">Story</th>
+            <th class="nosort column" i18n:translate="">Estimate</th>
+            <th class="nosort column" i18n:translate="">Actual hours</th>
+            <th class="nosort column" i18n:translate="">Difference</th>
+            <th class="nosort column" i18n:translate="">Assignees</th>
+            <th class="nosort column" i18n:translate="">Epic</th>
           </tr>
         </thead>
         <tbody tal:condition="view/stories">
@@ -41,7 +42,8 @@
                 <li tal:repeat="assignee story/assignees"
                     tal:content="assignee"></li>
               </ul>
-              <em tal:condition="not:story/assignees">
+              <em tal:condition="not:story/assignees"
+                  i18n:translate="">
                 Unassigned
               </em>
             </td>
@@ -52,13 +54,14 @@
                  tal:attributes="href story/epic/url;
                                  title story/epic/title"
                  tal:content="story/epic/title"></a>
-              <em tal:condition="not:story/epic">None</em>
+              <em tal:condition="not:story/epic">&nbsp;</em>
             </td>
           </tr>
         </tbody>
         <tbody tal:condition="not:view/stories">
           <tr>
-            <td class="discreet" colspan="6">
+            <td class="discreet" colspan="6"
+              i18n:translate="">
               No stories in this iteration.
               Add a new one or bring them in via the iteration planner.
             </td>
