@@ -7,8 +7,6 @@ from plone.directives import form
 from plone.formwidget.contenttree import ObjPathSourceBinder
 
 from collective.z3cform.widgets.enhancedtextlines import EnhancedTextLinesFieldWidget
-from collective.z3cform.widgets.token_input_widget import TokenInputFieldWidget
-
 from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
 from . import messageFactory as _

@@ -62,6 +62,10 @@ class View(grok.View):
     def timing(self):
         return get_timings(self.context)
 
+    def get_assignees(self):
+        for i in self.context.assigned_to:
+            yield get_user_details(self.context, i)
+
     def booking_format(self, brain):
         obj = brain.getObject()
         booking = {

@@ -39,8 +39,9 @@
             <dt i18n:translate="">Assignees</dt>
             <dd>
               <ul tal:condition="context/assigned_to">
-                <li tal:repeat="assignee context/assigned_to"
-                    tal:content="assignee"></li>
+                <li tal:repeat="assignee view/get_assignees">
+                  <a tal:content="assignee/fullname"
+                      tal:attributes="href assignee/href" /></li>
               </ul>
               <em tal:condition="not:context/assigned_to"
                 i18n:translate="">
