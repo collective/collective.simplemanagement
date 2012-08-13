@@ -1,8 +1,15 @@
 from zope import schema
 from zope.interface import Interface
-from plone.directives import form
+
 from z3c.relationfield.schema import RelationChoice
+
+from plone.directives import form
 from plone.formwidget.contenttree import ObjPathSourceBinder
+
+from collective.z3cform.widgets.enhancedtextlines import EnhancedTextLinesFieldWidget
+from collective.z3cform.widgets.token_input_widget import TokenInputFieldWidget
+
+from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
 from . import messageFactory as _
 
@@ -67,6 +74,8 @@ class IProject(form.Schema):
             u"and used technologies"),
         value_type=schema.TextLine()
     )
+    form.widget(classifiers=EnhancedTextLinesFieldWidget)
+
     repositories = schema.List(
         title=_(u"Repositories"),
         description=_(u"The HTTP URLs of the repositories "
@@ -123,12 +132,14 @@ class IStory(form.Schema):
 
     text = schema.Text(title=_(u"Text"))
     estimate = schema.Int(title=_(u"Estimate (man hours)"))
+
     assigned_to = schema.List(
         title=_(u"Assignees"),
         description=_(u"The user IDs of the people "
                       u"that are responsible to act on this story"),
         value_type=schema.TextLine()
     )
+    form.widget(assigned_to=UserTokenInputFieldWidget)
     epic = RelationChoice(
         title=_(u"Epic"),
         description=_(u"The epic the story belongs to"),

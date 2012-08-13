@@ -33,7 +33,8 @@ setup(
         'plone.app.dexterity',
         'plone.app.relationfield',
         'plone.namedfile [blobs]',
-        'Products.Poi'
+        'Products.Poi',
+        'abstract.z3cform.usertokeninput',
     ],
     extras_require={
         'test': [
