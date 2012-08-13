@@ -51,6 +51,9 @@ class IProject(form.Schema):
             u"as initially estimated by the project manager"
         )
     )
+    prj_start_date = schema.Date(title=_(u"Start date"))
+    prj_expected_end_date = schema.Date(title=_(u"Expected end date"))
+    prj_end_date = schema.Date(title=_(u"End date"))
     is_external = schema.Bool(
         title=_(u'Is external?'),
         description=_(
@@ -58,13 +61,18 @@ class IProject(form.Schema):
         required=True,
         default=True,
     )
+    classifiers = schema.List(
+        title=_(u"Project classifiers"),
+        description=_(u"Some keywords that describe the project "
+            u"and used technologies"),
+        value_type=schema.TextLine()
+    )
     repositories = schema.List(
         title=_(u"Repositories"),
         description=_(u"The HTTP URLs of the repositories "
                       u"(e.g. https://github.com/company/my.repository/)"),
         value_type=schema.URI()
     )
-
     environments = schema.List(
         title=_(u"URLs"),
         description=_(u"The URLs of the various online environments "

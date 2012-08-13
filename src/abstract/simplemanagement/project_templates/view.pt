@@ -85,6 +85,23 @@
                 <span  i18n:name="initial_estimate" tal:content="context/initial_estimate"></span>
                 man days
               </dd>
+              <dt i18n:translate="">Start date</dt>
+              <dd tal:condition="context/prj_start_date"
+                tal:content="python:context.toLocalizedTime(context.prj_start_date.isoformat())"></dd>
+              <dt i18n:translate="">Expected end date</dt>
+              <dd><span tal:condition="context/prj_expected_end_date"
+                tal:replace="python:context.toLocalizedTime(context.prj_expected_end_date.isoformat())" /></dd>
+              <dt i18n:translate="">End Date</dt>
+              <dd tal:condition="context/prj_end_date"
+                tal:content="python:context.toLocalizedTime(context.prj_end_date.isoformat())"></dd>
+              <dt i18n:translate="">Project classifiers</dt>
+              <dd>
+                <ul id="classifiers">
+                  <li tal:repeat="item context/classifiers">
+                    <span tal:replace="item"/>
+                  </li>
+                </ul>
+              </dd>
               <dt i18n:translate="">Milestones</dt>
               <dd>
                 <ul>

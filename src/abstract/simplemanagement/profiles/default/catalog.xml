@@ -4,6 +4,9 @@
     <index name="assigned_to" meta_type="KeywordIndex">
       <indexed_attr value="assigned_to"/>
     </index>
+    <index name="classifiers" meta_type="KeywordIndex">
+      <indexed_attr value="classifiers"/>
+    </index>
     <index name="booking_date" meta_type="DateIndex">
       <indexed_attr value="date"/>
     </index>
