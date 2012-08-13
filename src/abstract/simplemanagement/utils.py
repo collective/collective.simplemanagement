@@ -43,3 +43,12 @@ def get_difference_class(a, b):
     if (abs(float(a - b)) / float(max(a, b))) > WARNING_DELTA_PERCENT:
         return 'danger'
     return 'success'
+
+
+def get_user_details(context, user_id):
+    pm = getToolByName(context, 'portal_membership')
+    usr = pm.getMemberById(user_id)
+    return {
+        'fullname': usr.getProperty('fullname') or user_id,
+        'href': '/author/%s' % user_id  # TODO: fix with the right url
+    }

@@ -78,7 +78,8 @@
                   tal:content="booking/title" /></td>
                 <td tal:content="booking/date" />
                 <td tal:content="booking/time" />
-                <td tal:content="booking/creator" />
+                <td><a tal:attributes="href booking/creator/href"
+                  tal:content="booking/creator/fullname" />
                 <td tal:define="related booking/related">
                   <span tal:condition="related">
                     <a href=""

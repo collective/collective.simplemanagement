@@ -16,6 +16,7 @@ from Products.CMFCore.utils import getToolByName
 from .interfaces import IStory
 from .interfaces import IBooking
 from .utils import get_timings
+from .utils import get_user_details
 
 from . import messageFactory as _
 
@@ -69,7 +70,7 @@ class View(grok.View):
             'href': brain.getURL(),
             'date': self.context.toLocalizedTime(brain.date.isoformat()),
             'related': obj.get_related(),
-            'creator': brain.Creator
+            'creator': get_user_details(self.context, brain.Creator)
         }
         return booking
 

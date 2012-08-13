@@ -121,8 +121,9 @@
               <dt i18n:translate="">Operatives</dt>
               <dd>
                 <ul>
-                  <li tal:repeat="operative context/operatives">
-                    <span tal:content="operative/user_id"></span>
+                  <li tal:repeat="operative view/operatives">
+                    <span><a tal:attributes="href operative/user/href"
+                      tal:content="operative/user/fullname" /></span>
                     (<em tal:content="operative/role"></em>)
                   </li>
                 </ul>

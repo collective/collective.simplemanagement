@@ -39,8 +39,10 @@
             </td>
             <td>
               <ul tal:condition="story/assignees">
-                <li tal:repeat="assignee story/assignees"
-                    tal:content="assignee"></li>
+                <li tal:repeat="assignee story/assignees">
+                  <a tal:attributes="href assignee/href"
+                     tal:content="assignee/fullname" />
+                </li>
               </ul>
               <em tal:condition="not:story/assignees"
                   i18n:translate="">

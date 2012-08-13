@@ -6,6 +6,7 @@ from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IProject
 from .configure import DOCUMENTS_ID
+from .utils import get_user_details
 
 
 class View(grok.View):
@@ -96,10 +97,17 @@ class View(grok.View):
                 'sort_on': 'modified',
                 'sort_order': 'descending'
             })
-            for item in last_stuff[:self.MAX_ELEMENTS+1]:
+            for item in last_stuff[:self.MAX_ELEMENTS + 1]:
                 if item.getPath() != folder_path:
                     last_documents.append(item)
         return {
             'last': last_documents,
             'folder': documents_folder
         }
+
+    def operatives(self):
+        for i in self.context.operatives:
+            yield  {
+                'role': i.role,
+                'user': get_user_details(self.context, i.user_id)
+            }
