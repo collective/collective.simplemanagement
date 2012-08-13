@@ -24,14 +24,18 @@
                              classes timings/classes">
             <thead>
               <tr>
-                <th class="nosort column">Type</th>
-                <th class="nosort column">Difference from initial</th>
-                <th class="nosort column">Value (man hours)</th>
+                <th class="nosort column"
+                  i18n:translate="">Type</th>
+                <th class="nosort column"
+                  i18n:translate="">Difference from initial</th>
+                <th class="nosort column"
+                  i18n:translate="">Value (man hours)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="big header" colspan="2">
+                <td class="big header" colspan="2"
+                  i18n:translate="">
                   Initial estimate
                 </td>
                 <td class="big">
@@ -39,26 +43,26 @@
                 </td>
               </tr>
               <tr tal:condition="estimates/contained">
-                <td>Contained epics</td>
+                <td i18n:translate="">Contained epics</td>
                 <td tal:attributes="class classes/contained"
                     tal:content="differences/contained"></td>
                 <td tal:content="estimates/contained"></td>
               </tr>
               <tr>
-                <td>Associated stories</td>
+                <td i18n:translate="">Associated stories</td>
                 <td tal:attributes="class classes/stories"
                     tal:content="differences/stories"></td>
                 <td tal:content="estimates/stories"></td>
               </tr>
               <tr>
-                <td>Time spent</td>
+                <td i18n:translate="">Time spent</td>
                 <td tal:attributes="class classes/spent"
                     tal:content="differences/spent"></td>
                 <td tal:content="time_spent"></td>
               </tr>
             </tbody>
           </table>
-          <h5>Stories</h5>
+          <h5 i18n:translate="">Stories</h5>
           <ul tal:condition="view/stories">
             <li tal:repeat="story view/stories">
               <a href=""
@@ -69,19 +73,20 @@
             </li>
           </ul>
           <p class="discreet"
-             tal:condition="not:view/stories">
+             tal:condition="not:view/stories"
+             i18n:translate="">
             No stories associated
           </p>
         </div>
       </div>
 
             <tal:block condition="view/contained">
-      <h4>Contained epics</h4>
+      <h4 i18n:translate="">Contained epics</h4>
       <table class="listing" summary="Contained">
         <thead>
           <tr>
-            <th>Epic</th>
-            <th>Estimate</th>
+            <th i18n:translate="">Epic</th>
+            <th i18n:translate="">Estimate</th>
           </tr>
         </thead>
         <tbody>
