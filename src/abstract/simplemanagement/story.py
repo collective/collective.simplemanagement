@@ -17,7 +17,7 @@ from .interfaces import IStory
 from .interfaces import IBooking
 from .utils import get_timings
 from .utils import get_user_details
-
+from .utils import get_assignees_details
 from . import messageFactory as _
 
 
@@ -63,8 +63,7 @@ class View(grok.View):
         return get_timings(self.context)
 
     def get_assignees(self):
-        for i in self.context.assigned_to:
-            yield get_user_details(self.context, i)
+        return get_assignees_details(self.context)
 
     def booking_format(self, brain):
         obj = brain.getObject()

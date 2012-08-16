@@ -4,7 +4,7 @@ from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IIteration
 from .utils import get_timings
-from .utils import get_user_details
+from .utils import get_assignees_details
 
 
 class View(grok.View):
@@ -33,10 +33,6 @@ class View(grok.View):
                     'title': story.epic.to_object.title
                 }
 
-            def _get_assignees(context, assignees):
-                for user_id in assignees:
-                    yield get_user_details(context, user_id)
-
             stories.append({
                 'status': brain.review_state,
                 'url': brain.getURL,
@@ -47,6 +43,6 @@ class View(grok.View):
                 'difference': timings['difference'],
                 'time_status': timings['status'],
                 'epic': epic,
-                'assignees': _get_assignees(self.context, story.assigned_to)
+                'assignees': get_assignees_details(story)
             })
         return stories

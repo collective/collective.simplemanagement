@@ -52,3 +52,9 @@ def get_user_details(context, user_id):
         'fullname': usr.getProperty('fullname') or user_id,
         'href': '/author/%s' % user_id  # TODO: fix with the right url
     }
+
+
+def get_assignees_details(story):
+    assignees = getattr(story, 'assigned_to')
+    for user_id in assignees:
+        yield get_user_details(story, user_id)
