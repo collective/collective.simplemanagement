@@ -1,5 +1,8 @@
 from datetime import date
 from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.schema.interfaces import IVocabularyFactory
+
 from five import grok
 from plone.memoize.instance import memoize
 from Products.CMFCore.utils import getToolByName
@@ -14,6 +17,33 @@ class View(grok.View):
     grok.require('zope2.View')
 
     MAX_ELEMENTS = 5
+
+    @memoize
+    def status_vocabulary(self):
+        name = "abstract.simplemanagement.status"
+        return getUtility(IVocabularyFactory, name)(self.context)
+
+    def get_milestone_status(self, value):
+        voc = self.status_vocabulary()
+        return voc.getTermByToken(value).title
+
+    @memoize
+    def roles_vocabulary(self):
+        name = "abstract.simplemanagement.roles"
+        return getUtility(IVocabularyFactory, name)(self.context)
+
+    def get_role(self, value):
+        voc = self.roles_vocabulary()
+        return voc.getTermByToken(value).title
+
+    @memoize
+    def env_vocabulary(self):
+        name = "abstract.simplemanagement.envtypes"
+        return getUtility(IVocabularyFactory, name)(self.context)
+
+    def get_env_type(self, value):
+        voc = self.env_vocabulary()
+        return voc.getTermByToken(value).title
 
     @memoize
     def portal_state(self):
@@ -108,6 +138,6 @@ class View(grok.View):
     def operatives(self):
         for i in self.context.operatives:
             yield  {
-                'role': i.role,
+                'role': self.get_role(i.role),
                 'user': get_user_details(self.context, i.user_id)
             }

@@ -98,7 +98,8 @@
                     <li tal:repeat="operative view/operatives">
                       <span><a tal:attributes="href operative/user/href"
                         tal:content="operative/user/fullname" /></span>
-                      (<em tal:content="operative/role"></em>)
+                      (<em i18n:translate=""
+                        tal:content="operative/role"></em>)
                     </li>
                   </ul>
                 </dd>
@@ -209,7 +210,8 @@
             <ul>
               <li tal:repeat="milestone context/milestones">
                 <span tal:content="milestone/name"></span>
-                (<em tal:content="milestone/status"></em>)
+                (<em i18n:translate=""
+                  tal:content="python:view.get_milestone_status(milestone.status)"></em>)
               </li>
             </ul>
           </div>
@@ -315,7 +317,8 @@
                      tal:attributes="href env/url;
                                      title env/name">
                     <span tal:content="env/name"></span>
-                    (<em tal:content="env/env_type"></em>)
+                    (<em  i18n:translate=""
+                      tal:content="python:view.get_env_type(env.env_type)"></em>)
                   </a>
                 </li>
               </ul>

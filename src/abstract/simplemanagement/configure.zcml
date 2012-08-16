@@ -28,4 +28,20 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <!-- vocabularies -->
+  <utility
+      factory=".vocabularies.rolesVocab"
+      name="abstract.simplemanagement.roles"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
+  <utility
+      factory=".vocabularies.envtypesVocab"
+      name="abstract.simplemanagement.envtypes"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
+  <utility
+      factory=".vocabularies.statusVocab"
+      name="abstract.simplemanagement.status"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
 </configure>

@@ -16,8 +16,7 @@ class IResource(Interface):
 
     role = schema.Choice(
         title=_(u"Role"),
-        values=['account', 'project_manager', 'technical_lead',
-                'developer', 'designer', 'sysadmin']
+        source="abstract.simplemanagement.roles"
     )
     user_id = schema.TextLine(title=_(u"User ID"))
 
@@ -27,7 +26,7 @@ class IEnvironment(Interface):
     name = schema.TextLine(title=_(u"Name"))
     env_type = schema.Choice(
         title=_(u"Type"),
-        values=['prototype', 'staging', 'production']
+        source="abstract.simplemanagement.envtypes"
     )
     url = schema.URI(title=_(u"URL"))
 
@@ -37,8 +36,7 @@ class IMilestone(Interface):
     name = schema.TextLine(title=_(u"Name"))
     status = schema.Choice(
         title=_(u"Status"),
-        values=['not_started', 'analysis', 'offer', 'development',
-                'staging', 'production', 'maintenance', 'dead']
+        source="abstract.simplemanagement.status"
     )
 
 
