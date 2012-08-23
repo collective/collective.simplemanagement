@@ -4,8 +4,8 @@ Changelog
 1.0 (unreleased)
 ----------------
 
--
-- added static resources (javascript and css)
+- changed style for comments in iteration view [gborelli]
+- added static resources (javascript and css) [gborelli]
 - changed Project and Iteration view [gborelli]
 - added conversation_view to ISTory to display comments [gborelli]
 - added IStoriesListing adapter to list iteration's stories [gborelli]

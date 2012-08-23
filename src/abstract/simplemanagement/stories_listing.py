@@ -37,8 +37,7 @@ class StoriesListing(object):
 
     def comments(self, story):
         conversation = IConversation(story)
-        comments = [(i.author_name, i.text) for i in conversation.getComments()]
-        return comments
+        return [i for i in conversation.getThreads()]
 
     def stories(self):
         brains = self._stories()

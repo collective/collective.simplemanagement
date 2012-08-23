@@ -97,6 +97,7 @@
           </div>
 
           <div class="assignees-container clearfix">
+            <span class="label" i18n:translate="">Assignees</span>
             <ul class="assignees" tal:condition="story/assignees">
               <li tal:repeat="assignee story/assignees">
                 <a tal:attributes="href assignee/href"
@@ -121,12 +122,25 @@
                   tal:content="n_comments">0</span> Comments</dt>
               <dd class="collapsibleContent">
                 <h5 i18n:translate="">Comments</h5>
-                <ul>
-                  <li tal:repeat="comment comments">
-                    <span tal:content="python:comment[0]" />:
-                    <span tal:content="python:comment[1]" />
-                  </li>
-                </ul>
+                <div class="comments-container clearfix">
+                  <tal:comments
+                    repeat="comment_dict comments">
+                    <div class="comment clearfix" tal:define="depth comment_dict/depth|python:0;
+                                    comment comment_dict/comment"
+                        tal:attributes="style string:margin-left: ${depth}em">
+                      <div class="comment-autor">
+                        <a href=""
+                          tal:content="comment/Creator">Creator</a>
+                        <div class="commentDate"
+                             tal:content="python:context.toLocalizedTime(comment.modification_date.isoformat())">
+                             8/23/2001 12:40:44 PM
+                        </div>
+                      </div>
+                      <div class="comment-text"
+                        tal:content="structure comment/getText"></div>
+                    </div>
+                  </tal:comments>
+                </div>
                 <div class="field">
                   <textarea></textarea>
                 </div>

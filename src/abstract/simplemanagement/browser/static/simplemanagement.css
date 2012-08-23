@@ -139,10 +139,13 @@ td.difference {
   vertical-align: bottom
 }
 
+.assignees-container .assignees {
+  display: inline
+}
+
 .assignees-container .assignees li {
-  display:block;
-  float: left;
-  margin-left: .5em;
+  display:inline !important;
+  margin-right: .5em;
 }
 
 
@@ -169,6 +172,7 @@ td.difference {
   margin: .5em 0 0;
 }
 
+.assignees-container,
 .epic-container {
   margin-left: 0.5em;
 }
@@ -199,13 +203,38 @@ td.difference {
   padding: 20px;
 }
 
-table.stories dl.collapsible {
+.stories dl.collapsible {
   border: 0;
 }
-table.stories dl.collapsible dd.collapsibleContent {
+.stories dl.collapsible dd.collapsibleContent {
   margin:0 !important;
 }
-table.stories dl.collapsible dt.collapsibleHeader {
+.stories dl.collapsible dt.collapsibleHeader {
   background-color: transparent !important;
   margin-left: 0;
+}
+
+
+/* comments */
+.comments-container {
+  margin-bottom: 1em;
+}
+.comments-container .comment {
+  font-size: 100%;
+  margin-top: .5em;
+  border: 1px solid #ddd;
+}
+
+.comment-autor {
+  float: left;
+  margin: 4px;
+  padding: 4px;
+  width: 100px;
+}
+
+.comment-text {
+    margin-left: 120px;
+    padding: 4px;
+    border-left: 1px solid #ddd;
+    min-height: 50px;
 }
