@@ -45,7 +45,9 @@ class DashboardView(dashboard.DashboardView):
             ]
             for query, result_key in searches:
                 query.update({
-                    'path': '/'.join(self.context.getPhysicalPath())
+                    'path': '/'.join(self.context.getPhysicalPath()),
+                    'sort_on': 'modified',
+                    'sort_order': 'descending'
                 })
                 results = pc.searchResults(query)
                 result[result_key] = results[:self.MAX_ELEMENTS]
