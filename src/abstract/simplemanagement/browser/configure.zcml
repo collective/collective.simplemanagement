@@ -14,7 +14,7 @@
   <browser:page
     for="..interfaces.IStory"
     name="quickedit"
-    class=".quickedit.StoryQuickedit"
+    class=".quickforms.StoryQuickedit"
     layer="..interfaces.IBrowserLayer"
     permission="zope2.View"
   />
@@ -49,8 +49,8 @@
   <!-- TODO: fix adapter for attribute... -->
   <adapter
       for="*"
-      provides=".quickedit.IQuickForm"
-      factory=".quickedit.BaseqQuickFormAdapter"
+      provides="..interfaces.IQuickForm"
+      factory=".quickforms.BaseqQuickFormAdapter"
   />
 
 </configure>

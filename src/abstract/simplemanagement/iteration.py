@@ -29,20 +29,19 @@ class StoryForm(form.AddForm):
         'epic')
     fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
 
-    def create(self, data):
-        convert_funcs = {
-            'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
-        }
+    convert_funcs = {
+            'epic': lambda x: create_relation('/'.join(x.getPhysicalPath()))
+    }
 
+    def create(self, data):
         item = createContentInContainer(
             self.context,
             'Story',
             title=data.pop('title'))
         for k, v in data.items():
-            if v and k in convert_funcs:
-                v = convert_funcs[k](v)
+            if v and k in self.convert_funcs:
+                v = self.convert_funcs[k](v)
             setattr(item, k, v)
-        # item.date = date.today()
         return item
 
     def add(self, obj):
