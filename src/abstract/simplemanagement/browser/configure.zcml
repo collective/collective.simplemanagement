@@ -32,7 +32,7 @@
     name="conversation_view"
     for="..interfaces.IStory"
     layer="..interfaces.IBrowserLayer"
-    class="plone.app.discussion.browser.conversation.ConversationView"
+    class=".comments.ConversationView"
     permission="zope2.View"
     />
 
