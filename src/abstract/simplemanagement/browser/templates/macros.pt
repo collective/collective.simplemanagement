@@ -201,4 +201,48 @@
     </table>
   </metal:storytiming>
 
+  <metal:booking define-macro="booking-list">
+    <table class="listing"
+      tal:condition="booking_list">
+      <thead>
+        <tr>
+          <th i18n:translate="">Date</th>
+          <th i18n:translate="">Title</th>
+          <th i18n:translate="">Time</th>
+          <th i18n:translate="">Assignee</th>
+          <th i18n:translate="">Related</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr tal:repeat="booking booking_list">
+          <td tal:content="booking/date" />
+          <td class="booking-details">
+            <h4><a tal:attributes="href booking/href"
+              tal:content="booking/title"/>
+            </h4>
+            <dl class="collapsible collapsedOnLoad"
+                tal:condition="booking/description">
+              <dt class="collapsibleHeader" i18n:translate="">Details</dt>
+              <dd class="collapsibleContent">
+                <p class="discreet"
+                    tal:content="booking/description" />
+              </dd>
+            </dl>
+          </td>
+          <td class="actual_hours" tal:content="booking/time" />
+          <td><a tal:attributes="href booking/creator/href"
+            tal:content="booking/creator/fullname" />
+          <td tal:define="related booking/related">
+            <span tal:condition="related">
+              <a href=""
+                tal:attributes="
+                  href related/href;
+                  title related/description"
+                tal:content="related/title"/>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </metal:booking>
 </html>
