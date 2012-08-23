@@ -283,7 +283,7 @@ td.difference {
   margin: .5em 0 0;
 }
 
-
+#content a.status,
 #content a.quickedit,
 #content a.quickview {
   background: transparent url('pencil.png') no-repeat;
@@ -296,6 +296,12 @@ td.difference {
   width: 16px;
 }
 
+.template-quickedit #portal-column-content {
+  margin-left: -98.875%;
+  width: 96.75%;
+  padding: .5em;
+}
+
 #content a.quickview {
   background-image: url('magnifier.png');
 }
@@ -304,6 +310,7 @@ td.difference {
   background-image: url('tag_red.png');
 }
 
+#content a.status span,
 #content a.quickview span,
 #content a.quickedit span {
   padding: 20px;
@@ -380,4 +387,20 @@ td.difference {
 #addstory-form {
   padding: 1em;
   border: 1px solid #dddddd;
+}
+
+.tooltip {
+  display:none;
+  background: white;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  height: 25px;
+  width: 170px;
+  padding: .2em .5em;
+  font-size: 90%;
+}
+
+.tooltip a {
+  padding: 0 .2em;
+  line-height: 25px;
 }

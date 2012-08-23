@@ -33,4 +33,16 @@ $(document).ready(function(){
     revert: true
   });
 
+  $('.status').tooltip({
+    events: {
+      def: "click,blur",
+    },
+    onBeforeShow: function(){
+      var tip = this.getTip()
+      var content = '<div><a href="#">Start</a><a href="#">Complete</a><a href="#">Suspend</a></div>';
+      tip.html(content);
+    }
+
+  });
+
 });
