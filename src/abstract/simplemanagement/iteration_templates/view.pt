@@ -25,6 +25,29 @@
                   totals view/totals;
                   view_details python:True">
 
+        <div id="addstory-container" class="clearfix">
+          <h3 i18n:translate=""><a href="#">Add Story</a></h3>
+          <div id="addstory-form" style="display: none"
+            tal:content="structure view/add_story_form" />
+          <script type="text/javascript">
+            $(function() {
+
+              var add_form_link = $('#addstory-container a');
+
+              if ($("#addstory-form dl.portalMessage").length > 0){
+                $('#addstory-form').css('display', 'block');
+                add_form_link.addClass('open');
+              }
+
+              add_form_link.bind('click', function(evt){
+                $(this).toggleClass('open');
+                evt.preventDefault();
+                $('#addstory-form').toggle("slow");
+              });
+            });
+          </script>
+        </div>
+
         <metal:stories-listing
           use-macro="context/simpemanagement-macros/stories" />
 

@@ -367,3 +367,17 @@ td.difference {
     border-left: 1px solid #ddd;
     min-height: 50px;
 }
+
+#addstory-container h3 a {
+  background: url("./spindown-closed.gif") no-repeat scroll 0 50% transparent;
+  padding-left: 1em;
+}
+
+#addstory-container h3 a.open {
+  background-image: url('./spindown-open.gif');
+}
+
+#addstory-form {
+  padding: 1em;
+  border: 1px solid #dddddd;
+}

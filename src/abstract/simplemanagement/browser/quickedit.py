@@ -5,7 +5,7 @@ from z3c.form import form, field, button
 from plone.z3cform.layout import wrap_form
 
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+# from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
