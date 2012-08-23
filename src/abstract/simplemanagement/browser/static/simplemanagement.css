@@ -26,6 +26,7 @@
 
 .booking .listing{
    font-size: 85%;
+   width: 100%;
 }
 
 .booking .listing h4 {
@@ -34,6 +35,10 @@
 
 .booking .listing .discreet {
   font-size: 100%
+}
+
+#booking-form {
+  margin-top: 1em;
 }
 
 #booking-form label,
@@ -141,6 +146,7 @@
 /* timing status */
 td.danger {
   background-color: red;
+  color: white;
 }
 
 td.success {
@@ -209,10 +215,6 @@ td.difference {
   margin: .5em 0 0;
 }
 
-.assignees-container,
-.epic-container {
-  margin-left: 0.5em;
-}
 
 #content a.quickedit,
 #content a.quickview {
@@ -239,6 +241,9 @@ td.difference {
   padding: 20px;
 }
 
+.story-text {
+  margin: .6em 0;
+}
 .stories dl.collapsible {
   border: 1px solid #ddd;
 }
@@ -253,7 +258,7 @@ td.difference {
 }
 
 .booking-details {
-  width: 300px;
+  width: 350px;
 }
 
 .booking .listing dl.collapsible dd.collapsibleContent,
@@ -268,6 +273,7 @@ td.difference {
 
 .stories dl.collapsible dt.collapsibleHeader {
   margin-left: 0;
+
 }
 
 /* comments */

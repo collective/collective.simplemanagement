@@ -16,12 +16,20 @@
       <metal:timing
         use-macro="context/simpemanagement-macros/story-timing" />
 
-      <div tal:content="context/text" />
+      <div class="story-text">
+        <p tal:replace="context/text" />
+      </div>
+
       <metal:epic
         use-macro="context/simpemanagement-macros/epic" />
 
       <metal:assignes
           use-macro="context/simpemanagement-macros/assignees" />
+
+      <div id="booking-form" class="clearfix">
+        <h2 i18n:translate="">Add Booking</h2>
+        <div tal:content="structure view/form_contents" />
+      </div>
 
       <div class="booking"
         tal:define="booking_list view/get_booking">
@@ -67,10 +75,6 @@
             </tr>
           </tbody>
         </table>
-        <div id="booking-form">
-          <h2 i18n:translate="">Add Booking</h2>
-          <div tal:content="structure view/form_contents" />
-        </div>
       </div>
     </metal:block>
 </metal:content-core>
