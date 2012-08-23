@@ -16,33 +16,6 @@ class View(grok.View):
     grok.require('zope2.View')
 
     @memoize
-    def status_vocabulary(self):
-        name = "abstract.simplemanagement.status"
-        return getUtility(IVocabularyFactory, name)(self.context)
-
-    def get_milestone_status(self, value):
-        voc = self.status_vocabulary()
-        return voc.getTermByToken(value).title
-
-    @memoize
-    def roles_vocabulary(self):
-        name = "abstract.simplemanagement.roles"
-        return getUtility(IVocabularyFactory, name)(self.context)
-
-    def get_role(self, value):
-        voc = self.roles_vocabulary()
-        return voc.getTermByToken(value).title
-
-    @memoize
-    def env_vocabulary(self):
-        name = "abstract.simplemanagement.envtypes"
-        return getUtility(IVocabularyFactory, name)(self.context)
-
-    def get_env_type(self, value):
-        voc = self.env_vocabulary()
-        return voc.getTermByToken(value).title
-
-    @memoize
     def tools(self):
         return {
             'portal_catalog': getToolByName(self.context, 'portal_catalog')
@@ -72,6 +45,41 @@ class View(grok.View):
                 iterations['future'].append(iteration)
         return iterations
 
+
+class OverView(View):
+    grok.context(IProject)
+    grok.name('overview')
+    grok.require('zope2.View')
+
+    MAX_ELEMENTS = 5
+
+    @memoize
+    def status_vocabulary(self):
+        name = "abstract.simplemanagement.status"
+        return getUtility(IVocabularyFactory, name)(self.context)
+
+    def get_milestone_status(self, value):
+        voc = self.status_vocabulary()
+        return voc.getTermByToken(value).title
+
+    @memoize
+    def roles_vocabulary(self):
+        name = "abstract.simplemanagement.roles"
+        return getUtility(IVocabularyFactory, name)(self.context)
+
+    def get_role(self, value):
+        voc = self.roles_vocabulary()
+        return voc.getTermByToken(value).title
+
+    @memoize
+    def env_vocabulary(self):
+        name = "abstract.simplemanagement.envtypes"
+        return getUtility(IVocabularyFactory, name)(self.context)
+
+    def get_env_type(self, value):
+        voc = self.env_vocabulary()
+        return voc.getTermByToken(value).title
+
     def documents(self):
         last_documents = []
         documents_folder = None
@@ -98,9 +106,3 @@ class View(grok.View):
                 'role': self.get_role(i.role),
                 'user': get_user_details(self.context, i.user_id)
             }
-
-
-class OverView(View):
-    grok.context(IProject)
-    grok.name('overview')
-    grok.require('zope2.View')
