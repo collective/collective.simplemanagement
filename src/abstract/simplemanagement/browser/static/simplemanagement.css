@@ -204,13 +204,16 @@ td.difference {
 }
 
 .stories dl.collapsible {
-  border: 0;
+  border: 1px solid #ddd;
+}
+.stories dl.collapsedBlockCollapsible {
+  border:0;
 }
 .stories dl.collapsible dd.collapsibleContent {
   margin:0 !important;
 }
 .stories dl.collapsible dt.collapsibleHeader {
-  background-color: transparent !important;
+  /*background-color: white !important;*/
   margin-left: 0;
 }
 
