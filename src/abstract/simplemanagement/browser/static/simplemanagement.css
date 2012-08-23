@@ -188,11 +188,10 @@
   border: 1px solid #C8CACA;
 }
 .timing {
-  border-bottom: 1px solid #C8CACA;
-  border-left: 1px solid #C8CACA;
+  border: 1px solid #C8CACA;
   float: right;
-  margin-right: -3px;
-  margin-top: -3px;
+  margin-right: -4px;
+  margin-top: -4px;
   margin-left: 1em;
   vertical-align: middle;
 }
@@ -243,7 +242,6 @@ td.difference {
   margin-top: 1em;
 }
 .totals .timing {
-  border: 1px solid #C8CACA;
   margin-right: 0px;
   margin-top: 0px;
 }
