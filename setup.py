@@ -35,6 +35,7 @@ setup(
         'plone.namedfile [blobs]',
         'Products.Poi',
         'abstract.z3cform.usertokeninput',
+        'collective.js.jqueryui',
     ],
     extras_require={
         'test': [

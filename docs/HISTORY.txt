@@ -4,6 +4,7 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- added collective.js.jqueryui [gborelli]
 - changed style for comments in iteration view [gborelli]
 - added static resources (javascript and css) [gborelli]
 - changed Project and Iteration view [gborelli]
