@@ -7,6 +7,7 @@
   <includeDependencies package="." />
 
   <grok:grok package="." />
+  <include package=".browser" />
 
   <subscriber for=".interfaces.IProject
                    zope.app.container.interfaces.IObjectAddedEvent"
@@ -43,5 +44,12 @@
       factory=".vocabularies.statusVocab"
       name="abstract.simplemanagement.status"
       provides="zope.schema.interfaces.IVocabularyFactory" />
+
+  <adapter
+    for=".interfaces.IIteration"
+    provides=".interfaces.IStoriesListing"
+    factory=".stories_listing.StoriesListing"
+  />
+
 
 </configure>

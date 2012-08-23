@@ -1,0 +1,171 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  lang="en"
+  i18n:domain="abstract.simplemanagement"
+  tal:omit-tag="">
+
+  <metal:iteration define-macro="iteration"
+    tal:define="iteration_view nocall:iteration/@@view;
+                stories iteration_view/stories;
+                totals iteration_view/totals">
+    <h3><a href=""
+       title=""
+       tal:attributes="href iteration/absolute_url;
+                       title iteration/title">
+      <span tal:content="iteration/title" />
+      (<span
+        tal:content="python:context.toLocalizedTime(iteration.start.isoformat())"/>&nbsp;-&nbsp;
+      <span
+        tal:content="python:context.toLocalizedTime(iteration.start.isoformat())" />)
+    </a></h3>
+    <p tal:content="iteration/Description"></p>
+    <metal:stories define-slot="stories">
+      <metal:stories-listing
+        use-macro="context/simpemanagement-macros/stories" />
+    </metal:stories>
+  </metal:iteration>
+
+  <metal:stories define-macro="stories"
+      tal:define="view_details view_details|nothing">
+    <ul class="stories sortable"
+        tal:condition="stories">
+      <li class="story-container"
+        tal:repeat="story stories"
+        tal:attributes="class string:${story/status} draggable story-container">
+        <div class="story-block clearfix">
+
+          <table class="timing">
+            <tr>
+              <th class="nosort column" i18n:translate="">Estimate</th>
+              <th class="nosort column" i18n:translate="">Actual hours</th>
+              <th class="nosort column" i18n:translate="">Difference</th>
+            </tr>
+            <tr>
+              <td class="estimate" tal:content="story/estimate"></td>
+              <td class="actual_hours" tal:content="story/hours"></td>
+              <td class="difference" tal:attributes="class story/time_status"
+                  tal:content="story/difference">
+              </td>
+            </tr>
+          </table>
+
+          <div class="actions"
+            tal:condition="view_details">
+            <a href=""
+               title="View details"
+               class="quickview"
+               i18n:attributes="title"
+               tal:attributes="href story/url">
+              <span i18n:translate="">Details</span></a>
+            <a href=""
+               title="Edit story"
+               class="quickedit"
+               tal:attributes="href python:story['url'] + '/quickedit?ajax_load=1&ajax_include_head=1'"
+               i18n:attributes="title">
+               <span i18n:translate="">Edit</span></a>
+            <a href=""
+               title="Change status"
+               class="quickedit status"
+               i18n:attributes="title"
+               tal:attributes="href python:story['url'] + '/quickedit?ajax_load=1&ajax_include_head=1'">
+               <span tal:content="story/status">Status</span></a>
+          </div>
+
+          <h4>
+            <a href=""
+              title=""
+              tal:attributes="href story/url;
+                              title story/description"
+              tal:content="story/title" />
+          </h4>
+
+          <p tal:content="story/description"></p>
+          <p tal:condition="view_details"
+              tal:content="story/text" />
+
+          <div class="epic-container"
+            tal:condition="story/epic">
+            <span class="label" i18n:translate="">Epic</span>
+            <a href=""
+               title=""
+
+               tal:attributes="href story/epic/url;
+                               title story/epic/title"
+               tal:content="story/epic/title"></a>
+          </div>
+
+          <div class="assignees-container clearfix">
+            <ul class="assignees" tal:condition="story/assignees">
+              <li tal:repeat="assignee story/assignees">
+                <a tal:attributes="href assignee/href"
+                   tal:content="assignee/fullname" />
+              </li>
+            </ul>
+            <em tal:condition="not:story/assignees"
+                i18n:translate="">
+              Unassigned
+            </em>
+          </div>
+
+          <div tal:condition="view_details"
+            class="extra-details clearfix">
+
+            <dl class="collapsible collapsedOnLoad"
+                tal:define="comments story/comments;
+                  n_comments python:len(comments)">
+              <dt class="collapsibleHeader"
+                i18n:translate=""><span
+                  i18n:name="number"
+                  tal:content="n_comments">0</span> Comments</dt>
+              <dd class="collapsibleContent">
+                <h5 i18n:translate="">Comments</h5>
+                <ul>
+                  <li tal:repeat="comment comments">
+                    <span tal:content="python:comment[0]" />:
+                    <span tal:content="python:comment[1]" />
+                  </li>
+                </ul>
+                <div class="field">
+                  <textarea></textarea>
+                </div>
+                <div class="formActions">
+                  <button><span i18n:translate="">Send</span></button>
+                </div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="totals clearfix" tal:condition="totals|nothing">
+      <table class="timing">
+        <tr>
+          <th class="totals-label" rowspan="2"
+            i18n:translate="">Totals</th>
+          <th class="nosort column" i18n:translate="">Estimate</th>
+          <th class="nosort column" i18n:translate="">Actual hours</th>
+          <th class="nosort column" i18n:translate="">Difference</th>
+        </tr>
+        <tr>
+          <td class="estimate" tal:content="totals/estimate"></td>
+          <td class="actual_hours" tal:content="totals/hours"></td>
+          <td class="difference" tal:content="totals/difference">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div tal:condition="not:stories">
+      <p class="discreet"
+          i18n:translate="">
+          No stories in this iteration.
+          Add a new one or bring them in via the iteration planner.
+      </p>
+    </div>
+
+  </metal:stories>
+
+
+</html>

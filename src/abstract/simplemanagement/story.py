@@ -27,7 +27,7 @@ class IBookingForm(IBooking):
 
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("story_templates/booking_form.pt")
-    fields = field.Fields(IBookingForm).select('title', 'time', 'related')
+    fields = field.Fields(IBookingForm).select('title', 'time')  # , 'related')
 
     def create(self, data):
         convert_funcs = {
@@ -39,7 +39,7 @@ class BookingForm(form.AddForm):
             'Booking',
             title=data.pop('title'))
         for k, v in data.items():
-            if k in convert_funcs:
+            if v and k in convert_funcs:
                 v = convert_funcs[k](v)
             setattr(item, k, v)
         item.date = date.today()
@@ -69,6 +69,7 @@ class View(grok.View):
         obj = brain.getObject()
         booking = {
             'title': brain.Title,
+            'description': brain.Description,
             'time': brain.time,
             'href': brain.getURL(),
             'date': self.context.toLocalizedTime(brain.date.isoformat()),
@@ -85,8 +86,7 @@ class View(grok.View):
             'sort_on': 'booking_date'
         }
 
-        for el in catalog(**query):
-            yield self.booking_format(el)
+        return [self.booking_format(el) for el in catalog(**query)]
 
     def form_contents(self):
         z2.switch_on(self, request_layer=IFormLayer)

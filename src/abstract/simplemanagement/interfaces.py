@@ -158,3 +158,14 @@ class IBooking(form.Schema):
         source=ObjPathSourceBinder(),
         required=False
     )
+
+
+class IStoriesListing(Interface):
+
+    def stories():
+        """return stories details
+        """
+
+    def totals():
+        """return stories'timing
+        """

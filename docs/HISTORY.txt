@@ -4,4 +4,13 @@ Changelog
 1.0 (unreleased)
 ----------------
 
- - Initial release
+-
+- added static resources (javascript and css)
+- changed Project and Iteration view [gborelli]
+- added conversation_view to ISTory to display comments [gborelli]
+- added IStoriesListing adapter to list iteration's stories [gborelli]
+- added abstract.z3cform.usertokeninput dependency [gborelli]
+- added browser layer [gborelli]
+- added get_assignees_details in utils method in order to reuse it [gborelli]
+- added vocabularies for status, env_type and roles [gborelli]
+- create package structure and content types

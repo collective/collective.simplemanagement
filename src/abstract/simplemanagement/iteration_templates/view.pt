@@ -5,74 +5,31 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="abstract.simplemanagement">
-<body>
+  <body>
 
-<metal:content-core fill-slot="content-core">
-    <metal:block define-macro="content-core">
+    <metal:title fill-slot="content-title">
+      <div id="iteration-dates"
+          tal:define="dates view/get_dates">
+        <span tal:content="dates/start"/>&nbsp;&dash;&nbsp;<span
+          tal:content="dates/end" />
+      </div>
 
-      <table class="listing" summary="Stories"
-           i18n:attributes="summary">
-        <thead>
-          <tr>
-            <th class="nosort column" i18n:translate="">Story</th>
-            <th class="nosort column" i18n:translate="">Estimate</th>
-            <th class="nosort column" i18n:translate="">Actual hours</th>
-            <th class="nosort column" i18n:translate="">Difference</th>
-            <th class="nosort column" i18n:translate="">Assignees</th>
-            <th class="nosort column" i18n:translate="">Epic</th>
-          </tr>
-        </thead>
-        <tbody tal:condition="view/stories">
-          <tr tal:repeat="story view/stories"
-              tal:attributes="class story/status">
-            <td>
-              <a href=""
-                 title=""
-                 tal:attributes="href story/url;
-                                 title story/description"
-                 tal:content="story/title"></a>
-            </td>
-            <td tal:content="story/estimate"></td>
-            <td tal:content="story/hours"></td>
-            <td tal:attributes="class story/time_status"
-                tal:content="story/difference">
-            </td>
-            <td>
-              <ul tal:condition="story/assignees">
-                <li tal:repeat="assignee story/assignees">
-                  <a tal:attributes="href assignee/href"
-                     tal:content="assignee/fullname" />
-                </li>
-              </ul>
-              <em tal:condition="not:story/assignees"
-                  i18n:translate="">
-                Unassigned
-              </em>
-            </td>
-            <td>
-              <a href=""
-                 title=""
-                 tal:condition="story/epic"
-                 tal:attributes="href story/epic/url;
-                                 title story/epic/title"
-                 tal:content="story/epic/title"></a>
-              <em tal:condition="not:story/epic">&nbsp;</em>
-            </td>
-          </tr>
-        </tbody>
-        <tbody tal:condition="not:view/stories">
-          <tr>
-            <td class="discreet" colspan="6"
-              i18n:translate="">
-              No stories in this iteration.
-              Add a new one or bring them in via the iteration planner.
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <h1 metal:use-macro="context/kss_generic_macros/macros/generic_title_view">
+           Generic KSS Title. Is rendered with class="documentFirstHeading".
+      </h1>
+    </metal:title>
 
-    </metal:block>
-</metal:content-core>
+    <metal:content-core fill-slot="content-core">
+      <metal:block define-macro="content-core"
+        tal:define="stories view/stories;
+                  totals view/totals;
+                  view_details python:True">
 
-</body>
+        <metal:stories-listing
+          use-macro="context/simpemanagement-macros/stories" />
+
+      </metal:block>
+    </metal:content-core>
+
+  </body>
 </html>

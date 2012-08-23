@@ -12,58 +12,56 @@
 
       <div class="row">
         <div class="cell width-8 position-0">
-            <div tal:content="context/text" />
+          <div tal:content="context/text" />
+          <tal:block condition="view/has_epic">
+          <dt i18n:translate="">Epic</dt>
+          <dd>
+            <a href=""
+               title=""
+               tal:attributes="href context/epic/to_object/absolute_url;
+                               title context/epic/to_object/description"
+               tal:content="context/epic/to_object/title"></a>
+          </dd>
+          </tal:block>
+
         </div>
-        <div class="cell width-4 position-8">
-          <dl>
-            <dt i18n:translate="">Timing</dt>
-            <dd>
-              <table class="listing" summary="Timing">
-                <thead>
-                  <tr>
-                    <th class="nosort column" i18n:translate="">Estimate</th>
-                    <th class="nosort column" i18n:translate="">Resource time</th>
-                    <th class="nosort column" i18n:translate="">Difference</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr tal:define="timing view/timing">
-                    <td tal:content="timing/estimate"></td>
-                    <td tal:content="timing/resource_time"></td>
-                    <td tal:content="timing/difference"
-                        tal:attributes="class timing/status"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </dd>
-            <dt i18n:translate="">Assignees</dt>
-            <dd>
-              <ul tal:condition="context/assigned_to">
-                <li tal:repeat="assignee view/get_assignees">
-                  <a tal:content="assignee/fullname"
-                      tal:attributes="href assignee/href" /></li>
-              </ul>
-              <em tal:condition="not:context/assigned_to"
-                i18n:translate="">
-                Unassigned
-              </em>
-            </dd>
-            <tal:block condition="view/has_epic">
-            <dt i18n:translate="">Epic</dt>
-            <dd>
-              <a href=""
-                 title=""
-                 tal:attributes="href context/epic/to_object/absolute_url;
-                                 title context/epic/to_object/description"
-                 tal:content="context/epic/to_object/title"></a>
-            </dd>
-            </tal:block>
-          </dl>
+        <div class="cell width-8 position-8">
+          <table class="listing" summary="Timing">
+            <thead>
+              <tr>
+                <th class="nosort column" i18n:translate="">Estimate</th>
+                <th class="nosort column" i18n:translate="">Resource time</th>
+                <th class="nosort column" i18n:translate="">Difference</th>
+                <th class="nosort column" i18n:translate="">Assignees</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr tal:define="timing view/timing">
+                <td tal:content="timing/estimate"></td>
+                <td tal:content="timing/resource_time"></td>
+                <td tal:content="timing/difference"
+                    tal:attributes="class timing/status"></td>
+                <td>
+                  <ul class="assignees" tal:condition="context/assigned_to">
+                    <li tal:repeat="assignee view/get_assignees">
+                      <a tal:content="assignee/fullname"
+                        tal:attributes="href assignee/href" /></li>
+                  </ul>
+                  <em tal:condition="not:context/assigned_to"
+                    i18n:translate="">
+                    Unassigned
+                  </em>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <div class="row booking">
+      <div class="row booking"
+        tal:define="booking_list view/get_booking">
         <div class="cell position-0 width-full">
-          <table class="listing">
+          <table class="listing"
+            tal:condition="booking_list">
             <thead>
               <tr>
                 <th i18n:translate="">Title</th>
@@ -74,9 +72,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr tal:repeat="booking view/get_booking">
-                <td><a tal:attributes="href booking/href"
-                  tal:content="booking/title" /></td>
+              <tr tal:repeat="booking booking_list">
+                <td>
+                  <div class="collassible">
+                  <h4><a tal:attributes="href booking/href"
+                    tal:content="booking/title"/>
+                  </h4>
+                  <p class="discreet"
+                    tal:content="booking/description" /></td>
                 <td tal:content="booking/date" />
                 <td tal:content="booking/time" />
                 <td><a tal:attributes="href booking/creator/href"
@@ -86,7 +89,7 @@
                     <a href=""
                       tal:attributes="
                         href related/href;
-                        title related/title"
+                        title related/description"
                       tal:content="related/title"/>
                   </span>
                 </td>

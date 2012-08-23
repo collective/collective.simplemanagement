@@ -8,370 +8,75 @@
 <body>
 
 <metal:content-core fill-slot="content-core">
-    <metal:block define-macro="content-core"
-      tal:define="portal_state nocall:context/@@plone_portal_state;
-        css_class python:context.is_external and 'external' or 'internal'">
-    <!-- TODO: remove css and javascript from body document -->
-    <style type="text/css">
-      #project-view {margin-top: 1em}
-      #project-view h2 {
-        padding: .1em 0 .1em 1em;
-        font-size: 120%;
-        border-bottom: 1px solid #2C2C2C;
-        border-top:1px solid white;
-        background: #eeeeee; /* Old browsers */
-        background: -moz-linear-gradient(top,  #eeeeee 0%, #cccccc 100%); /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top,  #eeeeee 0%,#cccccc 100%); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top,  #eeeeee 0%,#cccccc 100%); /* Opera 11.10+ */
-        background: -ms-linear-gradient(top,  #eeeeee 0%,#cccccc 100%); /* IE10+ */
-        background: linear-gradient(to bottom,  #eeeeee 0%,#cccccc 100%); /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
-      }
+  <metal:block define-macro="content-core"
+    tal:define="portal_state nocall:context/@@plone_portal_state;
+      css_class python:context.is_external and 'external' or 'internal'">
 
-      #project-view .pane {
-        background-color: white;
-      }
-
-      #project-iterations {
-        height: 200px;
-      }
-    </style>
-    <script type="text/javascript">
-      $(document).ready(function(){
-        $("#project-view").tabs(
-            "#project-view div.pane",
-            {tabs: 'h2', effect: 'slide', initialIndex: 1}
-          );
-
-        $('#project-iterations dl').tabs(
-            "#project-iterations dd",
-            {tabs: 'dt', effect: 'slide', initialIndex: 1}
-          );
-
-      });
-    </script>
-
-    <div id="project-view" tal:attributes="class css_class">
-
-      <!-- Details -->
-      <h2 i18n:translate="">Overview</h2>
-      <div class="pane" id="project-details">
-         <div class="row">
-          <div class="cell width-8 position-0">
-            <div id="project-info">
-              <dl>
-                <dt i18n:translate="budget_label">Budget <small>as is by offer</small></dt>
-                <dd i18n:translate=""><span  i18n:name="budget" tal:content="context/budget"></span> man days</dd>
-                <dt i18n:translate="estimate_label">
-                  Estimate
-                  <small>at the beginning, by the project manager</small>
-                </dt>
-                <dd i18n:translate="">
-                  <span  i18n:name="initial_estimate" tal:content="context/initial_estimate"></span>
-                  man days
-                </dd>
-                <dt i18n:translate="">Start date</dt>
-                <dd tal:condition="context/prj_start_date"
-                  tal:content="python:context.toLocalizedTime(context.prj_start_date.isoformat())"></dd>
-                <dt i18n:translate="">Expected end date</dt>
-                <dd><span tal:condition="context/prj_expected_end_date"
-                  tal:replace="python:context.toLocalizedTime(context.prj_expected_end_date.isoformat())" /></dd>
-                <dt i18n:translate="">End Date</dt>
-                <dd tal:condition="context/prj_end_date"
-                  tal:content="python:context.toLocalizedTime(context.prj_end_date.isoformat())">
-                </dd>
-              </dl>
-
+  <div id="project-view" tal:attributes="class css_class">
+    <div class="row" id="iterations">
+      <!-- iterations -->
+      <div class="cell width-full position-0">
+        <div id="project-iterations"
+          tal:define="iterations view/iterations">
+          <tal:iterations tal:define="past iterations/past">
+            <h2 i18n:translate="">Past iterations (#<span
+                i18n:name="n_iterations"
+                tal:replace="python:len(past)" />)
+            </h2>
+            <div class="pane">
+              <div tal:condition="past">
+                <div tal:repeat="iteration past">
+                  <metal:iteration
+                    use-macro="context/simpemanagement-macros/iteration" />
+                </div>
+              </div>
+              <p class="discreet" tal:condition="not:past"
+                i18n:translate="">
+                There are no past iterations
+              </p>
             </div>
-          </div>
+          </tal:iterations>
 
-
-          <div class="cell width-8 position-8">
-            <div>
-              <dl>
-                <dt i18n:translate="">Customer</dt>
-                <dd tal:content="context/customer"></dd>
-                <dt i18n:translate="">Operatives</dt>
-                <dd>
-                  <ul>
-                    <li tal:repeat="operative view/operatives">
-                      <span><a tal:attributes="href operative/user/href"
-                        tal:content="operative/user/fullname" /></span>
-                      (<em i18n:translate=""
-                        tal:content="operative/role"></em>)
-                    </li>
-                  </ul>
-                </dd>
-                <dt i18n:translate="">Project classifiers</dt>
-                <dd>
-                  <ul id="classifiers">
-                    <li tal:repeat="item context/classifiers">
-                      <span tal:replace="item"/>
-                    </li>
-                  </ul>
-                </dd>
-              <dl>
+          <h2 i18n:translate="">Current Iteration</h2>
+          <div class="pane">
+            <div tal:condition="iterations/current">
+              <div tal:repeat="iteration iterations/current">
+                <metal:iteration
+                  use-macro="context/simpemanagement-macros/iteration" />
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="row"
-          tal:condition="context/notes">
-          <div class="cell width-full position-0">
-            <h5 i18n:translate="">Notes</h5>
-            <div tal:content="context/notes"></div>
-          </div>
-        </div>
-        <div class="visualClear"><!-- clear floats--></div>
-      </div>
-
-      <!-- Activities -->
-      <h2 i18n:translate="">Activities</h2>
-      <div  class="pane" id="project-activities">
-        <div class="row" id="project-dashboard">
-          <div class="cell width-full position-0"
-             tal:condition="portal_state/anonymous">
-            <p class="discreet"
+            <p class="discreet" tal:condition="not:iterations/current"
                i18n:translate="">
-              You must be authenticated to see your dashboard
+              There are no current iterations
             </p>
           </div>
 
-          <tal:dashboard condition="not:portal_state/anonymous"
-            define="dashboard view/dashboard">
-            <!-- my stories -->
-            <div class="cell width-8 position-0">
-              <h3 i18n:translate="">My stories</h3>
-              <ul tal:condition="dashboard/stories">
-                <li tal:repeat="story dashboard/stories">
-                  <p>
-                    <a href=""
-                       title=""
-                       tal:content="story/Title"
-                       tal:attributes="href story/getURL;
-                                       title story/Title"></a>
-                  </p>
-                  <p class="discreet">
-                    <span tal:replace="story/Description" />
-                  </p>
-                </li>
-              </ul>
-              <p class="discreet"
-                 tal:condition="not:dashboard/stories"
+          <tal:iterations
+            tal:define="future iterations/future">
+            <h2 i18n:translate="">Future iterations (#<span
+                i18n:name="n_iterations"
+                tal:replace="python:len(future)" />)
+            </h2>
+            <div class="pane">
+              <div tal:condition="future">
+                <div tal:repeat="iteration future">
+                  <metal:iteration
+                    use-macro="context/simpemanagement-macros/iteration" />
+                </div>
+              </div>
+              <p class="discreet" tal:condition="not:future"
                  i18n:translate="">
-                You have no stories assigned
-              </p>
-              <p class="discreet"
-                 tal:condition="dashboard/stories_n"
-                 i18n:translate="">
-                And <em i18n:name="stories_n" tal:content="dashboard/stories_n"></em> more
+                There are no past iterations
               </p>
             </div>
-
-            <!-- my tickets -->
-            <div class="cell width-8 position-8">
-              <h3 i18n:translate="">My tickets</h3>
-              <ul tal:condition="dashboard/tickets">
-                <li tal:repeat="ticket dashboard/tickets">
-                  <a href=""
-                     title=""
-                     tal:attributes="href ticket/getURL;
-                                     title ticket/Title">
-                    <span tal:content="ticket/Title"></span>
-                    (# <span tal:content="ticket/getId"></span>)
-                  </a>
-                </li>
-              </ul>
-              <p class="discreet"
-                 tal:condition="not:dashboard/tickets"
-                 i18n:translate="">
-                You have no tickets assigned
-              </p>
-              <p class="discreet"
-                 tal:condition="dashboard/tickets_n"
-                 i18n:translate="">
-                And <em i18n:name="ticket_n" tal:content="dashboard/tickets_n"></em> more
-              </p>
-            </div>
-          </tal:dashboard>
-
+          </tal:iterations>
         </div>
         <div class="visualClear"><!-- clear floats--></div>
       </div>
-
-
-      <!-- Planning -->
-      <h2 i18n:translate="">Planning</h2>
-      <div class="pane" id="project-planing">
-        <div class="row">
-          <!-- milestones -->
-          <div class="cell width-8 position-0">
-            <h3 i18n:translate="">Milestones</h3>
-            <ul>
-              <li tal:repeat="milestone context/milestones">
-                <span tal:content="milestone/name"></span>
-                (<em i18n:translate=""
-                  tal:content="python:view.get_milestone_status(milestone.status)"></em>)
-              </li>
-            </ul>
-          </div>
-
-          <!-- iterations -->
-          <div class="cell width-8 position-8">
-            <h3 i18n:translate="">Iterations</h3>
-            <div id="project-iterations"
-                 tal:define="iterations view/iterations">
-              <dl>
-                  <tal:iterations
-                    tal:define="past iterations/past">
-                  <dt i18n:translate="">Past (<span
-                      i18n:name="n_iterations"
-                      tal:replace="python:len(past)" /> iterations)
-                  </dt>
-                  <dd>
-                    <ul tal:condition="past">
-                      <li tal:repeat="iteration past">
-                        <a href=""
-                           title=""
-                           tal:content="iteration/title"
-                           tal:attributes="href iteration/absolute_url;
-                                           title iteration/title"></a>
-                      </li>
-                    </ul>
-                    <p class="discreet" tal:condition="not:past"
-                      i18n:translate="">
-                      There are no past iterations
-                    </p>
-                  </dd>
-                </tal:iterations>
-
-                <dt i18n:translate="">Current</dt>
-                <dd>
-                  <ul tal:condition="iterations/current">
-                    <li tal:repeat="iteration iterations/current">
-                      <a href=""
-                         title=""
-                         tal:content="iteration/title"
-                         tal:attributes="href iteration/absolute_url;
-                                         title iteration/title"></a>
-                    </li>
-                  </ul>
-                  <p class="discreet" tal:condition="not:iterations/current"
-                     i18n:translate="">
-                    There are no current iterations
-                  </p>
-                </dd>
-                <tal:iterations
-                  tal:define="future iterations/future">
-                  <dt i18n:translate="">Future (<span
-                      i18n:name="n_iterations"
-                      tal:replace="python:len(future)" /> iterations)
-                  </dt>
-                  <dd>
-                    <ul tal:condition="future">
-                      <li tal:repeat="iteration future">
-                        <a href=""
-                           title=""
-                           tal:content="iteration/title"
-                           tal:attributes="href iteration/absolute_url;
-                                           title iteration/title"></a>
-                      </li>
-                    </ul>
-                    <p class="discreet" tal:condition="not:future"
-                       i18n:translate="">
-                      There are no past iterations
-                    </p>
-                  </dd>
-                </tal:iterations>
-
-              </dl>
-            </div>
-          </div>
-        </div>
-        <div class="visualClear"><!-- clear floats--></div>
-      </div>
-
-
-      <!-- Documentation -->
-      <h2 i18n:translate="">Documentation</h2>
-      <div class="pane" id="project-documentation">
-        <div class="row">
-          <!-- repositories -->
-          <div class="cell width-8 position-0">
-            <h3 i18n:translate="">Repositories</h3>
-            <div>
-              <ul>
-                <li tal:repeat="repository context/repositories">
-                  <a href=""
-                     tal:attributes="href repository"
-                     tal:content="repository"></a>
-                </li>
-              </ul>
-            </div>
-            <h3 i18n:translate="">Environments</h3>
-            <div>
-              <ul>
-                <li tal:repeat="env context/environments">
-                  <a href=""
-                     title=""
-                     tal:attributes="href env/url;
-                                     title env/name">
-                    <span tal:content="env/name"></span>
-                    (<em  i18n:translate=""
-                      tal:content="python:view.get_env_type(env.env_type)"></em>)
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- documents -->
-          <div class="cell width-8 position-8">
-            <h3 i18n:translate="">Last documents</h3>
-            <div id="project-documents"
-                 tal:define="documents view/documents">
-              <ul tal:condition="documents/last">
-                <li tal:repeat="document documents/last">
-                  <a href=""
-                     title=""
-                     tal:attributes="href document/getURL;
-                                     title document/Title;
-                                     class python:'contenttype-%s' % document.portal_type.lower()"
-                      tal:content="document/Title" />
-                  <p class="discreet"
-                    tal:content="document/Description">
-                  </p>
-                </li>
-              </ul>
-              <p class="discreet"
-                 tal:condition="python: documents['folder'] and not documents['last']"
-                 i18n:translate="">
-                This project doesn't contain any documents
-              </p>
-              <a href=""
-                 title="Documents folder"
-                 tal:condition="documents/folder"
-                 tal:attributes="href documents/folder/absolute_url"
-                 i18n:translate=""
-                 i18n:attributes="title">
-                Go to the documents folder
-              </a>
-              <p class="discreet"
-                 tal:condition="not:documents/folder"
-                 i18n:translate="">
-                There are no documents in this project
-                because the designated area is missing.
-                We suggest to create it.
-              </p>
-            </div>
-          </div>
-
-        </div>
-        <div class="visualClear"><!-- clear floats--></div>
-      </div>
-
     </div>
-    </metal:block>
+  </div>
+
+  </metal:block>
 </metal:content-core>
 
 </body>
