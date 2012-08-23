@@ -36,6 +36,16 @@
     permission="zope2.View"
     />
 
+  <!-- dashboard -->
+  <browser:page
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    name="dashboard"
+    layer="..interfaces.IBrowserLayer"
+    permission="plone.app.portlets.ViewDashboard"
+    class=".dashboard.DashboardView"
+    template="templates/dashboard.pt"
+    />
+
   <!-- TODO: fix adapter for attribute... -->
   <adapter
       for="*"

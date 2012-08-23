@@ -4,6 +4,7 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- added dashboard view [gborelli]
 - added project overview view [gborelli]
 - changed story view [gborelli]
 - refactored timing_status method [gborelli]
