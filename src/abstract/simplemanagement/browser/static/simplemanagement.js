@@ -1,4 +1,8 @@
 $(document).ready(function(){
+
+  $('#overview ul.tabs').tabs("#overview div.panes > div");
+
+
   $('#project-iterations').tabs(
       "#project-iterations div.pane",
       {tabs: 'h2', effect: 'slide', initialIndex: 1}

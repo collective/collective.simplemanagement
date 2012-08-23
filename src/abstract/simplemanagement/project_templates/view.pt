@@ -13,66 +13,68 @@
       css_class python:context.is_external and 'external' or 'internal'">
 
   <div id="project-view" tal:attributes="class css_class">
-    <div class="row" id="iterations">
-      <!-- iterations -->
-      <div class="cell width-full position-0">
-        <div id="project-iterations"
-          tal:define="iterations view/iterations">
-          <tal:iterations tal:define="past iterations/past">
-            <h2 i18n:translate="">Past iterations (#<span
-                i18n:name="n_iterations"
-                tal:replace="python:len(past)" />)
-            </h2>
-            <div class="pane">
-              <div tal:condition="past">
-                <div tal:repeat="iteration past">
-                  <metal:iteration
-                    use-macro="context/simpemanagement-macros/iteration" />
-                </div>
-              </div>
-              <p class="discreet" tal:condition="not:past"
-                i18n:translate="">
-                There are no past iterations
-              </p>
-            </div>
-          </tal:iterations>
 
-          <h2 i18n:translate="">Current Iteration</h2>
+    <tal:content
+      tal:content="structure context/@@overview" />
+
+    <div id="iterations">
+      <!-- iterations -->
+      <div id="project-iterations"
+        tal:define="iterations view/iterations">
+        <tal:iterations tal:define="past iterations/past">
+          <h2 i18n:translate="">Past iterations (#<span
+              i18n:name="n_iterations"
+              tal:replace="python:len(past)" />)
+          </h2>
           <div class="pane">
-            <div tal:condition="iterations/current">
-              <div tal:repeat="iteration iterations/current">
+            <div tal:condition="past">
+              <div tal:repeat="iteration past">
                 <metal:iteration
                   use-macro="context/simpemanagement-macros/iteration" />
               </div>
             </div>
-            <p class="discreet" tal:condition="not:iterations/current"
-               i18n:translate="">
-              There are no current iterations
+            <p class="discreet" tal:condition="not:past"
+              i18n:translate="">
+              There are no past iterations
             </p>
           </div>
+        </tal:iterations>
 
-          <tal:iterations
-            tal:define="future iterations/future">
-            <h2 i18n:translate="">Future iterations (#<span
-                i18n:name="n_iterations"
-                tal:replace="python:len(future)" />)
-            </h2>
-            <div class="pane">
-              <div tal:condition="future">
-                <div tal:repeat="iteration future">
-                  <metal:iteration
-                    use-macro="context/simpemanagement-macros/iteration" />
-                </div>
-              </div>
-              <p class="discreet" tal:condition="not:future"
-                 i18n:translate="">
-                There are no past iterations
-              </p>
+        <h2 i18n:translate="">Current Iteration</h2>
+        <div class="pane">
+          <div tal:condition="iterations/current">
+            <div tal:repeat="iteration iterations/current">
+              <metal:iteration
+                use-macro="context/simpemanagement-macros/iteration" />
             </div>
-          </tal:iterations>
+          </div>
+          <p class="discreet" tal:condition="not:iterations/current"
+             i18n:translate="">
+            There are no current iterations
+          </p>
         </div>
-        <div class="visualClear"><!-- clear floats--></div>
+
+        <tal:iterations
+          tal:define="future iterations/future">
+          <h2 i18n:translate="">Future iterations (#<span
+              i18n:name="n_iterations"
+              tal:replace="python:len(future)" />)
+          </h2>
+          <div class="pane">
+            <div tal:condition="future">
+              <div tal:repeat="iteration future">
+                <metal:iteration
+                  use-macro="context/simpemanagement-macros/iteration" />
+              </div>
+            </div>
+            <p class="discreet" tal:condition="not:future"
+               i18n:translate="">
+              There are no past iterations
+            </p>
+          </div>
+        </tal:iterations>
       </div>
+      <div class="visualClear"><!-- clear floats--></div>
     </div>
   </div>
 

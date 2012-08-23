@@ -141,3 +141,9 @@ class View(grok.View):
                 'role': self.get_role(i.role),
                 'user': get_user_details(self.context, i.user_id)
             }
+
+class OverView(View):
+    grok.context(IProject)
+    grok.name('overview')
+    grok.require('zope2.View')
+
