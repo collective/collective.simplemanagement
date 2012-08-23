@@ -82,13 +82,11 @@
                       <h3 i18n:translate="">My stories</h3>
                       <ul tal:condition="dashboard/stories">
                         <li tal:repeat="story dashboard/stories">
-                          <p>
-                            <a href=""
-                               title=""
-                               tal:content="story/Title"
-                               tal:attributes="href story/getURL;
-                                               title story/Title"></a>
-                          </p>
+                          <a href=""
+                             title=""
+                             tal:content="story/Title"
+                             tal:attributes="href story/getURL;
+                                             title story/Title"></a>
                           <p class="discreet">
                             <span tal:replace="story/Description" />
                           </p>
