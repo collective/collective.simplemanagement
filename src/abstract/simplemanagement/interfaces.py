@@ -5,11 +5,16 @@ from z3c.relationfield.schema import RelationChoice
 
 from plone.directives import form
 from plone.formwidget.contenttree import ObjPathSourceBinder
+from plone.theme.interfaces import IDefaultPloneLayer
 
 from collective.z3cform.widgets.enhancedtextlines import EnhancedTextLinesFieldWidget
 from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
 from . import messageFactory as _
+
+
+class IBrowserLayer(IDefaultPloneLayer):
+    """The browser layer of the package"""
 
 
 class IResource(Interface):
