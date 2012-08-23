@@ -17,6 +17,8 @@ class BookingForm(form.AddForm):
     fields = field.Fields(IQuickForm).select('title') + \
             field.Fields(IBooking).select('time')
 
+    name = 'booking_form'
+
     convert_funcs = {
         'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
     }

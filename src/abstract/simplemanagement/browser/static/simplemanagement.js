@@ -11,13 +11,13 @@ $(document).ready(function(){
   $('.quickedit').prepOverlay({
     subtype: 'iframe',
     closeselector: '.button-field',
-    width:'50%',
+    width:'70%',
   });
-
 
   $('.quickview').prepOverlay({
       subtype: 'ajax',
       filter: common_content_filter,
+      formselector: 'form#booking_form',
       width:'80%'
   });
 
