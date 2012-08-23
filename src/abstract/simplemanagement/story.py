@@ -1,55 +1,23 @@
-from datetime import date
 from Acquisition import aq_inner
-from zope import schema
 from five import grok
 
-from z3c.form import form, field
 from z3c.form.interfaces import IFormLayer
-from z3c.relationfield.relation import create_relation
 
 from plone.z3cform import z2
-from plone.dexterity.utils import createContentInContainer
+
 from plone.dexterity.content import Container
 
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IStory
 from .interfaces import IBooking
-from .interfaces import IQuickForm
+from .booking import BookingForm
+
 from .utils import get_timings
 from .utils import get_user_details
 from .utils import get_assignees_details
 from .utils import get_epic_by_story
 from .utils import get_text
-
-
-class BookingForm(form.AddForm):
-    template = ViewPageTemplateFile("story_templates/booking_form.pt")
-    fields = field.Fields(IQuickForm).select('title') + \
-            field.Fields(IBooking).select('time')
-
-    convert_funcs = {
-        'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
-    }
-
-    def create(self, data):
-        item = createContentInContainer(
-            self.context,
-            'Booking',
-            title=data.pop('title'))
-        for k, v in data.items():
-            if v and k in self.convert_funcs:
-                v = self.convert_funcs[k](v)
-            setattr(item, k, v)
-        item.date = date.today()
-        return item
-
-    def add(self, obj):
-        obj.reindexObject()
-
-    def nextURL(self):
-        return self.context.absolute_url()
 
 
 class Story(Container):
