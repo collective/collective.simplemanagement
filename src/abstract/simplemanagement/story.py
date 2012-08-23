@@ -18,6 +18,7 @@ from .interfaces import IBooking
 from .utils import get_timings
 from .utils import get_user_details
 from .utils import get_assignees_details
+from .utils import get_epic_by_story
 from . import messageFactory as _
 
 
@@ -56,8 +57,8 @@ class View(grok.View):
     grok.context(IStory)
     grok.require('zope2.View')
 
-    def has_epic(self):
-        return bool(self.context.epic) and not self.context.epic.isBroken()
+    def get_epic(self):
+        return get_epic_by_story(self.context)
 
     def timing(self):
         return get_timings(self.context)

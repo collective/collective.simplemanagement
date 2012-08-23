@@ -34,22 +34,13 @@
       <li class="story-container"
         tal:repeat="story stories"
         tal:attributes="class string:${story/status} draggable story-container">
-        <div class="story-block clearfix">
+        <div class="story-block clearfix"
+            tal:define="assignees story/assignees;
+                        epic story/epic;
+                        timing story">
 
-          <table class="timing">
-            <tr>
-              <th class="nosort column" i18n:translate="">Estimate</th>
-              <th class="nosort column" i18n:translate="">Actual hours</th>
-              <th class="nosort column" i18n:translate="">Difference</th>
-            </tr>
-            <tr>
-              <td class="estimate" tal:content="story/estimate"></td>
-              <td class="actual_hours" tal:content="story/hours"></td>
-              <td class="difference" tal:attributes="class story/time_status"
-                  tal:content="story/difference">
-              </td>
-            </tr>
-          </table>
+          <metal:timing
+            use-macro="context/simpemanagement-macros/story-timing" />
 
           <div class="actions"
             tal:condition="view_details">
@@ -85,30 +76,11 @@
           <p tal:condition="view_details"
               tal:content="story/text" />
 
-          <div class="epic-container"
-            tal:condition="story/epic">
-            <span class="label" i18n:translate="">Epic</span>
-            <a href=""
-               title=""
+          <metal:epic
+            use-macro="context/simpemanagement-macros/epic" />
 
-               tal:attributes="href story/epic/url;
-                               title story/epic/title"
-               tal:content="story/epic/title"></a>
-          </div>
-
-          <div class="assignees-container clearfix">
-            <span class="label" i18n:translate="">Assignees</span>
-            <ul class="assignees" tal:condition="story/assignees">
-              <li tal:repeat="assignee story/assignees">
-                <a tal:attributes="href assignee/href"
-                   tal:content="assignee/fullname" />
-              </li>
-            </ul>
-            <em tal:condition="not:story/assignees"
-                i18n:translate="">
-              Unassigned
-            </em>
-          </div>
+          <metal:assignes
+            use-macro="context/simpemanagement-macros/assignees" />
 
           <div tal:condition="view_details"
             class="extra-details clearfix">
@@ -166,7 +138,8 @@
         <tr>
           <td class="estimate" tal:content="totals/estimate"></td>
           <td class="actual_hours" tal:content="totals/hours"></td>
-          <td class="difference" tal:content="totals/difference">
+          <td tal:content="totals/difference"
+            tal:attributes="class string:difference ${totals/time_status}">
           </td>
         </tr>
       </table>
@@ -181,5 +154,49 @@
 
   </metal:stories>
 
+  <metal:assignees define-macro="assignees">
+    <div class="assignees-container clearfix">
+      <span class="label" i18n:translate="">Assignees</span>
+      <ul class="assignees" tal:condition="assignees|nothing">
+        <li tal:repeat="assignee assignees">
+          <a tal:attributes="href assignee/href"
+             tal:content="assignee/fullname" />
+        </li>
+      </ul>
+      <em tal:condition="not:assignees|nothing"
+          i18n:translate="">
+        Unassigned
+      </em>
+    </div>
+  </metal:assignees>
+
+  <metal:epic define-macro="epic">
+    <div class="epic-container"
+        tal:condition="epic|nothing">
+      <span class="label" i18n:translate="">Epic</span>
+      <a href=""
+         title=""
+         tal:attributes="href epic/url;
+                         title epic/title"
+         tal:content="epic/title"></a>
+    </div>
+  </metal:epic>
+
+  <metal:storytiming define-macro="story-timing">
+    <table class="timing">
+      <tr>
+        <th class="nosort column" i18n:translate="">Estimate</th>
+        <th class="nosort column" i18n:translate="">Actual hours</th>
+        <th class="nosort column" i18n:translate="">Difference</th>
+      </tr>
+      <tr>
+        <td class="estimate" tal:content="timing/estimate"></td>
+        <td class="actual_hours" tal:content="timing/resource_time"></td>
+        <td tal:content="timing/difference"
+          tal:attributes="class string:difference ${timing/time_status}">
+        </td>
+      </tr>
+    </table>
+  </metal:storytiming>
 
 </html>

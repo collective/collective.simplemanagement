@@ -4,6 +4,11 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- changed story view [gborelli]
+- refactored timing_status method [gborelli]
+- added macros for assignees, timings and epic [gborelli]
+- normalized timings dict [gborelli]
+- allowed discussion for story [gborelli]
 - added collective.js.jqueryui [gborelli]
 - changed style for comments in iteration view [gborelli]
 - added static resources (javascript and css) [gborelli]

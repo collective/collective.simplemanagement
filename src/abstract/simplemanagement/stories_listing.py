@@ -7,6 +7,8 @@ from Products.CMFCore.utils import getToolByName
 from .interfaces import IStoriesListing
 from .utils import get_timings
 from .utils import get_assignees_details
+from .utils import get_epic_by_story
+from .utils import get_timing_status
 
 
 class StoriesListing(object):
@@ -51,12 +53,6 @@ class StoriesListing(object):
         for brain in brains:
             story = brain.getObject()
             timings = get_timings(story, portal_catalog=self.portal_catalog)
-            epic = None
-            if story.epic and not story.epic.isBroken():
-                epic = {
-                    'url': story.epic.to_object.absolute_url(),
-                    'title': story.epic.to_object.title
-                }
 
             self.totals['estimate'] += timings['estimate']
             self.totals['hours'] += timings['resource_time']
@@ -70,11 +66,15 @@ class StoriesListing(object):
                 'description': brain.Description,
                 'title': brain.Title,
                 'estimate': timings['estimate'],
-                'hours': timings['resource_time'],
+                'resource_time': timings['resource_time'],
                 'difference': timings['difference'],
-                'time_status': timings['status'],
-                'epic': epic,
+                'time_status': timings['time_status'],
+                'epic': get_epic_by_story(story),
                 'assignees': get_assignees_details(story),
                 'comments': self.comments(story)
             })
+
+        self.totals['time_status'] = get_timing_status(
+            self.totals['difference']
+        )
         return stories

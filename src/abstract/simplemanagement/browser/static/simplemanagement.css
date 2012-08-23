@@ -20,6 +20,22 @@
 }
 
 /* Booking form */
+.booking {
+  margin-top: 1em;
+}
+
+.booking .listing{
+   font-size: 85%;
+}
+
+.booking .listing h4 {
+  font-size: 110%;
+}
+
+.booking .listing .discreet {
+  font-size: 100%
+}
+
 #booking-form label,
 #booking-form .field {
   float: left;
@@ -93,6 +109,9 @@
 }
 
 
+.portaltype-story .timing {
+  border: 1px solid #C8CACA;
+}
 .timing {
   border-bottom: 1px solid #C8CACA;
   border-left: 1px solid #C8CACA;
@@ -103,6 +122,9 @@
   vertical-align: middle;
 }
 
+.timing th {
+  color: #666666
+}
 .timing td,
 .timing th {
   border-left: 1px solid #C8CACA;
@@ -116,11 +138,26 @@
   background-color: white;
 }
 
+/* timing status */
+td.danger {
+  background-color: red;
+}
+
+td.success {
+  background-color: #75AD0A;
+  color: white;
+}
+
+td.warning {
+  background-color: yellow;
+}
+
 td.estimate {
   width: 55px;
 }
 td.actual_hours {
   width: 85px;
+  text-align: right;
 }
 td.difference {
   width: 65px;
@@ -197,7 +234,6 @@ td.difference {
   background-image: url('tag_red.png');
 }
 
-
 #content a.quickview span,
 #content a.quickedit span {
   padding: 20px;
@@ -206,17 +242,33 @@ td.difference {
 .stories dl.collapsible {
   border: 1px solid #ddd;
 }
+
+.booking .listing dl.collapsible {
+  border:0 !important;
+}
+
 .stories dl.collapsedBlockCollapsible {
   border:0;
+  background-color: transparent;
 }
+
+.booking-details {
+  width: 300px;
+}
+
+.booking .listing dl.collapsible dd.collapsibleContent,
 .stories dl.collapsible dd.collapsibleContent {
   margin:0 !important;
 }
-.stories dl.collapsible dt.collapsibleHeader {
-  /*background-color: white !important;*/
+
+.booking .listing dl.collapsible dt.collapsibleHeader {
+  background-color: transparent;
   margin-left: 0;
 }
 
+.stories dl.collapsible dt.collapsibleHeader {
+  margin-left: 0;
+}
 
 /* comments */
 .comments-container {
