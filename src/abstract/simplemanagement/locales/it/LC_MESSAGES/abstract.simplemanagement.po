@@ -1,0 +1,510 @@
+# abstract.simplemanagement
+# Giorgio Borelli <giorgio@abstract.it>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"POT-Creation-Date: 2012-08-23 22:28+0000\n"
+"PO-Revision-Date: 2012-08-23 22:03+0000\n"
+"Last-Translator: Giorgio Borelli <giorgio@abstract.it>\n"
+"Language-Team: Giorgio Borelli <giorgio@abstract.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: it\n"
+"Language-Name: Italian\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: abstract.simplemanagement\n"
+"X-Is-Fallback-For: it-it it-ch it-sm it-hr it-si\n"
+
+#: ../project_templates/overview.pt:38
+msgid "${budget} man days"
+msgstr "${budget} giorni uomo"
+
+#: ../project_templates/overview.pt:46
+msgid "${initial_estimate} man days"
+msgstr "${initial_estimate} giorni uomo"
+
+#: ../browser/templates/macros.pt:94
+msgid "${number} Comments"
+msgstr "${number} Commenti"
+
+#: ../events.py:38
+msgid "%(project_name)s's documents"
+msgstr "Documenti di %(project_name)"
+
+#: ../events.py:14
+msgid "%(project_name)s's issues"
+msgstr "%(project_name) tracker"
+
+#: ../events.py:24
+msgid "<p>Here are collected all the issues relative to the project <em>%(project_name)s</em>.</p><p>If you found any problems, please report it here by clicking <em>New issue</em>.</p>"
+msgstr ""
+
+#: ../configure.py:28
+msgid "Account"
+msgstr "Account"
+
+#: ../browser/templates/macros.pt:137
+msgid "Actual hours"
+msgstr "Effettuate"
+
+#: ../story_templates/view.pt:30
+msgid "Add Booking"
+msgstr "Aggiungi Booking"
+
+#: ../iteration_templates/view.pt:29
+msgid "Add Story"
+msgstr "Aggiungi Storia"
+
+#: ../configure.py:11
+msgid "Analysis"
+msgstr "Analisi"
+
+#: ../browser/templates/macros.pt:212
+msgid "Assignee"
+msgstr "Assegnatario"
+
+#: ../browser/templates/macros.pt:161
+#: ../interfaces.py:151
+msgid "Assignees"
+msgstr "Assegnatari"
+
+#: ../epic_templates/view.pt:52
+msgid "Associated stories"
+msgstr "Storie associate"
+
+#: ../profiles/default/types/Booking.xml
+msgid "Booking"
+msgstr "Booking"
+
+#: ../interfaces.py:64
+msgid "Budget (man days)"
+msgstr "Budget (in giorni uomo)"
+
+#: ../browser/quickforms.py:65
+msgid "Cancel"
+msgstr "Annulla"
+
+#: ../browser/templates/macros.pt:59
+msgid "Change status"
+msgstr "Cambia stato"
+
+#: ../interfaces.py:79
+msgid "Check this field if this project is visible to customer."
+msgstr "Seleziona questo campo se il progetto è visibile al cliente"
+
+#: ../browser/templates/macros.pt:98
+msgid "Comments"
+msgstr "Commenti"
+
+#: ../epic_templates/view.pt:46
+msgid "Contained epics"
+msgstr "Epic correlate"
+
+#: ../project_templates/view.pt:43
+msgid "Current Iteration"
+msgstr "Iterazione corrente"
+
+#: ../interfaces.py:62
+#: ../project_templates/overview.pt:69
+msgid "Customer"
+msgstr "Cliente"
+
+#: ../booking_templates/view.pt:14
+#: ../browser/templates/macros.pt:209
+#: ../interfaces.py:167
+msgid "Date"
+msgstr "Data"
+
+#: ../configure.py:17
+msgid "Dead"
+msgstr "Morto"
+
+#: ../interfaces.py:23
+msgid "Description"
+msgstr "Descrizione"
+
+#: ../configure.py:32
+msgid "Designer"
+msgstr "Designer"
+
+#: ../browser/templates/macros.pt:52
+#: ../project_templates/overview.pt:11
+msgid "Details"
+msgstr "Dettagli"
+
+#: ../configure.py:31
+msgid "Developer"
+msgstr "Sviluppatore"
+
+#: ../configure.py:13
+msgid "Development"
+msgstr "Sviluppo"
+
+#: ../browser/templates/macros.pt:138
+msgid "Difference"
+msgstr "Differenza"
+
+#: ../epic_templates/view.pt:29
+msgid "Difference from initial"
+msgstr "Differenza dalla stima iniziale"
+
+#: ../project_templates/overview.pt:12
+msgid "Documentation"
+msgstr "Documentazione"
+
+#: ../project_templates/overview.pt:147
+msgid "Documents folder"
+msgstr "Cartella documentazione"
+
+#: ../browser/templates/macros.pt:58
+#: ../profiles/default/types/Booking.xml
+#: ../profiles/default/types/Epic.xml
+msgid "Edit"
+msgstr "Modifica"
+
+#: ../browser/templates/macros.pt:53
+msgid "Edit story"
+msgstr "Modifica storia"
+
+#: ../interfaces.py:136
+msgid "End"
+msgstr "Fine"
+
+#: ../project_templates/overview.pt:31
+msgid "End Date:"
+msgstr "Data di fine:"
+
+#: ../interfaces.py:76
+msgid "End date"
+msgstr "Data di fine"
+
+#: ../interfaces.py:102
+msgid "Environment"
+msgstr "Ambiente"
+
+#: ../project_templates/overview.pt:109
+msgid "Environments"
+msgstr "Ambienti"
+
+#: ../browser/templates/macros.pt:178
+#: ../epic_templates/view.pt:88
+#: ../interfaces.py:158
+msgid "Epic"
+msgstr "Epic"
+
+#: ../browser/templates/macros.pt:136
+#: ../epic_templates/view.pt:89
+msgid "Estimate"
+msgstr "Stima"
+
+#: ../interfaces.py:68
+msgid "Estimate (man days)"
+msgstr "Estimate (in giorni uomo)"
+
+#: ../interfaces.py:148
+msgid "Estimate (man hours)"
+msgstr "Estimate (in ore uomo)"
+
+#: ../interfaces.py:75
+msgid "Expected end date"
+msgstr "Data di fine prevista"
+
+#: ../project_templates/overview.pt:26
+msgid "Expected end date:"
+msgstr "Data di fine prevista:"
+
+#: ../project_templates/view.pt:59
+msgid "Future iterations (#${n_iterations})"
+msgstr "Iterazioni future (#${n_iterations})"
+
+#: ../project_templates/overview.pt:147
+msgid "Go to the documents folder"
+msgstr "Vai alla cartella documenti"
+
+#: ../interfaces.py:168
+msgid "Hours"
+msgstr "Ore"
+
+#: ../epic_templates/view.pt:37
+msgid "Initial estimate"
+msgstr "Stima iniziale"
+
+#: ../interfaces.py:78
+msgid "Is external?"
+msgstr "Esterno?"
+
+#: ../profiles/default/types/Iteration.xml
+msgid "Iteration"
+msgstr "Iterazione"
+
+#: ../project_templates/overview.pt:126
+msgid "Last documents"
+msgstr "Ultimi documenti"
+
+#: ../configure.py:16
+msgid "Maintenance"
+msgstr "Manutenzione"
+
+#: ../interfaces.py:111
+msgid "Milestone"
+msgstr "Milestone"
+
+#: ../interfaces.py:106
+#: ../project_templates/overview.pt:55
+msgid "Milestones"
+msgstr "Milestone"
+
+#: ../interfaces.py:107
+msgid "Milestones are the different phases of the project. Each milestone should formally define a self-sufficient deliverable, that can then be put into production."
+msgstr "Le milestone sono le differenti fasi del progetto. Ogni milestone dovrebbe definire una serie di deliverable auto sufficienti che possono essere messi in produzione."
+
+#: ../interfaces.py:43
+msgid "Name"
+msgstr "Nome"
+
+#: ../epic_templates/view.pt:75
+msgid "No stories associated"
+msgstr "Nessuna storia associata"
+
+#: ../browser/templates/macros.pt:150
+msgid "No stories in this iteration. Add a new one or bring them in via the iteration planner."
+msgstr "Non esistono storie in questa iterazione. Aggiungine una nuova o includine una attraverso l'iteration planner."
+
+#: ../configure.py:10
+msgid "Not started"
+msgstr "Non avviata"
+
+#: ../interfaces.py:127
+#: ../project_templates/overview.pt:13
+msgid "Notes"
+msgstr "Note"
+
+#: ../configure.py:12
+msgid "Offer"
+msgstr "Offerta"
+
+#: ../interfaces.py:115
+#: ../project_templates/overview.pt:71
+msgid "Operatives"
+msgstr "Risorse di riferimento"
+
+#: ../project_templates/view.pt:25
+msgid "Past iterations (#${n_iterations})"
+msgstr "Iterazioni passate (#${n_iterations})"
+
+#: ../project_templates/overview.pt:10
+msgid "Planning"
+msgstr "Pianificazione"
+
+#: ../configure.py:15
+msgid "Production"
+msgstr "Produzione"
+
+#: ../profiles/default/types/Project.xml
+msgid "Project"
+msgstr "Progetto"
+
+#: ../interfaces.py:85
+#: ../project_templates/overview.pt:85
+msgid "Project classifiers"
+msgstr "Tipologia"
+
+#: ../configure.py:29
+msgid "Project manager"
+msgstr "Project manager"
+
+#: ../configure.py:21
+msgid "Prototype"
+msgstr "Prototipo"
+
+#: ../booking_templates/view.pt:21
+#: ../browser/templates/macros.pt:213
+msgid "Related"
+msgstr "Ticket correlato"
+
+#: ../interfaces.py:170
+msgid "Related activity"
+msgstr "Attività correlata"
+
+#: ../interfaces.py:93
+#: ../project_templates/overview.pt:99
+msgid "Repositories"
+msgstr "Repository"
+
+#: ../interfaces.py:123
+msgid "Resource"
+msgstr "Risorsa"
+
+#: ../interfaces.py:35
+msgid "Role"
+msgstr "Ruolo"
+
+#: ../browser/quickforms.py:48
+msgid "Save"
+msgstr "Salva"
+
+#: ../browser/templates/macros.pt:122
+msgid "Send"
+msgstr "Invia"
+
+#: ../interfaces.py:86
+msgid "Some keywords that describe the project and used technologies"
+msgstr "Parole chiave che descrivono il progetto e le tecnologie utilizzate"
+
+#: ../configure.py:14
+msgid "Staging"
+msgstr "Staging"
+
+#: ../interfaces.py:135
+msgid "Start"
+msgstr "Inizio"
+
+#: ../interfaces.py:74
+msgid "Start date"
+msgstr "Data di inizio"
+
+#: ../project_templates/overview.pt:21
+msgid "Start date:"
+msgstr "Data di inizio:"
+
+#: ../interfaces.py:55
+msgid "Status"
+msgstr "Stato"
+
+#: ../epic_templates/view.pt:65
+msgid "Stories"
+msgstr "Storie"
+
+#: ../profiles/default/types/Story.xml
+msgid "Story"
+msgstr "Storia"
+
+#: ../configure.py:33
+msgid "Sysadmin"
+msgstr "Sistemista"
+
+#: ../configure.py:30
+msgid "Technical lead"
+msgstr "Responsabile Tecnico"
+
+#: ../interfaces.py:141
+msgid "Text"
+msgstr "Testo"
+
+#: ../interfaces.py:94
+msgid "The HTTP URLs of the repositories (e.g. https://github.com/company/my.repository/)"
+msgstr "Inserisci gli URL dei repository (es. https://github.com/company/my.repository/)"
+
+#: ../interfaces.py:100
+msgid "The URLs of the various online environments (staging, production)"
+msgstr "Inserisci gli URL dei vari ambienti online (staging, produzione ecc.)"
+
+#: ../events.py:43
+msgid "The documents that have been gathered for %(project_name)s"
+msgstr "I documenti relativi a %(project_name)s"
+
+#: ../interfaces.py:159
+msgid "The epic the story belongs to"
+msgstr "L'epic a cui appartiene la storia"
+
+#: ../events.py:19
+msgid "The issues relative to %(project_name)s"
+msgstr "I ticket relativi a  %(project_name)"
+
+#: ../interfaces.py:69
+msgid "The man days required for completion, as initially estimated by the project manager"
+msgstr "I giorni uomo richiesti per il completamento dell'attività stimati dal project manager"
+
+#: ../interfaces.py:65
+msgid "The man days that this project is paid for"
+msgstr "I giorni uomo disponibili per questo progetto"
+
+#: ../interfaces.py:152
+msgid "The user IDs of the people that are responsible to act on this story"
+msgstr "I nomi utente delle persone che parteciperanno a questa storia"
+
+#: ../interfaces.py:116
+msgid "The user IDs of those that have operative roles in this project (coders, designers, project managers, accounts etc.). Customers should not be included in this list.Adding someone here will add them automatically as managers to the default tracker."
+msgstr "I nomi utente di chi ha un ruolo operativo in questo progetto (sviluppatori, grafici, project manager, account ecc.). I Clienti non devono essere inclusi in questa lista. Le persone aggiunte in questo elenco saranno assegnate come manager del tracker."
+
+#: ../project_templates/view.pt:51
+msgid "There are no current iterations"
+msgstr "Non c'e nessuna iterazione corrente"
+
+#: ../project_templates/overview.pt:155
+msgid "There are no documents in this project because the designated area is missing. We suggest to create it."
+msgstr "Non ci sono documenti per questo progetto poiché non esiste l'apposita area. Ti suggerisco di crearla."
+
+#: ../project_templates/view.pt:36
+msgid "There are no past iterations"
+msgstr "Non ci sono iterazioni passate"
+
+#: ../project_templates/overview.pt:142
+msgid "This project doesn't contain any documents"
+msgstr "Il progetto non contiene nessun documento"
+
+#: ../booking_templates/view.pt:16
+#: ../browser/templates/macros.pt:211
+msgid "Time"
+msgstr "Ora"
+
+#: ../epic_templates/view.pt:58
+msgid "Time spent"
+msgstr "Ore spese"
+
+#: ../browser/templates/macros.pt:210
+#: ../interfaces.py:19
+msgid "Title"
+msgstr "Titolo"
+
+#: ../browser/templates/macros.pt:134
+msgid "Totals"
+msgstr "Totali"
+
+#: ../epic_templates/view.pt:27
+#: ../interfaces.py:45
+msgid "Type"
+msgstr "Tipo"
+
+#: ../interfaces.py:48
+msgid "URL"
+msgstr "URL"
+
+#: ../interfaces.py:99
+msgid "URLs"
+msgstr "URL"
+
+#: ../browser/templates/macros.pt:168
+msgid "Unassigned"
+msgstr "Non assegnato"
+
+#: ../interfaces.py:38
+msgid "User ID"
+msgstr "Nome utente"
+
+#: ../epic_templates/view.pt:31
+msgid "Value (man hours)"
+msgstr "Valore (in giorni uomo)"
+
+#: ../profiles/default/types/Booking.xml
+#: ../profiles/default/types/Epic.xml
+#: ../profiles/default/types/Iteration.xml
+msgid "View"
+msgstr "Visualizza"
+
+#: ../browser/templates/macros.pt:47
+msgid "View details"
+msgstr "Visualizza i dettagli"
+
+#. Default: "Budget <small>as is by offer:</small>"
+#: ../project_templates/overview.pt:37
+msgid "budget_label"
+msgstr "Budget <small>come da offerta:</small>"
+
+#. Default: "Estimate <small>at the beginning, by the project manager:</small>"
+#: ../project_templates/overview.pt:41
+msgid "estimate_label"
+msgstr "Stima <small>iniziale, effettuata dal project manager:</small>"
+
