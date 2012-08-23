@@ -49,8 +49,8 @@
   <!-- TODO: fix adapter for attribute... -->
   <adapter
       for="*"
-      provides=".quickedit.IBaseQuickedit"
-      factory=".quickedit.BaseqQuickeditAdapter"
+      provides=".quickedit.IQuickForm"
+      factory=".quickedit.BaseqQuickFormAdapter"
   />
 
 </configure>

@@ -1,6 +1,5 @@
 # pylint: disable=W0613
-from zope.interface import Interface
-from zope import schema
+from zope.interface import implements
 
 from z3c.form import form, field, button
 from plone.z3cform.layout import wrap_form
@@ -11,21 +10,14 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
 from ..interfaces import IStory
+from ..interfaces import IQuickForm
+
 from .. import messageFactory as _
 
 
-class IBaseQuickedit(Interface):
-    title = schema.TextLine(
-        title=_(u'Title'),
-    )
+class BaseqQuickFormAdapter(object):
+    implements(IQuickForm)
 
-    description = schema.Text(
-        title=_(u'Description'),
-        required=False,
-    )
-
-
-class BaseqQuickeditAdapter(object):
     def __init__(self, context):
         self.context = context
 
@@ -76,7 +68,7 @@ class BaseQuickeEdit(form.EditForm):
 
 
 class StoryQuickeditForm(BaseQuickeEdit):
-    fields = field.Fields(IBaseQuickedit) + field.Fields(IStory).select(
+    fields = field.Fields(IQuickForm) + field.Fields(IStory).select(
         'text',
         'estimate',
         'assigned_to',

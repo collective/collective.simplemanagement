@@ -14,6 +14,17 @@ from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 from . import messageFactory as _
 
 
+class IQuickForm(Interface):
+    title = schema.TextLine(
+        title=_(u'Title'),
+    )
+
+    description = schema.Text(
+        title=_(u'Description'),
+        required=False,
+    )
+
+
 class IBrowserLayer(IDefaultPloneLayer):
     """The browser layer of the package"""
 

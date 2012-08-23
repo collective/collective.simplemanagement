@@ -16,22 +16,18 @@ from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IStory
 from .interfaces import IBooking
+from .interfaces import IQuickForm
 from .utils import get_timings
 from .utils import get_user_details
 from .utils import get_assignees_details
 from .utils import get_epic_by_story
 from .utils import get_text
 
-from . import messageFactory as _
-
-
-class IBookingForm(IBooking):
-    title = schema.TextLine(title=_(u"Title"))
-
 
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("story_templates/booking_form.pt")
-    fields = field.Fields(IBookingForm).select('title', 'time')  # , 'related')
+    fields = field.Fields(IQuickForm).select('title') + \
+            field.Fields(IBooking).select('time')
 
     def create(self, data):
         convert_funcs = {
