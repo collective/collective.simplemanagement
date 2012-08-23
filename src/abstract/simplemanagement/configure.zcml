@@ -2,9 +2,11 @@
            xmlns:i18n="http://namespaces.zope.org/i18n"
            xmlns:gs="http://namespaces.zope.org/genericsetup"
            xmlns:grok="http://namespaces.zope.org/grok"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
            i18n_domain="abstract.simplemanagement">
 
   <includeDependencies package="." />
+  <i18n:registerTranslations directory="locales" />
 
   <grok:grok package="." />
   <include package=".browser" />
