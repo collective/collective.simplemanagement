@@ -14,7 +14,7 @@
  <property name="allowed_content_types">
    <element value="Booking"/>
  </property>
- <property name="allow_discussion">False</property>
+ <property name="allow_discussion">True</property>
  <property name="default_view">view</property>
  <property name="view_methods">
   <element value="view"/>
