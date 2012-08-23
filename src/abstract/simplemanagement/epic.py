@@ -2,12 +2,23 @@ from zope.component import getUtility
 from zope.app.intid.interfaces import IIntIds
 from zc.relation.interfaces import ICatalog
 from five import grok
+
 from Products.CMFCore.utils import getToolByName
 from plone.memoize.instance import memoize
+from plone.dexterity.content import Container
 
 from .interfaces import IEpic, IStory
 from .configure import MAN_DAY_HOURS
-from .utils import get_timings, get_difference_class
+from .utils import get_timings
+from .utils import get_difference_class
+from .utils import get_text
+
+
+class Epic(Container):
+    grok.implements(IEpic)
+
+    def get_text(self):
+        return get_text(self, self.text)
 
 
 class View(grok.View):

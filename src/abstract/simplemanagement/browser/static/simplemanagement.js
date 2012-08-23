@@ -21,11 +21,16 @@ $(document).ready(function(){
       width:'80%'
   });
 
+  function updateStoryPosition(event, ui) {
+    // TODO
+  }
+
   $( ".sortable" ).sortable({
+    update: updateStoryPosition,
+    tolerance: 'pointer',
     distance: 5,
     opacity: 0.5,
     revert: true
   });
 
- // + '?ajax_load=1&ajax_include_head=1'
 });

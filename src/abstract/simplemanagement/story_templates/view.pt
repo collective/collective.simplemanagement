@@ -17,7 +17,7 @@
         use-macro="context/simpemanagement-macros/story-timing" />
 
       <div class="story-text">
-        <p tal:replace="context/text" />
+        <p tal:replace="structure context/get_text" />
       </div>
 
       <metal:epic

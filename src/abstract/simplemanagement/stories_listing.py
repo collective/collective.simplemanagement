@@ -60,7 +60,7 @@ class StoriesListing(object):
 
             stories.append({
                 'id': brain.getId,
-                'text': story.text,
+                'text': story.get_text(),
                 'status': brain.review_state,
                 'url': brain.getURL(),
                 'description': brain.Description,

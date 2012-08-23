@@ -165,7 +165,7 @@
 
 
       <div id="project-notes" class="pane">
-        <div tal:content="structure context/notes"></div>
+        <div tal:content="structure context/get_notes"></div>
       </div>
 
     </div>

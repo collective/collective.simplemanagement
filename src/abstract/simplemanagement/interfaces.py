@@ -6,6 +6,7 @@ from z3c.relationfield.schema import RelationChoice
 from plone.directives import form
 from plone.formwidget.contenttree import ObjPathSourceBinder
 from plone.theme.interfaces import IDefaultPloneLayer
+from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
 
 from collective.z3cform.widgets.enhancedtextlines import EnhancedTextLinesFieldWidget
 from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
@@ -115,6 +116,7 @@ class IProject(form.Schema):
         title=_(u"Notes"),
         required=False
     )
+    form.widget(notes=WysiwygFieldWidget)
 
 
 class IIteration(form.Schema):

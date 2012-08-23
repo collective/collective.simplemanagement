@@ -4,11 +4,20 @@ from zope.schema.interfaces import IVocabularyFactory
 
 from five import grok
 from plone.memoize.instance import memoize
+from plone.dexterity.content import Container
 from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IProject
 from .configure import DOCUMENTS_ID
 from .utils import get_user_details
+from .utils import get_text
+
+
+class Project(Container):
+    grok.implements(IProject)
+
+    def get_notes(self):
+        return get_text(self, self.notes, source_mimetype="text/html")
 
 
 class View(grok.View):

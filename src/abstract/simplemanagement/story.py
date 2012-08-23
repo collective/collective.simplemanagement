@@ -9,6 +9,7 @@ from z3c.relationfield.relation import create_relation
 
 from plone.z3cform import z2
 from plone.dexterity.utils import createContentInContainer
+from plone.dexterity.content import Container
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
@@ -19,6 +20,8 @@ from .utils import get_timings
 from .utils import get_user_details
 from .utils import get_assignees_details
 from .utils import get_epic_by_story
+from .utils import get_text
+
 from . import messageFactory as _
 
 
@@ -51,6 +54,13 @@ class BookingForm(form.AddForm):
 
     def nextURL(self):
         return self.context.absolute_url()
+
+
+class Story(Container):
+    grok.implements(IStory)
+
+    def get_text(self):
+        return get_text(self, self.text)
 
 
 class View(grok.View):

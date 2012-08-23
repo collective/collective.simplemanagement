@@ -4,6 +4,8 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- added markdown support to story and epic [gborelli]
+- added Wysiwyg to Project notes [gborelli]
 - added dashboard view [gborelli]
 - added project overview view [gborelli]
 - changed story view [gborelli]

@@ -72,3 +72,23 @@ def get_epic_by_story(story):
             'title': story.epic.to_object.title
         }
     return epic
+
+
+def get_text(context, text,
+    source_mimetype='text/x-web-markdown', target_mimetype=None):
+    """return the body text of an item
+    """
+    transforms = getToolByName(context, 'portal_transforms')
+
+    if target_mimetype is None:
+        target_mimetype = 'text/x-html-safe'
+
+    if text is None:
+        return ''
+
+    if isinstance(text, unicode):
+        text = text.encode('utf8')
+    return transforms.convertTo(target_mimetype,
+                                text,
+                                context=context,
+                                mimetype=source_mimetype).getData()

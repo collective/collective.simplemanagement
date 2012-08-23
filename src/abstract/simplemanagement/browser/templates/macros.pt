@@ -75,7 +75,7 @@
           <p tal:content="story/description"></p>
           <div tal:condition="view_details"
             class="story-text">
-            <p tal:replace="story/text" />
+            <p tal:replace="structure story/text" />
           </div>
 
           <metal:epic
