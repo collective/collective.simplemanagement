@@ -4,6 +4,9 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Change story status from iteration view fixes #9 [gborelli]
+- checked permission to add booking, story etc [gborelli]
+- added reopen transition on story wf - from done status to todo [gborelli]
 - added markdown support to story and epic [gborelli]
 - added Wysiwyg to Project notes [gborelli]
 - added dashboard view [gborelli]

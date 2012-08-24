@@ -51,16 +51,18 @@
                tal:attributes="href story/url">
               <span i18n:translate="">Details</span></a>
             <a href=""
+               tal:condition="story/can_edit"
                title="Edit story"
                class="quickedit"
                tal:attributes="href python:story['url'] + '/quickedit?ajax_load=1&ajax_include_head=1'"
                i18n:attributes="title">
                <span i18n:translate="">Edit</span></a>
             <a href="#"
+               tal:condition="story/can_review"
                title="Change status"
                class="status"
                i18n:attributes="title"
-               tal:attributes="href python:story['url'] + '/quickedit?ajax_load=1&ajax_include_head=1'"
+               tal:attributes="href story/url"
                onclick="return false">
                <span tal:content="story/status">Status</span></a>
           </div>

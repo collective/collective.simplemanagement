@@ -71,7 +71,9 @@ class StoriesListing(object):
                 'time_status': timings['time_status'],
                 'epic': get_epic_by_story(story),
                 'assignees': get_assignees_details(story),
-                'comments': self.comments(story)
+                'comments': self.comments(story),
+                'can_edit': story.user_can_edit(),
+                'can_review': story.user_can_review()
             })
 
         self.totals['time_status'] = get_timing_status(

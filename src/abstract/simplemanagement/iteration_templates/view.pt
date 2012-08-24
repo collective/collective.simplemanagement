@@ -25,7 +25,8 @@
                   totals view/totals;
                   view_details python:True">
 
-        <div id="addstory-container" class="clearfix">
+        <div tal:condition="view/user_can_add_story"
+             id="addstory-container" class="clearfix">
           <h3><a i18n:translate="" href="#">Add Story</a></h3>
           <div id="addstory-form" style="display: none"
             tal:content="structure view/add_story_form" />

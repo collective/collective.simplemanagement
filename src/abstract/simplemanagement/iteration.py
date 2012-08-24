@@ -1,6 +1,7 @@
 from Acquisition import aq_inner
 from five import grok
 
+from zope.security import checkPermission
 from z3c.form import form, field
 from z3c.form.interfaces import IFormLayer
 from z3c.relationfield.relation import create_relation
@@ -72,6 +73,9 @@ class View(grok.View):
         start = self.context.toLocalizedTime(self.context.start.isoformat())
         end = self.context.toLocalizedTime(self.context.end.isoformat())
         return dict(start=start, end=end)
+
+    def user_can_add_story(self):
+        return checkPermission('cmf.AddPortalContent', self.context)
 
     def add_story_form(self):
         z2.switch_on(self, request_layer=IFormLayer)

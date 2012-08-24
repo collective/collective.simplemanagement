@@ -1,6 +1,6 @@
 from Acquisition import aq_inner
 from five import grok
-
+from zope.security import checkPermission
 from z3c.form.interfaces import IFormLayer
 
 from plone.z3cform import z2
@@ -26,10 +26,26 @@ class Story(Container):
     def get_text(self):
         return get_text(self, self.text)
 
+    def user_can_edit(self):
+        return checkPermission('cmf.ModifyPortalContent', self)
+
+    def user_can_review(self):
+        """An user can review a story if exists a WF transition
+        """
+        wf_tool = getToolByName(self, 'portal_workflow')
+        wf = wf_tool.getWorkflowsFor(self)
+        if wf:
+            wf = wf[0]
+        actions = wf.listActionInfos(object=self, max=1)
+        return len(actions) > 0
+
 
 class View(grok.View):
     grok.context(IStory)
     grok.require('zope2.View')
+
+    def user_can_booking(self):
+        return checkPermission('cmf.AddPortalContent', self.context)
 
     def get_epic(self):
         return get_epic_by_story(self.context)
