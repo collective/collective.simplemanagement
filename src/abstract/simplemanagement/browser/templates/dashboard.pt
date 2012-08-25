@@ -73,7 +73,7 @@
             </h1>
 
             <div id="content-core">
-                <div id="dashboard">
+                <div id="dashboard" i18n:domain="abstract.simplemanagement">
                   <div class="visualClear"><!-- --></div>
 
                   <div class="row" tal:define="dashboard view/dashboard">

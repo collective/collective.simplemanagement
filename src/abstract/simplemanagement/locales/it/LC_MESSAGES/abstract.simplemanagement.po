@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2012-08-23 22:28+0000\n"
+"POT-Creation-Date: 2012-08-25 12:50+0000\n"
 "PO-Revision-Date: 2012-08-23 22:03+0000\n"
 "Last-Translator: Giorgio Borelli <giorgio@abstract.it>\n"
 "Language-Team: Giorgio Borelli <giorgio@abstract.it>\n"
@@ -25,7 +25,7 @@ msgstr "${budget} giorni uomo"
 msgid "${initial_estimate} man days"
 msgstr "${initial_estimate} giorni uomo"
 
-#: ../browser/templates/macros.pt:94
+#: ../browser/templates/macros.pt:97
 msgid "${number} Comments"
 msgstr "${number} Commenti"
 
@@ -45,15 +45,15 @@ msgstr ""
 msgid "Account"
 msgstr "Account"
 
-#: ../browser/templates/macros.pt:137
+#: ../browser/templates/macros.pt:140
 msgid "Actual hours"
 msgstr "Effettuate"
 
-#: ../story_templates/view.pt:30
+#: ../story_templates/view.pt:31
 msgid "Add Booking"
 msgstr "Aggiungi Booking"
 
-#: ../iteration_templates/view.pt:29
+#: ../iteration_templates/view.pt:30
 msgid "Add Story"
 msgstr "Aggiungi Storia"
 
@@ -61,11 +61,19 @@ msgstr "Aggiungi Storia"
 msgid "Analysis"
 msgstr "Analisi"
 
-#: ../browser/templates/macros.pt:212
+#: ../browser/templates/dashboard.pt:103
+msgid "And ${stories_n} more"
+msgstr "E altre ${stories_n} ancora"
+
+#: ../browser/templates/dashboard.pt:129
+msgid "And ${ticket_n} more"
+msgstr "E altri ${ticket_n} ancora"
+
+#: ../browser/templates/macros.pt:215
 msgid "Assignee"
 msgstr "Assegnatario"
 
-#: ../browser/templates/macros.pt:161
+#: ../browser/templates/macros.pt:164
 #: ../interfaces.py:151
 msgid "Assignees"
 msgstr "Assegnatari"
@@ -86,7 +94,7 @@ msgstr "Budget (in giorni uomo)"
 msgid "Cancel"
 msgstr "Annulla"
 
-#: ../browser/templates/macros.pt:59
+#: ../browser/templates/macros.pt:60
 msgid "Change status"
 msgstr "Cambia stato"
 
@@ -94,7 +102,7 @@ msgstr "Cambia stato"
 msgid "Check this field if this project is visible to customer."
 msgstr "Seleziona questo campo se il progetto è visibile al cliente"
 
-#: ../browser/templates/macros.pt:98
+#: ../browser/templates/macros.pt:101
 msgid "Comments"
 msgstr "Commenti"
 
@@ -112,7 +120,7 @@ msgid "Customer"
 msgstr "Cliente"
 
 #: ../booking_templates/view.pt:14
-#: ../browser/templates/macros.pt:209
+#: ../browser/templates/macros.pt:212
 #: ../interfaces.py:167
 msgid "Date"
 msgstr "Data"
@@ -142,7 +150,7 @@ msgstr "Sviluppatore"
 msgid "Development"
 msgstr "Sviluppo"
 
-#: ../browser/templates/macros.pt:138
+#: ../browser/templates/macros.pt:141
 msgid "Difference"
 msgstr "Differenza"
 
@@ -158,7 +166,7 @@ msgstr "Documentazione"
 msgid "Documents folder"
 msgstr "Cartella documentazione"
 
-#: ../browser/templates/macros.pt:58
+#: ../browser/templates/macros.pt:59
 #: ../profiles/default/types/Booking.xml
 #: ../profiles/default/types/Epic.xml
 msgid "Edit"
@@ -188,13 +196,13 @@ msgstr "Ambiente"
 msgid "Environments"
 msgstr "Ambienti"
 
-#: ../browser/templates/macros.pt:178
+#: ../browser/templates/macros.pt:181
 #: ../epic_templates/view.pt:88
 #: ../interfaces.py:158
 msgid "Epic"
 msgstr "Epic"
 
-#: ../browser/templates/macros.pt:136
+#: ../browser/templates/macros.pt:139
 #: ../epic_templates/view.pt:89
 msgid "Estimate"
 msgstr "Stima"
@@ -260,6 +268,14 @@ msgstr "Milestone"
 msgid "Milestones are the different phases of the project. Each milestone should formally define a self-sufficient deliverable, that can then be put into production."
 msgstr "Le milestone sono le differenti fasi del progetto. Ogni milestone dovrebbe definire una serie di deliverable auto sufficienti che possono essere messi in produzione."
 
+#: ../browser/templates/dashboard.pt:82
+msgid "My stories"
+msgstr "Le mie storie"
+
+#: ../browser/templates/dashboard.pt:109
+msgid "My tickets"
+msgstr "I miei ticket"
+
 #: ../interfaces.py:43
 msgid "Name"
 msgstr "Nome"
@@ -268,7 +284,7 @@ msgstr "Nome"
 msgid "No stories associated"
 msgstr "Nessuna storia associata"
 
-#: ../browser/templates/macros.pt:150
+#: ../browser/templates/macros.pt:153
 msgid "No stories in this iteration. Add a new one or bring them in via the iteration planner."
 msgstr "Non esistono storie in questa iterazione. Aggiungine una nuova o includine una attraverso l'iteration planner."
 
@@ -320,7 +336,7 @@ msgid "Prototype"
 msgstr "Prototipo"
 
 #: ../booking_templates/view.pt:21
-#: ../browser/templates/macros.pt:213
+#: ../browser/templates/macros.pt:216
 msgid "Related"
 msgstr "Ticket correlato"
 
@@ -345,7 +361,7 @@ msgstr "Ruolo"
 msgid "Save"
 msgstr "Salva"
 
-#: ../browser/templates/macros.pt:122
+#: ../browser/templates/macros.pt:125
 msgid "Send"
 msgstr "Invia"
 
@@ -446,7 +462,7 @@ msgid "This project doesn't contain any documents"
 msgstr "Il progetto non contiene nessun documento"
 
 #: ../booking_templates/view.pt:16
-#: ../browser/templates/macros.pt:211
+#: ../browser/templates/macros.pt:214
 msgid "Time"
 msgstr "Ora"
 
@@ -454,12 +470,12 @@ msgstr "Ora"
 msgid "Time spent"
 msgstr "Ore spese"
 
-#: ../browser/templates/macros.pt:210
+#: ../browser/templates/macros.pt:213
 #: ../interfaces.py:19
 msgid "Title"
 msgstr "Titolo"
 
-#: ../browser/templates/macros.pt:134
+#: ../browser/templates/macros.pt:137
 msgid "Totals"
 msgstr "Totali"
 
@@ -476,7 +492,7 @@ msgstr "URL"
 msgid "URLs"
 msgstr "URL"
 
-#: ../browser/templates/macros.pt:168
+#: ../browser/templates/macros.pt:171
 msgid "Unassigned"
 msgstr "Non assegnato"
 
@@ -497,6 +513,14 @@ msgstr "Visualizza"
 #: ../browser/templates/macros.pt:47
 msgid "View details"
 msgstr "Visualizza i dettagli"
+
+#: ../browser/templates/dashboard.pt:95
+msgid "You have no stories assigned"
+msgstr "Non hai storie assegnate"
+
+#: ../browser/templates/dashboard.pt:121
+msgid "You have no tickets assigned"
+msgstr "Non hai ticket assegnati"
 
 #. Default: "Budget <small>as is by offer:</small>"
 #: ../project_templates/overview.pt:37
