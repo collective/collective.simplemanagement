@@ -9,7 +9,8 @@
   <metal:iteration define-macro="iteration"
     tal:define="iteration_view nocall:iteration/@@view;
                 stories iteration_view/stories;
-                totals iteration_view/totals">
+                totals iteration_view/totals;
+                can_edit iteration_view/user_can_edit">
     <h3><a href=""
        title=""
        tal:attributes="href iteration/absolute_url;
@@ -29,16 +30,17 @@
 
   <metal:stories define-macro="stories"
       tal:define="view_details view_details|nothing">
-    <ul class="stories sortable"
+    <ul class=""
+        tal:attributes="class python:can_edit and 'stories sortable' or 'stories'"
         tal:condition="stories">
       <li class="story-container"
         tal:repeat="story stories"
-        tal:attributes="class string:${story/status} draggable story-container">
+        tal:attributes="class string:${story/status} story-container;
+                        id story/id">
         <div class="story-block clearfix"
             tal:define="assignees story/assignees;
                         epic story/epic;
                         timing story">
-
           <metal:timing
             use-macro="context/simpemanagement-macros/story-timing" />
 

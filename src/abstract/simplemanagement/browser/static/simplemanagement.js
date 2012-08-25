@@ -22,10 +22,17 @@ $(document).ready(function(){
   });
 
   function updateStoryPosition(event, ui) {
-    // TODO
+    position = ui.item.index()
+    item_id = ui.item.attr('id')
+    $.getJSON('./story_move?story_id=' + item_id + '&position=' + position,
+        function(data){
+          if (data['success'] == false) {
+            alert(data['error']);
+          }
+    });
   }
 
-  $( ".sortable" ).sortable({
+  $( ".portaltype-iteration .sortable" ).sortable({
     update: updateStoryPosition,
     tolerance: 'pointer',
     distance: 5,
@@ -45,10 +52,8 @@ $(document).ready(function(){
       var trigger = this.getTrigger();
       var url = trigger.attr('href');
       var story_container = $(trigger).parents("li");
-      // var dest_status = data['destination'];
       $.get(url + '/wf_actions', function(data) {
         tip.html(data);
-        // alert(story_container.attr('class'));
         var links = $(tip).find('a');
         links.bind('click', function(evt){
           evt.preventDefault()

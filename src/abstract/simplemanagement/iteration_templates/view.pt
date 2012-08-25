@@ -23,7 +23,8 @@
       <metal:block define-macro="content-core"
         tal:define="stories view/stories;
                   totals view/totals;
-                  view_details python:True">
+                  view_details python:True;
+                  can_edit view/user_can_edit">
 
         <div tal:condition="view/user_can_add_story"
              id="addstory-container" class="clearfix">

@@ -34,6 +34,13 @@
       />
   </browser:pages>
 
+  <browser:page
+    for="..interfaces.IIteration"
+    name="story_move"
+    class=".story_move.StoryMove"
+    layer="..interfaces.IBrowserLayer"
+    permission="cmf.ModifyPortalContent"
+  />
 
   <browser:page
     for="*"

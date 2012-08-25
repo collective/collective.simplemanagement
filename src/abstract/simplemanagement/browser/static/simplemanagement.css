@@ -143,12 +143,15 @@
   border-bottom: 1px solid #E1E1E1;
   border-right: 1px solid #E1E1E1;
   border-top: 1px solid #E1E1E1;
-  cursor: move;
   list-style-type: none;
   margin: 0 0 5px;
   min-height: 33px;
   padding: 3px 3px 3px 10px;
   position: relative;
+}
+
+.portaltype-iteration .sortable .story-container {
+  cursor: move;
 }
 
 .story-container > div {

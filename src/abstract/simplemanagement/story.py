@@ -30,7 +30,8 @@ class Story(Container):
         return checkPermission('cmf.ModifyPortalContent', self)
 
     def user_can_review(self):
-        """An user can review a story if exists a WF transition
+        """An user can review a story if at least one WF transition
+        is available
         """
         wf_tool = getToolByName(self, 'portal_workflow')
         wf = wf_tool.getWorkflowsFor(self)

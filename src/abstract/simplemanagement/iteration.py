@@ -74,6 +74,9 @@ class View(grok.View):
         end = self.context.toLocalizedTime(self.context.end.isoformat())
         return dict(start=start, end=end)
 
+    def user_can_edit(self):
+        return checkPermission('cmf.ModifyPortalContent', self.context)
+
     def user_can_add_story(self):
         return checkPermission('cmf.AddPortalContent', self.context)
 
