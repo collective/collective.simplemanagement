@@ -395,12 +395,16 @@ td.difference {
   border: 1px solid #dddddd;
   border-radius: 5px;
   height: 25px;
-  width: 170px;
+  width: 220px;
   padding: .2em .5em;
-  font-size: 90%;
+  font-size: 85%;
 }
 
 .tooltip a {
   padding: 0 .2em;
   line-height: 25px;
+}
+
+.tooltip .disable {
+  color: #dddddd;
 }
