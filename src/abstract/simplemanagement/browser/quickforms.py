@@ -40,10 +40,14 @@ class BaseqQuickFormAdapter(object):
 
 class BaseQuickeEdit(form.EditForm):
     name = "quickedit_form"
+    noChangesMessage = _(u"No changes were applied.")
+    successMessage = _(u'Data successfully updated.')
 
     def redirect(self):
         self.request.response.redirect(
-            location=self.context.absolute_url())
+            location='%s/quickedit?ajax_load=1&ajax_include_head=1' % \
+                self.context.absolute_url()
+        )
 
     @button.buttonAndHandler(_(u'Save'), name='save')
     def handleApply(self, action):
@@ -59,11 +63,12 @@ class BaseQuickeEdit(form.EditForm):
 
         ptool = getToolByName(self.context, 'plone_utils')
         ptool.addPortalMessage(self.status)
-
         self.redirect()
 
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')
     def handleCancel(self, action):
+        ptool = getToolByName(self.context, 'plone_utils')
+        ptool.addPortalMessage(self.noChangesMessage)
         self.redirect()
 
 
