@@ -4,6 +4,7 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- users' dashboard enhancements [gborelli]
 - added server side method to sort stories in iteration view [gborelli]
 - Change story status from iteration view fixes #9 [gborelli]
 - checked permission to add booking, story etc [gborelli]

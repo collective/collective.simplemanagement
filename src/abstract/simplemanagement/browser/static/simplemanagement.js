@@ -14,12 +14,19 @@ $(document).ready(function(){
     width:'70%',
   });
 
-  $('.quickview').prepOverlay({
+  $('.story-quickview').prepOverlay({
       subtype: 'ajax',
       filter: common_content_filter,
       formselector: 'form#booking_form',
       width:'80%'
   });
+
+  $('.quickview').prepOverlay({
+      subtype: 'ajax',
+      filter: common_content_filter,
+      width:'50%'
+  });
+
 
   function updateStoryPosition(event, ui) {
     position = ui.item.index()

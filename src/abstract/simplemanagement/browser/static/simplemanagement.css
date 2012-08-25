@@ -288,7 +288,7 @@ td.difference {
 
 #content a.status,
 #content a.quickedit,
-#content a.quickview {
+#content a.story-quickview {
   background: transparent url('pencil.png') no-repeat;
   border: 0 none !important;
   display: block;
@@ -305,16 +305,19 @@ td.difference {
   padding: .5em;
 }
 
-#content a.quickview {
+#content a.story-quickview {
   background-image: url('magnifier.png');
 }
 
+#dashboard a.story-quickview {
+  margin: 5px 5px 0 0;
+}
 #content a.status {
   background-image: url('tag_red.png');
 }
 
 #content a.status span,
-#content a.quickview span,
+#content a.story-quickview span,
 #content a.quickedit span {
   padding: 20px;
 }

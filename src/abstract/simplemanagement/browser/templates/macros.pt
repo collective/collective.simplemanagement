@@ -48,7 +48,7 @@
             tal:condition="view_details">
             <a href=""
                title="View details"
-               class="quickview"
+               class="story-quickview"
                i18n:attributes="title"
                tal:attributes="href story/url">
               <span i18n:translate="">Details</span></a>
@@ -250,4 +250,52 @@
       </tbody>
     </table>
   </metal:booking>
+
+  <metal:stories-shortlist define-macro="stories-shortlist">
+    <ul tal:condition="stories">
+      <li tal:repeat="story stories">
+        <a href=""
+          tal:condition="show_actions|nothing"
+          class="story-quickview"
+          tal:attributes="href story/getURL;
+                           title story/Title">
+          <span i18n:translate="">Details</span>
+        </a>
+        <a href=""
+           title=""
+           tal:content="story/Title"
+           tal:attributes="href story/getURL;
+                           title story/Title"></a>
+        <p class="discreet">
+          <span tal:replace="story/Description" />
+        </p>
+      </li>
+    </ul>
+    <p class="discreet"
+       tal:condition="not:stories"
+       i18n:translate="">
+      You have no stories assigned
+    </p>
+  </metal:stories-shortlist>
+
+
+  <metal:tickets-shortlist define-macro="tickets-shortlist">
+    <ul tal:condition="tickets">
+      <li tal:repeat="ticket tickets">
+        <a href=""
+           title=""
+           tal:attributes="href ticket/getURL;
+                           title ticket/Title">
+          <span tal:content="ticket/Title"></span>
+          (# <span tal:content="ticket/getId"></span>)
+        </a>
+      </li>
+    </ul>
+    <p class="discreet"
+       tal:condition="not:tickets"
+       i18n:translate="">
+      You have no tickets assigned
+    </p>
+  </metal:tickets-shortlist>
+
 </html>

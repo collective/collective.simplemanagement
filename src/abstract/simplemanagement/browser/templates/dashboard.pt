@@ -78,55 +78,44 @@
 
                   <div class="row" tal:define="dashboard view/dashboard">
                     <!-- my stories -->
-                    <div class="cell width-8 position-0">
+                    <div class="cell width-8 position-0"
+                        tal:define="stories dashboard/stories;
+                          show_actions python:True">
                       <h3 i18n:translate="">My stories</h3>
-                      <ul tal:condition="dashboard/stories">
-                        <li tal:repeat="story dashboard/stories">
-                          <a href=""
-                             title=""
-                             tal:content="story/Title"
-                             tal:attributes="href story/getURL;
-                                             title story/Title"></a>
-                          <p class="discreet">
-                            <span tal:replace="story/Description" />
-                          </p>
-                        </li>
-                      </ul>
+                        <metal:stories
+                          use-macro="context/simpemanagement-macros/stories-shortlist" />
+
                       <p class="discreet"
-                         tal:condition="not:dashboard/stories"
-                         i18n:translate="">
-                        You have no stories assigned
-                      </p>
-                      <p class="discreet"
-                         tal:condition="dashboard/stories_n"
-                         i18n:translate="">
-                        And <em i18n:name="stories_n" tal:content="dashboard/stories_n"></em> more
+                         tal:condition="dashboard/stories_n">
+                        <a href=""
+                          i18n:translate=""
+                          i18n:attributes="title"
+                          title="Show more"
+                          class="quickview"
+                          tal:attributes="href string:${context/absolute_url}/mystories">
+                        And <em i18n:name="stories_n" tal:content="dashboard/stories_n"></em> more</a>
                       </p>
                     </div>
 
                     <!-- my tickets -->
-                    <div class="cell width-8 position-8">
+                    <div class="cell width-8 position-8"
+                      tal:define="tickets dashboard/tickets">
                       <h3 i18n:translate="">My tickets</h3>
-                      <ul tal:condition="dashboard/tickets">
-                        <li tal:repeat="ticket dashboard/tickets">
-                          <a href=""
-                             title=""
-                             tal:attributes="href ticket/getURL;
-                                             title ticket/Title">
-                            <span tal:content="ticket/Title"></span>
-                            (# <span tal:content="ticket/getId"></span>)
-                          </a>
-                        </li>
-                      </ul>
+
+                      <metal:tickets
+                        use-macro="context/simpemanagement-macros/tickets-shortlist" />
+
                       <p class="discreet"
-                         tal:condition="not:dashboard/tickets"
-                         i18n:translate="">
-                        You have no tickets assigned
-                      </p>
-                      <p class="discreet"
-                         tal:condition="dashboard/tickets_n"
-                         i18n:translate="">
-                        And <em i18n:name="ticket_n" tal:content="dashboard/tickets_n"></em> more
+                         tal:condition="dashboard/tickets_n">
+                        <a href=""
+                          i18n:translate=""
+                          i18n:attributes="title"
+                          title="Show more"
+                          class="quickview"
+                          tal:attributes="href string:${context/absolute_url}/mytickets">
+                        And <em i18n:name="ticket_n"
+                          tal:content="dashboard/tickets_n">x</em> more
+                        </a>
                       </p>
                     </div>
                   </div><!-- end dashboard -->

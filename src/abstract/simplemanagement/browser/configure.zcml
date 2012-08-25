@@ -69,6 +69,24 @@
     template="templates/dashboard.pt"
     />
 
+  <browser:page
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    name="mytickets"
+    class=".dashboard.MyTickets"
+    template="templates/mytickets.pt"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    name="mystories"
+    class=".dashboard.MyStories"
+    template="templates/mystories.pt"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+    />
+
   <!-- TODO: fix adapter for attribute... -->
   <adapter
       for="*"
