@@ -56,7 +56,7 @@
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
             Portal status message
         </div>
-        <dl tal:condition="python:view.empty() and view.can_edit()"
+<!--         <dl tal:condition="python:view.empty() and view.can_edit()"
             class="portalMessage info visualClear" id="dashboard-info-message">
             <dt i18n:translate="">Info</dt>
             <dd i18n:translate="info_empty_dashboard">
@@ -64,7 +64,7 @@
                 <em>edit</em> tab to assign some personal
                 portlets.
             </dd>
-        </dl>
+        </dl> -->
 
         <div id="content">
 
@@ -85,7 +85,7 @@
                         <metal:stories
                           use-macro="context/simpemanagement-macros/stories-shortlist" />
 
-                      <p class="discreet"
+                      <p class="discreet more-tasks"
                          tal:condition="dashboard/stories_n">
                         <a href=""
                           i18n:translate=""
@@ -93,7 +93,7 @@
                           title="Show more"
                           class="quickview"
                           tal:attributes="href string:${context/absolute_url}/mystories">
-                        And <em i18n:name="stories_n" tal:content="dashboard/stories_n"></em> more</a>
+                        And <em i18n:name="stories_n" tal:content="dashboard/stories_n">n</em> more</a>
                       </p>
                     </div>
 
@@ -105,7 +105,7 @@
                       <metal:tickets
                         use-macro="context/simpemanagement-macros/tickets-shortlist" />
 
-                      <p class="discreet"
+                      <p class="discreet more-tasks"
                          tal:condition="dashboard/tickets_n">
                         <a href=""
                           i18n:translate=""
@@ -114,7 +114,7 @@
                           class="quickview"
                           tal:attributes="href string:${context/absolute_url}/mytickets">
                         And <em i18n:name="ticket_n"
-                          tal:content="dashboard/tickets_n">x</em> more
+                          tal:content="dashboard/tickets_n">n</em> more
                         </a>
                       </p>
                     </div>

@@ -34,6 +34,29 @@ class DashboardMixin(object):
             user = portal_state.member()
         return user
 
+    def get_story(self, brain):
+        story = brain.getObject()
+        iteration = story.getParentNode()
+        project = iteration.getParentNode()
+        return {
+            'title': brain.Title,
+            'description': brain.Description,
+            'url': brain.getURL(),
+            'status': brain.review_state,
+            'can_edit': story.user_can_edit(),
+            'can_review': story.user_can_review(),
+            'iteration': {
+                'title': iteration.Title(),
+                'description': iteration.Description(),
+                'url': iteration.absolute_url()
+            },
+            'project': {
+                'title': project.Title(),
+                'description': project.Description(),
+                'url': project.absolute_url()
+            }
+        }
+
     @property
     def searches(self):
         if self.portal_state().anonymous():
@@ -67,12 +90,18 @@ class MyStories(BrowserView, DashboardMixin):
         query = self.searches[1][0]
         query.update(self.query_extra_params)
         pc = self.tools()['portal_catalog']
-        return pc.searchResults(query)
+        return [self.get_story(i) for i in pc.searchResults(query)]
 
 
 class DashboardView(dashboard.DashboardView, DashboardMixin):
 
     MAX_ELEMENTS = 5
+
+    def format_results(self, brain, res_type):
+        if res_type == 'tickets':
+            return brain
+        else:
+            return self.get_story(brain)
 
     def dashboard(self):
         result = {
@@ -81,11 +110,13 @@ class DashboardView(dashboard.DashboardView, DashboardMixin):
             'stories': [],
             'stories_n': 0
         }
+
         pc = self.tools()['portal_catalog']
         for query, result_key in self.searches:
             query.update(self.query_extra_params)
             results = pc.searchResults(query)
-            result[result_key] = results[:self.MAX_ELEMENTS]
+            result[result_key] = [self.format_results(i, result_key) \
+                for i in results[:self.MAX_ELEMENTS]]
             result['%s_n' % result_key] = total = len(results)
             if total <= self.MAX_ELEMENTS:
                 result['%s_n' % result_key] = False

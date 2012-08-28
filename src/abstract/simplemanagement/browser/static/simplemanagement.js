@@ -63,7 +63,6 @@ $(document).ready(function(){
         tip.html(data);
         var links = $(tip).find('a');
         links.bind('click', function(evt){
-          evt.preventDefault()
           $.getJSON($(this).attr('href'), function(data) {
             if (data == false) {
               alert('An error occurred');
@@ -73,6 +72,7 @@ $(document).ready(function(){
               tip.hide();
             }
           });
+          evt.preventDefault();
         });
       });
     }

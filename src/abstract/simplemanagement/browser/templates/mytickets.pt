@@ -12,8 +12,10 @@
     </metal:title>
 
     <metal:content-core fill-slot="content-core">
-      <metal:block define-macro="content-core">
-
+      <metal:block define-macro="content-core"
+               tal:define="tickets view/tickets">
+        <metal:stories
+          use-macro="context/simpemanagement-macros/tickets-shortlist" />
       </metal:block>
     </metal:content-core>
 

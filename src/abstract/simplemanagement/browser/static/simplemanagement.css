@@ -148,6 +148,7 @@
   min-height: 33px;
   padding: 3px 3px 3px 10px;
   position: relative;
+  display: list-item;
 }
 
 .portaltype-iteration .sortable .story-container {
@@ -309,9 +310,10 @@ td.difference {
   background-image: url('magnifier.png');
 }
 
-#dashboard a.story-quickview {
+/*#dashboard a.story-quickview {
   margin: 5px 5px 0 0;
-}
+}*/
+
 #content a.status {
   background-image: url('tag_red.png');
 }
@@ -413,4 +415,15 @@ td.difference {
 
 .tooltip .disable {
   color: #dddddd;
+}
+
+#dashboard ul.details {
+  font-size: 85%;
+  list-style-type: none;
+  margin:0;
+}
+
+.more-tasks {
+  float: right;
+  margin: 1em .2em 0 0;
 }

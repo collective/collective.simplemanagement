@@ -44,30 +44,8 @@
           <metal:timing
             use-macro="context/simpemanagement-macros/story-timing" />
 
-          <div class="actions"
-            tal:condition="view_details">
-            <a href=""
-               title="View details"
-               class="story-quickview"
-               i18n:attributes="title"
-               tal:attributes="href story/url">
-              <span i18n:translate="">Details</span></a>
-            <a href=""
-               tal:condition="story/can_edit"
-               title="Edit story"
-               class="quickedit"
-               tal:attributes="href python:story['url'] + '/quickedit?ajax_load=1&ajax_include_head=1'"
-               i18n:attributes="title">
-               <span i18n:translate="">Edit</span></a>
-            <a href="#"
-               tal:condition="story/can_review"
-               title="Change status"
-               class="status"
-               i18n:attributes="title"
-               tal:attributes="href story/url"
-               onclick="return false">
-               <span tal:content="story/status">Status</span></a>
-          </div>
+          <metal:actions
+            use-macro="context/simpemanagement-macros/story-actions" />
 
           <h4>
             <a href=""
@@ -161,6 +139,35 @@
 
   </metal:stories>
 
+
+  <metal:story-actions define-macro="story-actions">
+    <div class="actions"
+      tal:condition="show_actions|view_details|nothing">
+      <a href=""
+         title="View details"
+         class="story-quickview"
+         i18n:attributes="title"
+         tal:attributes="href story/url">
+        <span i18n:translate="">Details</span></a>
+      <a href=""
+         tal:condition="story/can_edit"
+         title="Edit story"
+         class="quickedit"
+         tal:attributes="href python:story['url'] + '/quickedit?ajax_load=1&ajax_include_head=1'"
+         i18n:attributes="title">
+         <span i18n:translate="">Edit</span></a>
+      <a href="#"
+         tal:condition="story/can_review"
+         title="Change status"
+         class="status"
+         i18n:attributes="title"
+         tal:attributes="href story/url"
+         onclick="return false">
+         <span tal:content="story/status">Status</span></a>
+    </div>
+  </metal:story-actions>
+
+
   <metal:assignees define-macro="assignees">
     <div class="assignees-container clearfix">
       <span class="label" i18n:translate="">Assignees</span>
@@ -252,23 +259,35 @@
   </metal:booking>
 
   <metal:stories-shortlist define-macro="stories-shortlist">
-    <ul tal:condition="stories">
-      <li tal:repeat="story stories">
-        <a href=""
-          tal:condition="show_actions|nothing"
-          class="story-quickview"
-          tal:attributes="href story/getURL;
-                           title story/Title">
-          <span i18n:translate="">Details</span>
-        </a>
+    <ul tal:condition="stories" class="stories">
+      <li tal:repeat="story stories"
+        tal:attributes="class string:${story/status} story-container">
+
+        <metal:actions
+          use-macro="context/simpemanagement-macros/story-actions" />
+
         <a href=""
            title=""
-           tal:content="story/Title"
-           tal:attributes="href story/getURL;
-                           title story/Title"></a>
+           tal:content="story/title"
+           tal:attributes="href story/url;
+                           title story/title"></a>
         <p class="discreet">
-          <span tal:replace="story/Description" />
+          <span tal:replace="story/description" />
         </p>
+        <ul class="details">
+          <li>
+            <span class="label" i18n:translate="">Project:</span>
+            <a href="" tal:content="story/project/title"
+            tal:attributes="title story/project/description;
+              href story/project/url"></a>
+          </li>
+          <li>
+            <span class="label"  i18n:translate="">Iteration:</span>
+            <a href="" tal:content="story/iteration/title"
+            tal:attributes="title story/iteration/description;
+              href story/iteration/url"></a>
+          </li>
+        </ul>
       </li>
     </ul>
     <p class="discreet"
