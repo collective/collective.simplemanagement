@@ -6,11 +6,13 @@ from five import grok
 from plone.memoize.instance import memoize
 from plone.dexterity.content import Container
 from Products.CMFCore.utils import getToolByName
+from plone.uuid.interfaces import IUUID
 
 from .interfaces import IProject
 from .configure import DOCUMENTS_ID
 from .utils import get_user_details
 from .utils import get_text
+from . import MessageFactory as _
 
 
 class Project(Container):
@@ -115,3 +117,34 @@ class OverView(View):
                 'role': self.get_role(i.role),
                 'user': get_user_details(self.context, i.user_id)
             }
+
+
+class Planning(grok.View):
+    grok.context(IProject)
+    grok.require('zope2.View')
+    grok.name('planning')
+
+    @memoize
+    def portal_catalog(self):
+        return getToolByName(self.context, 'portal_catalog')
+
+    def get_iterations(self):
+        iterations = [
+            {
+                'title': _(u"Backlog"),
+                'uuid': IUUID(self.context)
+            }
+        ]
+        pc = self.portal_catalog()
+        raw_iterations = pc.searchResults({
+            'path': '/'.join(self.context.getPhysicalPath()),
+            'portal_type': 'Iteration',
+            'sort_on': 'start',
+            'sort_order': 'ascending'
+        })
+        for iteration_brain in raw_iterations:
+            iterations.append({
+                'title': iteration_brain.Title,
+                'uuid': iteration_brain.UID
+            })
+        return iterations

@@ -5,6 +5,12 @@ from .interfaces import IStory
 from .configure import WARNING_DELTA, WARNING_DELTA_PERCENT
 
 
+def boolize(value):
+    if value.lower() in ('1', 'on', 'true'):
+        return True
+    return False
+
+
 def get_timing_status(difference):
     # TODO: the delta should be a percentage and probably differentiate more
     difference_status = 'success'

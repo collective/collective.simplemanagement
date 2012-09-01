@@ -94,4 +94,23 @@
       factory=".quickforms.BaseqQuickFormAdapter"
   />
 
+  <!-- Custom navtree strategy for Project -->
+  <class class=".navigation.ProjectNavtreeStrategy">
+    <allow
+        interface="plone.app.layout.navigation.interfaces.INavtreeStrategy" />
+  </class>
+  <adapter factory=".navigation.ProjectNavtreeStrategy"
+           for="..interfaces.IProject
+                plone.app.portlets.portlets.navigation.INavigationPortlet" />
+  <adapter factory=".navigation.ProjectNavtreeStrategy"
+           for="..interfaces.IIteration
+                plone.app.portlets.portlets.navigation.INavigationPortlet" />
+  <adapter factory=".navigation.ProjectNavtreeStrategy"
+           for="..interfaces.IStory
+                plone.app.portlets.portlets.navigation.INavigationPortlet" />
+  <adapter factory=".navigation.ProjectNavtreeStrategy"
+           for="..interfaces.IEpic
+                plone.app.portlets.portlets.navigation.INavigationPortlet" />
+
+
 </configure>
