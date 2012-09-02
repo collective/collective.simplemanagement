@@ -317,4 +317,45 @@
     </p>
   </metal:tickets-shortlist>
 
+  <metal:stories-planning define-macro="stories-planning"
+      tal:define="view_details view_details|nothing">
+    <p class="discreet"
+       tal:attributes="style python:'display:none' if stories else ''"
+       i18n:translate="">
+      No stories in this iteration.
+      Add a new one or bring them in via the iteration planner.
+    </p>
+    <ul class="stories sortable"
+        tal:attributes="class string:${widget_id}-stories stories sortable;
+                        data-uuid iteration_uuid;
+                        data-moveurl iteration_moveurl">
+      <li class="story-container"
+        tal:repeat="story stories"
+        tal:attributes="class string:${story/status} story-container;
+                        data-storyid story/id">
+        <div class="story-block clearfix"
+            tal:define="assignees story/assignees;
+                        epic story/epic">
+          <h4>
+            <a href=""
+              title=""
+              tal:attributes="href story/url;
+                              title story/description"
+              tal:content="story/title" />
+          </h4>
+
+          <p tal:content="story/description"></p>
+
+          <metal:epic
+            use-macro="context/simpemanagement-macros/epic" />
+
+          <metal:assignes
+            use-macro="context/simpemanagement-macros/assignees" />
+
+        </div>
+      </li>
+    </ul>
+
+  </metal:stories-planning>
+
 </html>

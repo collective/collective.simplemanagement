@@ -52,5 +52,11 @@
     factory=".stories_listing.StoriesListing"
   />
 
+  <adapter
+    for=".interfaces.IProject"
+    provides=".interfaces.IStoriesListing"
+    factory=".stories_listing.StoriesListing"
+  />
+
 
 </configure>

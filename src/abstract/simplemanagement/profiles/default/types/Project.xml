@@ -51,4 +51,10 @@
     visible="True" i18n:attributes="title">
   <permission value="Modify portal content"/>
  </action>
+ <action title="Planning" action_id="planning" category="object"
+         condition_expr=""
+         icon_expr="" link_target="" url_expr="string:${object_url}/@@planning"
+         visible="True" i18n:attributes="title">
+  <permission value="Modify portal content"/>
+ </action>
 </object>

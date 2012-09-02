@@ -8,15 +8,140 @@
     };
 
     simplemanagement.Planner.prototype = {
+        _init: function(element) {
+            var self = this;
+            this.element = $(element);
+            this.element_id = this.element.attr('id');
+            this.has_sortable = false;
+            this.left_selector = $('#'+this.element_id+'-left');
+            this.right_selector = $('#'+this.element_id+'-right');
+            this.loadStories(this.left_selector);
+            this.loadStories(this.right_selector);
+            this.left_selector.change(function() {
+                self.loadStories(self.left_selector);
+            });
+            this.right_selector.change(function() {
+                self.loadStories(self.right_selector);
+            });
+        },
+
+        loadStories: function(selector) {
+            var self = this;
+            var uuid = $('option:selected', selector).val();
+            var container = $('#'+selector.attr('id')+'-container');
+            container.load(
+                './@@stories',
+                {
+                    iteration: uuid,
+                    widget_id: this.element_id
+                },
+                function(response, status, request) {
+                    self.makeSortable();
+                }
+            );
+        },
+
+        makeSortable: function() {
+            var self = this;
+            if(this.has_sortable) {
+                $('ul.sortable', this.element).sortable('destroy');
+                this.has_sortable = false;
+            }
+            $('ul.sortable', this.element).sortable({
+                update: function(event, ui) { self.update(event, ui); },
+                start: function(event, ui) {
+                    if(event.ctrlKey || event.metaKey) {
+                        ui.item.addClass('copy');
+                    }
+                },
+                stop: function(event, ui) {
+                    if(!event.ctrlKey && !event.metaKey) {
+                        ui.item.removeClass('copy');
+                    }
+                },
+                receive: function(event, ui) {
+                    var destination = $(event.target);
+                    var destination_uuid = destination.attr('data-uuid');
+                    var origin = $(ui.sender);
+                    var origin_uuid = origin.attr('data-uuid');
+                    if(origin_uuid === destination_uuid) {
+                        $(ui.sender).sortable('cancel');
+                    }
+                },
+                tolerance: 'pointer',
+                distance: 5,
+                opacity: 0.5,
+                revert: true,
+                connectWith: '.'+this.element_id+'-stories'
+            });
+            this.has_sortable = true;
+        },
+
+        update: function(event, ui) {
+            var self = this;
+            var destination = $(event.target);
+            var destination_uuid = destination.attr('data-uuid');
+            var origin = $(ui.sender);
+            var origin_uuid = origin.attr('data-uuid');
+            var story_id = ui.item.attr('data-storyid');
+            if(origin_uuid) {
+                if(origin_uuid != destination_uuid) {
+                    var origin_url = origin.attr('data-moveurl');
+                    //console.log(story_id+': '+origin_uuid+' -> '+destination_uuid+' @ '+ui.item.index());
+                    if(origin.children('li').length === 0)
+                        origin.siblings('p.discreet').show();
+                    var destination_discreet = destination.siblings(
+                        'p.discreet');
+                    if(destination_discreet.is(':visible'))
+                        destination_discreet.hide();
+                    var copy = 'false';
+                    if(event.ctrlKey || event.metaKey)
+                        copy = 'true';
+                    $.getJSON(
+                        origin_url,
+                        {
+                            story_id: story_id,
+                            new_iteration: destination_uuid,
+                            new_position: ui.item.index(),
+                            do_copy: copy
+                        },
+                        function(data) {
+                            if(data['success'] === false) {
+                                alert(data['error']);
+                            }
+                            if(copy) {
+                                self.loadStories(self.left_selector);
+                                self.loadStories(self.right_selector);
+                            }
+                        }
+                    );
+                }
+            }
+            else {
+                var destination_url = destination.attr('data-moveurl');
+                $.getJSON(
+                    destination_url,
+                    {
+                        story_id: story_id,
+                        new_position: ui.item.index()
+                    },
+                    function(data) {
+                        if(data['success'] === false) {
+                            alert(data['error']);
+                        }
+                    }
+                );
+            }
+        }
     };
 
     simplemanagement.planners = [];
 
     $(document).ready(function(){
 
-        $('.-simplemenagement-planner').each(function() {
+        $('.simplemanagement-planner').each(function() {
             simplemanagement.planners.push(
-                new simplemanagement.Planner($(this)));
+                new simplemanagement.Planner(this));
         });
 
         $('#overview ul.tabs').tabs("#overview div.panes > div");

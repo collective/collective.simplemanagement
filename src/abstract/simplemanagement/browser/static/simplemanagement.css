@@ -287,6 +287,10 @@ td.difference {
   margin: .5em 0 0;
 }
 
+.story-container.copy .story-block {
+    background: transparent url('editcopy.png') top right no-repeat;
+}
+
 #content a.status,
 #content a.quickedit,
 #content a.story-quickview {
@@ -426,4 +430,8 @@ td.difference {
 .more-tasks {
   float: right;
   margin: 1em .2em 0 0;
+}
+
+.simplemanagement-planner ul.sortable {
+  min-height: 15px;
 }

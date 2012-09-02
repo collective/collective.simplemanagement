@@ -30,7 +30,10 @@ class StoriesListing(object):
     def _stories(self):
         pc = self.portal_catalog
         stories_brains = pc.searchResults({
-            'path': '/'.join(self.context.getPhysicalPath()),
+            'path': {
+                'query': '/'.join(self.context.getPhysicalPath()),
+                'depth': 1
+            },
             'portal_type': 'Story',
             'sort_on': 'getObjPositionInParent',
             'sort_order': 'ascending'

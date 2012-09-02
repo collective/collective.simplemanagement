@@ -43,6 +43,14 @@
   />
 
   <browser:page
+    for="..interfaces.IProject"
+    name="story_move"
+    class=".story_move.StoryMove"
+    layer="..interfaces.IBrowserLayer"
+    permission="cmf.ModifyPortalContent"
+  />
+
+  <browser:page
     for="*"
     name="simpemanagement-macros"
     class=".macros.Macros"
