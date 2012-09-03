@@ -182,3 +182,9 @@ class IStoriesListing(Interface):
     def totals():
         """return stories'timing
         """
+
+
+class IBacklogView(Interface):
+    """A marker interface for the backlog view, that has a custom
+    breadcrumb
+    """

@@ -14,7 +14,7 @@
       </h1>
     </metal:title>
 
-    <metal:title fill-slot="content-description">
+    <metal:description fill-slot="content-description">
       <div class="documentDescription"
           i18n:translate="">
         Here you can plan your iterations:
@@ -25,7 +25,7 @@
         If you wish to create a copy of the story,
         instead of moving it, keep Ctrl pressed while dragging.
       </div>
-    </metal:title>
+    </metal:description>
 
     <metal:content-core fill-slot="content-core">
       <metal:block define-macro="content-core"

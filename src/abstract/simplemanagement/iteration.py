@@ -56,9 +56,8 @@ class Iteration(Container):
     grok.implements(IIteration)
 
 
-class View(grok.View):
-    grok.context(IIteration)
-    grok.require('zope2.View')
+# XXX: move somewhere else
+class IterationViewMixin(object):
 
     totals = None
 
@@ -68,11 +67,6 @@ class View(grok.View):
         stories = adpt.stories()
         self.totals = adpt.totals
         return stories
-
-    def get_dates(self):
-        start = self.context.toLocalizedTime(self.context.start.isoformat())
-        end = self.context.toLocalizedTime(self.context.end.isoformat())
-        return dict(start=start, end=end)
 
     def user_can_edit(self):
         return checkPermission('cmf.ModifyPortalContent', self.context)
@@ -85,3 +79,13 @@ class View(grok.View):
         addform = StoryForm(aq_inner(self.context), self.request)
         addform.update()
         return addform.render()
+
+
+class View(grok.View, IterationViewMixin):
+    grok.context(IIteration)
+    grok.require('zope2.View')
+
+    def get_dates(self):
+        start = self.context.toLocalizedTime(self.context.start.isoformat())
+        end = self.context.toLocalizedTime(self.context.end.isoformat())
+        return dict(start=start, end=end)

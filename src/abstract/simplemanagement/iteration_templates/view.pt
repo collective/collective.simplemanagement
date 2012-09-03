@@ -27,27 +27,11 @@
                   can_edit view/user_can_edit">
 
         <div tal:condition="view/user_can_add_story"
-             id="addstory-container" class="clearfix">
+             id="addstory-container" class="clearfix simplemanagement-addstory">
           <h3><a i18n:translate="" href="#">Add Story</a></h3>
           <div id="addstory-form" style="display: none"
+               class="simplemanagement-addstory-form-wrapper"
             tal:content="structure view/add_story_form" />
-          <script type="text/javascript">
-            $(function() {
-
-              var add_form_link = $('#addstory-container a');
-
-              if ($("#addstory-form dl.portalMessage").length > 0){
-                $('#addstory-form').css('display', 'block');
-                add_form_link.addClass('open');
-              }
-
-              add_form_link.bind('click', function(evt){
-                $(this).toggleClass('open');
-                evt.preventDefault();
-                $('#addstory-form').toggle("slow");
-              });
-            });
-          </script>
         </div>
 
         <metal:stories-listing

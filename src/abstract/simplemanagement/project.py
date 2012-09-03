@@ -9,10 +9,11 @@ from Products.CMFCore.utils import getToolByName
 from plone.uuid.interfaces import IUUID
 from plone.app.uuid.utils import uuidToObject
 
-from .interfaces import IProject, IStoriesListing
+from .interfaces import IProject, IStoriesListing, IBacklogView
 from .configure import DOCUMENTS_ID
 from .utils import get_user_details
 from .utils import get_text
+from .iteration import IterationViewMixin
 from . import messageFactory as _
 
 
@@ -191,3 +192,9 @@ class Stories(grok.View):
         adpt = IStoriesListing(self.iteration())
         return adpt.stories()
 
+
+class Backlog(grok.View, IterationViewMixin):
+    grok.implements(IBacklogView)
+    grok.context(IProject)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('backlog')

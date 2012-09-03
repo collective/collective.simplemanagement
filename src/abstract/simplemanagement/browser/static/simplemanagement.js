@@ -149,6 +149,22 @@
                 new simplemanagement.Planner(this));
         });
 
+        $('.simplemanagement-addstory').each(function() {
+            var container = $(this);
+            var link = $('a', container);
+            var wrapper = $('div.simplemanagement-addstory-form-wrapper');
+            if($('dl.portalMessage', wrapper).length > 0){
+                wrapper.css('display', 'block');
+                add_form_link.addClass('open');
+            }
+
+            link.bind('click', function(evt) {
+                $(this).toggleClass('open');
+                evt.preventDefault();
+                wrapper.toggle("slow");
+            });
+        });
+
         $('#overview ul.tabs').tabs("#overview div.panes > div");
 
 

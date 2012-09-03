@@ -120,5 +120,22 @@
            for="..interfaces.IEpic
                 plone.app.portlets.portlets.navigation.INavigationPortlet" />
 
+  <!-- overrides -->
+  <browser:viewlet
+      name="plone.path_bar"
+      manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+      class=".overrides.BacklogPathBarViewlet"
+      permission="zope2.View"
+      view="..interfaces.IBacklogView"
+      />
+
+  <browser:viewlet
+      name="plone.path_bar"
+      manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+      class=".overrides.BacklogStoryPathBarViewlet"
+      for="..interfaces.IStory"
+      permission="zope2.View"
+      />
+
 
 </configure>
