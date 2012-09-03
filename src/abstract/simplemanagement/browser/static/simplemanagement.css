@@ -151,7 +151,7 @@
   display: list-item;
 }
 
-.portaltype-iteration .sortable .story-container {
+.sortable .story-container {
   cursor: move;
 }
 
@@ -287,8 +287,8 @@ td.difference {
   margin: .5em 0 0;
 }
 
-.story-container.copy .story-block {
-    background: transparent url('editcopy.png') top right no-repeat;
+.story-container.copy {
+    cursor: copy;
 }
 
 #content a.status,

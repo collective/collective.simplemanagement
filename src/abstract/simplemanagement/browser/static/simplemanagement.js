@@ -48,16 +48,21 @@
                 this.has_sortable = false;
             }
             $('ul.sortable', this.element).sortable({
-                update: function(event, ui) { self.update(event, ui); },
+                update: function(event, ui) {
+                    self.update(event, ui);
+                },
                 start: function(event, ui) {
-                    if(event.ctrlKey || event.metaKey) {
+                    if(event.ctrlKey || event.metaKey)
                         ui.item.addClass('copy');
-                    }
+                },
+                sort: function(event, ui) {
+                    if(event.ctrlKey || event.metaKey)
+                        ui.item.addClass('copy');
+                    else
+                        ui.item.removeClass('copy');
                 },
                 stop: function(event, ui) {
-                    if(!event.ctrlKey && !event.metaKey) {
-                        ui.item.removeClass('copy');
-                    }
+                    ui.item.removeClass('copy');
                 },
                 receive: function(event, ui) {
                     var destination = $(event.target);
