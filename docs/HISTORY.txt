@@ -4,6 +4,8 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- moved to collective namespace [simahawk]
+- prevent project view to brake if project created by zope admin [simahawk]
 - users' dashboard enhancements [gborelli]
 - added server side method to sort stories in iteration view [gborelli]
 - Change story status from iteration view fixes #9 [gborelli]
