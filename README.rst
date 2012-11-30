@@ -22,6 +22,14 @@ Installation
 Please, refer to `official documentation`__.
 
 
+Sponsored by
+------------
+
+.. image:: http://www.abstract.it/++theme++abstract.theme/theme/static/theme/img/online/logo.png
+   :alt: Abstract Website
+   :target: http://wwww.abstract.it
+
+
 __ http://pypi.python.org/pypi/Plone
 __ http://pypi.python.org/pypi/plone.dexterity
 __ http://www.abstract.it/en/blog/maurizio-delmonte/simplemanagement-an-agile-project-management-tool
