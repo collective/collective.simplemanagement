@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<dc-workflow workflow_id="project_workflow" title="Project Workflow" description="The project workflow" state_variable="review_state" initial_state="planning" manager_bypass="False">
+ <permission>Access contents information</permission>
+ <permission>Change portal events</permission>
+ <permission>Modify portal content</permission>
+ <permission>View</permission>
+ <state state_id="closed" title="Closed">
+  <description>The project has been succesfully closed and maintenance has expired (or was not planned)</description>
+  <exit-transition transition_id="further_planning"/>
+ </state>
+ <state state_id="dead" title="Dead">
+  <description>The project is dead: no more maintenance, evolution or anything else is possible.</description>
+  <exit-transition transition_id="resurrect"/>
+ </state>
+ <state state_id="development" title="Development">
+  <description>The project or an evolution of it is being developed</description>
+  <exit-transition transition_id="close"/>
+  <exit-transition transition_id="further_planning"/>
+  <exit-transition transition_id="kill"/>
+  <exit-transition transition_id="maintenance_start"/>
+ </state>
+ <state state_id="maintenance" title="Maintenance">
+  <description>The development has been completed but we must provide maintenance and bug fixing</description>
+  <exit-transition transition_id="close"/>
+  <exit-transition transition_id="further_planning"/>
+ </state>
+ <state state_id="offer" title="Offer">
+  <description>A commercial offer has been made and negotiations are under way. May involve plan changes</description>
+  <exit-transition transition_id="development_start"/>
+  <exit-transition transition_id="further_planning"/>
+  <exit-transition transition_id="kill"/>
+ </state>
+ <state state_id="planning" title="Planning">
+  <description>The initial state of the project. May involve analysis</description>
+  <exit-transition transition_id="development_start"/>
+  <exit-transition transition_id="kill"/>
+  <exit-transition transition_id="offer_made"/>
+ </state>
+ <transition transition_id="close" title="Close" new_state="closed" trigger="USER" before_script="" after_script="">
+  <description>Close the project succesfully</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=close" category="workflow" icon="">Close</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="development_start" title="Start developing" new_state="development" trigger="USER" before_script="" after_script="">
+  <description>Development has started</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=development_start" category="workflow" icon="">Start developing</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="further_planning" title="Plan evolution" new_state="planning" trigger="USER" before_script="" after_script="">
+  <description>An evolution is being planned</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=further_planning" category="workflow" icon="">Plan evolution</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="kill" title="Kill" new_state="dead" trigger="USER" before_script="" after_script="">
+  <description>Terminate the project abruptly and unsuccesfully</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=kill" category="workflow" icon="">Kill</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="maintenance_start" title="Start maintenance" new_state="maintenance" trigger="USER" before_script="" after_script="">
+  <description>Start the maintenance mode, where only bugfixes and "keeping it up" is needed</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=maintenance_start" category="workflow" icon="">Start maintenance</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="offer_made" title="Make offer and negotiate" new_state="offer" trigger="USER" before_script="" after_script="">
+  <description>An offer has been made and economic negotiations are in progress</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=offer_made" category="workflow" icon="">Make offer and negotiate</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="resurrect" title="Resurrect" new_state="planning" trigger="USER" before_script="" after_script="">
+  <description>Resurrect a dead project</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=resurrect" category="workflow" icon="">Resurrect</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+ <worklist worklist_id="reviewer_queue" title="">
+  <description>Reviewer tasks</description>
+  <action url="%(portal_url)s/search?review_state=pending" category="global" icon="">Pending (%(count)d)</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+  <match name="review_state" values="pending"/>
+ </worklist>
+ <variable variable_id="action" for_catalog="False" for_status="True" update_always="True">
+  <description>Previous transition</description>
+  <default>
+   
+   <expression>transition/getId|nothing</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+ <variable variable_id="actor" for_catalog="False" for_status="True" update_always="True">
+  <description>The ID of the user who performed the previous transition</description>
+  <default>
+   
+   <expression>user/getId</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+ <variable variable_id="comments" for_catalog="False" for_status="True" update_always="True">
+  <description>Comment about the last transition</description>
+  <default>
+   
+   <expression>python:state_change.kwargs.get('comment', '')</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+ <variable variable_id="review_history" for_catalog="False" for_status="False" update_always="False">
+  <description>Provides access to workflow history</description>
+  <default>
+   
+   <expression>state_change/getHistory</expression>
+  </default>
+  <guard>
+   <guard-permission>Request review</guard-permission>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </variable>
+ <variable variable_id="time" for_catalog="False" for_status="True" update_always="True">
+  <description>When the previous transition was performed</description>
+  <default>
+   
+   <expression>state_change/getDateTime</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+</dc-workflow>

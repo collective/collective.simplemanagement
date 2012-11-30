@@ -1,0 +1,62 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           xmlns:gs="http://namespaces.zope.org/genericsetup"
+           xmlns:grok="http://namespaces.zope.org/grok"
+           i18n_domain="collective.simplemanagement">
+
+  <includeDependencies package="." />
+  <i18n:registerTranslations directory="locales" />
+
+  <grok:grok package="." />
+  <include package=".browser" />
+
+  <subscriber for=".interfaces.IProject
+                   zope.app.container.interfaces.IObjectAddedEvent"
+              handler=".events.create_project_collaterals" />
+
+  <subscriber for=".interfaces.IProject
+                   zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+              handler=".events.update_tracker_managers" />
+
+  <adapter name="start" factory=".indexers.start" />
+  <adapter name="end" factory=".indexers.end" />
+  <adapter name="booking_date" factory=".indexers.date" />
+
+  <gs:registerProfile
+      name="default"
+      title="Simple Management"
+      directory="profiles/default"
+      description="Project management made simple"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <!-- vocabularies -->
+  <utility
+      factory=".vocabularies.rolesVocab"
+      name="collective.simplemanagement.roles"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
+  <utility
+      factory=".vocabularies.envtypesVocab"
+      name="collective.simplemanagement.envtypes"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
+  <utility
+      factory=".vocabularies.statusVocab"
+      name="collective.simplemanagement.status"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
+  <adapter
+    for=".interfaces.IIteration"
+    provides=".interfaces.IStoriesListing"
+    factory=".stories_listing.StoriesListing"
+  />
+
+  <adapter
+    for=".interfaces.IProject"
+    provides=".interfaces.IStoriesListing"
+    factory=".stories_listing.StoriesListing"
+  />
+
+
+</configure>
