@@ -6,12 +6,12 @@ SimpleManagement, an agile project management tool built on top of `Plone`__ tha
 Some features
 -------------
 
-    - automatic creation of documentation folder
-    - POI tracker and project form
-    - iterations where you can load/move/work on stories in agile mood ala ScrumDo
-    - planning view to move/clone stories between different iterations in agile mood
-    - user dashboard where stories and ticket relevant to the user show up
-    - booking on the stories (no need to create tasks as mandatory in XM, too often a level/layer too far for our needs)
+- automatic creation of documentation folder
+- POI tracker and project form
+- iterations where you can load/move/work on stories in agile mood ala ScrumDo
+- planning view to move/clone stories between different iterations in agile mood
+- user dashboard where stories and ticket relevant to the user show up
+- booking on the stories (no need to create tasks as mandatory in XM, too often a level/layer too far for our needs)
 
 For a wider view on what this is about take a look at `Maurizio's blogpost`__ and `watch the video`__.
 
@@ -22,8 +22,8 @@ Installation
 Please, refer to `official documentation`__.
 
 
-Sponsored by
-------------
+Credits
+-------
 
 .. image:: http://www.abstract.it/logo-abstract-readme
    :alt: Abstract Website
