@@ -113,3 +113,28 @@ def get_text(context, text,
                                 text,
                                 context=context,
                                 mimetype=source_mimetype).getData()
+
+
+class datetimerange(object):
+    """Just like ``xrange``, but working on ``datetime``.
+    """
+
+    def __init__(self, from_, to, step):
+        self.from_ = from_
+        self.current = from_
+        self.limit = to
+        self.step = step
+
+    def __iter__(self):
+        return self.__class__(
+            self.from_,
+            self.limit,
+            self.step
+        )
+
+    def next(self):
+        if self.current >= self.limit:
+            raise StopIteration()
+        current = self.current
+        self.current = self.current + self.step
+        return current
