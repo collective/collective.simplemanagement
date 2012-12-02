@@ -1,10 +1,13 @@
 from . import messageFactory as _
 
+
+# TODO: these should be configurable via p.a.registry
 TRACKER_ID = 'issues'
 DOCUMENTS_ID = 'documents'
 WARNING_DELTA = 3
 MAN_DAY_HOURS = 8
 WARNING_DELTA_PERCENT = 0.1
+
 
 STATUS_ITEMS = [
     ('not_started', _(u'Not started')),
@@ -16,6 +19,7 @@ STATUS_ITEMS = [
     ('maintenance', _(u'Maintenance')),
     ('dead', _(u'Dead'))
 ]
+
 
 ENV_TYPES = [
     ('prototype', _(u'Prototype')),

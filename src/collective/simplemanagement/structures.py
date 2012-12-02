@@ -12,6 +12,7 @@ class Resource(SimpleItem):
 
     role = FieldProperty(IResource['role'])
     user_id = FieldProperty(IResource['user_id'])
+    active = FieldProperty(IResource['active'])
 
     __name__ = None
     __parent__ = None
@@ -47,6 +48,7 @@ class Milestone(SimpleItem):
 
     name = FieldProperty(IMilestone['name'])
     status = FieldProperty(IMilestone['status'])
+    deadline = FieldProperty(IMilestone['deadline'])
 
     __name__ = None
     __parent__ = None

@@ -8,7 +8,9 @@ from plone.formwidget.contenttree import ObjPathSourceBinder
 from plone.theme.interfaces import IDefaultPloneLayer
 from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
 
-from collective.z3cform.widgets.enhancedtextlines import EnhancedTextLinesFieldWidget
+from collective.z3cform.widgets.enhancedtextlines import (
+    EnhancedTextLinesFieldWidget,
+)
 from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
 from . import messageFactory as _
@@ -36,6 +38,8 @@ class IResource(Interface):
         source="collective.simplemanagement.roles"
     )
     user_id = schema.TextLine(title=_(u"User ID"))
+    active = schema.Bool(title=_(u"Active"),
+                         default=True)
 
 
 class IEnvironment(Interface):
@@ -55,6 +59,8 @@ class IMilestone(Interface):
         title=_(u"Status"),
         source="collective.simplemanagement.status"
     )
+    deadline = schema.Date(title=_(u"Deadline"),
+                           required=False)
 
 
 class IProject(form.Schema):
@@ -160,6 +166,11 @@ class IStory(form.Schema):
         source=ObjPathSourceBinder(object_provides=[IEpic.__identifier__, ]),
         required=False
     )
+    milestone = schema.Choice(
+        title=_(u"Milestone"),
+        required=False,
+        source="collective.simplemanagement.milestones"
+    )
 
 
 class IBooking(form.Schema):
@@ -180,7 +191,7 @@ class IStoriesListing(Interface):
         """
 
     def totals():
-        """return stories'timing
+        """return stories' timing
         """
 
 
