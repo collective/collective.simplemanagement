@@ -2,14 +2,12 @@ from datetime import datetime
 from persistent import Persistent
 from BTrees.OOBTree import OOBTree
 from zope.interface import implements
-from zope.component import adapter
-from zope.annotation import factory
+from zope.component import adapter, queryAdapter
+from zope.annotation import factory, IAnnotations
 
 from .interfaces import ITimeline
+from .configure import TIMELINE_ANNOTATIONS_KEY, TIMELINE_INDEXER_PREFIX
 from .utils import datetimerange
-
-
-AUTO_INDEX_PREFIX = 'index_'
 
 
 def timeline(*ifaces):
@@ -20,11 +18,12 @@ def timeline(*ifaces):
     def _wrapper(cls):
         all_indexes = []
         for name in dir(cls):
-            if name.startswith(AUTO_INDEX_PREFIX) and \
+            if name.startswith(TIMELINE_INDEXER_PREFIX) and \
                     callable(getattr(cls, name)):
-                all_indexes.append(name[len(AUTO_INDEX_PREFIX):])
+                all_indexes.append(name[len(TIMELINE_INDEXER_PREFIX):])
         cls.all_indexes = tuple(all_indexes)
-        return factory(adapter(*ifaces)(cls))
+        return factory(adapter(*ifaces)(cls),
+                       key=TIMELINE_ANNOTATIONS_KEY)
     return _wrapper
 
 
@@ -50,7 +49,7 @@ class BaseTimeline(Persistent):
             indexes = self.all_indexes
         for index in indexes:
             data = {
-                'prefix': AUTO_INDEX_PREFIX,
+                'prefix': TIMELINE_INDEXER_PREFIX,
                 'index': index
             }
             indexer = getattr(self, '%(prefix)s%(index)s' % data, None)
@@ -82,3 +81,13 @@ class BaseTimeline(Persistent):
             indexes = self.all_indexes
         for step in datetimerange(from_, to, resolution):
             yield { i: self._get_value(i, step) for i in indexes }
+
+
+def clear_timeline(object_):
+    """Clears the timeline (throws away all data) for ``object_``.
+
+    Should be sued by uninstall.
+    """
+    annotations = queryAdapter(object_, IAnnotations, default={})
+    if TIMELINE_ANNOTATIONS_KEY in annotations:
+        del annotations[TIMELINE_ANNOTATIONS_KEY]

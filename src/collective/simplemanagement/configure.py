@@ -1,9 +1,13 @@
 from . import messageFactory as _
 
 
-# TODO: these should be configurable via p.a.registry
+TIMELINE_ANNOTATIONS_KEY = 'collective.simplemanagement.timeline'
+TIMELINE_INDEXER_PREFIX = 'index_'
 TRACKER_ID = 'issues'
 DOCUMENTS_ID = 'documents'
+
+
+# TODO: these should be configurable via p.a.registry
 WARNING_DELTA = 3
 MAN_DAY_HOURS = 8
 WARNING_DELTA_PERCENT = 0.1
