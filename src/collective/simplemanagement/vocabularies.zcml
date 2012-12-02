@@ -1,0 +1,27 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           xmlns:gs="http://namespaces.zope.org/genericsetup"
+           xmlns:grok="http://namespaces.zope.org/grok"
+           i18n_domain="collective.simplemanagement">
+
+  <utility
+      factory=".vocabularies.rolesVocab"
+      name="collective.simplemanagement.roles"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
+  <utility
+      factory=".vocabularies.envtypesVocab"
+      name="collective.simplemanagement.envtypes"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
+  <utility
+      factory=".vocabularies.statusVocab"
+      name="collective.simplemanagement.status"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
+  <utility
+      factory=".vocabularies.milestonesVocab"
+      name="collective.simplemanagement.milestones"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
+</configure>

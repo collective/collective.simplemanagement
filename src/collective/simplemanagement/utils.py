@@ -1,7 +1,9 @@
+from zope.location.interfaces import ILocation
 from Products.CMFCore.utils import getToolByName
 
-from .interfaces import IStory
+from .interfaces import IStory, IProject
 # TODO: harmonize differences display and warning display
+# Also move config into p.a.registry
 from .configure import WARNING_DELTA, WARNING_DELTA_PERCENT
 
 
@@ -9,6 +11,15 @@ def boolize(value):
     if value.lower() in ('1', 'on', 'true'):
         return True
     return False
+
+
+def get_project(context, default=None):
+    current = context
+    while ILocation.providedBy(current) and current.__parent__ is not None:
+        if IProject.providedBy(current):
+            return current
+        current = current.__parent__
+    return default
 
 
 def get_timing_status(difference):
@@ -56,6 +67,7 @@ def get_difference_class(a, b):
 
 
 def get_user_details(context, user_id):
+    # TODO: also obtain image
     pm = getToolByName(context, 'portal_membership')
     usr = pm.getMemberById(user_id)
     if usr:

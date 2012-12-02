@@ -30,22 +30,6 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
-  <!-- vocabularies -->
-  <utility
-      factory=".vocabularies.rolesVocab"
-      name="collective.simplemanagement.roles"
-      provides="zope.schema.interfaces.IVocabularyFactory" />
-
-  <utility
-      factory=".vocabularies.envtypesVocab"
-      name="collective.simplemanagement.envtypes"
-      provides="zope.schema.interfaces.IVocabularyFactory" />
-
-  <utility
-      factory=".vocabularies.statusVocab"
-      name="collective.simplemanagement.status"
-      provides="zope.schema.interfaces.IVocabularyFactory" />
-
   <adapter
     for=".interfaces.IIteration"
     provides=".interfaces.IStoriesListing"
@@ -58,5 +42,6 @@
     factory=".stories_listing.StoriesListing"
   />
 
+  <include file="vocabularies.zcml" />
 
 </configure>
