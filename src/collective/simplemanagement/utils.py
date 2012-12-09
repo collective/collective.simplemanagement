@@ -1,10 +1,10 @@
 from zope.location.interfaces import ILocation
 from Products.CMFCore.utils import getToolByName
 
-from .interfaces import IStory, IProject
-# TODO: harmonize differences display and warning display
-# Also move config into p.a.registry
-from .configure import WARNING_DELTA, WARNING_DELTA_PERCENT
+from .interfaces import IStory
+from .interfaces import IProject
+from .interfaces import IIteration
+from .configure import Settings
 
 
 def boolize(value):
@@ -13,26 +13,44 @@ def boolize(value):
     return False
 
 
-def get_project(context, default=None):
+def get_ancestor(iface, context, default=None):
+    """Gets the ancestor of ``context`` providing ``iface``.
+
+    Returns ``default`` if not found.
+    """
     current = context
-    while ILocation.providedBy(current) and current.__parent__ is not None:
-        if IProject.providedBy(current):
+    while current is not None:
+        if iface.providedBy(current):
             return current
+        if not ILocation.providedBy(current):
+            return default
         current = current.__parent__
     return default
 
 
-def get_timing_status(difference):
+def get_project(context, default=None):
+    return get_ancestor(IProject, context, default)
+
+
+def get_iteration(context, default=None):
+    return get_ancestor(IIteration, context, default)
+
+
+def get_timing_status(difference, settings=None):
+    if settings is None:
+        settings = Settings()
     # TODO: the delta should be a percentage and probably differentiate more
     difference_status = 'success'
     if difference < 0:
         difference_status = 'danger'
-    if difference > WARNING_DELTA:
+    if difference > settings.warning_delta:
         difference_status = 'warning'
     return difference_status
 
 
 def get_timings(context, portal_catalog=None):
+    # TODO: this probably breaks with the presence of estimate
+    # in Iteration too, and the fact that everywhere is a decimal.
     # TODO: this can be slow: see if it can be asyncronous (via javascript)
     if portal_catalog is None:
         pc = getToolByName(context, 'portal_catalog')
@@ -60,8 +78,10 @@ def get_timings(context, portal_catalog=None):
     }
 
 
-def get_difference_class(a, b):
-    if (abs(float(a - b)) / float(max(a, b))) > WARNING_DELTA_PERCENT:
+def get_difference_class(a, b, settings=None):
+    if settings is None:
+        settings = Settings()
+    if (abs(a - b) / max(a, b)) > settings.warning_delta_percent:
         return 'danger'
     return 'success'
 

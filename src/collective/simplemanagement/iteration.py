@@ -2,6 +2,7 @@ from Acquisition import aq_inner
 from five import grok
 
 from zope.security import checkPermission
+from zope.lifecycleevent.interfaces import IObjectMovedEvent
 from z3c.form import form, field
 from z3c.form.interfaces import IFormLayer
 from z3c.relationfield.relation import create_relation
@@ -19,6 +20,12 @@ from .interfaces import IIteration
 from .interfaces import IStoriesListing
 from .interfaces import IQuickForm
 from .interfaces import IStory
+from .utils import get_timings
+from .utils import get_iteration
+from .timeline import BaseTimeline
+from .timeline import timeline
+from .timeline import snapshot
+from .configure import Settings
 
 
 class StoryForm(form.AddForm):
@@ -89,3 +96,43 @@ class View(grok.View, IterationViewMixin):
         start = self.context.toLocalizedTime(self.context.start.isoformat())
         end = self.context.toLocalizedTime(self.context.end.isoformat())
         return dict(start=start, end=end)
+
+
+@timeline(IIteration)
+class IterationTimeline(BaseTimeline):
+    # pylint: disable=W0613
+
+    indexes = (
+        'estimate',
+        'todo',
+        'done'
+    )
+
+    def index(self, indexes, previous):
+        settings = Settings()
+        context = self.__parent__
+        values = {}
+        if 'estimate' in indexes:
+            values['estimate'] = context.estimate * settings.man_day_hours
+        if 'todo' in indexes or 'done' in indexes:
+            timings = get_timings(context)
+            if 'todo' in indexes:
+                values['todo'] = timings['estimate']
+            if 'done' in indexes:
+                values['done'] = timings['resource_time']
+        return values
+
+
+def timeline_update(object_, event):
+    iterations = []
+    if not IIteration.providedBy(object_):
+        if IObjectMovedEvent.providedBy(event):
+            for parent in [event.oldParent, event.newParent]:
+                if parent:
+                    iteration = get_iteration(parent)
+                    if iteration is not None:
+                        iterations.append(iteration)
+    else:
+        iterations.append(object_)
+    for iteration in iterations:
+        snapshot(iteration)

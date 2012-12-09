@@ -4,9 +4,10 @@ from BTrees.OOBTree import OOBTree
 from zope.interface import implements
 from zope.component import adapter, queryAdapter
 from zope.annotation import factory, IAnnotations
+from zope.lifecycleevent.interfaces import IObjectMovedEvent
 
 from .interfaces import ITimeline
-from .configure import TIMELINE_ANNOTATIONS_KEY, TIMELINE_INDEXER_PREFIX
+from .configure import TIMELINE_ANNOTATIONS_KEY
 from .utils import datetimerange
 
 
@@ -16,12 +17,6 @@ def timeline(*ifaces):
     along with calling the whole annotation factory thingamajig.
     """
     def _wrapper(cls):
-        all_indexes = []
-        for name in dir(cls):
-            if name.startswith(TIMELINE_INDEXER_PREFIX) and \
-                    callable(getattr(cls, name)):
-                all_indexes.append(name[len(TIMELINE_INDEXER_PREFIX):])
-        cls.all_indexes = tuple(all_indexes)
         return factory(adapter(*ifaces)(cls),
                        key=TIMELINE_ANNOTATIONS_KEY)
     return _wrapper
@@ -37,6 +32,18 @@ class BaseTimeline(Persistent):
     def __init__(self):
         self.data = OOBTree()
 
+    @property
+    def context(self):
+        return self.__parent__
+
+    def index(self, indexes, previous):
+        """Returns a dictionary whose keys are the values in ``indexes``
+        and the values the index values as of now.
+
+        ``previous`` is a dictionary containing the last inserted
+        values of the specified ``indexes``.
+        """
+
     def snapshot(self, indexes=None, insert=True):
         """Should return a dictionary which has a key
         for every item in ``indexes``,
@@ -44,26 +51,17 @@ class BaseTimeline(Persistent):
         **at this moment** on the context (``__parent__``).
         """
         now = datetime.now()
-        snapshot = {}
+        previous = {}
         if indexes is None:
-            indexes = self.all_indexes
+            indexes = self.indexes
         for index in indexes:
-            data = {
-                'prefix': TIMELINE_INDEXER_PREFIX,
-                'index': index
-            }
-            indexer = getattr(self, '%(prefix)s%(index)s' % data, None)
-            if indexer is None:
-                raise KeyError(
-                    ("No indexer for '%(index)s' "
-                     "(maybe add a '%(prefix)s%(index)s' method to the "
-                     "timeline adapter)") % data)
-            snapshot[index] = indexer(self._get_value(index))
+            previous[index] = self._get_value(index)
+        snapshot_ = self.index(indexes, previous)
         if insert:
-            for index, value in snapshot.items():
+            for index, value in snapshot_.items():
                 index = self._get_index(index)
                 index[now] = value
-        return snapshot
+        return snapshot_
 
     def _get_index(self, index):
         return self.data.setdefault(index, OOBTree())
@@ -80,13 +78,23 @@ class BaseTimeline(Persistent):
         if indexes is None:
             indexes = self.all_indexes
         for step in datetimerange(from_, to, resolution):
-            yield { i: self._get_value(i, step) for i in indexes }
+            yield (step, { i: self._get_value(i, step) for i in indexes })
+
+
+def snapshot(object_, **kwargs):
+    timeline_ = ITimeline(object_)
+    timeline_.snapshot(**kwargs)
+
+
+def subscriber(object_, event):
+    if not IObjectMovedEvent.providedBy(event):
+        snapshot(object_)
 
 
 def clear_timeline(object_):
     """Clears the timeline (throws away all data) for ``object_``.
 
-    Should be sued by uninstall.
+    Should be used by uninstall.
     """
     annotations = queryAdapter(object_, IAnnotations, default={})
     if TIMELINE_ANNOTATIONS_KEY in annotations:

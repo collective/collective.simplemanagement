@@ -1,3 +1,4 @@
+from decimal import Decimal
 from zope import schema
 from zope.interface import Interface
 
@@ -140,18 +141,19 @@ class IIteration(form.Schema):
 
     start = schema.Date(title=_(u"Start"))
     end = schema.Date(title=_(u"End"))
+    estimate = schema.Decimal(title=_(u"Estimate (man days)"))
 
 
 class IEpic(form.Schema):
 
     text = schema.Text(title=_(u"Text"))
-    estimate = schema.Int(title=_(u"Estimate (man days)"))
+    estimate = schema.Decimal(title=_(u"Estimate (man days)"))
 
 
 class IStory(form.Schema):
 
     text = schema.Text(title=_(u"Text"))
-    estimate = schema.Int(title=_(u"Estimate (man hours)"))
+    estimate = schema.Decimal(title=_(u"Estimate (man hours)"))
 
     assigned_to = schema.List(
         title=_(u"Assignees"),
@@ -176,7 +178,7 @@ class IStory(form.Schema):
 class IBooking(form.Schema):
 
     date = schema.Date(title=_(u"Date"))
-    time = schema.Int(title=_(u"Hours"))
+    time = schema.Decimal(title=_(u"Hours"))
     related = RelationChoice(
         title=_(u"Related activity"),
         source=ObjPathSourceBinder(),
@@ -240,3 +242,24 @@ class ITimeline(Interface):
         (if the index is missing for that period,
         it is not present in the dictionary) and the values the values.
         """
+
+
+class ISettings(Interface):
+    """The settings of simplemanagement.
+    """
+
+    warning_delta = schema.Decimal()
+    man_day_hours = schema.Decimal()
+    warning_delta_percent = schema.Decimal(
+        min=Decimal("0.1"),
+        max=Decimal("1.0")
+    )
+    statuses = schema.List(
+        value_type=schema.TextLine()
+    )
+    env_types = schema.List(
+        value_type=schema.TextLine()
+    )
+    resource_roles = schema.List(
+        value_type=schema.TextLine()
+    )

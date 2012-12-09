@@ -1,0 +1,39 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           xmlns:gs="http://namespaces.zope.org/genericsetup"
+           xmlns:grok="http://namespaces.zope.org/grok"
+           i18n_domain="collective.simplemanagement">
+
+  <!-- ITERATION
+
+       Update the iteration timeline when stories or bookings
+       are moved in or out, added or deleted.
+       Also when the iteration is created and when it is modified
+       (but not deleted)
+       Note: IObjectMovedEvent covers add and delete too -->
+
+  <subscriber for=".interfaces.IStory
+                   zope.lifecycleevent.interfaces.IObjectMovedEvent"
+              handler=".iteration.timeline_update" />
+
+  <subscriber for=".interfaces.IStory
+                   zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+              handler=".iteration.timeline_update" />
+
+  <subscriber for=".interfaces.IBooking
+                   zope.lifecycleevent.interfaces.IObjectMovedEvent"
+              handler=".iteration.timeline_update" />
+
+  <subscriber for=".interfaces.IBooking
+                   zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+              handler=".iteration.timeline_update" />
+
+  <subscriber for=".interfaces.IIteration
+                   zope.lifecycleevent.interfaces.IObjectAddedEvent"
+              handler=".iteration.timeline_update" />
+
+  <subscriber for=".interfaces.IIteration
+                   zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+              handler=".iteration.timeline_update" />
+
+</configure>

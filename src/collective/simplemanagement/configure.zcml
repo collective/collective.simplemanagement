@@ -11,7 +11,7 @@
   <include package=".browser" />
 
   <subscriber for=".interfaces.IProject
-                   zope.app.container.interfaces.IObjectAddedEvent"
+                   zope.lifecycleevent.interfaces.IObjectAddedEvent"
               handler=".events.create_project_collaterals" />
 
   <subscriber for=".interfaces.IProject
@@ -43,5 +43,7 @@
   />
 
   <include file="vocabularies.zcml" />
+
+  <include file="timelines.zcml" />
 
 </configure>

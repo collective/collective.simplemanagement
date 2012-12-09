@@ -2,15 +2,18 @@ from zope.interface import implements
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.interfaces import IVocabularyFactory
 
-from .configure import STATUS_ITEMS
-from .configure import ENV_TYPES
-from .configure import ROLES
+from .configure import Settings
 from .utils import get_project
 
 
 class baseVocabulary(object):
     implements(IVocabularyFactory)
-    terms = []
+    terms_attribute = ''
+
+    @property
+    def terms(self):
+        settings = Settings()
+        return getattr(settings, self.terms_attribute)
 
     def __call__(self, context):
         terms = []
@@ -23,15 +26,18 @@ class baseVocabulary(object):
 
 
 class statusVocab(baseVocabulary):
-    terms = STATUS_ITEMS
+
+    terms_attribute = 'statuses'
 
 
 class envtypesVocab(baseVocabulary):
-    terms = ENV_TYPES
+
+    terms_attribute = 'env_types'
 
 
 class rolesVocab(baseVocabulary):
-    terms = ROLES
+
+    terms_attribute = 'resource_roles'
 
 
 class milestonesVocab(object):
