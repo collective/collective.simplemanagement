@@ -1,19 +1,50 @@
 # -*- coding: utf-8 -*-
-from plone.app.testing import PloneWithPackageLayer
+from decimal import Decimal
+from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import IntegrationTesting
+from plone.app.testing import FunctionalTesting
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import login
+from plone.app.testing import setRoles
 
-import collective.simplemanagement
+
+class BaseLayer(PloneSandboxLayer):
+
+    defaultBases = (PLONE_FIXTURE,)
+
+    def setUpZope(self, app, configurationContext): # pylint: disable=W0613
+        # Load ZCML
+        import collective.simplemanagement
+        self.loadZCML(package=collective.simplemanagement, name='testing.zcml')
+
+    def setUpPloneSite(self, portal):
+        # Install into Plone site using portal_setup
+        self.applyProfile(portal, 'collective.simplemanagement:default')
+        setRoles(portal, TEST_USER_ID, ['Manager'])
+        login(portal, TEST_USER_NAME)
+        portal.invokeFactory('Project', 'test-project', title=u"Test project")
+        test_project = portal['test-project']
+        stories = []
+        for i in xrange(1, 4):
+            test_project.invokeFactory('Story', 'test-story-%d' % i,
+                                       title=(u"Test story %d" % i))
+            stories.append(test_project['test-story-%d' % i])
+            stories[-1].estimate = Decimal(10*i)
+        setRoles(portal, TEST_USER_ID, ['Member'])
 
 
-SIMPLEMANAGEMENT = PloneWithPackageLayer(
-    zcml_package=collective.simplemanagement,
-    zcml_filename='testing.zcml',
-    gs_profile_id='collective.simplemanagement:default',
-    name="SIMPLEMANAGEMENT"
+BASE = BaseLayer()
+
+
+BASE_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(BASE,),
+    name="collective.simplemanagement base integration testing"
 )
 
 
-SIMPLEMANAGEMENT_INTEGRATION = IntegrationTesting(
-    bases=(SIMPLEMANAGEMENT,),
-    name="SIMPLEMANAGEMENT_INTEGRATION"
+BASE_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(BASE,),
+    name="collective.simplemanagement base functional testing"
 )

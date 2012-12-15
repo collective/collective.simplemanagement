@@ -43,7 +43,8 @@ setup(
     ],
     extras_require={
         'test': [
-            'plone.app.testing',
+            'mock',
+            'plone.app.testing'
         ],
     },
     entry_points="""
