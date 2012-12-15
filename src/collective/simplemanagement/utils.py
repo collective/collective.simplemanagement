@@ -36,18 +36,6 @@ def get_iteration(context, default=None):
     return get_ancestor(IIteration, context, default)
 
 
-def get_timing_status(difference, settings=None):
-    if settings is None:
-        settings = Settings()
-    # TODO: the delta should be a percentage and probably differentiate more
-    difference_status = 'success'
-    if difference < 0:
-        difference_status = 'danger'
-    if difference > settings.warning_delta:
-        difference_status = 'warning'
-    return difference_status
-
-
 def get_timings(context, portal_catalog=None):
     # TODO: this probably breaks with the presence of estimate
     # in Iteration too, and the fact that everywhere is a decimal.
@@ -74,15 +62,19 @@ def get_timings(context, portal_catalog=None):
         'estimate': estimate,
         'resource_time': hours,
         'difference': difference,
-        'time_status': get_timing_status(difference)
+        'time_status': get_difference_class(estimate, hours)
     }
 
 
 def get_difference_class(a, b, settings=None):
     if settings is None:
         settings = Settings()
-    if (abs(a - b) / max(a, b)) > settings.warning_delta_percent:
-        return 'danger'
+    difference = a - b
+    if (abs(difference) / a) > settings.warning_delta_percent:
+        if difference < 0:
+            return 'danger'
+        else:
+            return 'warning'
     return 'success'
 
 

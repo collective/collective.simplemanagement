@@ -1,0 +1,29 @@
+<registry>
+  <records interface="collective.simplemanagement.interfaces.ISettings">
+    <value key="warning_delta_percent">0.1</value>
+    <value key="man_day_hours">8.0</value>
+    <value key="statuses">
+      <element>not_started|Not started</element>
+      <element>analysis|Analysis</element>
+      <element>offer|Offer</element>
+      <element>development|Development</element>
+      <element>staging|Staging</element>
+      <element>production|Production</element>
+      <element>maintenance|Maintenance</element>
+      <element>dead|Dead</element>
+    </value>
+    <value key="env_types">
+      <element>prototype|Prototype</element>
+      <element>staging|Staging</element>
+      <element>production|Production</element>
+    </value>
+    <value key="resource_roles">
+      <element>account|Account</element>
+      <element>project_manager|Project manager</element>
+      <element>technical_lead|Technical lead</element>
+      <element>developer|Developer</element>
+      <element>designer|Designer</element>
+      <element>sysadmin|Sysadmin</element>
+    </value>
+  </records>
+</registry>

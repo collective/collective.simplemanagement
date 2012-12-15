@@ -8,7 +8,7 @@ from .interfaces import IStoriesListing
 from .utils import get_timings
 from .utils import get_assignees_details
 from .utils import get_epic_by_story
-from .utils import get_timing_status
+from .utils import get_difference_class
 
 
 class StoriesListing(object):
@@ -79,7 +79,8 @@ class StoriesListing(object):
                 'can_review': story.user_can_review()
             })
 
-        self.totals['time_status'] = get_timing_status(
-            self.totals['difference']
+        self.totals['time_status'] = get_difference_class(
+            self.totals['estimate'],
+            self.totals['hours']
         )
         return stories

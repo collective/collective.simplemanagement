@@ -91,11 +91,11 @@ class View(grok.View):
             'contained': False
         }
         classes = {
-            'stories':  get_difference_class(estimates['stories'],
-                                             estimates['epic'],
+            'stories':  get_difference_class(estimates['epic'],
+                                             estimates['stories'],
                                              settings),
-            'spent': get_difference_class(time_spent,
-                                          estimates['epic'],
+            'spent': get_difference_class(estimates['epic'],
+                                          time_spent,
                                           settings),
             'contained': False
         }
@@ -104,8 +104,8 @@ class View(grok.View):
                 [c['estimate'] for c in contained]) * settings.man_day_hours
             differences['contained'] = estimates['contained'] - \
                 estimates['epic']
-            classes['contained'] = get_difference_class(estimates['contained'],
-                                                        estimates['epic'],
+            classes['contained'] = get_difference_class(estimates['epic'],
+                                                        estimates['contained'],
                                                         settings)
         return {
             'estimates': estimates,

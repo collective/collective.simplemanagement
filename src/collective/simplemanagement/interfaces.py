@@ -248,18 +248,26 @@ class ISettings(Interface):
     """The settings of simplemanagement.
     """
 
-    warning_delta = schema.Decimal()
-    man_day_hours = schema.Decimal()
     warning_delta_percent = schema.Decimal(
+        title=_(u"Warning delta"),
+        description=_(u"The percentage (between 0 and 1) "
+                      u"after which a deviation needs to be highlighted"),
         min=Decimal("0.1"),
         max=Decimal("1.0")
     )
+    man_day_hours = schema.Decimal(
+        title=_(u"Man day hours"),
+        description=_(u"The number of hours a person works in a day")
+    )
     statuses = schema.List(
+        title=_(u"Project statuses"),
         value_type=schema.TextLine()
     )
     env_types = schema.List(
+        title=_(u"Environment types"),
         value_type=schema.TextLine()
     )
     resource_roles = schema.List(
+        title=_(u"Resource roles"),
         value_type=schema.TextLine()
     )
