@@ -2,7 +2,7 @@ from datetime import datetime
 from persistent import Persistent
 from BTrees.OOBTree import OOBTree
 from zope.interface import implements
-from zope.component import adapter, queryAdapter
+from zope.component import adapter, queryAdapter, provideAdapter
 from zope.annotation import factory, IAnnotations
 from zope.lifecycleevent.interfaces import IObjectMovedEvent
 
@@ -17,8 +17,10 @@ def timeline(*ifaces):
     along with calling the whole annotation factory thingamajig.
     """
     def _wrapper(cls):
-        return factory(adapter(*ifaces)(cls),
-                       key=TIMELINE_ANNOTATIONS_KEY)
+        adapter_ = factory(adapter(*ifaces)(cls),
+                          key=TIMELINE_ANNOTATIONS_KEY)
+        provideAdapter(adapter_)
+        return adapter_
     return _wrapper
 
 
