@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from decimal import Decimal
+from plone.testing import z2
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import IntegrationTesting
@@ -18,6 +19,7 @@ class BaseLayer(PloneSandboxLayer):
         # Load ZCML
         import collective.simplemanagement
         self.loadZCML(package=collective.simplemanagement, name='testing.zcml')
+        z2.installProduct(app, 'Products.Poi')
 
     def setUpPloneSite(self, portal):
         # Install into Plone site using portal_setup
