@@ -67,7 +67,7 @@ class BaseTimeline(Persistent):
         return self.data.setdefault(index, OOBTree())
 
     def _get_value(self, index, limit=None):
-        index = self._get_index(index, OOBTree())
+        index = self._get_index(index)
         if len(index) == 0:
             return None
         if limit is None:

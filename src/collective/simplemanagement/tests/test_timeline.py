@@ -13,9 +13,11 @@ class DummyTimeline(BaseTimeline):
     indexes = ('a', 'b')
 
     def index(self, indexes, previous):
-        return {
-            k: previous.get(k, 0) + 1 for k in indexes
-        }
+        result = {}
+        for index in indexes:
+            result[index] = 1 if previous[index] is None else \
+                previous[index] + 1
+        return result
 
 
 class TestTimeline(unittest.TestCase):
