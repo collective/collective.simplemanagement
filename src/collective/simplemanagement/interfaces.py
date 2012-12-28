@@ -238,8 +238,13 @@ class ITimeline(ILocation):
     It can be thought of as a versioned, local catalog of an object.
     """
 
-    def snapshot(indexes=None, insert=True):
+    def snapshot(context, indexes=None, insert=True):
         """Take a snapshot of the context and add it to the timeline.
+
+        ``context`` is the adapter context, which is passed for convenience
+        (as :func:`~zope.annotation.factory.factory`
+        sometimes wraps the whole thing in a location proxy,
+        making everything extra difficult).
 
         ``indexes`` can optionally restrict snapshotting just to some of them
         (``None`` means *all*).

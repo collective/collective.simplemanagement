@@ -13,11 +13,15 @@ from ..timeline import BaseTimeline
 from ..testing import BASE_INTEGRATION_TESTING
 
 
+DUMMY_CONTEXT = object()
+
+
 class DummyTimeline(BaseTimeline):
 
     indexes = ('a', 'b')
 
-    def index(self, indexes, previous):
+    def index(self, context, indexes, previous):
+        assert context is DUMMY_CONTEXT
         result = {}
         for index in indexes:
             result[index] = 1 if previous[index] is None else \
@@ -34,7 +38,7 @@ class TestTimeline(unittest.TestCase):
         timeline = DummyTimeline()
         self.assertNotIn('a', timeline.data)
         self.assertNotIn('b', timeline.data)
-        timeline.snapshot()
+        timeline.snapshot(DUMMY_CONTEXT)
         self.assertIn('a', timeline.data)
         self.assertIn('b', timeline.data)
         self.assertEqual(
@@ -48,7 +52,7 @@ class TestTimeline(unittest.TestCase):
         before = now
         now = datetime(2012, 12, 16, 0, 0, 0)
         mock_datetime.now.return_value = now
-        timeline.snapshot()
+        timeline.snapshot(DUMMY_CONTEXT)
         self.assertEqual(
             tuple(timeline.data['a'].items()),
             ((before, 1), (now, 2))
@@ -65,7 +69,7 @@ class TestTimeline(unittest.TestCase):
         timeline = DummyTimeline()
         self.assertNotIn('a', timeline.data)
         self.assertNotIn('b', timeline.data)
-        timeline.snapshot()
+        timeline.snapshot(DUMMY_CONTEXT)
         self.assertIn('a', timeline.data)
         self.assertIn('b', timeline.data)
         self.assertEqual(
@@ -78,7 +82,7 @@ class TestTimeline(unittest.TestCase):
         )
         two = datetime(2012, 12, 16, 0, 0, 0)
         mock_datetime.now.return_value = two
-        timeline.snapshot(indexes=['a'])
+        timeline.snapshot(DUMMY_CONTEXT, indexes=['a'])
         self.assertEqual(
             tuple(timeline.data['a'].items()),
             ((one, 1), (two, 2))
@@ -89,7 +93,7 @@ class TestTimeline(unittest.TestCase):
         )
         three = datetime(2012, 12, 17, 0, 0, 0)
         mock_datetime.now.return_value = three
-        timeline.snapshot(indexes=['b'])
+        timeline.snapshot(DUMMY_CONTEXT, indexes=['b'])
         self.assertEqual(
             tuple(timeline.data['a'].items()),
             ((one, 1), (two, 2))
@@ -103,7 +107,7 @@ class TestTimeline(unittest.TestCase):
         timeline = DummyTimeline()
         self.assertNotIn('a', timeline.data)
         self.assertNotIn('b', timeline.data)
-        result = timeline.snapshot(insert=False)
+        result = timeline.snapshot(DUMMY_CONTEXT, insert=False)
         self.assertIn('a', timeline.data)
         self.assertIn('b', timeline.data)
         self.assertEqual(len(timeline.data['a'].items()), 0)
@@ -118,7 +122,7 @@ class TestTimeline(unittest.TestCase):
         timeline = DummyTimeline()
         for day in xrange(1, 32):
             mock_datetime.now.return_value = datetime(2012, 12, day, 0, 0, 0)
-            timeline.snapshot()
+            timeline.snapshot(DUMMY_CONTEXT)
         weekly = timeline.slice(
             datetime(2012, 12, 3),
             datetime(2012, 12, 31),

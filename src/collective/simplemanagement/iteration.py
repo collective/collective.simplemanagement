@@ -109,9 +109,8 @@ class IterationTimeline(BaseTimeline):
         'done'
     )
 
-    def index(self, indexes, previous):
+    def index(self, context, indexes, previous):
         settings = Settings()
-        context = self.__parent__
         values = {}
         if 'estimate' in indexes:
             values['estimate'] = quantize(

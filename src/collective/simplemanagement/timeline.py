@@ -36,23 +36,21 @@ class BaseTimeline(Persistent):
         self.__parent__ = None
         self.__name__ = None
 
-    @property
-    def context(self):
-        return self.__parent__
-
-    def index(self, indexes, previous):
+    def index(self, context, indexes, previous):
         """Returns a dictionary whose keys are the values in ``indexes``
         and the values the index values as of now.
+
+        ``context`` is the adapter context.
 
         ``previous`` is a dictionary containing the last inserted
         values of the specified ``indexes``.
         """
 
-    def snapshot(self, indexes=None, insert=True):
+    def snapshot(self, context, indexes=None, insert=True):
         """Should return a dictionary which has a key
         for every item in ``indexes``,
         and whose values are the correct values for the index
-        **at this moment** on the context (``__parent__``).
+        **at this moment** on the ``context``.
         """
         now = datetime.now()
         previous = {}
@@ -60,7 +58,7 @@ class BaseTimeline(Persistent):
             indexes = self.indexes
         for index in indexes:
             previous[index] = self._get_value(index)
-        snapshot_ = self.index(indexes, previous)
+        snapshot_ = self.index(context, indexes, previous)
         if insert:
             for index, value in snapshot_.items():
                 index = self._get_index(index)
@@ -99,12 +97,7 @@ class BaseTimeline(Persistent):
 
 def snapshot(object_, **kwargs):
     timeline_ = ITimeline(object_)
-    # Acquisition, I _so_ love you.
-    # Remove the line below,
-    # and due to the fact that __parent__ apparently works via acquisition,
-    # and not the other way around, everything will explode.
-    timeline_.__parent__ = object_
-    timeline_.snapshot(**kwargs)
+    timeline_.snapshot(object_, **kwargs)
 
 
 def subscriber(object_, event):
