@@ -20,7 +20,7 @@ def timeline(*ifaces):
         adapter_ = factory(adapter(*ifaces)(cls),
                           key=TIMELINE_ANNOTATIONS_KEY)
         provideAdapter(adapter_)
-        return adapter_
+        return cls
     return _wrapper
 
 
