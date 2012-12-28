@@ -1,10 +1,17 @@
+from copy import copy
+from decimal import Decimal
+
 from zope.location.interfaces import ILocation
 from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IStory
 from .interfaces import IProject
 from .interfaces import IIteration
-from .configure import Settings
+from .configure import Settings, DECIMAL_QUANT
+
+
+def quantize(value):
+    return value.quantize(DECIMAL_QUANT)
 
 
 def boolize(value):
@@ -51,17 +58,17 @@ def get_timings(context, portal_catalog=None):
             'path': '/'.join(context.getPhysicalPath()),
             'portal_type': 'Story'
         })
-        estimate = sum([s.estimate for s in stories])
+        estimate = sum([s.estimate for s in stories], Decimal("0.00"))
     bookings = pc.searchResults({
         'path': '/'.join(context.getPhysicalPath()),
         'portal_type': 'Booking'
     })
-    hours = sum([b.time for b in bookings])
+    hours = sum([b.time for b in bookings], Decimal("0.00"))
     difference = estimate - hours
     return {
-        'estimate': estimate,
-        'resource_time': hours,
-        'difference': difference,
+        'estimate': quantize(estimate),
+        'resource_time': quantize(hours),
+        'difference': quantize(difference),
         'time_status': get_difference_class(estimate, hours)
     }
 
@@ -148,6 +155,7 @@ class datetimerange(object):
     def next(self):
         if self.current >= self.limit:
             raise StopIteration()
-        current = self.current
-        self.current = self.current + self.step
-        return current
+        current = copy(self.current)
+        next = current + self.step
+        self.current = next
+        return (current, next)

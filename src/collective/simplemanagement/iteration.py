@@ -20,6 +20,7 @@ from .interfaces import IIteration
 from .interfaces import IStoriesListing
 from .interfaces import IQuickForm
 from .interfaces import IStory
+from .utils import quantize
 from .utils import get_timings
 from .utils import get_iteration
 from .timeline import BaseTimeline
@@ -113,7 +114,9 @@ class IterationTimeline(BaseTimeline):
         context = self.__parent__
         values = {}
         if 'estimate' in indexes:
-            values['estimate'] = context.estimate * settings.man_day_hours
+            values['estimate'] = quantize(
+                context.estimate * settings.man_day_hours
+            )
         if 'todo' in indexes or 'done' in indexes:
             timings = get_timings(context)
             if 'todo' in indexes:
@@ -132,6 +135,8 @@ def timeline_update(object_, event):
                     iteration = get_iteration(parent)
                     if iteration is not None:
                         iterations.append(iteration)
+        else:
+            iterations.append(get_iteration(object_))
     else:
         iterations.append(object_)
     for iteration in iterations:

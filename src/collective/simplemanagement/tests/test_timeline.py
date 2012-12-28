@@ -1,8 +1,12 @@
-from datetime import datetime
-from datetime import timedelta
-import unittest2 as unittest
+from datetime import date, datetime, timedelta
+from decimal import Decimal
 
+import unittest2 as unittest
 from mock import patch
+
+from zope.event import notify
+from zope.lifecycleevent import ObjectModifiedEvent
+from plone.app.testing import (TEST_USER_ID, TEST_USER_NAME, login, setRoles)
 
 from ..interfaces import ITimeline
 from ..timeline import BaseTimeline
@@ -123,10 +127,10 @@ class TestTimeline(unittest.TestCase):
         self.assertEqual(
             [ t for t in weekly ],
             [
-                (datetime(2012, 12, 3), { 'a': 3, 'b': 3 }),
-                (datetime(2012, 12, 10), { 'a': 10, 'b': 10 }),
-                (datetime(2012, 12, 17), { 'a': 17, 'b': 17 }),
-                (datetime(2012, 12, 24), { 'a': 24, 'b': 24 }),
+                (datetime(2012, 12, 3), { 'a': 9, 'b': 9 }),
+                (datetime(2012, 12, 10), { 'a': 16, 'b': 16 }),
+                (datetime(2012, 12, 17), { 'a': 23, 'b': 23 }),
+                (datetime(2012, 12, 24), { 'a': 30, 'b': 30 }),
             ]
         )
         daily = timeline.slice(
@@ -161,19 +165,142 @@ class TestTimeline(unittest.TestCase):
 
 class TestIteration(unittest.TestCase):
 
+    maxDiff = None
+
     layer = BASE_INTEGRATION_TESTING
 
-    def test_create_iteration(self):
-        pass
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.project = self.portal['test-project']
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        login(self.portal, TEST_USER_NAME)
 
-    def test_update_iteration(self):
-        pass
+    def tearDown(self):
+        setRoles(self.portal, TEST_USER_ID, ['Member'])
 
-    def test_add_story(self):
-        pass
+    def assertTimelineEqual(self, object_, from_, to, step, list_):
+        timeline = ITimeline(object_)
+        self.assertEqual(
+            [ e for e in timeline.slice(from_, to, step) ],
+            list_
+        )
 
-    def test_update_story(self):
-        pass
+    @patch('collective.simplemanagement.timeline.datetime', autospec=True)
+    def test_create_iteration(self, mock_datetime):
+        mock_datetime.now.return_value = datetime(2012, 12, 28, 8, 0, 0)
+        self.project.invokeFactory('Iteration',
+                                   'iteration-1',
+                                   title=u"Iteration 1",
+                                   start=date(2012, 12, 28),
+                                   end=date(2012, 12, 31),
+                                   estimate=Decimal("1.00"))
+        iteration_1 = self.project['iteration-1']
+        self.assertTimelineEqual(
+            iteration_1,
+            datetime(2012, 12, 28),
+            datetime(2012, 12, 29),
+            timedelta(days=1),
+            [
+                (datetime(2012, 12, 28), { 'estimate': Decimal("8.00"),
+                                           'todo': Decimal("0.00"),
+                                           'done': Decimal("0.00") })
+            ]
+        )
+
+    @patch('collective.simplemanagement.timeline.datetime', autospec=True)
+    def test_update_iteration(self, mock_datetime):
+        mock_datetime.now.return_value = datetime(2012, 12, 28, 8, 0, 0)
+        self.project.invokeFactory('Iteration',
+                                   'iteration-1',
+                                   title=u"Iteration 1",
+                                   start=date(2012, 12, 28),
+                                   end=date(2012, 12, 31),
+                                   estimate=Decimal("1.00"))
+        iteration_1 = self.project['iteration-1']
+        mock_datetime.now.return_value = datetime(2012, 12, 29, 8, 0, 0)
+        iteration_1.estimate = Decimal("2.0")
+        notify(ObjectModifiedEvent(iteration_1))
+        self.assertTimelineEqual(
+            iteration_1,
+            datetime(2012, 12, 28),
+            datetime(2012, 12, 30),
+            timedelta(days=1),
+            [
+                (datetime(2012, 12, 28), { 'estimate': Decimal("8.00"),
+                                           'todo': Decimal("0.00"),
+                                           'done': Decimal("0.00") }),
+                (datetime(2012, 12, 29), { 'estimate': Decimal("16.00"),
+                                           'todo': Decimal("0.00"),
+                                           'done': Decimal("0.00") })
+            ]
+        )
+
+    @patch('collective.simplemanagement.timeline.datetime', autospec=True)
+    def test_add_story(self, mock_datetime):
+        mock_datetime.now.return_value = datetime(2012, 12, 28, 8, 0, 0)
+        self.project.invokeFactory('Iteration',
+                                   'iteration-1',
+                                   title=u"Iteration 1",
+                                   start=date(2012, 12, 28),
+                                   end=date(2012, 12, 31),
+                                   estimate=Decimal("1.00"))
+        iteration_1 = self.project['iteration-1']
+        mock_datetime.now.return_value = datetime(2012, 12, 29, 8, 0, 0)
+        iteration_1.invokeFactory('Story',
+                                  'story-1-1',
+                                  title=u"Story 1.1",
+                                  estimate=Decimal("8.00"))
+        self.assertTimelineEqual(
+            iteration_1,
+            datetime(2012, 12, 28),
+            datetime(2012, 12, 30),
+            timedelta(days=1),
+            [
+                (datetime(2012, 12, 28), { 'estimate': Decimal("8.00"),
+                                           'todo': Decimal("0.00"),
+                                           'done': Decimal("0.00") }),
+                (datetime(2012, 12, 29), { 'estimate': Decimal("8.00"),
+                                           'todo': Decimal("8.00"),
+                                           'done': Decimal("0.00") })
+            ]
+        )
+
+    @patch('collective.simplemanagement.timeline.datetime', autospec=True)
+    def test_update_story(self, mock_datetime):
+        mock_datetime.now.return_value = datetime(2012, 12, 28, 8, 0, 0)
+        self.project.invokeFactory('Iteration',
+                                   'iteration-1',
+                                   title=u"Iteration 1",
+                                   start=date(2012, 12, 28),
+                                   end=date(2012, 12, 31),
+                                   estimate=Decimal("1.00"))
+        iteration_1 = self.project['iteration-1']
+        mock_datetime.now.return_value = datetime(2012, 12, 29, 8, 0, 0)
+        iteration_1.invokeFactory('Story',
+                                  'story-1-1',
+                                  title=u"Story 1.1",
+                                  estimate=Decimal("8.00"))
+        story_1_1 = iteration_1['story-1-1']
+        mock_datetime.now.return_value = datetime(2012, 12, 30, 8, 0, 0)
+        story_1_1.estimate = Decimal("7.00")
+        notify(ObjectModifiedEvent(story_1_1))
+        self.assertTimelineEqual(
+            iteration_1,
+            datetime(2012, 12, 28),
+            datetime(2012, 12, 31),
+            timedelta(days=1),
+            [
+                (datetime(2012, 12, 28), { 'estimate': Decimal("8.00"),
+                                           'todo': Decimal("0.00"),
+                                           'done': Decimal("0.00") }),
+                (datetime(2012, 12, 29), { 'estimate': Decimal("8.00"),
+                                           'todo': Decimal("8.00"),
+                                           'done': Decimal("0.00") }),
+                (datetime(2012, 12, 30), { 'estimate': Decimal("8.00"),
+                                           'todo': Decimal("7.00"),
+                                           'done': Decimal("0.00") })
+            ]
+        )
 
     def test_delete_story(self):
         pass

@@ -23,7 +23,7 @@ class TestBookingHoles(unittest.TestCase):
         utility = getUtility(IBookingHoles)
         hole = BookingHole(
             date(2012, 12, 28),
-            Decimal("8.0"),
+            Decimal("8.00"),
             TEST_USER_ID,
             reason=u"sick"
         )
@@ -34,7 +34,7 @@ class TestBookingHoles(unittest.TestCase):
         self.assertEqual(len(utility), 1)
         hole = BookingHole(
             date(2012, 12, 28),
-            Decimal("4.0"),
+            Decimal("4.00"),
             TEST_USER_ID,
             reason=u"leave"
         )
@@ -48,7 +48,7 @@ class TestBookingHoles(unittest.TestCase):
         utility = getUtility(IBookingHoles)
         hole = BookingHole(
             date(2012, 12, 28),
-            Decimal("8.0"),
+            Decimal("8.00"),
             'user_1',
             reason=u"sick"
         )
@@ -56,7 +56,7 @@ class TestBookingHoles(unittest.TestCase):
         self.assertEqual(len(utility), 1)
         hole = BookingHole(
             date(2012, 12, 29),
-            Decimal("8.0"),
+            Decimal("8.00"),
             'user_1',
             reason=u"sick"
         )
@@ -64,7 +64,7 @@ class TestBookingHoles(unittest.TestCase):
         self.assertEqual(len(utility), 2)
         hole = BookingHole(
             date(2012, 12, 28),
-            Decimal("8.0"),
+            Decimal("8.00"),
             'user_2',
             reason=u"sick"
         )
@@ -72,7 +72,7 @@ class TestBookingHoles(unittest.TestCase):
         self.assertEqual(len(utility), 3)
         hole = BookingHole(
             date(2012, 12, 28),
-            Decimal("4.0"),
+            Decimal("4.00"),
             'user_1',
             reason=u"leave"
         )
@@ -85,7 +85,7 @@ class TestBookingHoles(unittest.TestCase):
             for day in [28, 29, 30]:
                 hole = BookingHole(
                     date(2012, 12, day),
-                    Decimal("8.0"),
+                    Decimal("8.00"),
                     user,
                     reason=u"sick"
                 )
@@ -111,7 +111,7 @@ class TestBookingHoles(unittest.TestCase):
         utility = getUtility(IBookingHoles)
         hole = BookingHole(
             date(2012, 12, 28),
-            Decimal("8.0"),
+            Decimal("8.00"),
             TEST_USER_ID,
             reason=u"sick"
         )
@@ -125,7 +125,7 @@ class TestBookingHoles(unittest.TestCase):
             for day in [28, 29, 30]:
                 hole = BookingHole(
                     date(2012, 12, day),
-                    Decimal("8.0"),
+                    Decimal("8.00"),
                     user,
                     reason=u"sick"
                 )
@@ -147,7 +147,7 @@ class TestBookingHoles(unittest.TestCase):
         for day in [7, 12, 13, 18, 20, 21, 22, 23, 28]:
             hole = BookingHole(
                 date(2012, 12, day),
-                Decimal("8.0"),
+                Decimal("8.00"),
                 TEST_USER_ID,
                 reason=u"sick"
             )

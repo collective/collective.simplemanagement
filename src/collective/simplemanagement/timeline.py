@@ -74,15 +74,27 @@ class BaseTimeline(Persistent):
         index = self._get_index(index)
         if len(index) == 0:
             return None
-        if limit is None:
-            return index[index.maxKey()]
-        return index[index.maxKey(limit)]
+        if limit is not None:
+            keys = index.keys(max=limit, excludemax=True)
+            if len(keys) > 0:
+                max_key = keys[-1]
+            else:
+                return None
+        else:
+            max_key = index.maxKey()
+        return index[max_key]
 
     def slice(self, from_, to, resolution, indexes=None):
         if indexes is None:
             indexes = self.indexes
-        for step in datetimerange(from_, to, resolution):
-            yield (step, { i: self._get_value(i, step) for i in indexes })
+        for current, next in datetimerange(from_, to, resolution):
+            result = {}
+            for index in indexes:
+                try:
+                    result[index] = self._get_value(index, next)
+                except ValueError:
+                    result[index] = None
+            yield (current, result)
 
 
 def snapshot(object_, **kwargs):

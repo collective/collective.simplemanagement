@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from zope.interface import implements
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
@@ -7,6 +9,7 @@ from .interfaces import ISettings
 TIMELINE_ANNOTATIONS_KEY = 'collective.simplemanagement.timeline'
 TRACKER_ID = 'issues'
 DOCUMENTS_ID = 'documents'
+DECIMAL_QUANT = Decimal("1.00")
 
 
 class Settings(object):
