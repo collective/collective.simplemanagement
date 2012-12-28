@@ -67,14 +67,15 @@ def get_timings(context, portal_catalog=None):
 
 
 def get_difference_class(a, b, settings=None):
-    if settings is None:
-        settings = Settings()
-    difference = a - b
-    if (abs(difference) / a) > settings.warning_delta_percent:
-        if difference < 0:
-            return 'danger'
-        else:
-            return 'warning'
+    if a > 0 or a < 0:
+        if settings is None:
+            settings = Settings()
+        difference = a - b
+        if (abs(difference) / a) > settings.warning_delta_percent:
+            if difference < 0:
+                return 'danger'
+            else:
+                return 'warning'
     return 'success'
 
 
