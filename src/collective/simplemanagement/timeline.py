@@ -99,6 +99,11 @@ class BaseTimeline(Persistent):
 
 def snapshot(object_, **kwargs):
     timeline_ = ITimeline(object_)
+    # Acquisition, I _so_ love you.
+    # Remove the line below,
+    # and due to the fact that __parent__ apparently works via acquisition,
+    # and not the other way around, everything will explode.
+    timeline_.__parent__ = object_
     timeline_.snapshot(**kwargs)
 
 
