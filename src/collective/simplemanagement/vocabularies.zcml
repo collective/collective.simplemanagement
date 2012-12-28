@@ -20,6 +20,11 @@
       provides="zope.schema.interfaces.IVocabularyFactory" />
 
   <utility
+      factory=".vocabularies.offDutyReasonsVocab"
+      name="collective.simplemanagement.off_duty_reasons"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
+  <utility
       factory=".vocabularies.milestonesVocab"
       name="collective.simplemanagement.milestones"
       provides="zope.schema.interfaces.IVocabularyFactory" />

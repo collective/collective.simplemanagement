@@ -25,5 +25,12 @@
       <element>designer|Designer</element>
       <element>sysadmin|Sysadmin</element>
     </value>
+    <value key="off_duty_reasons">
+      <element>sick|I was sick</element>
+      <element>leave|I was on leave</element>
+      <element>little_things|so many little things caugt me up</element>
+      <element>calamity|unexpected stuff happened</element>
+      <element>dog|the dog ate my Mac</element>
+    </value>
   </records>
 </registry>

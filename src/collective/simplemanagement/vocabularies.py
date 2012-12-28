@@ -40,6 +40,11 @@ class rolesVocab(baseVocabulary):
     terms_attribute = 'resource_roles'
 
 
+class offDutyReasonsVocab(baseVocabulary):
+
+    terms_attribute = 'off_duty_reasons'
+
+
 class milestonesVocab(object):
     implements(IVocabularyFactory)
 

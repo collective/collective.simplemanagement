@@ -1,4 +1,5 @@
 from datetime import datetime
+from datetime import timedelta
 import unittest2 as unittest
 
 from mock import patch
@@ -108,9 +109,54 @@ class TestTimeline(unittest.TestCase):
             { 'a': 1, 'b': 1 }
         )
 
-    def test_slice(self):
-        pass
-
+    @patch('collective.simplemanagement.timeline.datetime', autospec=True)
+    def test_slice(self, mock_datetime):
+        timeline = DummyTimeline()
+        for day in xrange(1, 32):
+            mock_datetime.now.return_value = datetime(2012, 12, day, 0, 0, 0)
+            timeline.snapshot()
+        weekly = timeline.slice(
+            datetime(2012, 12, 3),
+            datetime(2012, 12, 31),
+            timedelta(days=7)
+        )
+        self.assertEqual(
+            [ t for t in weekly ],
+            [
+                (datetime(2012, 12, 3), { 'a': 3, 'b': 3 }),
+                (datetime(2012, 12, 10), { 'a': 10, 'b': 10 }),
+                (datetime(2012, 12, 17), { 'a': 17, 'b': 17 }),
+                (datetime(2012, 12, 24), { 'a': 24, 'b': 24 }),
+            ]
+        )
+        daily = timeline.slice(
+            datetime(2012, 12, 3),
+            datetime(2012, 12, 7),
+            timedelta(days=1)
+        )
+        self.assertEqual(
+            [ t for t in daily ],
+            [
+                (datetime(2012, 12, 3), { 'a': 3, 'b': 3 }),
+                (datetime(2012, 12, 4), { 'a': 4, 'b': 4 }),
+                (datetime(2012, 12, 5), { 'a': 5, 'b': 5 }),
+                (datetime(2012, 12, 6), { 'a': 6, 'b': 6 }),
+            ]
+        )
+        hourly = timeline.slice(
+            datetime(2012, 12, 3, 22),
+            datetime(2012, 12, 4, 2),
+            timedelta(hours=1)
+        )
+        self.assertEqual(
+            [ t for t in hourly ],
+            [
+                (datetime(2012, 12, 3, 22), { 'a': 3, 'b': 3 }),
+                (datetime(2012, 12, 3, 23), { 'a': 3, 'b': 3 }),
+                (datetime(2012, 12, 4, 0), { 'a': 4, 'b': 4 }),
+                (datetime(2012, 12, 4, 1), { 'a': 4, 'b': 4 }),
+            ]
+        )
 
 class TestIteration(unittest.TestCase):
 

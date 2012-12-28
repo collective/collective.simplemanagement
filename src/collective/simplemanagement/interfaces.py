@@ -66,21 +66,32 @@ class IMilestone(Interface):
 
 class IProject(form.Schema):
 
-    customer = schema.TextLine(title=_(u"Customer"))
-    budget = schema.Int(
+    customer = schema.TextLine(
+        title=_(u"Customer")
+    )
+    budget = schema.Decimal(
         title=_(u"Budget (man days)"),
         description=_(u"The man days that this project is paid for")
     )
-    initial_estimate = schema.Int(
+    initial_estimate = schema.Decimal(
         title=_(u"Estimate (man days)"),
         description=_(
             u"The man days required for completion, "
             u"as initially estimated by the project manager"
-        )
+        ),
+        required=False
     )
-    prj_start_date = schema.Date(title=_(u"Start date"))
-    prj_expected_end_date = schema.Date(title=_(u"Expected end date"))
-    prj_end_date = schema.Date(title=_(u"End date"))
+    prj_start_date = schema.Date(
+        title=_(u"Start date")
+    )
+    prj_expected_end_date = schema.Date(
+        title=_(u"Expected end date"),
+        required=False
+    )
+    prj_end_date = schema.Date(
+        title=_(u"End date"),
+        required=False
+    )
     is_external = schema.Bool(
         title=_(u'Is external?'),
         description=_(
@@ -92,7 +103,8 @@ class IProject(form.Schema):
         title=_(u"Project classifiers"),
         description=_(u"Some keywords that describe the project "
             u"and used technologies"),
-        value_type=schema.TextLine()
+        value_type=schema.TextLine(),
+        required=False
     )
     form.widget(classifiers=EnhancedTextLinesFieldWidget)
 
@@ -100,14 +112,16 @@ class IProject(form.Schema):
         title=_(u"Repositories"),
         description=_(u"The HTTP URLs of the repositories "
                       u"(e.g. https://github.com/company/my.repository/)"),
-        value_type=schema.URI()
+        value_type=schema.URI(),
+        required=False
     )
     environments = schema.List(
         title=_(u"URLs"),
         description=_(u"The URLs of the various online environments "
                       u"(staging, production)"),
         value_type=schema.Object(title=_(u"Environment"),
-                                 schema=IEnvironment)
+                                 schema=IEnvironment),
+        required=False
     )
     milestones = schema.List(
         title=_(u"Milestones"),
@@ -116,7 +130,8 @@ class IProject(form.Schema):
                       u"a self-sufficient deliverable, "
                       u"that can then be put into production."),
         value_type=schema.Object(title=_(u"Milestone"),
-                                 schema=IMilestone)
+                                 schema=IMilestone),
+        required=False
     )
     operatives = schema.List(
         title=_(u"Operatives"),
@@ -128,7 +143,8 @@ class IProject(form.Schema):
             u"as managers to the default tracker."
         ),
         value_type=schema.Object(title=_(u"Resource"),
-                                 schema=IResource)
+                                 schema=IResource),
+        required=False
     )
     notes = schema.Text(
         title=_(u"Notes"),
@@ -141,25 +157,34 @@ class IIteration(form.Schema):
 
     start = schema.Date(title=_(u"Start"))
     end = schema.Date(title=_(u"End"))
-    estimate = schema.Decimal(title=_(u"Estimate (man days)"))
+    estimate = schema.Decimal(
+        title=_(u"Estimate (man days)"),
+        required=False
+    )
 
 
 class IEpic(form.Schema):
 
     text = schema.Text(title=_(u"Text"))
-    estimate = schema.Decimal(title=_(u"Estimate (man days)"))
+    estimate = schema.Decimal(
+        title=_(u"Estimate (man days)")
+    )
 
 
 class IStory(form.Schema):
 
-    text = schema.Text(title=_(u"Text"))
+    text = schema.Text(
+        title=_(u"Text"),
+        required=False
+    )
     estimate = schema.Decimal(title=_(u"Estimate (man hours)"))
 
     assigned_to = schema.List(
         title=_(u"Assignees"),
         description=_(u"The user IDs of the people "
                       u"that are responsible to act on this story"),
-        value_type=schema.TextLine()
+        value_type=schema.TextLine(),
+        required=False
     )
     form.widget(assigned_to=UserTokenInputFieldWidget)
     epic = RelationChoice(
@@ -270,4 +295,27 @@ class ISettings(Interface):
     resource_roles = schema.List(
         title=_(u"Resource roles"),
         value_type=schema.TextLine()
+    )
+    off_duty_reasons = schema.List(
+        title=_(u"Possible reasons to be off duty"),
+        value_type=schema.TextLine()
+    )
+
+
+class IBookingHole(Interface):
+    """Explains why someone seemigly hasn't worked on anything for many hours.
+
+    Since bookings keep track of worked time on projects,
+    there can be hours of unbooked time for various reasons.
+
+    This object helps keep track of this *missing time*
+    so that it is not reported as *unknown hole*.
+    """
+
+    day = schema.Date()
+    hours = schema.Decimal()
+    user_id = schema.TextLine()
+    reason = schema.Choice(
+        title=_(u"Reason"),
+        source="collective.simplemanagement.off_duty_reasons"
     )

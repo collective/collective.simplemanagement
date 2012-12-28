@@ -78,7 +78,7 @@ class BaseTimeline(Persistent):
 
     def slice(self, from_, to, resolution, indexes=None):
         if indexes is None:
-            indexes = self.all_indexes
+            indexes = self.indexes
         for step in datetimerange(from_, to, resolution):
             yield (step, { i: self._get_value(i, step) for i in indexes })
 

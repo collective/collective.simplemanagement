@@ -16,7 +16,8 @@ class Settings(object):
     _vocabularies = (
         'statuses',
         'env_types',
-        'resource_roles'
+        'resource_roles',
+        'off_duty_reasons'
     )
 
     def __init__(self):
