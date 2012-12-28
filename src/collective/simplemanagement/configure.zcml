@@ -1,6 +1,5 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:i18n="http://namespaces.zope.org/i18n"
-           xmlns:gs="http://namespaces.zope.org/genericsetup"
            xmlns:grok="http://namespaces.zope.org/grok"
            i18n_domain="collective.simplemanagement">
 
@@ -22,14 +21,6 @@
   <adapter name="end" factory=".indexers.end" />
   <adapter name="booking_date" factory=".indexers.date" />
 
-  <gs:registerProfile
-      name="default"
-      title="Simple Management"
-      directory="profiles/default"
-      description="Project management made simple"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
-
   <adapter
     for=".interfaces.IIteration"
     provides=".interfaces.IStoriesListing"
@@ -45,5 +36,7 @@
   <include file="vocabularies.zcml" />
 
   <include file="timelines.zcml" />
+
+  <include file="genericsetup.zcml" />
 
 </configure>

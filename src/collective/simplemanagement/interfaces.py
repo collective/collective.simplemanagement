@@ -334,8 +334,18 @@ class IBookingHoles(Interface):
         ``hole`` must provide :class:`IBookingHole`
         """
 
-    def remove(user_id, day):
-        """Removes the hole registered by ``user_id`` for the given ``day``
+    def remove(user_id, day=None):
+        """Removes the hole registered by ``user_id`` for the given ``day``.
+
+        If ``day`` is ``None`` removes everything.
+        """
+
+    def __contains__(user_id):
+        """Returns true if ``user_id`` is contained.
+        """
+
+    def __iter__():
+        """Iterates over all the contained holes, in random order
         """
 
     def iter_user(user_id, from_, to):
