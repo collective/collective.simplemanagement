@@ -33,6 +33,8 @@ class BaseTimeline(Persistent):
 
     def __init__(self):
         self.data = OOBTree()
+        self.__parent__ = None
+        self.__name__ = None
 
     @property
     def context(self):

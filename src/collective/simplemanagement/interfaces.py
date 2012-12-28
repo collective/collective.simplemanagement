@@ -1,6 +1,7 @@
 from decimal import Decimal
 from zope import schema
 from zope.interface import Interface
+from zope.location.interfaces import ILocation
 
 from z3c.relationfield.schema import RelationChoice
 
@@ -228,7 +229,7 @@ class IBacklogView(Interface):
     """
 
 
-class ITimeline(Interface):
+class ITimeline(ILocation):
     """Keeps a list of "snapshots" over time.
 
     Snapshots are the status of an item at a given time,
