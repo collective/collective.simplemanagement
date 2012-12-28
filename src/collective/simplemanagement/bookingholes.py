@@ -48,6 +48,9 @@ class BookingHoles(Persistent):
             for day in self.users[user_id].keys():
                 yield self.users[user_id][day]
 
+    def __len__(self):
+        return len([ h for h in self])
+
 # Migration helper
 
 def migrate_utility(context, migrate_hole):
@@ -84,6 +87,7 @@ def install_utility(context):
     if utility is None:
         utility = BookingHoles()
         sm.registerUtility(utility, IBookingHoles)
+
 
 def remove_utility(context):
     """Removes the registered booking holes utility
