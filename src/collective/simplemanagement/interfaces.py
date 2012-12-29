@@ -97,13 +97,6 @@ class IProject(form.Schema):
         title=_(u"End date"),
         required=False
     )
-    is_external = schema.Bool(
-        title=_(u'Is external?'),
-        description=_(
-            u'Check this field if this project is visible to customer.'),
-        required=True,
-        default=True,
-    )
     classifiers = schema.List(
         title=_(u"Project classifiers"),
         description=_(u"Some keywords that describe the project "
@@ -156,6 +149,13 @@ class IProject(form.Schema):
         required=False
     )
     form.widget(notes=WysiwygFieldWidget)
+
+    form.omitted('priority')
+    priority = schema.Int(
+        title=_(u"Priority"),
+        default=100,
+        min=0
+    )
 
 
 class IIteration(form.Schema):
