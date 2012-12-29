@@ -17,10 +17,11 @@
     <tal:content
       tal:content="structure context/@@overview" />
 
-    <div id="iterations">
+    <div id="iterations"
+         tal:define="iterations view/iterations"
+         tal:condition="iterations">
       <!-- iterations -->
-      <div id="project-iterations"
-        tal:define="iterations view/iterations">
+      <div id="project-iterations">
         <tal:iterations tal:define="past iterations/past">
           <h2 i18n:translate="">Past iterations (#<span
               i18n:name="n_iterations"

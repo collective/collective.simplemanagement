@@ -52,9 +52,10 @@ class milestonesVocab(object):
         project = get_project(context)
         terms = []
         if project is not None:
-            for milestone in project.milestones:
-                terms.append(
-                    SimpleVocabulary.createTerm(milestone.getId(),
-                                                milestone.getId(),
-                                                milestone.name))
+            if project.milestones:
+                for milestone in project.milestones:
+                    terms.append(
+                        SimpleVocabulary.createTerm(milestone.getId(),
+                                                    milestone.getId(),
+                                                    milestone.name))
         return SimpleVocabulary(terms)

@@ -63,7 +63,7 @@ def get_timings(context, portal_catalog=None):
         'path': '/'.join(context.getPhysicalPath()),
         'portal_type': 'Booking'
     })
-    hours = sum([b.time for b in bookings], Decimal("0.00"))
+    hours = sum([b.time for b in bookings if b.time], Decimal("0.00"))
     difference = estimate - hours
     return {
         'estimate': quantize(estimate),
@@ -100,7 +100,7 @@ def get_user_details(context, user_id):
 
 
 def get_assignees_details(story):
-    assignees = getattr(story, 'assigned_to')
+    assignees = getattr(story, 'assigned_to') or []
     for user_id in assignees:
         yield get_user_details(story, user_id)
 
