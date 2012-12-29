@@ -13,9 +13,6 @@
 
   <div id="project-view">
 
-    <tal:content
-      tal:content="structure context/@@overview" />
-
     <div id="iterations"
          tal:define="iterations view/iterations"
          tal:condition="iterations">
@@ -30,7 +27,7 @@
             <div tal:condition="past">
               <div tal:repeat="iteration past">
                 <metal:iteration
-                  use-macro="context/simpemanagement-macros/iteration" />
+                  use-macro="context/simpemanagement-macros/iteration-compact" />
               </div>
             </div>
             <p class="discreet" tal:condition="not:past"
@@ -45,7 +42,7 @@
           <div tal:condition="iterations/current">
             <div tal:repeat="iteration iterations/current">
               <metal:iteration
-                use-macro="context/simpemanagement-macros/iteration" />
+                use-macro="context/simpemanagement-macros/iteration-compact" />
             </div>
           </div>
           <p class="discreet" tal:condition="not:iterations/current"
@@ -64,7 +61,7 @@
             <div tal:condition="future">
               <div tal:repeat="iteration future">
                 <metal:iteration
-                  use-macro="context/simpemanagement-macros/iteration" />
+                  use-macro="context/simpemanagement-macros/iteration-compact" />
               </div>
             </div>
             <p class="discreet" tal:condition="not:future"
@@ -76,6 +73,10 @@
       </div>
       <div class="visualClear"><!-- clear floats--></div>
     </div>
+
+    <tal:content
+       tal:content="structure context/@@overview" />
+
   </div>
 
   </metal:block>

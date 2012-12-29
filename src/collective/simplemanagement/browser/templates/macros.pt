@@ -6,6 +6,163 @@
   i18n:domain="collective.simplemanagement"
   tal:omit-tag="">
 
+  <metal:story-milestone define-macro="story-milestone">
+    <!-- TODO -->
+    To be done
+  </metal:story-milestone>
+
+  <metal:story-epic define-macro="story-epic">
+    <a href=""
+       title=""
+       tal:attributes="href story/epic/url;
+                       title story/epic/title"
+       tal:content="story/epic/title"
+       tal:condition="story/epic|nothing"></a>
+    <span tal:condition="not:story/epic|nothing"
+          i18n:translate="">(None)</span>
+  </metal:story-epic>
+
+  <metal:story-assignees define-macro="story-assignees">
+    <ul class="assignees" tal:condition="story/assignees|nothing">
+      <li tal:repeat="assignee story/assignees">
+        <a tal:attributes="href assignee/href"
+           tal:content="assignee/fullname" />
+      </li>
+    </ul>
+    <em tal:condition="not:story/assignees|nothing"
+        i18n:translate="">
+      Unassigned
+    </em>
+  </metal:story-assignees>
+
+  <metal:story-actions
+     define-macro="story-actions">
+      <a href=""
+         title="View details"
+         class="story-quickview"
+         i18n:attributes="title"
+         tal:attributes="href story/url">
+        <span i18n:translate="">Details</span></a>
+      <a href=""
+         tal:condition="story/can_edit"
+         title="Edit story"
+         class="quickedit"
+         tal:attributes="href python:story['url'] + '/quickedit?ajax_load=1&ajax_include_head=1'"
+         i18n:attributes="title">
+         <span i18n:translate="">Edit</span></a>
+      <a href="#"
+         tal:condition="story/can_review"
+         title="Change status"
+         class="status"
+         i18n:attributes="title"
+         tal:attributes="href story/url"
+         onclick="return false">
+         <span tal:content="story/status">Status</span></a>
+  </metal:story-actions>
+
+  <metal:story-compact
+     define-macro="story-compact">
+    <tr class="story"
+        tal:attributes="id story/id">
+      <td>
+        <span tal:attributes="class string:handle ${story/status};">
+          ☰
+        </span>
+        <a href=""
+           title=""
+           tal:attributes="href story/url;
+                           title story/description"
+           tal:content="story/title" />
+      </td>
+      <metal:extra-info define-slot="extra-info">
+        <td class="info">
+          <metal:story-epic
+                 use-macro="context/simpemanagement-macros/story-epic" />
+        </td>
+        <td class="info">
+          <metal:story-milestone
+                 use-macro="context/simpemanagement-macros/story-milestone" />
+        </td>
+        <td class="info">
+          <metal:story-assignees
+                 use-macro="context/simpemanagement-macros/story-assignees" />
+        </td>
+      </metal:extra-info>
+      <td tal:attributes="class string:data numeric-data ${story/time_status}"
+          tal:content="story/estimate"></td>
+      <td tal:attributes="class string:data numeric-data ${story/time_status}"
+          tal:content="story/resource_time"></td>
+      <td tal:attributes="class string:data numeric-data ${story/time_status}"
+          tal:content="story/difference"></td>
+      <metal:after-columns define-slot="after-columns">
+        <td class="actions">
+          <metal:story-actions
+                 use-macro="context/simpemanagement-macros/story-actions" />
+        </td>
+      </metal:after-columns>
+    </tr>
+  </metal:story-compact>
+
+  <metal:iteration-compact define-macro="iteration-compact"
+    tal:define="iteration_view nocall:iteration/@@view;
+                stories iteration_view/stories;
+                totals iteration_view/totals;
+                can_edit iteration_view/user_can_edit">
+    <table class="listing stories">
+      <caption>
+        <a href=""
+           title=""
+           tal:attributes="href iteration/absolute_url;
+                           title iteration/Description">
+          <span tal:content="iteration/title" />
+          (<span
+              tal:content="python:context.toLocalizedTime(iteration.start.isoformat())"/>
+          -
+           <span
+              tal:content="python:context.toLocalizedTime(iteration.end.isoformat())" />)
+        </a>
+      </caption>
+      <thead>
+        <tr>
+          <th i18n:translate="">Story</th>
+          <th class="info" i18n:translate="">Epic</th>
+          <th class="info" i18n:translate="">Milestone</th>
+          <th class="info" i18n:translate="">Assignees</th>
+          <th class="data numeric-data" i18n:translate="">Estimate</th>
+          <th class="data numeric-data" i18n:translate="">Done</th>
+          <th class="data numeric-data" i18n:translate="">Difference</th>
+          <th class="actions" i18n:translate="">Actions</th>
+        </tr>
+      </thead>
+      <tfoot tal:condition="totals|nothing">
+        <tr>
+          <th i18n:translate="">Totals</th>
+          <th class="info">&nbsp;</th>
+          <th class="info">&nbsp;</th>
+          <th class="info">&nbsp;</th>
+          <td class="data numeric-data" tal:content="totals/estimate"></td>
+          <td class="data numeric-data" tal:content="totals/hours"></td>
+          <td tal:attributes="class string:data numeric-data ${totals/time_status}"
+              tal:content="totals/difference"></td>
+          <th class="actions">&nbsp;</th>
+        </tr>
+      </tfoot>
+      <tbody tal:condition="stories">
+        <tal:cycle repeat="story stories">
+          <metal:story-compact use-macro="context/simpemanagement-macros/story-compact" />
+        </tal:cycle>
+      </tbody>
+      <tbody tal:condition="not:stories">
+        <tr>
+          <th colspan="8" i18n:translate="">
+            No stories in this iteration.
+            Add a new one or bring them in via the iteration planner.
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </metal:iteration-compact>
+
   <metal:iteration define-macro="iteration"
     tal:define="iteration_view nocall:iteration/@@view;
                 stories iteration_view/stories;
@@ -138,35 +295,6 @@
     </div>
 
   </metal:stories>
-
-
-  <metal:story-actions define-macro="story-actions">
-    <div class="actions"
-      tal:condition="show_actions|view_details|nothing">
-      <a href=""
-         title="View details"
-         class="story-quickview"
-         i18n:attributes="title"
-         tal:attributes="href story/url">
-        <span i18n:translate="">Details</span></a>
-      <a href=""
-         tal:condition="story/can_edit"
-         title="Edit story"
-         class="quickedit"
-         tal:attributes="href python:story['url'] + '/quickedit?ajax_load=1&ajax_include_head=1'"
-         i18n:attributes="title">
-         <span i18n:translate="">Edit</span></a>
-      <a href="#"
-         tal:condition="story/can_review"
-         title="Change status"
-         class="status"
-         i18n:attributes="title"
-         tal:attributes="href story/url"
-         onclick="return false">
-         <span tal:content="story/status">Status</span></a>
-    </div>
-  </metal:story-actions>
-
 
   <metal:assignees define-macro="assignees">
     <div class="assignees-container clearfix">
