@@ -48,14 +48,21 @@ class View(grok.View):
             'sort_order': 'ascending'
         })
         now = date.today()
+        have_iterations = False
         for iteration_brain in raw_iterations:
             iteration = iteration_brain.getObject()
             if iteration.end < now:
                 iterations['past'].append(iteration)
+                have_iterations = True
             elif iteration.end >= now and iteration.start <= now:
                 iterations['current'].append(iteration)
+                have_iterations = True
             else:
                 iterations['future'].append(iteration)
+                have_iterations = True
+
+        if not have_iterations:
+            return None
         return iterations
 
 
@@ -114,7 +121,11 @@ class OverView(View):
         }
 
     def operatives(self):
-        for i in self.context.operatives:
+        operatives = self.context.operatives
+        if not operatives:
+            operatives = []
+
+        for i in operatives:
             yield  {
                 'role': self.get_role(i.role),
                 'user': get_user_details(self.context, i.user_id)

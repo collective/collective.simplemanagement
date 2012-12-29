@@ -1,4 +1,6 @@
 from decimal import Decimal
+from datetime import date
+
 from zope import schema
 from zope.interface import Interface
 from zope.location.interfaces import ILocation
@@ -80,10 +82,12 @@ class IProject(form.Schema):
             u"The man days required for completion, "
             u"as initially estimated by the project manager"
         ),
-        required=False
+        required=False,
+        default=Decimal('0.00')
     )
     prj_start_date = schema.Date(
-        title=_(u"Start date")
+        title=_(u"Start date"),
+        default=date.today()
     )
     prj_expected_end_date = schema.Date(
         title=_(u"Expected end date"),
@@ -160,7 +164,8 @@ class IIteration(form.Schema):
     end = schema.Date(title=_(u"End"))
     estimate = schema.Decimal(
         title=_(u"Estimate (man days)"),
-        required=False
+        required=False,
+        default=Decimal('0.00')
     )
 
 
@@ -168,7 +173,8 @@ class IEpic(form.Schema):
 
     text = schema.Text(title=_(u"Text"))
     estimate = schema.Decimal(
-        title=_(u"Estimate (man days)")
+        title=_(u"Estimate (man days)"),
+        default=Decimal('0.00')
     )
 
 
@@ -178,7 +184,10 @@ class IStory(form.Schema):
         title=_(u"Text"),
         required=False
     )
-    estimate = schema.Decimal(title=_(u"Estimate (man hours)"))
+    estimate = schema.Decimal(
+        title=_(u"Estimate (man hours)"),
+        default=Decimal('0.00')
+    )
 
     assigned_to = schema.List(
         title=_(u"Assignees"),
