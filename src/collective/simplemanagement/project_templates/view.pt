@@ -9,10 +9,9 @@
 
 <metal:content-core fill-slot="content-core">
   <metal:block define-macro="content-core"
-    tal:define="portal_state nocall:context/@@plone_portal_state;
-      css_class python:context.is_external and 'external' or 'internal'">
+    tal:define="portal_state nocall:context/@@plone_portal_state">
 
-  <div id="project-view" tal:attributes="class css_class">
+  <div id="project-view">
 
     <tal:content
       tal:content="structure context/@@overview" />
