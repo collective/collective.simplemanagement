@@ -457,6 +457,7 @@ table.stories tfoot td {
 
 table.stories tbody tr td.numeric-data {
     width: 3em;
+    text-align: right;
 }
 
 table.stories tbody tr td.info {

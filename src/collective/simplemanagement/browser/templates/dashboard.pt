@@ -4,139 +4,143 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
       metal:use-macro="context/main_template/macros/master"
-      i18n:domain="plone">
-
-<head>
+      i18n:domain="collective.simplemanagement">
+  <head>
     <metal:block fill-slot="top_slot"
                  tal:define="dummy python:request.set('disable_border',1);
                              disable_column_one python:request.set('disable_plone.leftcolumn',1);
                              disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
-</head>
+  </head>
+  <body metal:use-macro="content">
 
-<body>
+    <metal:bodytext fill-slot="main">
+      <metal:main define-macro="main">
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+        <h1 class="documentFirstHeading">Dashboard</h1>
+      <!-- <div tal:replace="structure provider:plone.belowcontenttitle" />     -->
 
-<tal:comment replace="nothing">
-    Please note that this template fills the "content" slot instead of the
-    "main" slot, this is done so we can provide stuff like the content
-    tabs. This also means that we have to supply things that are normally
-    present from main_template.
-</tal:comment>
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+          <div id="content-core">
 
-<metal:main fill-slot="content">
-    <tal:main-macro metal:define-macro="main"
-                    tal:define="memberinfo context/portal_membership/getMemberInfo;
-                                member context/@@plone_portal_state/member;
-                                name python:memberinfo['fullname'] or member.getId() or member.getId();
-                                portal_url context/portal_url">
-
-
-
-        <div id="edit-bar" tal:condition="view/can_edit">
-            <h5 class="hiddenStructure">Views</h5>
-
-            <ul id="content-views"
-                class="contentViews">
-              <li class="selected">
-                <a href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard"
-                   i18n:translate="label_dashboard">Dashboard</a>
-              </li>
-              <li>
-                <a href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-dashboard"
-                   i18n:translate="label_edit">Edit</a>
-              </li>
-            </ul>
-
-            <div class="contentActions" tal:condition="view/can_edit">
-              &nbsp;
-            </div>
-        </div>
-
-        <div metal:use-macro="context/global_statusmessage/macros/portal_message">
-            Portal status message
-        </div>
-<!--         <dl tal:condition="python:view.empty() and view.can_edit()"
-            class="portalMessage info visualClear" id="dashboard-info-message">
-            <dt i18n:translate="">Info</dt>
-            <dd i18n:translate="info_empty_dashboard">
-                Your dashboard is currently empty. Click the
-                <em>edit</em> tab to assign some personal
-                portlets.
-            </dd>
-        </dl> -->
-
-        <div id="content">
-
-            <h1 class="documentFirstHeading" i18n:translate="heading_dashboard">
-                <span tal:replace="name" i18n:name="user_name" />&#8217;s dashboard
-            </h1>
-
-            <div id="content-core">
-                <div id="dashboard" i18n:domain="collective.simplemanagement">
-                  <div class="visualClear"><!-- --></div>
-
-                  <div class="row" tal:define="dashboard view/dashboard">
-                    <!-- my stories -->
-                    <div class="cell width-8 position-0"
-                        tal:define="stories dashboard/stories;
-                          show_actions python:True">
-                      <h3 i18n:translate="">My stories</h3>
-                        <metal:stories
-                          use-macro="context/simpemanagement-macros/stories-shortlist" />
-
-                      <p class="discreet more-tasks"
-                         tal:condition="dashboard/stories_n">
-                        <a href=""
-                          i18n:translate=""
-                          i18n:attributes="title"
-                          title="Show more"
-                          class="quickview"
-                          tal:attributes="href string:${context/absolute_url}/mystories">
-                        And <em i18n:name="stories_n" tal:content="dashboard/stories_n">n</em> more</a>
-                      </p>
-                    </div>
-
-                    <!-- my tickets -->
-                    <div class="cell width-8 position-8"
-                      tal:define="tickets dashboard/tickets">
-                      <h3 i18n:translate="">My tickets</h3>
-
-                      <metal:tickets
-                        use-macro="context/simpemanagement-macros/tickets-shortlist" />
-
-                      <p class="discreet more-tasks"
-                         tal:condition="dashboard/tickets_n">
-                        <a href=""
-                          i18n:translate=""
-                          i18n:attributes="title"
-                          title="Show more"
-                          class="quickview"
-                          tal:attributes="href string:${context/absolute_url}/mytickets">
-                        And <em i18n:name="ticket_n"
-                          tal:content="dashboard/tickets_n">n</em> more
-                        </a>
-                      </p>
-                    </div>
-                  </div><!-- end dashboard -->
-
-                  <div class="visualClear"><!-- --></div>
-
-                  <div id="dashboard-portlets1"
-                    tal:content="structure provider:plone.dashboard1" />
-                  <div id="dashboard-portlets2"
-                    tal:content="structure provider:plone.dashboard2" />
-                  <div id="dashboard-portlets3"
-                    tal:content="structure provider:plone.dashboard3" />
-                  <div id="dashboard-portlets4"
-                    tal:content="structure provider:plone.dashboard4" />
+            <dl class="enableFormTabbing">
+              <dt id="fieldsetlegend-stories"
+                  i18n:translate="">Stories</dt>
+              <dd id="fieldset-stories">
+                <div id="missed-bookings">
+                  <h2 i18n:translate="">Please complete your booking</h2>
+                  <p class="claim"
+                    i18n:translate="">You seem to have missing bookings
+                    for the following days:</p>
+                  <table class="invisible item-listing">
+                    <tr>
+                      <td>Mon, 7th January 2013</td>
+                      <td>(1.5 hours booked)</td>
+                      <td>It's okay, I&nbsp;
+                        <select>
+                          <option>...select reason</option>
+                          <option>was no leave</option>
+                          <option>have been caught up by stuff</option>
+                          <option>have been taken by aliens</option>
+                          <option>had my mac swallowed by the cat</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Mon, 7th January 2013</td>
+                      <td>(1.5 hours booked)</td>
+                      <td>It's okay, I&nbsp;
+                        <select>
+                          <option>...select reason</option>
+                          <option>was no leave</option>
+                          <option>have been caught up by stuff</option>
+                          <option>have been taken by aliens</option>
+                          <option>had my mac swallowed by the cat</option>
+                        </select>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
-                <div class="visualClear"><!-- --></div>
-            </div>
-        </div>
 
-    </tal:main-macro>
-</metal:main>
+                <div id="projects">
+                  <div class="project" tal:repeat="project view/projects">
+                    <h2>
+                      <span>
+                        <a tal:attributes="href project/url"
+                          tal:content="project/priority"></a></span>
+                        <span tal:replace="project/title">Project #1</span>
+                    </h2>
+                    <table class="listing stories">
+                      <thead>
+                        <tr>
+                          <th i18n:translate="">Story</th>
+                          <th i18n:translate="">Epic</th>
+                          <th i18n:translate="">Milestone</th>
+                          <th i18n:translate="">Assignees</th>
+                          <th i18n:translate="">Estimate</th>
+                          <th i18n:translate="">Done</th>
+                          <th i18n:translate="">Difference</th>
+                          <th i18n:translate="">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tal:stories repeat="story project/stories">
+                          <metal:stories
+                            use-macro="context/simpemanagement-macros/story-compact">
+                            <!-- metal:remove-actions fill-slot="after-columns" / -->
+                          </metal:stories>
+                        </tal:stories>
+                      </tbody>
+                    </table>
+                  </div>
 
-</body>
+                </div>
+
+              </dd>
+
+              <dt id="fieldsetlegend-tickets"
+                  i18n:translate="">Tickets</dt>
+              <dd id="fieldset-tickets">
+                <h2>TODO: Booking list</h2>
+              </dd>
+
+              <!-- Booking History -->
+              <dt id="fieldsetlegend-booking"
+                  i18n:translate="">Booking</dt>
+              <dd id="fieldset-booking">
+
+                <table class="listing">
+                  <thead>
+                    <tr>
+                      <th i18n:translate="">Date</th>
+                      <th i18n:translate="">Hours</th>
+                      <th i18n:translate="">Title</th>
+                      <th i18n:translate="">Projects</th>
+                      <th i18n:translate="">Story</th>
+                    </tr>
+                  </thead>
+<!--                   <tbody>
+                    <tr tal:repeat="book view/bookings">
+                      <td><a href=""
+                          tal:content="book/date">today</a></td>
+                      <td tal:content="book/time">3.0</td>
+                      <td><a tal:attributes="href book/url"
+                             tal:content="book/title">closed ticket #1</a></td>
+                      <td><a tal:content="book/project/title"
+                             tal:attributes="href book/project/url">Project 1</a></td>
+                      <td><a tal:content="book/story/title"
+                             tal:attributes="href book/story/url">Story 1</a></td>
+                    </tr>
+                  </tbody>
+-->
+                </table>
+
+              </dd>
+            </dl>
+
+
+          </div>
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+      </metal:main>
+    </metal:bodytext>
+  </body>
 </html>

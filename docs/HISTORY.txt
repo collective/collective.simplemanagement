@@ -4,6 +4,8 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- changed dashboard view [gborelli]
+- added IStoryListing adapter for INavigationRoot [gborelli]
 - moved to collective namespace [simahawk]
 - prevent project view to brake if project created by zope admin [simahawk]
 - users' dashboard enhancements [gborelli]

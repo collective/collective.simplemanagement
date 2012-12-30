@@ -33,6 +33,14 @@
     factory=".stories_listing.StoriesListing"
   />
 
+
+  <adapter
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    provides=".interfaces.IStoriesListing"
+    factory=".stories_listing.PortalStoriesListing"
+  />
+
+
   <include file="vocabularies.zcml" />
 
   <include file="timelines.zcml" />

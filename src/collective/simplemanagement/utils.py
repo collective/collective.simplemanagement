@@ -35,6 +35,10 @@ def get_ancestor(iface, context, default=None):
     return default
 
 
+def get_story(context, default=None):
+    return get_ancestor(IStory, context, default)
+
+
 def get_project(context, default=None):
     return get_ancestor(IProject, context, default)
 

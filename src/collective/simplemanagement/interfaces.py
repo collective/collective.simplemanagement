@@ -223,8 +223,9 @@ class IBooking(form.Schema):
 
 class IStoriesListing(Interface):
 
-    def stories():
-        """return stories details
+    def stories(project_info=False):
+        """return stories details if project_info is True
+        each story contains also information about project and iteration
         """
 
     def totals():

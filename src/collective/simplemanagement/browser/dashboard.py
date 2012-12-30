@@ -1,17 +1,11 @@
-from zope.component import getMultiAdapter
-
-from plone.app.layout.dashboard import dashboard
 from plone.memoize.instance import memoize
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
+from ..interfaces import IStoriesListing
 
 
-class DashboardMixin(object):
-    query_extra_params = {
-        'sort_on': 'modified',
-        'sort_order': 'descending'
-    }
+class DashboardMixin(BrowserView):
 
     @memoize
     def tools(self):
@@ -21,10 +15,7 @@ class DashboardMixin(object):
 
     @memoize
     def portal_state(self):
-        return getMultiAdapter(
-            (self.context, self.request),
-            name='plone_portal_state'
-        )
+        return self.context.restrictedTraverse('plone_portal_state')
 
     @property
     def user(self):
@@ -34,90 +25,43 @@ class DashboardMixin(object):
             user = portal_state.member()
         return user
 
-    def get_story(self, brain):
-        story = brain.getObject()
-        iteration = story.getParentNode()
-        project = iteration.getParentNode()
-        return {
-            'title': brain.Title,
-            'description': brain.Description,
-            'url': brain.getURL(),
-            'status': brain.review_state,
-            'can_edit': story.user_can_edit(),
-            'can_review': story.user_can_review(),
-            'iteration': {
-                'title': iteration.Title(),
-                'description': iteration.Description(),
-                'url': iteration.absolute_url()
-            },
-            'project': {
-                'title': project.Title(),
-                'description': project.Description(),
-                'url': project.absolute_url()
-            }
-        }
+
+class MyTickets(DashboardMixin):
 
     @property
-    def searches(self):
-        if self.portal_state().anonymous():
-            return []
-
-        return [
-            ({'portal_type': 'PoiIssue',
-              'getResponsibleManager': self.user.getId(),
-              'review_state': ('new', 'open', 'in-progress', 'resolved',
-                                'unconfirmed')},
-             'tickets'),
-            ({'portal_type': 'Story',
-              'assigned_to': self.user.getId(),
-              'review_state': ('todo', 'suspended', 'in_progress')},
-              'stories')
-        ]
-
-
-class MyTickets(BrowserView, DashboardMixin):
+    def _query(self):
+        return {
+            'portal_type': 'PoiIssue',
+            'getResponsibleManager': self.user.getId(),
+            'review_state': ('new', 'open', 'in-progress', 'unconfirmed'),
+            'sort_on': 'modified',
+            'sort_order': 'descending'
+        }
+        # 'resolved',
 
     def tickets(self):
-        query = self.searches[0][0]
-        query.update(self.query_extra_params)
         pc = self.tools()['portal_catalog']
-        return pc.searchResults(query)
+        return pc.searchResults(self._query)
 
 
-class MyStories(BrowserView, DashboardMixin):
-
-    def stories(self):
-        query = self.searches[1][0]
-        query.update(self.query_extra_params)
-        pc = self.tools()['portal_catalog']
-        return [self.get_story(i) for i in pc.searchResults(query)]
+class MyStories(DashboardMixin):
+    pass
 
 
-class DashboardView(dashboard.DashboardView, DashboardMixin):
+class DashboardView(DashboardMixin):
 
-    MAX_ELEMENTS = 5
+    def projects(self):
+        listing = IStoriesListing(self.context)
 
-    def format_results(self, brain, res_type):
-        if res_type == 'tickets':
-            return brain
-        else:
-            return self.get_story(brain)
+        projects = {}
+        for st in listing.stories(project_info=True):
+            prj = st.pop('project')
+            if prj['UID'] not in projects:
+                projects[prj['UID']] = prj
+                projects[prj['UID']]['stories'] = []
 
-    def dashboard(self):
-        result = {
-            'tickets': [],
-            'tickets_n': 0,
-            'stories': [],
-            'stories_n': 0
-        }
+            projects[prj['UID']]['stories'].append(st)
 
-        pc = self.tools()['portal_catalog']
-        for query, result_key in self.searches:
-            query.update(self.query_extra_params)
-            results = pc.searchResults(query)
-            result[result_key] = [self.format_results(i, result_key) \
-                for i in results[:self.MAX_ELEMENTS]]
-            result['%s_n' % result_key] = total = len(results)
-            if total <= self.MAX_ELEMENTS:
-                result['%s_n' % result_key] = False
-        return result
+        projects = [p[1] for p in projects.items()]
+        projects.sort(key=lambda x: x['priority'])
+        return projects
