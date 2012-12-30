@@ -1,8 +1,10 @@
 from plone.memoize.instance import memoize
-
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
+
 from ..interfaces import IMyStoriesListing
+from ..interfaces import IProject
+from ..utils import get_project
 
 
 class DashboardMixin(BrowserView):
@@ -41,7 +43,27 @@ class MyTickets(DashboardMixin):
 
     def tickets(self):
         pc = self.tools()['portal_catalog']
-        return pc.searchResults(self._query)
+        tickets = pc.searchResults(self._query)
+        return tickets
+
+    def get_project(self, brain):
+        context = brain.getObject()
+        prj = None
+        while context is not None:
+            if IProject.providedBy(context):
+                prj = context
+                break
+            try:
+                context = context.__parent__
+            except AttributeError:
+                break
+
+        if prj:
+            return {
+                'title': prj.Title(),
+                'description': prj.Description(),
+                'url': prj.absolute_url(),
+            }
 
 
 class MyStories(DashboardMixin):

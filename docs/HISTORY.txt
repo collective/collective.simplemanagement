@@ -4,6 +4,7 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- added mytickets view [gborelli]
 - added project dashboard view [gborelli]
 - added IMyStoriesLIsting adapter [gborelli]
 - changed dashboard view [gborelli]
