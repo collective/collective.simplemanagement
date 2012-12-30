@@ -19,9 +19,9 @@
       <!-- iterations -->
       <div id="project-iterations">
         <tal:iterations tal:define="past iterations/past">
-          <h2 i18n:translate="">Past iterations (#<span
-              i18n:name="n_iterations"
-              tal:replace="python:len(past)" />)
+          <h2 i18n:translate="">
+            Past iterations (<span i18n:name="n_iterations"
+                                   tal:replace="python:len(past)" />)
           </h2>
           <div class="pane">
             <div tal:condition="past">
@@ -37,7 +37,7 @@
           </div>
         </tal:iterations>
 
-        <h2 i18n:translate="">Current Iteration</h2>
+        <h2 i18n:translate="">Current iteration</h2>
         <div class="pane">
           <div tal:condition="iterations/current">
             <div tal:repeat="iteration iterations/current">
@@ -53,9 +53,9 @@
 
         <tal:iterations
           tal:define="future iterations/future">
-          <h2 i18n:translate="">Future iterations (#<span
-              i18n:name="n_iterations"
-              tal:replace="python:len(future)" />)
+          <h2 i18n:translate="">
+            Future iterations (<span i18n:name="n_iterations"
+                                     tal:replace="python:len(future)" />)
           </h2>
           <div class="pane">
             <div tal:condition="future">

@@ -220,28 +220,28 @@ ul.stories .suspended {
     background-color: white;
 }
 
-td.danger {
+.timing td.danger {
     background-color: red;
     color: white;
 }
 
-td.success {
+.timing td.success {
     background-color: #75AD0A;
     color: white;
 }
 
-td.warning {
+.timing td.warning {
     background-color: yellow;
 }
 
-td.estimate {
+.timing td.estimate {
     width: 55px;
 }
-td.actual_hours {
+.timing td.actual_hours {
     width: 85px;
     text-align: right;
 }
-td.difference {
+.timing td.difference {
     width: 65px;
 }
 
@@ -443,6 +443,18 @@ table.stories {
     width: 100%;
 }
 
+table.stories caption {
+    font-size: 130%;
+    font-weight: bold;
+    margin-bottom: 0.2em;
+    text-align: left;
+}
+
+table.stories tfoot td {
+    font-size: 110%;
+    background-color: #DDDDDD;
+}
+
 table.stories tbody tr td.numeric-data {
     width: 3em;
 }
@@ -480,17 +492,54 @@ table.stories tbody tr.story span.handle {
 
 table.stories tbody tr.story span.handle.todo {
     background-color: #444444;
-    color: white;
+    color: #444444;
 }
 
 table.stories tbody tr.story span.handle.done {
     background-color: #8DC73E;
+    color: #8DC73E;
 }
 
 table.stories tbody tr.story span.handle.in_progress {
     background-color: #448CCA;
+    color: #448CCA;
 }
 
 table.stories tbody tr.story span.handle.suspended {
     background-color: #FF7F0E;
+    color: #FF7F0E;
+}
+
+table.stories.sortable tbody tr.story span.handle.todo {
+    color: #FFFFFF;
+}
+
+table.stories.sortable tbody tr.story span.handle.done {
+    color: #FFFFFF;
+}
+
+table.stories.sortable tbody tr.story span.handle.in_progress {
+    color: #FFFFFF;
+}
+
+table.stories.sortable tbody tr.story span.handle.suspended {
+    color: #FFFFFF;
+}
+
+table.stories td.data.danger,
+table.stories td.data.success,
+table.stories td.data.warning {
+    font-weight: bold;
+}
+
+table.stories td.data.danger {
+    color: #ff4420;
+}
+
+table.stories td.data.success {
+    color: #75AD0A;
+}
+
+table.stories td.data.warning {
+    color: #f17e03;
 }

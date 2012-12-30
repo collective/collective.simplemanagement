@@ -140,8 +140,10 @@
           <th class="info">&nbsp;</th>
           <th class="info">&nbsp;</th>
           <th class="info">&nbsp;</th>
-          <td class="data numeric-data" tal:content="totals/estimate"></td>
-          <td class="data numeric-data" tal:content="totals/hours"></td>
+          <td tal:attributes="class string:data numeric-data ${totals/time_status}"
+              tal:content="totals/estimate"></td>
+          <td tal:attributes="class string:data numeric-data ${totals/time_status}"
+              tal:content="totals/hours"></td>
           <td tal:attributes="class string:data numeric-data ${totals/time_status}"
               tal:content="totals/difference"></td>
           <th class="actions">&nbsp;</th>

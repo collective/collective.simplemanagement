@@ -1,6 +1,6 @@
 <registry>
   <records interface="collective.simplemanagement.interfaces.ISettings">
-    <value key="warning_delta_percent">0.1</value>
+    <value key="warning_delta_percent">0.3</value>
     <value key="man_day_hours">8.0</value>
     <value key="statuses">
       <element>not_started|Not started</element>
