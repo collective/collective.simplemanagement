@@ -36,10 +36,15 @@
 
   <adapter
     for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    provides=".interfaces.IStoriesListing"
-    factory=".stories_listing.PortalStoriesListing"
+    provides=".interfaces.IMyStoriesListing"
+    factory=".stories_listing.MyStoriesListing"
   />
 
+  <adapter
+    for=".interfaces.IProject"
+    provides=".interfaces.IMyStoriesListing"
+    factory=".stories_listing.MyStoriesListing"
+  />
 
   <include file="vocabularies.zcml" />
 

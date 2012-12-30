@@ -233,6 +233,10 @@ class IStoriesListing(Interface):
         """
 
 
+class IMyStoriesListing(IStoriesListing):
+    """This adapter return all stories assigned to myself"""
+
+
 class IBacklogView(Interface):
     """A marker interface for the backlog view, that has a custom
     breadcrumb

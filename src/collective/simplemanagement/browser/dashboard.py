@@ -2,7 +2,7 @@ from plone.memoize.instance import memoize
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from ..interfaces import IStoriesListing
+from ..interfaces import IMyStoriesListing
 
 
 class DashboardMixin(BrowserView):
@@ -51,7 +51,7 @@ class MyStories(DashboardMixin):
 class DashboardView(DashboardMixin):
 
     def projects(self):
-        listing = IStoriesListing(self.context)
+        listing = IMyStoriesListing(self.context)
 
         projects = {}
         for st in listing.stories(project_info=True):

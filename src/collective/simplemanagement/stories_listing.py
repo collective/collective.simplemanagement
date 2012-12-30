@@ -7,6 +7,7 @@ from plone.app.discussion.interfaces import IConversation
 from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IStoriesListing
+from .interfaces import IMyStoriesListing
 from .utils import get_timings
 from .utils import get_assignees_details
 from .utils import get_epic_by_story
@@ -127,12 +128,28 @@ class StoriesListing(object):
         return stories
 
 
-class PortalStoriesListing(StoriesListing):
+class MyStoriesListing(StoriesListing):
+    implements(IMyStoriesListing)
 
     @property
     def _query(self):
         return {
+            'path': {
+                'query': '/'.join(self.context.getPhysicalPath()),
+            },
             'portal_type': 'Story',
             'assigned_to': self.user.getId(),
             'review_state': ('todo', 'suspended', 'in_progress')
         }
+
+
+# class ProjectMyStoriesListing(StoriesListing):
+#     implements(IMyStoriesListing)
+
+#     @property
+#     def _query(self):
+#         return {
+#             'portal_type': 'Story',
+#             'assigned_to': self.user.getId(),
+#             'review_state': ('todo', 'suspended', 'in_progress')
+#         }
