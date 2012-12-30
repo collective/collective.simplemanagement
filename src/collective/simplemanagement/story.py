@@ -18,10 +18,20 @@ from .utils import get_user_details
 from .utils import get_assignees_details
 from .utils import get_epic_by_story
 from .utils import get_text
+from .utils import get_project
 
 
 class Story(Container):
     grok.implements(IStory)
+
+    def get_milestone(self):
+        if self.milestone:
+            # XXX: This, bluntly put, sucks.
+            project = get_project(self)
+            for milestone in project.milestones:
+                if self.milestone.decode('utf-8') == milestone.name:
+                    return milestone
+        return None
 
     def get_text(self):
         return get_text(self, self.text)

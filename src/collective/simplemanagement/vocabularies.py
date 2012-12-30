@@ -55,7 +55,10 @@ class milestonesVocab(object):
             if project.milestones:
                 for milestone in project.milestones:
                     terms.append(
-                        SimpleVocabulary.createTerm(milestone.getId(),
-                                                    milestone.getId(),
-                                                    milestone.name))
+                        SimpleVocabulary.createTerm(
+                            milestone.name.encode('utf-8'),
+                            milestone.name.encode('utf-8'),
+                            milestone.name
+                        )
+                    )
         return SimpleVocabulary(terms)

@@ -214,6 +214,7 @@
             revert: true
         });
 
+        $('.simple-tooltip[title]').tooltip();
 
         $('.status').tooltip({
             events: {

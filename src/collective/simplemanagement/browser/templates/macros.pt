@@ -7,8 +7,23 @@
   tal:omit-tag="">
 
   <metal:story-milestone define-macro="story-milestone">
-    <!-- TODO -->
-    To be done
+    <tal:exists condition="story/milestone"
+                define="milestone story/milestone">
+      <a href="javascript:void(0)"
+         class="simple-tooltip"
+         tal:condition="milestone/deadline"
+         tal:attributes="title string:${milestone/name} (${milestone/status})"
+         i18n:translate="">
+      due <strong i18n:name="deadline" tal:content="milestone/deadline" />
+      </a>
+      <a href="javascript:void(0)"
+         class="simple-tooltip"
+         tal:condition="not:milestone/deadline"
+         tal:attributes="title string:${milestone/name} (${milestone/status})"
+         tal:content="milestone/name" />
+    </tal:exists>
+    <span tal:condition="not:story/milestone"
+          i18n:translate="">(None)</span>
   </metal:story-milestone>
 
   <metal:story-epic define-macro="story-epic">

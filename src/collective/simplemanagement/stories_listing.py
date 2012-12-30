@@ -76,7 +76,8 @@ class StoriesListing(object):
                 'assignees': get_assignees_details(story),
                 'comments': self.comments(story),
                 'can_edit': story.user_can_edit(),
-                'can_review': story.user_can_review()
+                'can_review': story.user_can_review(),
+                'milestone': story.get_milestone()
             })
 
         self.totals['time_status'] = get_difference_class(
