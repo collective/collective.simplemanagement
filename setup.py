@@ -40,6 +40,7 @@ setup(
         'Products.Poi',
         'abstract.z3cform.usertokeninput',
         'collective.js.jqueryui',
+        'collective.prettydate'
     ],
     extras_require={
         'test': [
