@@ -4,7 +4,7 @@ from Products.Five.browser import BrowserView
 
 from ..interfaces import IMyStoriesListing
 from ..interfaces import IProject
-from ..utils import get_project
+from ..utils import timeago
 
 
 class DashboardMixin(BrowserView):
@@ -45,6 +45,9 @@ class MyTickets(DashboardMixin):
         pc = self.tools()['portal_catalog']
         tickets = pc.searchResults(self._query)
         return tickets
+
+    def timeago(self, timestamp):
+        return timeago(timestamp.utcdatetime())
 
     def get_project(self, brain):
         context = brain.getObject()

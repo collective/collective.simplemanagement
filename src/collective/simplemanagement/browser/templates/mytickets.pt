@@ -18,7 +18,7 @@
             tal:define="results view/tickets;
                         Batch python:modules['Products.CMFPlone'].Batch;
                         b_start python:request.get('b_start', 0);
-                        batch python:Batch(results, 1, int(b_start), orphan=0)">
+                        batch python:Batch(results, 2, int(b_start), orphan=0)">
 
       <div tal:replace="structure provider:plone.abovecontenttitle" />
       <h1 class="documentFirstHeading">My tickets</h1>
@@ -64,8 +64,8 @@
                         title project/description"
                     tal:content="project/title" />
               </td>
-              <td tal:content="ticket/created"></td>
-              <td tal:content="ticket/modified"></td>
+              <td tal:content="python: view.timeago(ticket.created)"></td>
+              <td tal:content="python: view.timeago(ticket.modified)"></td>
               <td tal:content="ticket/getSeverity"></td>
               <td tal:content="ticket/review_state"
                   tal:attributes="class ticket/review_state"></td>

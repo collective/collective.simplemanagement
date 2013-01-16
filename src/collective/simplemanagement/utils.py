@@ -1,8 +1,13 @@
 from copy import copy
 from decimal import Decimal
+from DateTime import DateTime
 
+from zope.component import getUtility
 from zope.location.interfaces import ILocation
+
 from Products.CMFCore.utils import getToolByName
+
+from collective.prettydate.interfaces import IPrettyDate
 
 from .interfaces import IStory
 from .interfaces import IProject
@@ -163,3 +168,7 @@ class datetimerange(object):
         next = current + self.step
         self.current = next
         return (current, next)
+
+
+def timeago(timestamp):
+    return getUtility(IPrettyDate).date(timestamp)
