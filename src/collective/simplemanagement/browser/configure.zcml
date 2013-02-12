@@ -11,6 +11,16 @@
     layer="..interfaces.IBrowserLayer"
   />
 
+  <!-- TODO: we should really give this thing an interface hey -->
+  <browser:page
+    for="*"
+    name="simplemanagement_helpers"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+    class=".helpers.Helper"
+    allowed_attributes="timeago"
+    />
+
   <browser:page
     for="..interfaces.IStory"
     name="quickedit"

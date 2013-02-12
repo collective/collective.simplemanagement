@@ -11,10 +11,11 @@
                 define="milestone story/milestone">
       <a href="javascript:void(0)"
          class="simple-tooltip"
+         tal:define="helpers nocall:context/@@simplemanagement_helpers"
          tal:condition="milestone/deadline"
          tal:attributes="title string:${milestone/name} (${milestone/status})"
          i18n:translate="">
-      due <strong i18n:name="deadline" tal:content="milestone/deadline" />
+      due <strong i18n:name="deadline" tal:content="python:helpers.timeago(milestone.deadline)" />
       </a>
       <a href="javascript:void(0)"
          class="simple-tooltip"

@@ -1,6 +1,6 @@
 from copy import copy
 from decimal import Decimal
-from DateTime import DateTime
+from datetime import date, time, datetime
 
 from zope.component import getUtility
 from zope.location.interfaces import ILocation
@@ -170,5 +170,16 @@ class datetimerange(object):
         return (current, next)
 
 
-def timeago(timestamp):
-    return getUtility(IPrettyDate).date(timestamp)
+def timeago(timestamp, short=False):
+    utility = getUtility(IPrettyDate)
+    if isinstance(timestamp, date):
+        return utility.date(
+            datetime.combine(timestamp, time(0, 0)),
+            short=short,
+            asdays=True
+        )
+    elif isinstance(timestamp, datetime):
+        return utility.date(timestamp, short=short)
+    raise ValueError(
+        "'%s' cannot be converted prettily" % type(timestamp).__name__
+    )
