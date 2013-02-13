@@ -468,6 +468,10 @@ table.stories tbody tr td.actions {
     width: 52px;
 }
 
+table.stories tbody tr td.quick-booking {
+    width: 80px;
+}
+
 table.stories tbody tr.story td:first-child {
     padding-left: 0px;
     padding-top: 0px;

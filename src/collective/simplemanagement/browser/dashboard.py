@@ -77,7 +77,6 @@ class DashboardView(DashboardMixin):
 
     def projects(self):
         listing = IMyStoriesListing(self.context)
-
         projects = {}
         for st in listing.stories(project_info=True):
             prj = st.pop('project')

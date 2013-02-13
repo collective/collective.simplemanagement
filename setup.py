@@ -31,16 +31,20 @@ setup(
     zip_safe=False,
     install_requires=[
         'setuptools',
-        'collective.dexteritytextindexer',
+        'lxml',
+        'plone.tiles',
         'Products.CMFPlone',
         'plone.app.collection',
         'plone.app.dexterity',
         'plone.app.relationfield',
         'plone.namedfile [blobs]',
+        'plone.app.blocks',
+        'plone.app.tiles',
         'Products.Poi',
         'abstract.z3cform.usertokeninput',
         'collective.js.jqueryui',
-        'collective.prettydate'
+        'collective.prettydate',
+        'collective.dexteritytextindexer'
     ],
     extras_require={
         'test': [

@@ -75,7 +75,6 @@
                           <th i18n:translate="">Story</th>
                           <th i18n:translate="">Epic</th>
                           <th i18n:translate="">Milestone</th>
-                          <th i18n:translate="">Assignees</th>
                           <th i18n:translate="">Estimate</th>
                           <th i18n:translate="">Done</th>
                           <th i18n:translate="">Difference</th>
@@ -86,7 +85,21 @@
                         <tal:stories repeat="story project/stories">
                           <metal:stories
                             use-macro="context/simpemanagement-macros/story-compact">
-                            <!-- metal:remove-actions fill-slot="after-columns" / -->
+                            <metal:extra-info fill-slot="extra-info">
+                              <td class="info">
+                                <metal:story-epic
+                                   use-macro="context/simpemanagement-macros/story-epic" />
+                              </td>
+                              <td class="info">
+                                <metal:story-milestone
+                                   use-macro="context/simpemanagement-macros/story-milestone" />
+                              </td>
+                            </metal:extra-info>
+                            <metal:after-columns fill-slot="after-columns">
+                              <td class="quick-booking">
+                                <button i18n:translate="">Book time</button>
+                              </td>
+                            </metal:after-columns>
                           </metal:stories>
                         </tal:stories>
                       </tbody>
