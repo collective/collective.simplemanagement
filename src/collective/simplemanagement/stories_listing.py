@@ -112,13 +112,16 @@ class StoriesListing(object):
                         'priority': project.priority,
                         'UID': IUUID(project)
                     },
-                    'iteration': {
-                        'title': iteration.Title(),
-                        'description': iteration.Description(),
-                        'url': iteration.absolute_url(),
-                        'UID': IUUID(iteration)
-                    }
                 })
+                if iteration:
+                    data.update({
+                        'iteration': {
+                           'title': iteration.Title(),
+                            'description': iteration.Description(),
+                            'url': iteration.absolute_url(),
+                            'UID': IUUID(iteration)
+                        }
+                    })
             stories.append(data)
 
         self.totals['time_status'] = get_difference_class(
