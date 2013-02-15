@@ -131,12 +131,11 @@ def timeline_update(object_, event):
         if IObjectMovedEvent.providedBy(event):
             for parent in [event.oldParent, event.newParent]:
                 if parent:
-                    iteration = get_iteration(parent)
-                    if iteration is not None:
-                        iterations.append(iteration)
+                    iterations.append(get_iteration(parent))
         else:
             iterations.append(get_iteration(object_))
     else:
         iterations.append(object_)
     for iteration in iterations:
-        snapshot(iteration)
+        if iteration is not None:
+            snapshot(iteration)
