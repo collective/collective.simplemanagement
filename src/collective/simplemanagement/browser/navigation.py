@@ -15,5 +15,8 @@ class ProjectNavtreeStrategy(NavtreeStrategy):
         if result:
             if item.portal_type in self.hidden_types:
                 result = False
+            elif item.portal_type == 'Iteration' and \
+                    item.review_state != 'active':
+                result = False
         return result
 

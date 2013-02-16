@@ -2,6 +2,7 @@
 <object name="portal_workflow" meta_type="Plone Workflow Tool">
  <object name="story_workflow" meta_type="Workflow"/>
  <object name="project_workflow" meta_type="Workflow"/>
+ <object name="iteration_workflow" meta_type="Workflow"/>
  <bindings>
   <type type_id="Booking">
    <bound-workflow workflow_id="one_state_workflow"/>
@@ -16,7 +17,7 @@
    <bound-workflow workflow_id="project_workflow"/>
   </type>
   <type type_id="Iteration">
-   <bound-workflow workflow_id="one_state_workflow"/>
+   <bound-workflow workflow_id="iteration_workflow"/>
   </type>
  </bindings>
 </object>
