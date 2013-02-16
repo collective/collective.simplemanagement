@@ -73,7 +73,7 @@
     name="create-hole"
     class=".holes_helpers.CreateHole"
     layer="..interfaces.IBrowserLayer"
-    permission="cmf.ModifyPortalContent"
+    permission="zope2.View"
   />
 
   <browser:page
