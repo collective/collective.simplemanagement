@@ -6,15 +6,17 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from ..utils import get_story
 from ..utils import get_project
+from ..utils import AttrDict
 
 
 class BookingView(BrowserView):
 
+    @property
     @memoize
     def tools(self):
-        return {
+        return AttrDict({
             'portal_catalog': getToolByName(self.context, 'portal_catalog')
-        }
+        })
 
     @memoize
     def portal_state(self):
@@ -39,7 +41,7 @@ class BookingView(BrowserView):
             'sort_order': 'descending'
         }
 
-        pc = self.tools()['portal_catalog']
+        pc = self.tools['portal_catalog']
         for brain in pc.searchResults(query):
             booking = brain.getObject()
             story = get_story(booking)

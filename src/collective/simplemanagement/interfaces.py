@@ -309,6 +309,14 @@ class ISettings(Interface):
         title=_(u"Man day hours"),
         description=_(u"The number of hours a person works in a day")
     )
+    booking_check_delta_days_start = schema.Int(
+        title=_(u"Booking check days delta start"),
+        description=_(u"The number of days ...")
+    )
+    booking_check_delta_days_end = schema.Int(
+        title=_(u"Booking check days delta end"),
+        description=_(u"The number of days ...")
+    )
     statuses = schema.List(
         title=_(u"Project statuses"),
         value_type=schema.TextLine()

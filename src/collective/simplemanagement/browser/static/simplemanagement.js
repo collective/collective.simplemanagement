@@ -197,7 +197,7 @@
             position = ui.item.index();
             item_id = ui.item.attr('id');
             $.getJSON(
-                './story_move?story_id=' + item_id + '&position=' + position,
+                './story_move?story_id=' + item_id + '&new_position=' + position,
                 function(data){
                     if(data['success'] === false) {
                         alert(data['error']);
@@ -246,6 +246,20 @@
                     });
                 });
             }
+        });
+
+        $('.create-hole').click(function(){
+            var date = $(this).attr('data-date');
+            var time = $(this).attr('data-time');
+            var reason = $(this).parent().find(':selected').val();
+            $.getJSON(
+                './create-hole?date=' + date + '&time=' + time + '&reason=' + reason,
+                function(data){
+                    if(data['success'] === false) {
+                        alert(data['error']);
+                    }
+                }
+           );
         });
 
     });

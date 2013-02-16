@@ -62,13 +62,27 @@
 
   <browser:page
     for="*"
+    name="create-hole"
+    class=".holes_helpers.CreateHole"
+    layer="..interfaces.IBrowserLayer"
+    permission="cmf.ModifyPortalContent"
+  />
+
+  <browser:page
+    for="*"
     name="simpemanagement-macros"
     class=".macros.Macros"
     layer="..interfaces.IBrowserLayer"
     permission="zope2.View"
   />
 
-  <!-- allow comments for story items -->
+  <!-- allow comments for sto<browser:page
+    for="..interfaces.IIteration"
+    name="story_move"
+    class=".story_move.StoryMove"
+    layer="..interfaces.IBrowserLayer"
+    permission="cmf.ModifyPortalContent"
+  />ry items -->
   <browser:page
     name="conversation_view"
     for="..interfaces.IStory"

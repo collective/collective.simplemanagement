@@ -13,6 +13,7 @@ from .interfaces import IProject, IStoriesListing, IBacklogView
 from .configure import DOCUMENTS_ID
 from .utils import get_user_details
 from .utils import get_text
+from .utils import AttrDict
 from .iteration import IterationViewMixin
 from . import messageFactory as _
 
@@ -28,11 +29,12 @@ class View(grok.View):
     grok.context(IProject)
     grok.require('zope2.View')
 
+    @property
     @memoize
     def tools(self):
-        return {
+        return AttrDict({
             'portal_catalog': getToolByName(self.context, 'portal_catalog')
-        }
+        })
 
     def iterations(self):
         iterations = {
@@ -40,7 +42,7 @@ class View(grok.View):
             'current': [],
             'future': []
         }
-        pc = self.tools()['portal_catalog']
+        pc = self.tools['portal_catalog']
         raw_iterations = pc.searchResults({
             'path': '/'.join(self.context.getPhysicalPath()),
             'portal_type': 'Iteration',
@@ -105,7 +107,7 @@ class OverView(View):
         documents_folder = None
         if DOCUMENTS_ID in self.context:
             documents_folder = self.context[DOCUMENTS_ID]
-            pc = self.tools()['portal_catalog']
+            pc = self.tools['portal_catalog']
             folder_path = '/'.join(documents_folder.getPhysicalPath())
             last_stuff = pc.searchResults({
                 'path': folder_path,
