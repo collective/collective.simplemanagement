@@ -123,7 +123,6 @@
     display: inline;
 }
 
-
 #booking-form .field input[type="text"][name$=".title"],
 #content #booking-form input.text-widget {
     line-height: 100%;
@@ -552,7 +551,36 @@ table.stories td.data.warning {
 .template-dashboard #booking-form {
     display: none;
 }
+.template-dashboard #missed-bookings{
+    overflow: hidden;
+    width: 826px;
+    margin-bottom: 20px;
+}
+.template-dashboard #missed-bookings .booking-hole{
+    font-size:120%;
+}
+.template-dashboard #missed-bookings .booking-hole .booking-date{
+    font-weight: bold;
+}
+.template-dashboard #missed-bookings .booking-hole *{
+    vertical-align: middle;
+}
+/*.template-dashboard #missed-bookings{
+    overflow: hidden;
+    width: 50%;
+}*/
+.alert-top{
+    border: 2px solid #00008D;
+    border-radius: 10px;
+    padding: 10px;
+}
+.alert-top h2{
+    color:white;
+    background-color: #FF7700;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
 
-.template-dashboard .booking-form {
-    background-color:;
+.claim{
+    font-weight: bold;
 }

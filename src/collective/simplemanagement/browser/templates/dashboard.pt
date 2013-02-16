@@ -27,7 +27,7 @@
                   i18n:translate="">Stories</dt>
               <dd id="fieldset-stories"
                   tal:define="booking_holes view/booking_holes;">
-                <div id="missed-bookings"
+                <div id="missed-bookings" class="alert alert-top alert-booking"
                      tal:condition="booking_holes">
                   <h2 i18n:translate="">Please complete your booking</h2>
                   <p class="claim"
@@ -36,14 +36,20 @@
                   <div class="listing">
                     <div class="row booking-hole"
                          tal:repeat="hole booking_holes">
-                      <div class="cell position-0 column-1">
+                      <div class="cell position-0 column-3">
                         <span class="booking-date"
                               tal:content="python:helpers.timeago(hole.date)" />
                       </div>
-                      <div class="cell position-1 column-2">
-                        <span class="booking-time" tal:content="hole/time" />
+                      <div class="cell position-2 column-2">
+                        <span class="booking-time"
+                              i18n:translate="">
+                          (<span i18n:name="time"
+                                tal:omit-tag=""
+                                tal:content="hole/time" />
+                          hours booked)
+                        </span>
                       </div>
-                      <div class="cell position-2 column-4">
+                      <div class="cell position-5 column-4">
                         <div class="actions">
                           <span class="take-it-easy"
                                 i18n:translate="">It's okay, I</span>
