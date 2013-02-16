@@ -267,6 +267,9 @@
             }
         });
 
+        $('select.hole-reasons').change(function(){
+            $(this).siblings('button').removeAttr('disabled');
+        });
         $('.create-hole').click(function(){
             var $self = $(this);
             var date = $(this).attr('data-date');
@@ -280,7 +283,7 @@
                         if($container.find('.booking-hole').length==1){
                             $container.fadeOut();
                         }else{
-                            $self.closest('tr').fadeOut();
+                            $self.closest('.booking-hole').fadeOut();
                         }
                     }else{
                         alert(data['error']);

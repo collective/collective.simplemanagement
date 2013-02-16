@@ -55,7 +55,8 @@
                               tal:attributes="value python:reason[0]"
                               tal:content="python:reason[1]" />
                           </select>
-                          <button 
+                          <button
+                            disabled="disabled"
                             tal:attributes="data-time python:str(hole.time);
                                             data-date python:hole.date.strftime('%Y-%m-%d')"
                             class="create-hole"
