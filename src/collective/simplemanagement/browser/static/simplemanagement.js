@@ -249,13 +249,21 @@
         });
 
         $('.create-hole').click(function(){
+            var $self = $(this);
             var date = $(this).attr('data-date');
             var time = $(this).attr('data-time');
             var reason = $(this).parent().find(':selected').val();
             $.getJSON(
                 './create-hole?date=' + date + '&time=' + time + '&reason=' + reason,
                 function(data){
-                    if(data['success'] === false) {
+                    if(data['success']===true) {
+                        var $container = $('#missed-bookings');
+                        if($container.find('.booking-hole').length==1){
+                            $container.fadeOut();
+                        }else{
+                            $self.closest('tr').fadeOut();
+                        }
+                    }else{
                         alert(data['error']);
                     }
                 }

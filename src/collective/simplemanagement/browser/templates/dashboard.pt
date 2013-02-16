@@ -14,7 +14,7 @@
   <body metal:use-macro="content">
 
     <metal:bodytext fill-slot="main">
-      <metal:main define-macro="main">
+      <metal:main define-macro="main" tal:define="helpers context/@@simplemanagement_helpers;">
         <div tal:replace="structure provider:plone.abovecontenttitle" />
         <h1 class="documentFirstHeading">Dashboard</h1>
       <!-- <div tal:replace="structure provider:plone.belowcontenttitle" />     -->
@@ -33,21 +33,22 @@
                   <p class="claim"
                     i18n:translate="">You seem to have missing bookings
                     for the following days:</p>
-                  <table class="invisible listing">
-                    <tr>
-                      <th i18n:translate="">Date</th>
-                      <th i18n:translate="">Time</th>
-                      <th i18n:translate="">Actions</th>
-                    </tr>
-                    <tr class="booking-hole"
-                        tal:repeat="hole booking_holes">
-                        <td class="date"
-                            tal:content="hole/date" />
-                        <td class="time" tal:content="hole/time" />
-                        <td class="actions">
+                  <div class="listing">
+                    <div class="row booking-hole"
+                         tal:repeat="hole booking_holes">
+                      <div class="cell position-0 column-1">
+                        <span class="booking-date"
+                              tal:content="python:helpers.timeago(hole.date)" />
+                      </div>
+                      <div class="cell position-1 column-2">
+                        <span class="booking-time" tal:content="hole/time" />
+                      </div>
+                      <div class="cell position-2 column-4">
+                        <div class="actions">
                           <span class="take-it-easy"
                                 i18n:translate="">It's okay, I</span>
-                          <select name="reason" class="hole-reasons">
+                          <select class="hole-reasons"
+                                  tal:attributes="name string:reason-${repeat/hole/number}">
                             <option i18n:translate="">- select reason -</option>
                             <option
                               tal:repeat="reason view/hole_reasons"
@@ -55,15 +56,16 @@
                               tal:content="python:reason[1]" />
                           </select>
                           <button 
-                            tal:attributes="data-time hole/missing_time;
+                            tal:attributes="data-time python:str(hole.time);
                                             data-date python:hole.date.strftime('%Y-%m-%d')"
                             class="create-hole"
                             i18n:translate="">
-                            GO!
+                            Fill it!
                           </button>
-                        </td>
-                    </tr>
-                  </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div id="projects">
