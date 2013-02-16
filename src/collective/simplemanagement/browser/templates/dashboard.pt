@@ -25,38 +25,43 @@
             <dl class="enableFormTabbing">
               <dt id="fieldsetlegend-stories"
                   i18n:translate="">Stories</dt>
-              <dd id="fieldset-stories">
-                <div id="missed-bookings">
+              <dd id="fieldset-stories"
+                  tal:define="booking_holes view/booking_holes;">
+                <div id="missed-bookings"
+                     tal:condition="booking_holes">
                   <h2 i18n:translate="">Please complete your booking</h2>
                   <p class="claim"
                     i18n:translate="">You seem to have missing bookings
                     for the following days:</p>
-                  <table class="invisible item-listing">
+                  <table class="invisible listing">
                     <tr>
-                      <td>Mon, 7th January 2013</td>
-                      <td>(1.5 hours booked)</td>
-                      <td>It's okay, I&nbsp;
-                        <select>
-                          <option>...select reason</option>
-                          <option>was no leave</option>
-                          <option>have been caught up by stuff</option>
-                          <option>have been taken by aliens</option>
-                          <option>had my mac swallowed by the cat</option>
-                        </select>
-                      </td>
+                      <th i18n:translate="">Date</th>
+                      <th i18n:translate="">Time</th>
+                      <th i18n:translate="">Actions</th>
                     </tr>
-                    <tr>
-                      <td>Mon, 7th January 2013</td>
-                      <td>(1.5 hours booked)</td>
-                      <td>It's okay, I&nbsp;
-                        <select>
-                          <option>...select reason</option>
-                          <option>was no leave</option>
-                          <option>have been caught up by stuff</option>
-                          <option>have been taken by aliens</option>
-                          <option>had my mac swallowed by the cat</option>
-                        </select>
-                      </td>
+                    <tr class="booking-hole"
+                        tal:repeat="hole booking_holes">
+                        <td class="date"
+                            tal:content="hole/date" />
+                        <td class="time" tal:content="hole/time" />
+                        <td class="actions">
+                          <span class="take-it-easy"
+                                i18n:translate="">It's okay, I</span>
+                          <select name="reason" class="hole-reasons">
+                            <option i18n:translate="">- select reason -</option>
+                            <option
+                              tal:repeat="reason view/hole_reasons"
+                              tal:attributes="value python:reason[0]"
+                              tal:content="python:reason[1]" />
+                          </select>
+                          <button 
+                            tal:attributes="data-time hole/missing_time;
+                                            data-date python:hole.date.strftime('%Y-%m-%d')"
+                            class="create-hole"
+                            i18n:translate="">
+                            GO!
+                          </button>
+                        </td>
                     </tr>
                   </table>
                 </div>

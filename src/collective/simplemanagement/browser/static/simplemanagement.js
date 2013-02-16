@@ -248,5 +248,19 @@
             }
         });
 
+        $('.create-hole').click(function(){
+            var date = $(this).attr('data-date');
+            var time = $(this).attr('data-time');
+            var reason = $(this).parent().find(':selected').val();
+            $.getJSON(
+                './create-hole?date=' + date + '&time=' + time + '&reason=' + reason,
+                function(data){
+                    if(data['success'] === false) {
+                        alert(data['error']);
+                    }
+                }
+           );
+        });
+
     });
 })(jQuery);
