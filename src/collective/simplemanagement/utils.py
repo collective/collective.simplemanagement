@@ -88,6 +88,11 @@ def get_bookings(userid=None, project=None, portal_catalog=None,
 
 def get_booking_holes(userid, bookings, expected_working_time=None,
                       man_day_hours=None, from_date=None, to_date=None):
+    """ given a user and a list of bookings returns booking holes
+    ``expected_working_time`` minimal expected working hours per day
+    ``man_day_hours`` amount of working hours per day
+    ``from_date`` and ``to_date`` limit the range of dates to check upon
+    """
     # TODO: get settings from global settings if not passed
     _missing = {}
     for booking in bookings:
