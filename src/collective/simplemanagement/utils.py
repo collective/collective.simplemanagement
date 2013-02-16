@@ -3,6 +3,7 @@ from decimal import Decimal
 from datetime import date, time, datetime
 
 from zope.component import getUtility
+from zope.component.hooks import getSite
 from zope.location.interfaces import ILocation
 
 from Products.CMFCore.utils import getToolByName
@@ -50,6 +51,35 @@ def get_project(context, default=None):
 
 def get_iteration(context, default=None):
     return get_ancestor(IIteration, context, default)
+
+
+def get_bookings(userid=None, project=None, portal_catalog=None,
+                 from_date=None, to_date=None):
+    """ returns bookings.
+    ``userid`` limits results to objs belonging to that user.
+    ``project`` a project obj. If given, results will be limited to that proj.
+    ``from_date`` lower date limit
+    ``to_date```upper date limit
+    """
+    if portal_catalog is None:
+        pc = getToolByName(getSite(), 'portal_catalog')
+    else:
+        pc = portal_catalog
+    query = {
+        'portal_type': 'Booking',
+        'sort_on': 'booking_date',
+    }
+    if userid:
+        query['Creator'] = userid
+    if project:
+        query['path'] = '/'.join(project.getPhysicalPath())
+    if from_date and not to_date:
+        query['created'] = {'query': from_date, 'range': 'min'}
+    elif to_date and not from_date:
+        query['created'] = {'query': to_date, 'range': 'max'}
+    else:
+        query['created'] = {'query': [from_date, to_date], 'range': 'minmax'}
+    return pc(query)
 
 
 def get_timings(context, portal_catalog=None):
