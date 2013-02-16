@@ -97,7 +97,8 @@
                             </metal:extra-info>
                             <metal:after-columns fill-slot="after-columns">
                               <td class="quick-booking">
-                                <button i18n:translate="">Book time</button>
+                                <a i18n:translate="" class="bookform" title="NONE"
+                                   tal:attributes="rel string:${story/url}/create_booking">Book time</a>
                               </td>
                             </metal:after-columns>
                           </metal:stories>
@@ -149,8 +150,34 @@
 
               </dd>
             </dl>
-
-
+            <div id="booking-form" class="booking-form">
+              <h2>Add booking</h2>
+              <form method="post" action="" tal:attributes="action string:${context/absolute_url}/booking_json">
+                <div class="field">
+                  <label for="title">Title</label><br/>
+                  <input type="text" id="title" name="title"
+                         placeholder="title"/>
+                </div>
+                <div class="field">
+                  <label for="description">Description</label><br/>
+                  <input type="text" id="description" name="description"
+                         placeholder="description"/>
+                </div>
+                <div class="field">
+                  <label for="when">When</label><br/>
+                  <input type="hidden" name="date" id="date" class="date"/>
+                  <div class="datepicker"></div>
+                </div>
+                <div class="field">
+                  <label for="time">Time spent</label><br/>
+                  <input type="text" id="time" name="time" placeholder="timespent"/>
+                </div>
+                <!-- <div class="field">
+                  <label for="reference">reference</label><br/>
+                  <input type="text" id="reference" name="reference" placeholder="reference"/>
+                </div> -->
+                <input type="submit" name="book item" />
+              </form>
           </div>
         <div tal:replace="structure provider:plone.belowcontentbody" />
       </metal:main>

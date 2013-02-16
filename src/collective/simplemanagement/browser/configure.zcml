@@ -29,6 +29,14 @@
     permission="zope2.View"
   />
 
+  <browser:page
+    for="..interfaces.IStory"
+    name="create_booking"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+    class=".createbooking.CreateBookingView"
+  />
+
   <browser:pages
     for="..interfaces.IStory"
     class=".wfactions.WFActions"

@@ -405,7 +405,7 @@ ul.stories .actions {
     background: white;
     border: 1px solid #dddddd;
     border-radius: 5px;
-    height: 25px;
+    height: auto;
     width: 220px;
     padding: .2em .5em;
     font-size: 85%;
@@ -547,4 +547,12 @@ table.stories td.data.success {
 
 table.stories td.data.warning {
     color: #f17e03;
+}
+
+.template-dashboard #booking-form {
+    display: none;
+}
+
+.template-dashboard .booking-form {
+    background-color:;
 }

@@ -247,6 +247,25 @@
                 });
             }
         });
+        $(".bookform").tooltip({
+            disabled: true,
+            events: { def: "click,blur"},
+            position: "bottom left",
+            onBeforeShow: function(){
+                var tip = this.getTip();
+                tip.empty();
+                tip.html($('.booking-form').html());
+                tip.addClass('booking-form');
+                tip.find('form').attr('action', this.getTrigger().attr('rel'));
+                tip.find('.datepicker').datepicker({
+                    altField: ".date"
+                });
+                var form = tip.find('form');
+                form.bind('submit', function(evt){
+                    tip.hide();
+                });
+            }
+        });
 
     });
 })(jQuery);
