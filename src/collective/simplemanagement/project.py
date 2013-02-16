@@ -62,7 +62,6 @@ class View(grok.View):
             else:
                 iterations['future'].append(iteration)
                 have_iterations = True
-
         if not have_iterations:
             return None
         return iterations

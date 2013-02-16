@@ -29,6 +29,14 @@
     permission="zope2.View"
   />
 
+  <browser:page
+    for="..interfaces.IStory"
+    name="create_booking"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+    class=".createbooking.CreateBookingView"
+  />
+
   <browser:pages
     for="..interfaces.IStory"
     class=".wfactions.WFActions"
@@ -84,13 +92,7 @@
     permission="zope2.View"
   />
 
-  <!-- allow comments for sto<browser:page
-    for="..interfaces.IIteration"
-    name="story_move"
-    class=".story_move.StoryMove"
-    layer="..interfaces.IBrowserLayer"
-    permission="cmf.ModifyPortalContent"
-  />ry items -->
+  <!-- allow comments for story items -->
   <browser:page
     name="conversation_view"
     for="..interfaces.IStory"
@@ -142,41 +144,5 @@
       provides="..interfaces.IQuickForm"
       factory=".quickforms.BaseqQuickFormAdapter"
   />
-
-  <!-- Custom navtree strategy for Project -->
-  <class class=".navigation.ProjectNavtreeStrategy">
-    <allow
-        interface="plone.app.layout.navigation.interfaces.INavtreeStrategy" />
-  </class>
-  <adapter factory=".navigation.ProjectNavtreeStrategy"
-           for="..interfaces.IProject
-                plone.app.portlets.portlets.navigation.INavigationPortlet" />
-  <adapter factory=".navigation.ProjectNavtreeStrategy"
-           for="..interfaces.IIteration
-                plone.app.portlets.portlets.navigation.INavigationPortlet" />
-  <adapter factory=".navigation.ProjectNavtreeStrategy"
-           for="..interfaces.IStory
-                plone.app.portlets.portlets.navigation.INavigationPortlet" />
-  <adapter factory=".navigation.ProjectNavtreeStrategy"
-           for="..interfaces.IEpic
-                plone.app.portlets.portlets.navigation.INavigationPortlet" />
-
-  <!-- overrides -->
-  <browser:viewlet
-      name="plone.path_bar"
-      manager="plone.app.layout.viewlets.interfaces.IAboveContent"
-      class=".overrides.BacklogPathBarViewlet"
-      permission="zope2.View"
-      view="..interfaces.IBacklogView"
-      />
-
-  <browser:viewlet
-      name="plone.path_bar"
-      manager="plone.app.layout.viewlets.interfaces.IAboveContent"
-      class=".overrides.BacklogStoryPathBarViewlet"
-      for="..interfaces.IStory"
-      permission="zope2.View"
-      />
-
 
 </configure>

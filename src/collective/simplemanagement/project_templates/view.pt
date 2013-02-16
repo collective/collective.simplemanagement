@@ -37,7 +37,7 @@
           </div>
         </tal:iterations>
 
-        <h2 i18n:translate="">Current iteration</h2>
+        <h2 i18n:translate="">Current iterations</h2>
         <div class="pane">
           <div tal:condition="iterations/current">
             <div tal:repeat="iteration iterations/current">

@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<dc-workflow workflow_id="iteration_workflow" title="Iteration Workflow" description="The workflow of iterations" state_variable="review_state" initial_state="planned" manager_bypass="False">
+ <permission>Access contents information</permission>
+ <permission>Change portal events</permission>
+ <permission>Modify portal content</permission>
+ <permission>View</permission>
+ <state state_id="planned" title="Planned">
+  <description>The iteration is planned</description>
+  <exit-transition transition_id="activate"/>
+ </state>
+ <state state_id="active" title="Active">
+  <description>The iteration is being worked on</description>
+  <exit-transition transition_id="complete"/>
+  <exit-transition transition_id="replan"/>
+ </state>
+ <state state_id="completed" title="Completed">
+  <description>The iteration is complete</description>
+  <exit-transition transition_id="reactivate"/>
+ </state>
+ <transition transition_id="activate" title="Activate" new_state="active" trigger="USER" before_script="" after_script="">
+  <description>Activate the iteration and start working</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=activate" category="workflow" icon="">Activate</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="replan" title="Back to planning" new_state="planned" trigger="USER" before_script="" after_script="">
+  <description>Plan again the iteration</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=replan" category="workflow" icon="">Replan</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="complete" title="Complete" new_state="completed" trigger="USER" before_script="" after_script="">
+  <description>The iteration is done</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=complete" category="workflow" icon="">Complete</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="reactivate" title="Activate again" new_state="active" trigger="USER" before_script="" after_script="">
+  <description>Activate the iteration again to work on it</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=reactivate" category="workflow" icon="">Reactivate</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+ <variable variable_id="action" for_catalog="False" for_status="True" update_always="True">
+  <description>Previous transition</description>
+  <default>
+   
+   <expression>transition/getId|nothing</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+ <variable variable_id="actor" for_catalog="False" for_status="True" update_always="True">
+  <description>The ID of the user who performed the previous transition</description>
+  <default>
+   
+   <expression>user/getId</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+ <variable variable_id="comments" for_catalog="False" for_status="True" update_always="True">
+  <description>Comment about the last transition</description>
+  <default>
+   
+   <expression>python:state_change.kwargs.get('comment', '')</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+ <variable variable_id="review_history" for_catalog="False" for_status="False" update_always="False">
+  <description>Provides access to workflow history</description>
+  <default>
+   
+   <expression>state_change/getHistory</expression>
+  </default>
+  <guard>
+   <guard-permission>Request review</guard-permission>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </variable>
+ <variable variable_id="time" for_catalog="False" for_status="True" update_always="True">
+  <description>When the previous transition was performed</description>
+  <default>
+   
+   <expression>state_change/getDateTime</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+</dc-workflow>

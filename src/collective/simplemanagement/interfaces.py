@@ -243,6 +243,11 @@ class IBacklogView(Interface):
     """
 
 
+class IProjectNavigation(Interface):
+    """The project navigation portlet
+    """
+
+
 class ITimeline(ILocation):
     """Keeps a list of "snapshots" over time.
 
