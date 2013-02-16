@@ -4,6 +4,9 @@
     <value key="man_day_hours">8.0</value>
     <value key="booking_check_delta_days_start">7</value>
     <value key="booking_check_delta_days_end">2</value>
+    <value key="employees_group">employees</value>
+    <value key="monthly_weeks_before">1</value>
+    <value key="monthly_weeks_after">1</value>
     <value key="statuses">
       <element>not_started|Not started</element>
       <element>analysis|Analysis</element>

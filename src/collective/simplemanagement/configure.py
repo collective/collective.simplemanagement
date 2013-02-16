@@ -1,3 +1,4 @@
+from datetime import timedelta
 from decimal import Decimal
 
 from zope.interface import implements
@@ -10,6 +11,8 @@ TIMELINE_ANNOTATIONS_KEY = 'collective.simplemanagement.timeline'
 TRACKER_ID = 'issues'
 DOCUMENTS_ID = 'documents'
 DECIMAL_QUANT = Decimal("1.00")
+ONE_DAY = timedelta(days=1)
+ONE_WEEK = timedelta(days=7)
 
 
 class Settings(object):

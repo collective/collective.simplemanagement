@@ -82,7 +82,8 @@ def get_bookings(userid=None, project=None, portal_catalog=None,
     elif to_date and not from_date:
         query['booking_date'] = {'query': to_date, 'range': 'max'}
     elif from_date and to_date:
-        query['booking_date'] = {'query': [from_date, to_date], 'range': 'minmax'}
+        query['booking_date'] = {'query': [from_date, to_date],
+                                 'range': 'minmax'}
     return pc.searchResults(query)
 
 
@@ -173,17 +174,27 @@ def get_difference_class(a, b, settings=None):
     return 'success'
 
 
-def get_user_details(context, user_id):
-    # TODO: also obtain image
-    pm = getToolByName(context, 'portal_membership')
+def get_user_details(context, user_id, **kwargs):
+    pm = kwargs.get(
+        'portal_membership',
+        getToolByName(context, 'portal_membership')
+    )
+    pu = kwargs.get(
+        'portal_url',
+        getToolByName(context, 'portal_url')
+    )
     usr = pm.getMemberById(user_id)
+    data = {
+        'user_id': user_id,
+        'fullname': user_id,
+        'href': None,
+        'portrait': None
+    }
     if usr:
-        fullname = usr.getProperty('fullname') or user_id
-        href = '/author/%s' % user_id  # TODO: fix with the right url
-    else:
-        fullname = user_id
-        href = None
-    return dict(fullname=fullname, href=href)
+        data['fullname'] = usr.getProperty('fullname') or user_id
+        data['href'] = '%s/author/%s' % (pu(), user_id)
+        data['portrait'] = pm.getPersonalPortrait(user_id)
+    return data
 
 
 def get_assignees_details(story):

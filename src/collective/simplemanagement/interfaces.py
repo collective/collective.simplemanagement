@@ -333,6 +333,20 @@ class ISettings(Interface):
         title=_(u"Possible reasons to be off duty"),
         value_type=schema.TextLine()
     )
+    employees_group = schema.TextLine(
+        title=_(u"Employess group"),
+        description=_(u"Identifier of the group containing all employees")
+    )
+    monthly_weeks_before = schema.Int(
+        title=_(u"Number of weeks before month"),
+        description=_(u"The number of weeks to show in monthly views "
+                      u"that actually fall in the previous month")
+    )
+    monthly_weeks_after = schema.Int(
+        title=_(u"Number of weeks after month"),
+        description=_(u"The number of weeks to show in monthly views "
+                      u"that actually fall in the next month")
+    )
 
 
 class IBookingHole(Interface):
