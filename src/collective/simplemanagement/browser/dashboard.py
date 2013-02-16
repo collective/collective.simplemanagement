@@ -1,7 +1,5 @@
 import datetime
 
-from zope import component
-
 from plone.memoize.instance import memoize as instance_memoize
 from plone.memoize.view import memoize as view_memoize
 
@@ -11,10 +9,10 @@ from Products.Five.browser import BrowserView
 from ..configure import Settings
 from ..interfaces import IMyStoriesListing
 from ..interfaces import IProject
-from ..interfaces import IBookingHoles
 from ..utils import timeago
 from ..utils import AttrDict
 from ..utils import get_bookings
+from ..utils import get_booking_holes
 
 
 class DashboardMixin(BrowserView):
@@ -115,7 +113,7 @@ class DashboardView(DashboardMixin):
     @view_memoize
     def hole_settings(self):
         start_delta = self.settings.booking_check_delta_days_start
-        end_delta = self.settings.booking_check_delta_days_start
+        end_delta = self.settings.booking_check_delta_days_end
         today = datetime.date.today()
         from_date = today - datetime.timedelta(start_delta)
         to_date = today - datetime.timedelta(end_delta)
@@ -126,7 +124,7 @@ class DashboardView(DashboardMixin):
             'man_day_hours': self.settings.man_day_hours,
         })
 
-    @view_memoize
+    # @view_memoize
     def bookings(self, userid, from_date, to_date):
         cat = self.tools.portal_catalog
         bookings = get_bookings(
@@ -141,49 +139,14 @@ class DashboardView(DashboardMixin):
         member = self.portal_state.member()
         userid = member.getId()
         hole_settings = self.hole_settings
-
-        expected_working_time = hole_settings.man_day_hours - \
-            (hole_settings.man_day_hours * hole_settings.warning_delta_percent)
-
-        _missing = {}
-        # first we collect all the booking and we get total hours for every date
-        bookings = self.bookings(userid,
-                                 hole_settings.from_date,
-                                 hole_settings.to_date)
-        print bookings
-        for booking in bookings:
-            if booking.time >= expected_working_time:
-                # let's skip this if already have sufficient hours
-                continue
-            # let's check for a hole matching this booking
-            if _missing.get(booking.date):
-                _missing[booking.date] += booking.time
-            else:
-                _missing[booking.date] = booking.time
-
-        # then we check that total time matches our constraints
-        holes_util = component.getUtility(IBookingHoles)
-        holes = tuple(holes_util.iter_user(userid,
-                                           hole_settings.from_date,
-                                           hole_settings.to_date))
-        print holes
-        missing = []
-        for date, time in _missing.iteritems():
-            if time >= expected_working_time:
-                # drop it if time is enough
-                continue
-            the_hole = [x for x in holes if booking.date == x.day]
-            if the_hole and \
-                (the_hole[0].hours + booking.time) >= expected_working_time:
-                # if we have a hole matching our booking date
-                # and hole hours + booked time matches our constraint
-                # we are ok with this booking
-                continue
-            missing.append(AttrDict({
-                # 'date': plone_view.toLocalizedTime(booking.date),
-                'date': date,
-                'time': time,
-                'missing_time': hole_settings.man_day_hours - time
-            }))
-        print missing
-        return missing
+        man_day_hours = hole_settings.man_day_hours
+        expected_working_time = man_day_hours - \
+            (man_day_hours * hole_settings.warning_delta_percent)
+        from_date = hole_settings.from_date
+        to_date = hole_settings.to_date
+        bookings = self.bookings(userid, from_date, to_date)
+        holes = get_booking_holes(userid, bookings,
+                                  expected_working_time=expected_working_time,
+                                  man_day_hours=man_day_hours,
+                                  from_date=from_date, to_date=to_date)
+        return holes

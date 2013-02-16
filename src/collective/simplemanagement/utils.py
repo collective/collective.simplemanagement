@@ -13,6 +13,7 @@ from collective.prettydate.interfaces import IPrettyDate
 from .interfaces import IStory
 from .interfaces import IProject
 from .interfaces import IIteration
+from .interfaces import IBookingHoles
 from .configure import Settings, DECIMAL_QUANT
 
 
@@ -54,12 +55,13 @@ def get_iteration(context, default=None):
 
 
 def get_bookings(userid=None, project=None, portal_catalog=None,
-                 from_date=None, to_date=None):
+                 from_date=None, to_date=None, sort=True):
     """ returns bookings.
     ``userid`` limits results to objs belonging to that user.
     ``project`` a project obj. If given, results will be limited to that proj.
     ``from_date`` lower date limit
-    ``to_date```upper date limit
+    ``to_date`` upper date limit
+    ``sort`` disable sorting
     """
     if portal_catalog is None:
         pc = getToolByName(getSite(), 'portal_catalog')
@@ -67,19 +69,60 @@ def get_bookings(userid=None, project=None, portal_catalog=None,
         pc = portal_catalog
     query = {
         'portal_type': 'Booking',
-        'sort_on': 'booking_date',
     }
+    if sort:
+        # this is not working in tests (???)
+        query['sort_on'] = 'booking_date'
     if userid:
         query['Creator'] = userid
     if project:
         query['path'] = '/'.join(project.getPhysicalPath())
     if from_date and not to_date:
-        query['created'] = {'query': from_date, 'range': 'min'}
+        query['booking_date'] = {'query': from_date, 'range': 'min'}
     elif to_date and not from_date:
-        query['created'] = {'query': to_date, 'range': 'max'}
-    else:
-        query['created'] = {'query': [from_date, to_date], 'range': 'minmax'}
-    return pc(query)
+        query['booking_date'] = {'query': to_date, 'range': 'max'}
+    elif from_date and to_date:
+        query['booking_date'] = {'query': [from_date, to_date], 'range': 'minmax'}
+    return pc.searchResults(query)
+
+
+def get_booking_holes(userid, bookings, expected_working_time=None,
+                      man_day_hours=None, from_date=None, to_date=None):
+    # TODO: get settings from global settings if not passed
+    _missing = {}
+    for booking in bookings:
+        if booking.time >= expected_working_time:
+            # let's skip this if already have sufficient hours
+            continue
+        # let's check for a hole matching this booking
+        if _missing.get(booking.date):
+            _missing[booking.date] += booking.time
+        else:
+            _missing[booking.date] = booking.time
+
+    # then we check that total time matches our constraints
+    holes_utility = getUtility(IBookingHoles)
+    holes = tuple(holes_utility.iter_user(userid,
+                                       from_date,
+                                       to_date))
+    missing = []
+    for dt, tm in sorted(_missing.items()):
+        if tm >= expected_working_time:
+            # drop it if time is enough
+            continue
+        the_hole = [x for x in holes if dt == x.day]
+        if the_hole and \
+            (the_hole[0].hours + tm) >= expected_working_time:
+            # if we have a hole matching our booking date
+            # and hole hours + booked time matches our constraint
+            # we are ok with this booking
+            continue
+        missing.append(AttrDict({
+            # 'date': plone_view.toLocalizedTime(booking.date),
+            'date': dt,
+            'time': tm,
+        }))
+    return missing
 
 
 def get_timings(context, portal_catalog=None):
