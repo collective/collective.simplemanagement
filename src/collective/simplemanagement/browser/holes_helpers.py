@@ -2,12 +2,15 @@ import datetime
 import json
 import logging
 from decimal import Decimal
+from BTrees.OOBTree import OOBTree
 
 from zope import component
 
 from Products.Five.browser import BrowserView
 from ..bookingholes import BookingHole
 from ..interfaces import IBookingHoles
+from ..configure import Settings
+
 
 logger = logging.getLogger('collective.simplemanagement')
 
@@ -21,13 +24,15 @@ class CreateHole(BrowserView):
     def process(self):
         date = self.request['date']
         date = [int(x) for x in date.split('-')]
-        time = self.request['time']
+        time = int(self.request['time'])
         reason = self.request['reason']
+        settings = Settings()
+        missing_time = settings.man_day_hours - time
         member = self.portal_state.member()
         # create hole
         hole = BookingHole(
             datetime.date(*date),
-            Decimal(time),
+            Decimal(missing_time),
             member.getId(),
             reason=reason
         )
@@ -49,3 +54,17 @@ class CreateHole(BrowserView):
             }
         self.request.response.setHeader("Content-type", "application/json")
         return json.dumps(result)
+
+
+class FlushHoles(BrowserView):
+    """ reset holes utility
+    TO BE USED ONLY FOR TESTING PURPOSES!
+    """
+
+    def __call__(self):
+        if not self.request.get('do-it-really'):
+            # just a guard for accidental calling
+            return 'you must provide a "do-it-really" in order to flush!'
+        util = component.getUtility(IBookingHoles)
+        util.users = OOBTree()
+        return 'BOOKING HOLES UTILITY FLUSHED'

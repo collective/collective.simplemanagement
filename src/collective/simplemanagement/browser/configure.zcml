@@ -70,6 +70,14 @@
 
   <browser:page
     for="*"
+    name="flush-holes"
+    class=".holes_helpers.FlushHoles"
+    layer="..interfaces.IBrowserLayer"
+    permission="cmf.ManagePortal"
+  />
+
+  <browser:page
+    for="*"
     name="simpemanagement-macros"
     class=".macros.Macros"
     layer="..interfaces.IBrowserLayer"
