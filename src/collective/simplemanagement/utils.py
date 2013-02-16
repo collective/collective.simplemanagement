@@ -183,3 +183,14 @@ def timeago(timestamp, short=False):
     raise ValueError(
         "'%s' cannot be converted prettily" % type(timestamp).__name__
     )
+
+
+class AttrDict(dict):
+    """ a smarter dict
+    """
+
+    def __getattr__(self, k):
+        return self[k]
+
+    def __setattr__(self, k, v):
+        self[k] = v
