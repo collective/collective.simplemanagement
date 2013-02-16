@@ -7,56 +7,38 @@
       i18n:domain="collective.simplemanagement">
   <body>
 
-    <!-- XXX: had to rewrite in lots of providers and fill content
-         instead of content-core because the edit bar viewlet
-         seems to be unoverridable for a mere view -->
-    <metal:content fill-slot="content">
-      <metal:block define-macro="content"
+    <metal:title fill-slot="content-title">
+      <h1 class="documentFirstHeading"
+          i18n:translate="">
+        Backlog
+      </h1>
+    </metal:title>
+
+    <metal:description fill-slot="content-description">
+      <div class="documentDescription"
+          i18n:translate="">
+        The backlog contains all the stories that haven't been planned yet.
+      </div>
+    </metal:description>
+
+    <metal:content-core fill-slot="content-core">
+      <metal:block define-macro="content-core"
                    tal:define="stories view/stories;
                                totals view/totals;
                                view_details python:True;
                                can_edit view/user_can_edit;
                                ajax_load python:True">
-
-        <div metal:use-macro="context/global_statusmessage/macros/portal_message">
-          Status message
-        </div>
-
-        <div id="content">
-          <div id="viewlet-above-content-title" tal:content="structure provider:plone.abovecontenttitle" tal:condition="not:ajax_load" />
-          <h1 class="documentFirstHeading" i18n:translate="">
-            Backlog
-          </h1>
-          <a class="link-parent visualNoPrint"
-             tal:attributes="href context/absolute_url;
-                             title context/Title">
-          <span i18n:translate="">Back to project</span>
-        </a>
-          <div id="viewlet-below-content-title" tal:content="structure provider:plone.belowcontenttitle" tal:condition="not:ajax_load" />
-
-          <div class="documentDescription"
-               i18n:translate="">
-            All the stories that still have no temporal planning end up here.
-          </div>
-
-          <div id="viewlet-above-content-body" tal:content="structure provider:plone.abovecontentbody" tal:condition="not:ajax_load" />
-
-          <div id="content-core">
-            <div tal:condition="view/user_can_add_story"
-                 id="addstory-container" class="clearfix simplemanagement-addstory">
-              <h3><a i18n:translate="" href="#">Add Story</a></h3>
-              <div id="addstory-form" style="display: none"
-                   class="simplemanagement-addstory-form-wrapper"
-                   tal:content="structure view/add_story_form" />
-            </div>
-
-            <metal:stories-listing
-               use-macro="context/simpemanagement-macros/stories" />
-          </div>
-          <div id="viewlet-below-content-body" tal:content="structure provider:plone.belowcontentbody" tal:condition="not:ajax_load" />
+        <div tal:condition="view/user_can_add_story"
+             id="addstory-container" class="clearfix simplemanagement-addstory">
+          <h3><a i18n:translate="" href="#">Add Story</a></h3>
+          <div id="addstory-form" style="display: none"
+               class="simplemanagement-addstory-form-wrapper"
+               tal:content="structure view/add_story_form" />
+          <metal:stories-listing
+              use-macro="context/simpemanagement-macros/stories" />
         </div>
       </metal:block>
-    </metal:content>
+    </metal:content-core>
 
   </body>
 </html>

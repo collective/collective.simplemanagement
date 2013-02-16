@@ -47,7 +47,7 @@ class Booking(dexterity.Item):
 
     def get_related(self):
         related = self.related
-        if  bool(related) and \
+        if bool(related) and \
             not related.isBroken():
             related = related.to_object
             return {
