@@ -554,7 +554,8 @@ table.stories td.data.warning {
 .template-dashboard #missed-bookings{
     overflow: hidden;
     width: 826px;
-    margin-bottom: 20px;
+    margin: 0 auto;
+    margin-bottom: 30px;
 }
 .template-dashboard #missed-bookings .booking-hole{
     font-size:120%;
@@ -583,4 +584,5 @@ table.stories td.data.warning {
 
 .claim{
     font-weight: bold;
+    padding: 5px 10px;
 }
