@@ -15,7 +15,8 @@ from .interfaces import IQuickForm
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("story_templates/booking_form.pt")
     fields = field.Fields(IQuickForm).select('title') + \
-            field.Fields(IBooking).select('time')
+            field.Fields(IBooking).select('time') + \
+            field.Fields(IBooking).select('date')
 
     name = 'booking_form'
 
