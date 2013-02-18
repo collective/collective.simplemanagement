@@ -8,4 +8,12 @@
     expression=""
     id="++resource++simplemanagement/simplemanagement.js"
     inline="False" />
+  <javascript
+    cacheable="True"
+    compression="safe"
+    cookable="True"
+    enabled="True"
+    expression=""
+    id="++resource++simplemanagement/worklog.js"
+    inline="False" />
 </object>

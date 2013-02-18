@@ -584,3 +584,53 @@ table.stories td.data.warning {
 .claim{
     font-weight: bold;
 }
+
+#worklog {
+    margin: 20px;
+}
+
+#worklog > * {
+    opacity: 0;
+}
+
+#worklog .resources {
+    background: #ddd;
+    margin: 10px 0px;
+    padding: 20px;
+    border-radius: 3px;
+}
+
+#worklog .resources ul {
+    list-style-type: none;
+}
+
+#worklog .resources ul li label img {
+    height: 24px;
+}
+
+#worklog .calendar {
+    position: relative;
+}
+
+#worklog .calendar a.previous,
+#worklog .calendar a.next {
+    text-indent: -10000em;
+    overflow: hidden;
+    height: 1em;
+    width: 1em;
+    display: inline-block;
+    text-decoration: none;
+}
+
+#worklog .calendar a.previous {
+    background: url('./go-previous.png')  2px 4px no-repeat;
+}
+
+#worklog .calendar a.next {
+    background: url('./go-next.png') 2px 4px no-repeat;
+}
+
+#worklog .calendar table {
+    width: 100%;
+    margin-top: 7px;
+}

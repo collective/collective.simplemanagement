@@ -194,6 +194,8 @@ def get_user_details(context, user_id, **kwargs):
         data['fullname'] = usr.getProperty('fullname') or user_id
         data['href'] = '%s/author/%s' % (pu(), user_id)
         data['portrait'] = pm.getPersonalPortrait(user_id)
+        if data['portrait'] is not None:
+            data['portrait'] = data['portrait'].absolute_url()
     return data
 
 

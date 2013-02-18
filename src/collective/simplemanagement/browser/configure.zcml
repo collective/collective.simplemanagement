@@ -140,6 +140,24 @@
 
   <browser:page
     for="..interfaces.IProject"
+    name="worklog"
+    class=".worklog.Worklog"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+    template="templates/worklog.pt"
+  />
+
+  <browser:page
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    name="worklog"
+    class=".worklog.Worklog"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+    template="templates/worklog.pt"
+  />
+
+  <browser:page
+    for="..interfaces.IProject"
     name="worklog_backend"
     class=".worklog.WorklogBackend"
     layer="..interfaces.IBrowserLayer"

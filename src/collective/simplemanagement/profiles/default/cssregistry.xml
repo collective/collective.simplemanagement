@@ -11,5 +11,5 @@
     id="++resource++simplemanagement/simplemanagement.css"
     media="screen"
     rel="stylesheet"
-    rendering="import" />
+    rendering="link" />
 </object>

@@ -1,0 +1,126 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.simplemanagement">
+  <head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1);
+                             disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                             disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
+  </head>
+  <body metal:use-macro="content">
+
+    <metal:bodytext fill-slot="main">
+      <metal:main define-macro="main"
+                  tal:define="helpers context/@@simplemanagement_helpers;">
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+        <h1 class="documentFirstHeading" i18n:translate="">Worklog</h1>
+        <!-- <div tal:replace="structure provider:plone.belowcontenttitle" />
+             -->
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+        <div id="content-core">
+          <div id="worklog"
+               tal:attributes="data-resources view/json_resources">
+            <h2 i18n:translate="">Resources</h2>
+            <form method="post"
+                  class="resources"
+                  action=""
+                  tal:attributes="action string:${context/absolute_url}/@@worklog_backend">
+              <ul>
+                <li tal:repeat="resource view/resources">
+                  <label for=""
+                         tal:attributes="for string:worklog-resources-${resource/user_id}">
+                    <input type="checkbox"
+                           name="resources"
+                           id=""
+                           value=""
+                           checked="checked"
+                           tal:attributes="id string:worklog-resources-${resource/user_id};
+                                           value resource/user_id"/>
+                    <img tal:condition="resource/portrait"
+                         tal:attributes="src resource/portrait;
+                                         title resource/fullname;" />
+                    <img tal:condition="not:resource/portrait"
+                         tal:attributes="src string:${portal_url}/defaultUser.gif;
+                                         title resource/fullname;" />
+                    <span tal:content="resource/fullname"></span>
+                  </label>
+                </li>
+              </ul>
+            </form>
+            <div class="calendar">
+              <h2>
+                <a class="previous"
+                   href=""
+                   title="">Previous</a>
+                <span>Month name</span>
+                <a class="next"
+                   href=""
+                   title="">Next</a>
+              </h2>
+              <table class="listing">
+                <thead>
+                  <tr>
+                    <th class="nosort column info-column"
+                        i18n:translate="">Week</th>
+                    <th class="nosort column info-column"
+                        i18n:translate="">Resources</th>
+                    <th class="nosort column date-column"
+                        i18n:translate="">Mon</th>
+                    <th class="nosort column date-column"
+                        i18n:translate="">Tue</th>
+                    <th class="nosort column date-column"
+                        i18n:translate="">Wed</th>
+                    <th class="nosort column date-column"
+                        i18n:translate="">Thu</th>
+                    <th class="nosort column date-column"
+                        i18n:translate="">Fri</th>
+                    <th class="nosort column date-column"
+                        i18n:translate="">Sat</th>
+                    <th class="nosort column date-column"
+                        i18n:translate="">Sun</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="info-column week-info"></td>
+                    <td class="info-column resource-info">
+                      <img src=""
+                           tal:attributes="src string:${portal_url}/defaultUser.gif"/>
+                      <span></span>
+                    </td>
+                    <td class="date-column">
+                      <a href="#"></a>
+                    </td>
+                    <td class="date-column">
+                      <a href="#"></a>
+                    </td>
+                    <td class="date-column">
+                      <a href="#"></a>
+                    </td>
+                    <td class="date-column">
+                      <a href="#"></a>
+                    </td>
+                    <td class="date-column">
+                      <a href="#"></a>
+                    </td>
+                    <td class="date-column">
+                      <a href="#"></a>
+                    </td>
+                    <td class="date-column">
+                      <a href="#"></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+      </metal:main>
+    </metal:bodytext>
+  </body>
+</html>
