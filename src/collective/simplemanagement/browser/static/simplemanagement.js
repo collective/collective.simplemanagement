@@ -281,9 +281,13 @@
                     if(data['success']===true) {
                         var $container = $('#missed-bookings');
                         if($container.find('.booking-hole').length==1){
-                            $container.fadeOut();
+                            $container.fadeOut(500, function(){
+                                $(this).remove();
+                            });
                         }else{
-                            $self.closest('.booking-hole').fadeOut();
+                            $self.closest('.booking-hole').fadeOut(500, function(){
+                                $(this).remove();
+                            });
                         }
                     }else{
                         alert(data['error']);

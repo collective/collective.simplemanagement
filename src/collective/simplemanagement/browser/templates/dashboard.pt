@@ -34,44 +34,47 @@
                     i18n:translate="">You seem to have missing bookings
                     for the following days:</p>
                   <div class="listing">
-                    <div class="row booking-hole"
-                         tal:repeat="hole booking_holes">
-                      <div class="cell position-0 column-3">
-                        <span class="booking-date"
-                              tal:content="python:helpers.timeago(hole.date)" />
-                      </div>
-                      <div class="cell position-2 column-2">
-                        <span class="booking-time"
+                    <tal:row repeat="hole booking_holes">
+                      <div tal:define="css_class string:row booking-hole;
+                                       odd repeat/hole/odd;"
+                           tal:attributes="class python:css_class + (odd and ' odd' or ' even')">
+                        <div class="cell position-0 column-3">
+                          <span class="booking-date"
+                                tal:content="python:helpers.timeago(hole.date)" />
+                        </div>
+                        <div class="cell position-2 column-2">
+                          <span class="booking-time"
+                                i18n:translate="">
+                            (<span i18n:name="time"
+                                  tal:omit-tag=""
+                                  tal:content="hole/time" />
+                            hours booked)
+                          </span>
+                        </div>
+                        <div class="cell position-5 column-4">
+                          <div class="actions">
+                            <span class="take-it-easy"
+                                  i18n:translate="">It's okay, I</span>
+                            <select class="hole-reasons"
+                                    tal:attributes="name string:reason-${repeat/hole/number}">
+                              <option i18n:translate="">- select reason -</option>
+                              <option
+                                tal:repeat="reason view/hole_reasons"
+                                tal:attributes="value python:reason[0]"
+                                tal:content="python:reason[1]" />
+                            </select>
+                            <button
+                              disabled="disabled"
+                              tal:attributes="data-time python:str(hole.time);
+                                              data-date python:hole.date.strftime('%Y-%m-%d')"
+                              class="create-hole"
                               i18n:translate="">
-                          (<span i18n:name="time"
-                                tal:omit-tag=""
-                                tal:content="hole/time" />
-                          hours booked)
-                        </span>
-                      </div>
-                      <div class="cell position-5 column-4">
-                        <div class="actions">
-                          <span class="take-it-easy"
-                                i18n:translate="">It's okay, I</span>
-                          <select class="hole-reasons"
-                                  tal:attributes="name string:reason-${repeat/hole/number}">
-                            <option i18n:translate="">- select reason -</option>
-                            <option
-                              tal:repeat="reason view/hole_reasons"
-                              tal:attributes="value python:reason[0]"
-                              tal:content="python:reason[1]" />
-                          </select>
-                          <button
-                            disabled="disabled"
-                            tal:attributes="data-time python:str(hole.time);
-                                            data-date python:hole.date.strftime('%Y-%m-%d')"
-                            class="create-hole"
-                            i18n:translate="">
-                            Fill it!
-                          </button>
+                              Fill it!
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </tal:row>
                   </div>
                 </div>
 
