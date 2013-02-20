@@ -73,11 +73,20 @@ class WorklogBase(BrowserView):
 
 class Worklog(WorklogBase):
 
+    def js_init(self, id):
+        return """
+        (function($) {{
+            $(window).load(function() {{
+                window.simplemanagement.worklog.make('{id}');
+            }});
+        }})(jQuery);
+        """.format(id=id)
+
     def json_resources(self):
         resources = {}
-        for resource in self.resources:
+        for resource in self.resources():
             resources[resource['user_id']] = resource
-        json.dumps(resources)
+        return json.dumps(resources)
 
 
 class WorklogBackend(WorklogBase):
@@ -153,6 +162,8 @@ class WorklogBackend(WorklogBase):
             'resources',
             [ r['user_id'] for r in self.resources() ]
         )
+        if isinstance(resources, str):
+            resources = [ resources ]
         (start, end), previous, current, next = self.get_month_data(settings)
         total_hours = []
         for week_start, week_end in datetimerange(start, end, ONE_WEEK):

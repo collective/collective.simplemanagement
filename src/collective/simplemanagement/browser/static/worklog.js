@@ -11,13 +11,14 @@
     worklog.Worklog = function(element) {
         this.root = $(element);
         this.form = this.root.find('form.resources');
-        this.resources = $.loadJSON(this.root.attr('data-resources'));
+        this.resources = $.parseJSON(this.root.attr('data-resources'));
         this.current = null;
         this.backend = {
             url: this.form.attr('action'),
-            method: this.form.attr('method').toUpper()
+            method: this.form.attr('method').toUpperCase()
         };
         this.row_template = this.root.find('table tbody tr').detach();
+        this.initial_load = true;
         this.bind();
         this.load();
     };
@@ -60,12 +61,22 @@
                             week_hours[k].total).addClass(
                                 week_hours[k]['class']);
                     });
-                    if(j<(hours.length-1)) {
-                        res_row = this.row_template.clone();
-                        res_row.appendTo(tbody);
-                        res_row.find('.week-info').remove();
+                    if((j%2) === 0) {
+                        res_row.removeClass('odd');
+                        res_row.addClass('even');
+                    }
+                    if(j < (resources.length-1)) {
+                        row = this.row_template.clone();
+                        row.appendTo(tbody);
+                        row.find('.week-info').remove();
                     }
                 }
+            }
+            if(this.initial_load) {
+                this.root.children().each(function() {
+                    $(this).animate({ opacity: 1 });
+                });
+                this.initial_load = false;
             }
         },
         load: function(month) {
@@ -78,30 +89,37 @@
             });
             if((typeof month) != "undefined" && month !== null)
                 data.month = month;
-            $.ajax(
-                this.backend.url,
-                {
-                    data: data,
-                    dataType: "json",
-                    type: this.backend.method,
-                    success: function(data, status, request) {
-                        self.current = data.current.value;
-                        self.root.find('.calendar .previous').attr(
-                            'title', data.previous.title);
-                        self.root.find('.calendar .previous').click(function(e) {
+            $.ajax({
+                url: this.backend.url,
+                data: data,
+                dataType: "json",
+                type: this.backend.method,
+                traditional: true,
+                success: function(data, status, request) {
+                    self.current = data.current.value;
+                    self.root.find('.calendar .previous').attr(
+                        'title', data.previous.title);
+                    self.root.find('.calendar .next').attr(
+                        'title', data.next.title);
+                    self.render(data.current.title, data.total_hours);
+                    self.root.find('.calendar .previous').click(
+                        function(e) {
                             e.preventDefault();
                             self.load(data.previous.value);
-                        });
-                        self.root.find('.calendar .next').attr(
-                            'title', data.next.title);
-                        self.root.find('.calendar .next').click(function(e) {
-                            e.preventDefault();
-                            self.load(data.next.value);
-                        });
-                        self.render(data.current.title, data.total_hours);
-                    }
+                        }
+                    );
+                    self.root.find('.calendar .next').click(function(e) {
+                        e.preventDefault();
+                        self.load(data.next.value);
+                    });
                 }
-            );
+            });
         }
+    };
+
+    worklog._worklog = null;
+
+    worklog.make = function(id) {
+        worklog._worklog = new worklog.Worklog($('#'+id));
     };
 })(jQuery);

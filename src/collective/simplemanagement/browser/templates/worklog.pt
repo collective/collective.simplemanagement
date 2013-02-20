@@ -21,6 +21,8 @@
         <!-- <div tal:replace="structure provider:plone.belowcontenttitle" />
              -->
         <div tal:replace="structure provider:plone.abovecontentbody" />
+        <script type="text/javascript"
+                tal:content="python:view.js_init('worklog')" />
         <div id="content-core">
           <div id="worklog"
                tal:attributes="data-resources view/json_resources">
