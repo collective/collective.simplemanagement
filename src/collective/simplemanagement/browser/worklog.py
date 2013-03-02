@@ -167,9 +167,11 @@ class WorklogBackend(WorklogBase):
         (start, end), previous, current, next = self.get_month_data(settings)
         total_hours = []
         for week_start, week_end in datetimerange(start, end, ONE_WEEK):
-            week_identifier = '%s - %s' % (
-                week_start.strftime("%d/%m"),
-                (week_end-ONE_DAY).strftime("%d/%m")
+            week_identifier = u'<i>%d %s</i> &mdash; <i>%d %s</i>' % (
+                week_start.day,
+                MONTHS[week_start.month-1],
+                (week_end-ONE_DAY).day,
+                MONTHS[(week_end-ONE_DAY).month-1]
             )
             week_hours = []
             for resource in resources:

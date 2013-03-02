@@ -53,6 +53,25 @@
                 </li>
               </ul>
             </form>
+            <div class="booking-details wrapper">
+              <b class="notch"></b>
+              <table class="listing">
+                <thead>
+                  <tr>
+                    <th>Project</th>
+                    <th>Story</th>
+                    <th>Hours</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><i i18n:translate="">No results</i></td>
+                    <td></td>
+                    <td class="data-column"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <div class="calendar">
               <h2>
                 <a class="previous"
@@ -87,7 +106,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr class="odd">
                     <td class="info-column week-info"></td>
                     <td class="info-column resource-info">
                       <img src=""
@@ -95,25 +114,32 @@
                       <span></span>
                     </td>
                     <td class="date-column">
-                      <a href="#"></a>
+                      <a href="javascript:void(0)" title="Details"
+                         i18n:attributes="title"></a>
                     </td>
                     <td class="date-column">
-                      <a href="#"></a>
+                      <a href="javascript:void(0)" title="Details"
+                         i18n:attributes="title"></a>
                     </td>
                     <td class="date-column">
-                      <a href="#"></a>
+                      <a href="javascript:void(0)" title="Details"
+                         i18n:attributes="title"></a>
                     </td>
                     <td class="date-column">
-                      <a href="#"></a>
+                      <a href="javascript:void(0)" title="Details"
+                         i18n:attributes="title"></a>
                     </td>
                     <td class="date-column">
-                      <a href="#"></a>
+                      <a href="javascript:void(0)" title="Details"
+                         i18n:attributes="title"></a>
                     </td>
                     <td class="date-column">
-                      <a href="#"></a>
+                      <a href="javascript:void(0)" title="Details"
+                         i18n:attributes="title"></a>
                     </td>
                     <td class="date-column">
-                      <a href="#"></a>
+                      <a href="javascript:void(0)" title="Details"
+                         i18n:attributes="title"></a>
                     </td>
                   </tr>
                 </tbody>

@@ -1,0 +1,19 @@
+<object xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+        name="portal_actions"
+        meta_type="Plone Actions Tool">
+  <object name="user" meta_type="CMF Action Category">
+    <object name="worklog" meta_type="CMF Action" insert-after="dashboard"
+            i18n:domain="collective.simplemanagement">
+      <property name="title" i18n:translate="">Worklog</property>
+      <property name="description" i18n:translate=""/>
+      <property name="url_expr">string:${portal_url}/@@worklog</property>
+      <property name="link_target"/>
+      <property name="icon_expr"/>
+      <property name="available_expr"/>
+      <property name="permissions">
+        <element value="Manage portal"/>
+      </property>
+      <property name="visible">True</property>
+    </object>
+  </object>
+</object>

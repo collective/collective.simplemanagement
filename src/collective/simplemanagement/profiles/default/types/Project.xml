@@ -63,4 +63,10 @@
          visible="True" i18n:attributes="title">
   <permission value="Modify portal content"/>
  </action>
+ <action title="Worklog" action_id="worklog" category="object"
+         condition_expr=""
+         icon_expr="" link_target="" url_expr="string:${object_url}/@@worklog"
+         visible="True" i18n:attributes="title">
+  <permission value="Manage Portal"/>
+ </action>
 </object>

@@ -400,14 +400,37 @@ ul.stories .actions {
 }
 
 .tooltip {
-    display:none;
+    display: none;
     background: white;
-    border: 1px solid #dddddd;
-    border-radius: 5px;
-    height: auto;
-    width: 220px;
-    padding: .2em .5em;
+    border: 1px solid #bbb;
+    padding: 0.2em;
+    box-shadow: 0 0 0.7em #777;
     font-size: 85%;
+}
+
+.tooltip .wrapper {
+    position: relative;
+}
+
+.tooltip .wrapper .notch {
+    position: absolute;
+    top: -0.65em;
+    margin: 0;
+    border-top: 0;
+    border-left: 0.5em solid transparent;
+    border-right: 0.5em solid transparent;
+    border-bottom: 0.5em solid white;
+    padding: 0;
+    width: 0;
+    height: 0;
+}
+
+.tooltip .wrapper.right .notch {
+    left: 2em;
+}
+
+.tooltip .wrapper.left .notch {
+    right: 2em;
 }
 
 .tooltip a {
@@ -639,4 +662,16 @@ table.stories td.data.warning {
 
 #worklog .calendar table td.resource-info img {
     height: 24px;
+}
+
+#worklog .calendar table tr.week-start {
+    border-top: 1px solid #ccc;
+}
+
+.tooltip .booking-details {
+    width: 20em;
+}
+
+.tooltip .booking-details table {
+    width: 100%;
 }

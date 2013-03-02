@@ -220,7 +220,6 @@
             events: {
                 def: "click,blur"
             },
-
             onBeforeShow: function(){
                 var tip = this.getTip();
                 tip.empty();
