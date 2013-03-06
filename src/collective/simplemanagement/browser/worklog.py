@@ -55,10 +55,14 @@ class WorklogBase(BrowserView):
                 'path': '/'.join(self.context.getPhysicalPath()),
                 'portal_type': 'Booking'
             })
-            resources = [ o.user_id for o in self.context.operatives ]
+            resources = []
+            for operative in self.context.operatives:
+                if operative.user_id not in resources:
+                    resources.append(operative.user_id)
             for booking in bookings:
-                if booking.assigned_to not in resources:
-                    resources.append(booking.assigned_to)
+                for assignee in booking.assigned_to:
+                    if assignee not in resources:
+                        resources.append(assignee)
         else:
             group = self.tools.portal_groups.getGroupById(
                 settings.employees_group
