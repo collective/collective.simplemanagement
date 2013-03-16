@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<rolemap>
+  <roles>
+    <role name="Customer"/>
+    <role name="Employee"/>
+    <role name="PM"/>
+  </roles>
+  <permissions>
+<!--     <permission name="MyProduct: MyPermission" acquire="False">
+      <role name="Member"/>
+    </permission>  -->
+  </permissions>
+</rolemap>

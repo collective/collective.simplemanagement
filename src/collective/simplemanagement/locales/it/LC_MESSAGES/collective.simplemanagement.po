@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2013-03-16 08:42+0000\n"
+"POT-Creation-Date: 2013-03-16 09:23+0000\n"
 "PO-Revision-Date: 2012-08-23 22:03+0000\n"
 "Last-Translator: Giorgio Borelli <giorgio@abstract.it>\n"
 "Language-Team: Giorgio Borelli <giorgio@abstract.it>\n"
@@ -149,6 +149,7 @@ msgstr "Iterazioni correnti"
 
 #: ../interfaces.py:73
 #: ../project_templates/overview.pt:69
+#: ../sharing.py:8
 msgid "Customer"
 msgstr "Cliente"
 
@@ -211,6 +212,10 @@ msgstr "Modifica"
 #: ../browser/templates/macros.pt:64
 msgid "Edit story"
 msgstr "Modifica storia"
+
+#: ../sharing.py:14
+msgid "Employee"
+msgstr "Impiegato"
 
 #: ../interfaces.py:337
 msgid "Employess group"
@@ -422,6 +427,10 @@ msgstr "Otobre"
 #: ../project_templates/overview.pt:71
 msgid "Operatives"
 msgstr "Risorse di riferimento"
+
+#: ../sharing.py:20
+msgid "PM"
+msgstr ""
 
 #: ../project_templates/view.pt:23
 msgid "Past iterations (${n_iterations})"

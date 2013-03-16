@@ -1,0 +1,97 @@
+Processing of ..//booking_templates/view.pt finished. (0 warnings, 0 errors)
+===============================================================================
+..//browser/templates/dashboard.pt:19:50:
+-ERROR- - i18n:translate missing for this:
+"""
+Dashboard
+"""
+-------------------------------------------------------------------------------
+..//browser/templates/dashboard.pt:117:32:
+-ERROR- - title attribute of <a> lacks i18n:attributes
+-------------------------------------------------------------------------------
+..//browser/templates/dashboard.pt:135:20:
+-FATAL- - ERROR in document:
+<unknown>:135:20: not well-formed (invalid token)
+===============================================================================
+..//browser/templates/macros.pt:68:93:
+-FATAL- - ERROR in document:
+<unknown>:68:93: not well-formed (invalid token)
+===============================================================================
+..//browser/templates/ticketsmacros.pt:50:89:
+-WARNING- - i18n:translate missing for this:
+"""
+Pubblicato
+"""
+-------------------------------------------------------------------------------
+Processing of ..//browser/templates/ticketsmacros.pt finished. (1 warnings, 0 errors)
+===============================================================================
+..//browser/templates/wf_actions.pt:19:94:
+-FATAL- - ERROR in document:
+<unknown>:19:94: not well-formed (invalid token)
+===============================================================================
+..//browser/templates/worklog.pt:61:31:
+-ERROR- - i18n:translate missing for this:
+"""
+Project
+"""
+-------------------------------------------------------------------------------
+..//browser/templates/worklog.pt:62:29:
+-ERROR- - i18n:translate missing for this:
+"""
+Story
+"""
+-------------------------------------------------------------------------------
+..//browser/templates/worklog.pt:63:29:
+-ERROR- - i18n:translate missing for this:
+"""
+Hours
+"""
+-------------------------------------------------------------------------------
+..//browser/templates/worklog.pt:79:36:
+-ERROR- - i18n:translate missing for this:
+"""
+Previous
+"""
+-------------------------------------------------------------------------------
+..//browser/templates/worklog.pt:80:32:
+-ERROR- - i18n:translate missing for this:
+"""
+Month name
+"""
+-------------------------------------------------------------------------------
+..//browser/templates/worklog.pt:83:32:
+-ERROR- - i18n:translate missing for this:
+"""
+Next
+"""
+-------------------------------------------------------------------------------
+Processing of ..//browser/templates/worklog.pt finished. (0 warnings, 6 errors)
+===============================================================================
+..//epic_templates/view.pt:18:21:
+-ERROR- - i18n:translate missing for this:
+"""
+Timings
+"""
+-------------------------------------------------------------------------------
+Processing of ..//epic_templates/view.pt finished. (0 warnings, 1 errors)
+===============================================================================
+Processing of ..//iteration_templates/story_form.pt finished. (0 warnings, 0 errors)
+===============================================================================
+Processing of ..//iteration_templates/view.pt finished. (0 warnings, 0 errors)
+===============================================================================
+Processing of ..//project_templates/backlog.pt finished. (0 warnings, 0 errors)
+===============================================================================
+..//project_templates/overview.pt:94:10:
+-FATAL- - ERROR in document:
+<unknown>:94:10: mismatched tag
+===============================================================================
+Processing of ..//project_templates/planning.pt finished. (0 warnings, 0 errors)
+===============================================================================
+Processing of ..//project_templates/stories.pt finished. (0 warnings, 0 errors)
+===============================================================================
+Processing of ..//project_templates/view.pt finished. (0 warnings, 0 errors)
+===============================================================================
+Processing of ..//story_templates/booking_form.pt finished. (0 warnings, 0 errors)
+===============================================================================
+Processing of ..//story_templates/view.pt finished. (0 warnings, 0 errors)
+===============================================================================

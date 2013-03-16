@@ -4,6 +4,7 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- added customer, employee, PM roles and groups [giorgio]
 - updated translations [giorgio]
 - added my tickets view in dasboard [gborelli]
 - added project dashboard view [gborelli]

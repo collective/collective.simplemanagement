@@ -12,6 +12,14 @@
   </gs:importStep>
 
   <gs:importStep
+      name="collective.simplemanagement.install"
+      title="Extra setup"
+      description="Extra simplemanagement install steps"
+      handler=".setuphandlers.setupSimpleManagement">
+    <depends name="sharing"/>
+  </gs:importStep>
+
+  <gs:importStep
       name="collective.simplemanagement.bookingholes.uninstall"
       title="Uninstall SimpleManagement booking holes"
       description="Deletes the booking holes utility"

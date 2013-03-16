@@ -78,7 +78,7 @@ def migrate_utility(context, migrate_hole):
 def install_utility(context):
     """Installs the utility into the site
     """
-    data_file = 'collective-simplemanagement-bookingholes-install.txt'
+    data_file = 'collective-simplemanagement-install.txt'
     if context.readDataFile(data_file) is None:
         return
     site = context.getSite()

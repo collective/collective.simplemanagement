@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-03-16 08:42+0000\n"
+"POT-Creation-Date: 2013-03-16 09:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -149,6 +149,7 @@ msgstr ""
 
 #: ../interfaces.py:73
 #: ../project_templates/overview.pt:69
+#: ../sharing.py:8
 msgid "Customer"
 msgstr ""
 
@@ -210,6 +211,10 @@ msgstr ""
 
 #: ../browser/templates/macros.pt:64
 msgid "Edit story"
+msgstr ""
+
+#: ../sharing.py:14
+msgid "Employee"
 msgstr ""
 
 #: ../interfaces.py:337
@@ -421,6 +426,10 @@ msgstr ""
 #: ../interfaces.py:135
 #: ../project_templates/overview.pt:71
 msgid "Operatives"
+msgstr ""
+
+#: ../sharing.py:20
+msgid "PM"
 msgstr ""
 
 #: ../project_templates/view.pt:23

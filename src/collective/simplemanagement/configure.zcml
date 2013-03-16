@@ -52,4 +52,9 @@
 
   <include file="genericsetup.zcml" />
 
+  <!-- sharing -->
+  <utility name="Employee" factory=".sharing.EmployeeRole"/>
+  <utility name="Customer" factory=".sharing.CustomerRole"/>
+  <utility name="PM" factory=".sharing.PMRole"/>
+
 </configure>
