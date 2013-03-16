@@ -487,7 +487,7 @@ table.stories tbody tr td.info {
 }
 
 table.stories tbody tr td.actions {
-    width: 52px;
+    width: 65px;
 }
 
 table.stories tbody tr td.quick-booking {
@@ -574,7 +574,7 @@ table.stories td.data.warning {
     color: #f17e03;
 }
 
-.template-dashboard #booking-form {
+#booking-tooltip-form {
     display: none;
 }
 .template-dashboard #missed-bookings{

@@ -205,7 +205,7 @@
     </metal:stories>
   </metal:iteration>
 
-  <metal:stories define-macro="stories"
+<!--   <metal:stories define-macro="stories"
       tal:define="view_details view_details|nothing">
     <ul class=""
         tal:attributes="class python:can_edit and 'stories sortable' or 'stories'"
@@ -315,7 +315,7 @@
     </div>
 
   </metal:stories>
-
+ -->
   <metal:assignees define-macro="assignees">
     <div class="assignees-container clearfix">
       <span class="label" i18n:translate="">Assignees</span>
@@ -377,17 +377,11 @@
         <tr tal:repeat="booking booking_list">
           <td tal:content="booking/date" />
           <td class="booking-details">
-            <h4><a tal:attributes="href booking/href"
+            <span class="label"><a tal:attributes="href booking/href"
               tal:content="booking/title"/>
-            </h4>
-            <dl class="collapsible collapsedOnLoad"
-                tal:condition="booking/description">
-              <dt class="collapsibleHeader" i18n:translate="">Details</dt>
-              <dd class="collapsibleContent">
-                <p class="discreet"
+            </span>
+            <span class="discreet"
                     tal:content="booking/description" />
-              </dd>
-            </dl>
           </td>
           <td class="actual_hours" tal:content="booking/time" />
           <td><a tal:attributes="href booking/creator/href"
@@ -503,7 +497,37 @@
         </div>
       </li>
     </ul>
-
   </metal:stories-planning>
 
+  <metal:booking-form define-macro="booking-form">
+    <div id="booking-tooltip-form" class="booking-form">
+      <h2>Add booking</h2>
+      <form method="post" action="" tal:attributes="action string:${context/absolute_url}/booking_json">
+        <div class="field">
+          <label for="title">Title</label><br/>
+          <input type="text" id="title" name="title"
+                 placeholder="title"/>
+        </div>
+        <div class="field">
+          <label for="description">Description</label><br/>
+          <input type="text" id="description" name="description"
+                 placeholder="description"/>
+        </div>
+        <div class="field">
+          <label for="when">When</label><br/>
+          <input type="hidden" name="date" id="date" class="date"/>
+          <div class="datepicker"></div>
+        </div>
+        <div class="field">
+          <label for="time">Time spent</label><br/>
+          <input type="text" id="time" name="time" placeholder="timespent"/>
+        </div>
+        <!-- <div class="field">
+          <label for="reference">reference</label><br/>
+          <input type="text" id="reference" name="reference" placeholder="reference"/>
+        </div> -->
+        <input type="submit" name="book item" />
+      </form>
+    </div>
+  </metal:booking-form>
 </html>

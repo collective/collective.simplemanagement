@@ -34,9 +34,64 @@
             tal:content="structure view/add_story_form" />
         </div>
 
-        <metal:stories-listing
-          use-macro="context/simpemanagement-macros/stories" />
 
+        <div tal:condition="stories" id="stories-wrapper">
+
+          <table class="listing stories">
+            <thead>
+              <tr>
+                <th i18n:translate="">Story</th>
+                <th i18n:translate="">Epic</th>
+                <th i18n:translate="">Milestone</th>
+                <th i18n:translate="">Estimate</th>
+                <th i18n:translate="">Done</th>
+                <th i18n:translate="">Difference</th>
+                <th i18n:translate="">Booking</th>
+                <th i18n:translate="">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tal:stories repeat="story stories">
+                <metal:stories
+                  use-macro="context/simpemanagement-macros/story-compact">
+                  <metal:extra-info fill-slot="extra-info">
+                    <td class="info">
+                      <metal:story-epic
+                         use-macro="context/simpemanagement-macros/story-epic" />
+                    </td>
+                    <td class="info">
+                      <metal:story-milestone
+                         use-macro="context/simpemanagement-macros/story-milestone" />
+                    </td>
+                  </metal:extra-info>
+                  <metal:after-columns fill-slot="after-columns">
+                    <td class="quick-booking">
+                      <a i18n:translate=""
+                         class="bookform"
+                         title="Add Booking"
+                         i18n:attributes="title"
+                         tal:attributes="rel string:${story/url}/create_booking">Book time</a>
+                    </td>
+                    <td class="actions">
+                      <metal:story-actions
+                        use-macro="context/simpemanagement-macros/story-actions" />
+                    </td>
+                  </metal:after-columns>
+                </metal:stories>
+              </tal:stories>
+            </tbody>
+          </table>
+        </div>
+        <div tal:condition="not:stories">
+          <p class="discreet"
+              i18n:translate="">
+              No stories in this iteration.
+              Add a new one or bring them in via the iteration planner.
+          </p>
+        </div>
+
+        <metal:booking-form
+          use-macro="context/simpemanagement-macros/booking-form" />
       </metal:block>
     </metal:content-core>
 

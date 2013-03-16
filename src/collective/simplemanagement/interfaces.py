@@ -212,7 +212,10 @@ class IStory(form.Schema):
 
 class IBooking(form.Schema):
 
-    date = schema.Date(title=_(u"Date"))
+    date = schema.Date(
+        title=_(u"Date"),
+        default=date.today()
+    )
     time = schema.Decimal(title=_(u"Hours"))
     related = RelationChoice(
         title=_(u"Related activity"),
