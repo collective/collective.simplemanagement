@@ -116,7 +116,7 @@ class StoriesListing(object):
                 if iteration:
                     data.update({
                         'iteration': {
-                           'title': iteration.Title(),
+                            'title': iteration.Title(),
                             'description': iteration.Description(),
                             'url': iteration.absolute_url(),
                             'UID': IUUID(iteration)

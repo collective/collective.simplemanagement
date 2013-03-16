@@ -84,10 +84,19 @@
     permission="cmf.ManagePortal"
   />
 
+  <!-- macros -->
   <browser:page
     for="*"
     name="simpemanagement-macros"
     class=".macros.Macros"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+  />
+
+  <browser:page
+    for="*"
+    name="simpemanagement-ticketsmacros"
+    class=".macros.TicketsMacros"
     layer="..interfaces.IBrowserLayer"
     permission="zope2.View"
   />
@@ -118,24 +127,6 @@
     permission="plone.app.portlets.ViewDashboard"
     class=".dashboard.DashboardView"
     template="templates/dashboard.pt"
-    />
-
-  <browser:page
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    name="mytickets"
-    class=".dashboard.MyTickets"
-    template="templates/mytickets.pt"
-    layer="..interfaces.IBrowserLayer"
-    permission="zope2.View"
-    />
-
-  <browser:page
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    name="mystories"
-    class=".dashboard.MyStories"
-    template="templates/mystories.pt"
-    layer="..interfaces.IBrowserLayer"
-    permission="zope2.View"
     />
 
   <browser:page

@@ -7,3 +7,7 @@ class Macros(BrowserView):
 
     def __getitem__(self, key):
         return self.template.macros[key]
+
+
+class TicketsMacros(Macros):
+    template = ViewPageTemplateFile('templates/ticketsmacros.pt')

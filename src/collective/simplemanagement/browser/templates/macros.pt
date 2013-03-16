@@ -23,7 +23,8 @@
          tal:attributes="title string:${milestone/name} (${milestone/status})"
          tal:content="milestone/name" />
     </tal:exists>
-    <span tal:condition="not:story/milestone"
+    <span class="no-data"
+          tal:condition="not:story/milestone"
           i18n:translate="">(None)</span>
   </metal:story-milestone>
 
@@ -34,7 +35,8 @@
                        title story/epic/title"
        tal:content="story/epic/title"
        tal:condition="story/epic|nothing"></a>
-    <span tal:condition="not:story/epic|nothing"
+    <span class="no-data"
+          tal:condition="not:story/epic|nothing"
           i18n:translate="">(None)</span>
   </metal:story-epic>
 

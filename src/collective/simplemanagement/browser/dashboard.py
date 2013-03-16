@@ -13,6 +13,7 @@ from ..utils import timeago
 from ..utils import AttrDict
 from ..utils import get_bookings
 from ..utils import get_booking_holes
+from ..utils import get_wf_state_info
 
 
 class DashboardMixin(BrowserView):
@@ -43,23 +44,37 @@ class DashboardMixin(BrowserView):
         return Settings()
 
 
-class MyTickets(DashboardMixin):
+class TicketsMixIn(object):
 
-    @property
-    def _query(self):
-        return {
+    n_tickets = 0
+
+    def _get_tickets(self):
+        pc = self.tools['portal_catalog']
+        query = {
             'portal_type': 'PoiIssue',
             'getResponsibleManager': self.user.getId(),
             'review_state': ('new', 'open', 'in-progress', 'unconfirmed'),
             'sort_on': 'modified',
             'sort_order': 'descending'
         }
-        # 'resolved',
+        results = pc.searchResults(query)
+        self.n_tickets = len(results)
+        return results
+
+    def _format_ticket(self, item):
+        return {
+            'url': item.getURL(),
+            'title': item.Title,
+            'id': item.getId,
+            'created': item.created,
+            'modified': item.modified,
+            'severity': item.getSeverity,
+            'review_state': get_wf_state_info(item, self.context),
+            'project': self.get_project(item)
+        }
 
     def tickets(self):
-        pc = self.tools['portal_catalog']
-        tickets = pc.searchResults(self._query)
-        return tickets
+        return [self._format_ticket(item) for item in self._get_tickets()]
 
     def timeago(self, timestamp):
         return timeago(timestamp.utcdatetime())
@@ -84,11 +99,7 @@ class MyTickets(DashboardMixin):
             }
 
 
-class MyStories(DashboardMixin):
-    pass
-
-
-class DashboardView(DashboardMixin):
+class DashboardView(DashboardMixin, TicketsMixIn):
 
     def projects(self):
         listing = IMyStoriesListing(self.context)

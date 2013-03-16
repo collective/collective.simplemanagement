@@ -285,3 +285,30 @@ class AttrDict(dict):
 
     def __setattr__(self, k, v):
         self[k] = v
+
+
+def get_wf_state_info(brain, context=None):
+    """Returns some informations on workflow state
+
+    :param obj: Object
+    :returns: name and title of workflow state
+    :rtype: dict
+    """
+    if not context:
+        context = brain.getObject()
+    wt = getToolByName(context, 'portal_workflow')
+    _info = {
+        'title': None,
+        'state': None
+    }
+
+    _info['state'] = brain.review_state
+    # wt.getInfoFor(obj, 'review_state')
+    if _info['state']:
+        _info['title'] = context.translate(
+            wt.getTitleForStateOnType(
+                _info['state'], brain.portal_type
+            )
+        )
+
+    return _info

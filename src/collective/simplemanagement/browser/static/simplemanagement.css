@@ -494,17 +494,20 @@ table.stories tbody tr td.quick-booking {
     width: 80px;
 }
 
+#tickets-listing tbody tr.ticket td:first-child,
 table.stories tbody tr.story td:first-child {
     padding-left: 0px;
     padding-top: 0px;
     padding-bottom: 0px;
 }
 
+#tickets-listing tbody tr.ticket td:first-child a,
 table.stories tbody tr.story td:first-child a {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 }
 
+#tickets-listing tbody tr.ticket span.handle,
 table.stories tbody tr.story span.handle {
     display: block;
     float: left;
@@ -674,4 +677,31 @@ table.stories td.data.warning {
 
 .tooltip .booking-details table {
     width: 100%;
+}
+
+.no-data {
+    display: none
+}
+
+.severity-Low {
+    background-color: green;
+}
+.severity-Medium {
+    background-color: transparent;
+}
+.severity-Critical {
+    background-color: red;
+}
+.severity-Important {
+    background-color: orange;
+}
+
+.state-unconfirmed {
+    color: red;
+}
+.state-in-progress {
+    color: orange;
+}
+.state-open {
+    color: orange;
 }

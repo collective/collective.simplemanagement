@@ -130,8 +130,17 @@
 
               <dt id="fieldsetlegend-tickets"
                   i18n:translate="">Tickets</dt>
-              <dd id="fieldset-tickets">
-                <h2>TODO: Booking list</h2>
+              <dd id="fieldset-tickets"
+                tal:define="tickets view/tickets">
+                <h2 18n:translate="">
+                  Found
+                  <span 18n:name="n_ticket"
+                      tal:replace="view/n_tickets"></span>
+                  tickets
+                </h2>
+
+                <metal:tickets
+                  use-macro="context/simpemanagement-ticketsmacros/tickets" />
               </dd>
 
               <!-- Booking History -->
