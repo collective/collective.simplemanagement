@@ -10,6 +10,7 @@ from z3c.relationfield.relation import create_relation
 from plone.memoize.instance import memoize
 from plone.dexterity.content import Container
 from plone.dexterity.utils import createContentInContainer
+
 from plone.z3cform import z2
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -39,7 +40,7 @@ class StoryForm(form.AddForm):
     fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
 
     convert_funcs = {
-            'epic': lambda x: create_relation('/'.join(x.getPhysicalPath()))
+        'epic': lambda x: create_relation('/'.join(x.getPhysicalPath()))
     }
 
     def create(self, data):

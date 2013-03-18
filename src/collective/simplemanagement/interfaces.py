@@ -201,12 +201,14 @@ class IStory(form.Schema):
         required=False
     )
     form.widget(assigned_to=UserTokenInputFieldWidget)
+
     epic = RelationChoice(
         title=_(u"Epic"),
         description=_(u"The epic the story belongs to"),
         source=ObjPathSourceBinder(object_provides=[IEpic.__identifier__, ]),
         required=False
     )
+
     milestone = schema.Choice(
         title=_(u"Milestone"),
         required=False,

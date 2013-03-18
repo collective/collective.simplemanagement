@@ -4,6 +4,9 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- fix Dexterity2.0 relations issue [giorgio]
+- added workflow to discussion item [giorgio]
+- added plone.formwidget.contenttree dependency [giorgio]
 - UI improvements [giorgio]
 - disabled form releated kss [giorgio]
 - added customer, employee, PM roles and groups [giorgio]

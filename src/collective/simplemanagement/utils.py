@@ -6,6 +6,8 @@ from zope.component import getUtility
 from zope.component.hooks import getSite
 from zope.location.interfaces import ILocation
 
+from z3c.relationfield.relation import RelationValue
+
 from Products.CMFCore.utils import getToolByName
 
 from collective.prettydate.interfaces import IPrettyDate
@@ -13,6 +15,7 @@ from collective.prettydate.interfaces import IPrettyDate
 from .interfaces import IStory
 from .interfaces import IProject
 from .interfaces import IIteration
+from .interfaces import IEpic
 from .interfaces import IBookingHoles
 from .configure import Settings, DECIMAL_QUANT
 
@@ -206,13 +209,20 @@ def get_assignees_details(story):
 
 
 def get_epic_by_story(story):
-    epic = None
-    if story.epic and not story.epic.isBroken():
-        epic = {
-            'url': story.epic.to_object.absolute_url(),
-            'title': story.epic.to_object.title
-        }
-    return epic
+    obj = getattr(story, 'epic', None)
+    if not obj:
+        return
+
+    if isinstance(obj, RelationValue):
+        if obj.isBroken():
+            return
+
+        obj = obj.to_object
+
+    return {
+        'url': obj.absolute_url(),
+        'title': obj.title
+    }
 
 
 def get_text(context, text,

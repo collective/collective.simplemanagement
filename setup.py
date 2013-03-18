@@ -37,6 +37,7 @@ setup(
         'plone.app.collection',
         'plone.app.dexterity [grok,relations]',
         'plone.app.relationfield',
+        'plone.formwidget.contenttree',
         'plone.namedfile [blobs]',
         'plone.app.blocks',
         'plone.app.tiles',

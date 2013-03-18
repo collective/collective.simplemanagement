@@ -19,5 +19,8 @@
   <type type_id="Iteration">
    <bound-workflow workflow_id="iteration_workflow"/>
   </type>
+  <type type_id="Discussion Item">
+   <bound-workflow workflow_id="one_state_workflow"/>
+  </type>
  </bindings>
 </object>
