@@ -170,12 +170,13 @@ class WorklogBackend(WorklogBase):
             resources = [ resources ]
         (start, end), previous, current, next = self.get_month_data(settings)
         total_hours = []
+        _translate = lambda x: self.context.translate(x)
         for week_start, week_end in datetimerange(start, end, ONE_WEEK):
             week_identifier = u'<i>%d %s</i> &mdash; <i>%d %s</i>' % (
                 week_start.day,
-                MONTHS[week_start.month-1],
+                _translate(MONTHS[week_start.month-1]),
                 (week_end-ONE_DAY).day,
-                MONTHS[(week_end-ONE_DAY).month-1]
+                _translate(MONTHS[(week_end-ONE_DAY).month-1])
             )
             week_hours = []
             for resource in resources:
@@ -217,16 +218,16 @@ class WorklogBackend(WorklogBase):
         return json.dumps({
             'previous': {
                 'value': '%s-%s' % previous,
-                'title': u'%s %d' % (MONTHS[previous[1]-1], previous[0])
+                'title': u'%s %d' % (_translate(MONTHS[previous[1]-1]), previous[0])
             },
             'current': {
                 'value': '%s-%s' % current,
-                'title': u'%s <small>%d</small>' % (MONTHS[current[1]-1],
+                'title': u'%s <small>%d</small>' % (_translate(MONTHS[current[1]-1]),
                                                     current[0])
             },
             'next': {
                 'value': '%s-%s' % next,
-                'title': u'%s %d' % (MONTHS[next[1]-1], next[0])
+                'title': u'%s %d' % (_translate(MONTHS[next[1]-1]), next[0])
             },
             'total_hours': total_hours
         })

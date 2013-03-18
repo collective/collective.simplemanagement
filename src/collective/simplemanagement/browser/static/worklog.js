@@ -49,7 +49,9 @@
                 row = this.row_template.clone();
                 row.appendTo(tbody);
                 row.find('.week-info').html(identifier);
-                row.find('.week-info').attr('rowspan', resources.length);
+                if (resources.length > 0) {
+                    row.find('.week-info').attr('rowspan', resources.length);
+                }
                 row.addClass('week-start');
                 for(var j=0; j<resources.length; j++) {
                     var res_row = row;
