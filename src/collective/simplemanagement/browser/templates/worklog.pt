@@ -46,7 +46,7 @@
                          tal:attributes="src resource/portrait;
                                          title resource/fullname;" />
                     <img tal:condition="not:resource/portrait"
-                         tal:attributes="src string:${portal_url}/defaultUser.gif;
+                         tal:attributes="src string:${portal_url}/defaultUser.png;
                                          title resource/fullname;" />
                     <span tal:content="resource/fullname"></span>
                   </label>
@@ -110,7 +110,7 @@
                     <td class="info-column week-info"></td>
                     <td class="info-column resource-info">
                       <img src=""
-                           tal:attributes="src string:${portal_url}/defaultUser.gif"/>
+                           tal:attributes="src string:${portal_url}/defaultUser.png"/>
                       <span></span>
                     </td>
                     <td class="date-column">
