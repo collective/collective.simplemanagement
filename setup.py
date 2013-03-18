@@ -35,16 +35,16 @@ setup(
         'plone.tiles',
         'Products.CMFPlone',
         'plone.app.collection',
-        'plone.app.dexterity',
+        'plone.app.dexterity [grok,relations]',
         'plone.app.relationfield',
         'plone.namedfile [blobs]',
         'plone.app.blocks',
         'plone.app.tiles',
         'Products.Poi',
         'abstract.z3cform.usertokeninput',
-        'collective.js.jqueryui',
+        'collective.js.jqueryui > 1.8.16.9',
         'collective.prettydate',
-        'collective.dexteritytextindexer'
+        # 'collective.dexteritytextindexer'
     ],
     extras_require={
         'test': [
