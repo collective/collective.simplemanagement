@@ -22,7 +22,9 @@ class Project(Container):
     grok.implements(IProject)
 
     def get_notes(self):
-        return get_text(self, self.notes, source_mimetype="text/html")
+        notes = self.notes
+        if notes:
+            return self.notes.output
 
 
 class View(grok.View):

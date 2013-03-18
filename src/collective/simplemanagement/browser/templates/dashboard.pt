@@ -135,9 +135,9 @@
                   i18n:translate="">Tickets</dt>
               <dd id="fieldset-tickets"
                 tal:define="tickets view/tickets">
-                <h2 18n:translate="">
+                <h2 i18n:translate="">
                   Found
-                  <span 18n:name="n_ticket"
+                  <span i18n:name="n_ticket"
                       tal:replace="view/n_tickets"></span>
                   tickets
                 </h2>

@@ -205,7 +205,7 @@
     </metal:stories>
   </metal:iteration>
 
-<!--   <metal:stories define-macro="stories"
+  <metal:stories define-macro="stories"
       tal:define="view_details view_details|nothing">
     <ul class=""
         tal:attributes="class python:can_edit and 'stories sortable' or 'stories'"
@@ -315,7 +315,7 @@
     </div>
 
   </metal:stories>
- -->
+
   <metal:assignees define-macro="assignees">
     <div class="assignees-container clearfix">
       <span class="label" i18n:translate="">Assignees</span>

@@ -10,7 +10,9 @@ from z3c.relationfield.schema import RelationChoice
 from plone.directives import form
 from plone.formwidget.contenttree import ObjPathSourceBinder
 from plone.theme.interfaces import IDefaultPloneLayer
-from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
+
+from plone.app.textfield import RichText
+
 
 from collective.z3cform.widgets.enhancedtextlines import (
     EnhancedTextLinesFieldWidget,
@@ -99,8 +101,10 @@ class IProject(form.Schema):
     )
     classifiers = schema.List(
         title=_(u"Project classifiers"),
-        description=_(u"Some keywords that describe the project "
-            u"and used technologies"),
+        description=_(
+            u"Some keywords that describe the project "
+            u"and used technologies"
+        ),
         value_type=schema.TextLine(),
         required=False
     )
@@ -144,11 +148,11 @@ class IProject(form.Schema):
                                  schema=IResource),
         required=False
     )
-    notes = schema.Text(
+
+    notes = RichText(
         title=_(u"Notes"),
         required=False
     )
-    form.widget(notes=WysiwygFieldWidget)
 
     form.omitted('priority')
     priority = schema.Int(

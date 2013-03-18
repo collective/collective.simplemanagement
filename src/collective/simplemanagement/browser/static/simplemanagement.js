@@ -176,6 +176,7 @@
         $('.quickedit').prepOverlay({
             subtype: 'iframe',
             closeselector: '.button-field',
+            config: {onClose: function(el){window.location.reload()}},
             width:'70%'
         });
 
@@ -183,11 +184,17 @@
             subtype: 'ajax',
             filter: common_content_filter,
             formselector: 'form#booking_form',
+            config: {onClose: function(el){
+                window.location.reload()
+            }},
             width:'80%'
         });
 
         $('.quickview').prepOverlay({
             subtype: 'ajax',
+            // config: {onClose: function(el){
+            //     alert('pippo')}
+            // },
             filter: common_content_filter,
             width:'50%'
         });
