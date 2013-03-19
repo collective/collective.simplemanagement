@@ -57,6 +57,10 @@ class TicketsMixIn(object):
             'sort_on': 'modified',
             'sort_order': 'descending'
         }
+
+        if IProject.providedBy(self.context):
+            query['path'] = '/'.join(self.context.getPhysicalPath())
+
         results = pc.searchResults(query)
         self.n_tickets = len(results)
         return results
