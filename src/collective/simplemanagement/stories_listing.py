@@ -61,9 +61,9 @@ class StoriesListing(object):
         stories_brains = pc.searchResults(self._query)
         return stories_brains
 
-    def comments(self, story):
-        conversation = IConversation(story)
-        return [i for i in conversation.getThreads()]
+    # def comments(self, story):
+    #     conversation = IConversation(story)
+    #     return [i for i in conversation.getThreads()]
 
     def stories(self, project_info=False):
         brains = self._stories()
@@ -95,7 +95,6 @@ class StoriesListing(object):
                 'time_status': timings['time_status'],
                 'epic': get_epic_by_story(story),
                 'assignees': get_assignees_details(story),
-                'comments': self.comments(story),
                 'can_edit': story.user_can_edit(),
                 'can_review': story.user_can_review(),
                 'milestone': story.get_milestone()

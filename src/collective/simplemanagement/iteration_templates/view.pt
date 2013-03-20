@@ -80,6 +80,22 @@
                 </metal:stories>
               </tal:stories>
             </tbody>
+
+            <tfoot>
+              <tr>
+                <th i18n:translate="">Totals</th>
+                <th class="info">&nbsp;</th>
+                <th class="info">&nbsp;</th>
+                <td tal:attributes="class string:data numeric-data ${totals/time_status}"
+                    tal:content="totals/estimate"></td>
+                <td tal:attributes="class string:data numeric-data ${totals/time_status}"
+                    tal:content="totals/hours"></td>
+                <td tal:attributes="class string:data numeric-data ${totals/time_status}"
+                    tal:content="totals/difference"></td>
+                <th class="actions">&nbsp;</th>
+                <th class="info">&nbsp;</th>
+              </tr>
+            </tfoot>
           </table>
         </div>
         <div tal:condition="not:stories">

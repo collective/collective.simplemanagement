@@ -244,46 +244,6 @@
           <metal:assignes
             use-macro="context/simpemanagement-macros/assignees" />
 
-          <div tal:condition="view_details"
-            class="extra-details clearfix">
-
-            <dl class="collapsible collapsedOnLoad"
-                tal:define="comments story/comments;
-                  n_comments python:len(comments)">
-              <dt class="collapsibleHeader"
-                i18n:translate=""><span
-                  i18n:name="number"
-                  tal:content="n_comments">0</span> Comments</dt>
-              <dd class="collapsibleContent">
-                <h5 i18n:translate="">Comments</h5>
-                <div class="comments-container clearfix">
-                  <tal:comments
-                    repeat="comment_dict comments">
-                    <div class="comment clearfix" tal:define="depth comment_dict/depth|python:0;
-                                    comment comment_dict/comment"
-                        tal:attributes="style string:margin-left: ${depth}em">
-                      <div class="comment-autor">
-                        <a href=""
-                          tal:content="comment/Creator">Creator</a>
-                        <div class="commentDate"
-                             tal:content="python:context.toLocalizedTime(comment.modification_date.isoformat())">
-                             8/23/2001 12:40:44 PM
-                        </div>
-                      </div>
-                      <div class="comment-text"
-                        tal:content="structure comment/getText"></div>
-                    </div>
-                  </tal:comments>
-                </div>
-                <div class="field">
-                  <textarea></textarea>
-                </div>
-                <div class="formActions">
-                  <button><span i18n:translate="">Send</span></button>
-                </div>
-              </dd>
-            </dl>
-          </div>
         </div>
       </li>
     </ul>
