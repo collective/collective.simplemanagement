@@ -324,7 +324,7 @@ def get_wf_state_info(brain, context=None):
     return _info
 
 
-def get_employee_ids(self, context=None):
+def get_employee_ids(context=None):
     settings = Settings()
     resources = []
     if not context:

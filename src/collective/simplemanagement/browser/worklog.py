@@ -64,7 +64,7 @@ class WorklogBase(BrowserView):
                     if assignee not in resources:
                         resources.append(assignee)
         else:
-            resources = get_employee_ids()
+            resources = get_employee_ids(self.context)
         for resource in resources:
             yield get_user_details(self.context, resource, **self.tools)
 
