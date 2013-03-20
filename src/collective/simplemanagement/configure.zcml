@@ -57,4 +57,10 @@
   <utility name="Customer" factory=".sharing.CustomerRole"/>
   <utility name="PM" factory=".sharing.PMRole"/>
 
+  <!-- Permissions -->
+  <permission
+      id="simplemanagement.ManageProject"
+      title="Simplemanagement: Manage project" />
+
+
 </configure>

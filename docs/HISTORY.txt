@@ -4,6 +4,8 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- added "Simplemanagement: Manage project" permission to
+  Manager, PM and Site Administrator [giorgio]
 - fix Dexterity2.0 relations issue [giorgio]
 - added workflow to discussion item [giorgio]
 - added plone.formwidget.contenttree dependency [giorgio]

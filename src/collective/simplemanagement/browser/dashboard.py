@@ -1,5 +1,7 @@
 import datetime
 
+from zope.security import checkPermission
+
 from plone.memoize.instance import memoize as instance_memoize
 from plone.memoize.view import memoize as view_memoize
 
@@ -17,7 +19,6 @@ from ..utils import get_wf_state_info
 from ..utils import get_employee_ids
 from ..utils import get_user_details
 from ..utils import get_project
-
 
 
 class DashboardMixin(BrowserView):
@@ -53,13 +54,31 @@ class DashboardMixin(BrowserView):
         return Settings()
 
     def get_project_details(self, brain):
-        prj = get_project(brain.getObject())
+        # we can't use utils.get_project because
+        # PoiIssue doesn't provide ILocation
+        prj = None
+        context = brain.getObject()
+        while context is not None:
+            if IProject.providedBy(context):
+                prj = context
+                break
+            try:
+                context = context.__parent__
+            except AttributeError:
+                break
+
         if prj:
             return {
                 'title': prj.Title(),
                 'description': prj.Description(),
                 'url': prj.absolute_url(),
             }
+
+    @property
+    def user_can_manage_project(self):
+        return checkPermission(
+            'simplemanagement.ManageProject', self.context
+        )
 
 
 class TicketsMixIn(object):
@@ -84,7 +103,11 @@ class TicketsMixIn(object):
 
     def _get_tickets(self):
         pc = self.tools['portal_catalog']
-        user_id = self.request.get('employee', self.user.getId())
+        if self.user_can_manage_project:
+            user_id = self.request.get('employee', self.user.getId())
+        else:
+            user_id = self.user.getId()
+
         query = {
             'portal_type': 'PoiIssue',
             'getResponsibleManager': user_id,

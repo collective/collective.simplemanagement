@@ -145,16 +145,18 @@
                   ticket/s assigned
                 </h2>
 
-                <h2 i18n:translate="" tal:condition="employee_details">
-                  <span i18n:name="user"
-                    tal:replace="employee_details/fullname"/> has
-                  <span i18n:name="n_ticket"
-                      tal:replace="view/n_tickets"></span>
-                  ticket/s assigned
-                </h2>
+                <tal:pm condition="view/user_can_manage_project">
+                  <h2 i18n:translate="" tal:condition="employee_details">
+                    <span i18n:name="user"
+                      tal:replace="employee_details/fullname"/> has
+                    <span i18n:name="n_ticket"
+                        tal:replace="view/n_tickets"></span>
+                    ticket/s assigned
+                  </h2>
 
-                <metal:form
-                  use-macro="context/simpemanagement-macros/employee-form" />
+                  <metal:form
+                    use-macro="context/simpemanagement-macros/employee-form" />
+                </tal:pm>
 
                 <metal:tickets
                   use-macro="context/simpemanagement-ticketsmacros/tickets" />

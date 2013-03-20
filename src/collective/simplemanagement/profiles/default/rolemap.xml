@@ -6,8 +6,10 @@
     <role name="PM"/>
   </roles>
   <permissions>
-<!--     <permission name="MyProduct: MyPermission" acquire="False">
-      <role name="Member"/>
-    </permission>  -->
+    <permission name="Simplemanagement: Manage project" acquire="False">
+      <role name="Manager"/>
+      <role name="PM"/>
+      <role name="Site Administrator"/>
+    </permission>
   </permissions>
 </rolemap>
