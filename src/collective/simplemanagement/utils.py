@@ -322,3 +322,17 @@ def get_wf_state_info(brain, context=None):
         )
 
     return _info
+
+
+def get_employee_ids(self, context=None):
+    settings = Settings()
+    resources = []
+    if not context:
+        context = getSite()
+    gtool = getToolByName(context, 'portal_groups')
+    group = gtool.getGroupById(
+        settings.employees_group
+    )
+    if group is not None:
+        resources = group.getMemberIds()
+    return resources

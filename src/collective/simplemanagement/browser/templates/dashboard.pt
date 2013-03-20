@@ -134,13 +134,27 @@
               <dt id="fieldsetlegend-tickets"
                   i18n:translate="">Tickets</dt>
               <dd id="fieldset-tickets"
-                tal:define="tickets view/tickets">
-                <h2 i18n:translate="">
-                  Found
+                tal:define="tickets view/tickets;
+                            employees view/employees;
+                            employee_details view/employee_details">
+
+                <h2 i18n:translate="" tal:condition="not:employee_details">
+                  You have
                   <span i18n:name="n_ticket"
                       tal:replace="view/n_tickets"></span>
-                  tickets
+                  ticket/s assigned
                 </h2>
+
+                <h2 i18n:translate="" tal:condition="employee_details">
+                  <span i18n:name="user"
+                    tal:replace="employee_details/fullname"/> has
+                  <span i18n:name="n_ticket"
+                      tal:replace="view/n_tickets"></span>
+                  ticket/s assigned
+                </h2>
+
+                <metal:form
+                  use-macro="context/simpemanagement-macros/employee-form" />
 
                 <metal:tickets
                   use-macro="context/simpemanagement-ticketsmacros/tickets" />

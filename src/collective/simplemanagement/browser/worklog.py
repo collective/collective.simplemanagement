@@ -14,8 +14,8 @@ from .. import messageFactory as _
 from ..interfaces import IBookingHoles, IProject
 from ..configure import ONE_DAY, ONE_WEEK, Settings
 from ..utils import (AttrDict, datetimerange, get_user_details,
-                     get_difference_class, quantize, get_project, get_story)
-
+                     get_difference_class, quantize, get_project,
+                     get_story, get_employee_ids)
 
 
 MONTHS = (
@@ -64,13 +64,7 @@ class WorklogBase(BrowserView):
                     if assignee not in resources:
                         resources.append(assignee)
         else:
-            group = self.tools.portal_groups.getGroupById(
-                settings.employees_group
-            )
-            if group is not None:
-                resources = group.getMemberIds()
-            else:
-                resources = []
+            resources = get_employee_ids()
         for resource in resources:
             yield get_user_details(self.context, resource, **self.tools)
 

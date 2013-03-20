@@ -14,6 +14,10 @@ from ..utils import AttrDict
 from ..utils import get_bookings
 from ..utils import get_booking_holes
 from ..utils import get_wf_state_info
+from ..utils import get_employee_ids
+from ..utils import get_user_details
+from ..utils import get_project
+
 
 
 class DashboardMixin(BrowserView):
@@ -22,7 +26,12 @@ class DashboardMixin(BrowserView):
     @instance_memoize
     def tools(self):
         return AttrDict({
-            'portal_catalog': getToolByName(self.context, 'portal_catalog')
+            'portal_catalog': getToolByName(self.context, 'portal_catalog'),
+            'portal_membership': getToolByName(
+                self.context,
+                'portal_membership'
+            ),
+            'portal_url': getToolByName(self.context, 'portal_url'),
         })
 
     @property
@@ -43,16 +52,42 @@ class DashboardMixin(BrowserView):
     def settings(self):
         return Settings()
 
+    def get_project_details(self, brain):
+        prj = get_project(brain.getObject())
+        if prj:
+            return {
+                'title': prj.Title(),
+                'description': prj.Description(),
+                'url': prj.absolute_url(),
+            }
+
 
 class TicketsMixIn(object):
 
     n_tickets = 0
 
+    def employee_details(self):
+        employee = self.request.get('employee')
+        if not employee:
+            return False
+        else:
+            return get_user_details(self.context, employee, **self.tools)
+
+    def employees(self):
+        if IProject.providedBy(self.context):
+            # TODO: filter user by context
+            pass
+        resources = get_employee_ids(self.context)
+        for resource in resources:
+            if resource != self.user.getId():
+                yield get_user_details(self.context, resource, **self.tools)
+
     def _get_tickets(self):
         pc = self.tools['portal_catalog']
+        user_id = self.request.get('employee', self.user.getId())
         query = {
             'portal_type': 'PoiIssue',
-            'getResponsibleManager': self.user.getId(),
+            'getResponsibleManager': user_id,
             'review_state': ('new', 'open', 'in-progress', 'unconfirmed'),
             'sort_on': 'modified',
             'sort_order': 'descending'
@@ -74,7 +109,7 @@ class TicketsMixIn(object):
             'modified': item.modified,
             'severity': item.getSeverity,
             'review_state': get_wf_state_info(item, self.context),
-            'project': self.get_project(item)
+            'project': self.get_project_details(item)
         }
 
     def tickets(self):
@@ -82,25 +117,6 @@ class TicketsMixIn(object):
 
     def timeago(self, timestamp):
         return timeago(timestamp.utcdatetime())
-
-    def get_project(self, brain):
-        context = brain.getObject()
-        prj = None
-        while context is not None:
-            if IProject.providedBy(context):
-                prj = context
-                break
-            try:
-                context = context.__parent__
-            except AttributeError:
-                break
-
-        if prj:
-            return {
-                'title': prj.Title(),
-                'description': prj.Description(),
-                'url': prj.absolute_url(),
-            }
 
 
 class DashboardView(DashboardMixin, TicketsMixIn):

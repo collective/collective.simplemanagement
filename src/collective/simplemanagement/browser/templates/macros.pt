@@ -530,4 +530,35 @@
       </form>
     </div>
   </metal:booking-form>
+
+  <metal:employee-form define-macro="employee-form">
+    <div id="employees-form-wrapper"
+         tal:define="selected python:request.get('employee')">
+      <form tal:attributes="action string:dashboard#fieldsetlegend-tickets">
+        <div class="field">
+          <label class="formQuestion" for="employee"
+            i18n:translate="">Filter results by employee</label>
+          <select name="employee"
+            onchange="this.form.submit()">
+            <option value=""
+              i18n:translate="">Select an employee</option>
+            <tal:options repeat="emp employees">
+              <option tal:condition="python:selected == emp['user_id']"
+                      tal:attributes="value emp/user_id"
+                      tal:content="emp/fullname"
+                      selected=1 />
+              <option tal:condition="python:selected != emp['user_id']"
+                      tal:attributes="value emp/user_id"
+                      tal:content="emp/fullname" />
+            </tal:options>
+          </select>
+          <a class="reset"
+            tal:condition="selected"
+            tal:attributes="href string:dashboard#fieldsetlegend-tickets">
+              <span i18n:translate="">Reset filter</span>
+          </a>
+        </div>
+      </form>
+    </div>
+  </metal:employee-form>
 </html>
