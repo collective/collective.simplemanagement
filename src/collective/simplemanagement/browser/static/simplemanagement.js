@@ -224,15 +224,15 @@
         $('.simple-tooltip[title]').tooltip();
 
         $('.status').tooltip({
-            events: {
-                def: "click,blur"
-            },
+            position: "center left",
+            offset: [-40, -200],
+            events: {def: "click,blur"},
             onBeforeShow: function(){
                 var tip = this.getTip();
                 tip.empty();
                 var trigger = this.getTrigger();
                 var url = trigger.attr('href');
-                var story_container = $(trigger).parents("li");
+                var handle_span = $(trigger).parents('tr').find('span.handle');
                 $.get(url + '/wf_actions', function(data) {
                     tip.html(data);
                     var links = $(tip).find('a');
@@ -242,9 +242,9 @@
                                 alert('An error occurred');
                             }
                             else {
-                                story_container.removeClass(
+                                handle_span.removeClass(
                                     'done in_progress suspended todo');
-                                story_container.addClass(data);
+                                handle_span.addClass(data);
                                 tip.hide();
                             }
                         });
