@@ -1,3 +1,4 @@
+from datetime import datetime, date
 from zope.interface import implements
 from persistent import Persistent
 from BTrees.OOBTree import OOBTree
@@ -35,13 +36,20 @@ class BookingHoles(Persistent):
             del self.users[user_id][day]
 
     def iter_user(self, user_id, from_, to):
+        # XXX: do we need datetime date objects?
+        if isinstance(from_, datetime):
+            from_ = from_.date()
+
+        if isinstance(to, datetime):
+            to = to.date()
+
         user_holes = self.users.get(user_id, None)
         if user_holes is not None:
             for key in user_holes.keys(min=from_, max=to):
                 yield user_holes[key]
 
     def __contains__(self, user_id):
-        return self.users.has_key(user_id)
+        return user_id in self.users
 
     def __iter__(self):
         for user_id in self.users.keys():
@@ -49,10 +57,10 @@ class BookingHoles(Persistent):
                 yield self.users[user_id][day]
 
     def __len__(self):
-        return len([ h for h in self])
+        return len([h for h in self])
+
 
 # Migration helper
-
 def migrate_utility(context, migrate_hole):
     """Migrates the existing booking holes utility.
 
@@ -73,8 +81,8 @@ def migrate_utility(context, migrate_hole):
         sm.unregisterUtility(provided=IBookingHoles)
     sm.registerUtility(new_utility, IBookingHoles)
 
-# Setup handlers
 
+# Setup handlers
 def install_utility(context):
     """Installs the utility into the site
     """
