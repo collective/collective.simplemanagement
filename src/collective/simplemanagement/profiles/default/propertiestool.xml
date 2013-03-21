@@ -3,6 +3,7 @@
   <object name="navtree_properties" meta_type="Plone Property Sheet">
   <property name="metaTypesNotToList" type="lines" purge="False">
    <element value="Booking"/>
+   <element value="Story"/>
   </property>
  </object>
 </object>
