@@ -18,27 +18,7 @@
          tal:condition="iterations">
       <!-- iterations -->
       <div id="project-iterations">
-        <tal:iterations tal:define="past iterations/past">
-          <h2 i18n:translate="">
-            Past iterations (<span i18n:name="n_iterations"
-                                   tal:replace="python:len(past)" />)
-          </h2>
-          <div class="pane">
-            <div tal:condition="past">
-              <div tal:repeat="iteration past">
-                <metal:iteration
-                  use-macro="context/simpemanagement-macros/iteration-compact" />
-              </div>
-            </div>
-            <p class="discreet" tal:condition="not:past"
-              i18n:translate="">
-              There are no past iterations
-            </p>
-          </div>
-        </tal:iterations>
 
-        <h2 i18n:translate="">Current iterations</h2>
-        <div class="pane">
           <div tal:condition="iterations/current">
             <div tal:repeat="iteration iterations/current">
               <metal:iteration
@@ -49,29 +29,14 @@
              i18n:translate="">
             There are no current iterations
           </p>
-        </div>
-
-        <tal:iterations
-          tal:define="future iterations/future">
-          <h2 i18n:translate="">
-            Future iterations (<span i18n:name="n_iterations"
-                                     tal:replace="python:len(future)" />)
-          </h2>
-          <div class="pane">
-            <div tal:condition="future">
-              <div tal:repeat="iteration future">
-                <metal:iteration
-                  use-macro="context/simpemanagement-macros/iteration-compact" />
-              </div>
-            </div>
-            <p class="discreet" tal:condition="not:future"
-               i18n:translate="">
-              There are no past iterations
-            </p>
-          </div>
-        </tal:iterations>
       </div>
+
       <div class="visualClear"><!-- clear floats--></div>
+
+      <div id="project-actions">
+        <a href="all-iterations">
+          <span i18n:translate="">See all iterations</span></a>
+      </div>
     </div>
 
     <tal:content

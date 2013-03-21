@@ -69,6 +69,12 @@ class View(grok.View):
         return iterations
 
 
+class AllIterations(View):
+    grok.context(IProject)
+    grok.name('all-iterations')
+    grok.require('zope2.View')
+
+
 class OverView(View):
     grok.context(IProject)
     grok.name('overview')

@@ -86,6 +86,7 @@
         <span tal:attributes="class string:handle ${story/status};">
           ☰
         </span>
+
         <a href=""
            title=""
            tal:attributes="href story/url;
@@ -93,14 +94,6 @@
            tal:content="story/title" />
       </td>
       <metal:extra-info define-slot="extra-info">
-        <td class="info">
-          <metal:story-epic
-                 use-macro="context/simpemanagement-macros/story-epic" />
-        </td>
-        <td class="info">
-          <metal:story-milestone
-                 use-macro="context/simpemanagement-macros/story-milestone" />
-        </td>
         <td class="info">
           <metal:story-assignees
                  use-macro="context/simpemanagement-macros/story-assignees" />
@@ -110,8 +103,6 @@
           tal:content="story/estimate"></td>
       <td tal:attributes="class string:data numeric-data ${story/time_status}"
           tal:content="story/resource_time"></td>
-      <td tal:attributes="class string:data numeric-data ${story/time_status}"
-          tal:content="story/difference"></td>
       <metal:after-columns define-slot="after-columns">
         <td class="actions">
           <metal:story-actions
@@ -126,7 +117,8 @@
                 stories iteration_view/stories;
                 totals iteration_view/totals;
                 can_edit iteration_view/user_can_edit">
-    <table class="listing stories">
+    <table class="listing stories"
+        tal:attributes="class python:can_edit and 'listing stories sortable' or 'stories listing'">
       <caption>
         <a href=""
            title=""
@@ -143,12 +135,9 @@
       <thead>
         <tr>
           <th i18n:translate="">Story</th>
-          <th class="info" i18n:translate="">Epic</th>
-          <th class="info" i18n:translate="">Milestone</th>
           <th class="info" i18n:translate="">Assignees</th>
           <th class="data numeric-data" i18n:translate="">Estimate</th>
           <th class="data numeric-data" i18n:translate="">Done</th>
-          <th class="data numeric-data" i18n:translate="">Difference</th>
           <th class="actions" i18n:translate="">Actions</th>
         </tr>
       </thead>
@@ -156,14 +145,10 @@
         <tr>
           <th i18n:translate="">Totals</th>
           <th class="info">&nbsp;</th>
-          <th class="info">&nbsp;</th>
-          <th class="info">&nbsp;</th>
           <td tal:attributes="class string:data numeric-data ${totals/time_status}"
               tal:content="totals/estimate"></td>
           <td tal:attributes="class string:data numeric-data ${totals/time_status}"
               tal:content="totals/hours"></td>
-          <td tal:attributes="class string:data numeric-data ${totals/time_status}"
-              tal:content="totals/difference"></td>
           <th class="actions">&nbsp;</th>
         </tr>
       </tfoot>

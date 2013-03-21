@@ -201,20 +201,35 @@
 
 
         function updateStoryPosition(event, ui) {
-            position = ui.item.index();
-            item_id = ui.item.attr('id');
+            var position = ui.item.index(),
+                item_id = ui.item.attr('id'),
+                rows = ui.item.parent().children(),
+                row, i;
+
             $.getJSON(
+                // TODO: get url from tr.data-url or something similar
                 './story_move?story_id=' + item_id + '&new_position=' + position,
                 function(data){
                     if(data['success'] === false) {
                         alert(data['error']);
                     }
+                    for (i=0; i<rows.length; i++) {
+                        row = $(rows[i]);
+                        row.removeClass("odd even");
+                        if (i % 2 == 0) {
+                            row.addClass("even");
+                        } else {
+                            row.addClass("odd");
+                        }
+                    }
+
                 }
            );
         }
 
-        $( ".portaltype-iteration .sortable" ).sortable({
+        $( "table.sortable tbody" ).sortable({
             update: updateStoryPosition,
+            handle: ".handle",
             tolerance: 'pointer',
             distance: 5,
             opacity: 0.5,

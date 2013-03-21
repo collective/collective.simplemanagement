@@ -37,16 +37,14 @@
 
         <div tal:condition="stories" id="stories-wrapper">
 
-          <table class="listing stories">
+          <table class="listing stories"
+              tal:attributes="class python:can_edit and 'listing stories sortable' or 'stories listing'">
             <thead>
               <tr>
                 <th i18n:translate="">Story</th>
-                <th i18n:translate="">Epic</th>
-                <th i18n:translate="">Milestone</th>
+                <th i18n:translate="">Assignees</th>
                 <th i18n:translate="">Estimate</th>
                 <th i18n:translate="">Done</th>
-                <th i18n:translate="">Difference</th>
-                <th i18n:translate="">Booking</th>
                 <th i18n:translate="">Actions</th>
               </tr>
             </thead>
@@ -54,24 +52,8 @@
               <tal:stories repeat="story stories">
                 <metal:stories
                   use-macro="context/simpemanagement-macros/story-compact">
-                  <metal:extra-info fill-slot="extra-info">
-                    <td class="info">
-                      <metal:story-epic
-                         use-macro="context/simpemanagement-macros/story-epic" />
-                    </td>
-                    <td class="info">
-                      <metal:story-milestone
-                         use-macro="context/simpemanagement-macros/story-milestone" />
-                    </td>
-                  </metal:extra-info>
+
                   <metal:after-columns fill-slot="after-columns">
-                    <td class="quick-booking">
-                      <a i18n:translate=""
-                         class="bookform"
-                         title="Add Booking"
-                         i18n:attributes="title"
-                         tal:attributes="rel string:${story/url}/create_booking">Book time</a>
-                    </td>
                     <td class="actions">
                       <metal:story-actions
                         use-macro="context/simpemanagement-macros/story-actions" />
@@ -85,15 +67,11 @@
               <tr>
                 <th i18n:translate="">Totals</th>
                 <th class="info">&nbsp;</th>
-                <th class="info">&nbsp;</th>
                 <td tal:attributes="class string:data numeric-data ${totals/time_status}"
                     tal:content="totals/estimate"></td>
                 <td tal:attributes="class string:data numeric-data ${totals/time_status}"
                     tal:content="totals/hours"></td>
-                <td tal:attributes="class string:data numeric-data ${totals/time_status}"
-                    tal:content="totals/difference"></td>
                 <th class="actions">&nbsp;</th>
-                <th class="info">&nbsp;</th>
               </tr>
             </tfoot>
           </table>
@@ -106,8 +84,6 @@
           </p>
         </div>
 
-        <metal:booking-form
-          use-macro="context/simpemanagement-macros/booking-form" />
       </metal:block>
     </metal:content-core>
 

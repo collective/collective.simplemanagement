@@ -3,6 +3,7 @@
 # Packages
 *.egg
 *.egg-info
+.DS_Store
 dist
 build
 eggs
