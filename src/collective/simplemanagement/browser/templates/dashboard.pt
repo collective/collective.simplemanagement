@@ -90,11 +90,8 @@
                       <thead>
                         <tr>
                           <th i18n:translate="">Story</th>
-                          <th i18n:translate="">Epic</th>
-                          <th i18n:translate="">Milestone</th>
                           <th i18n:translate="">Estimate</th>
                           <th i18n:translate="">Done</th>
-                          <th i18n:translate="">Difference</th>
                           <th i18n:translate="">Actions</th>
                         </tr>
                       </thead>
@@ -103,14 +100,6 @@
                           <metal:stories
                             use-macro="context/simpemanagement-macros/story-compact">
                             <metal:extra-info fill-slot="extra-info">
-                              <td class="info">
-                                <metal:story-epic
-                                   use-macro="context/simpemanagement-macros/story-epic" />
-                              </td>
-                              <td class="info">
-                                <metal:story-milestone
-                                   use-macro="context/simpemanagement-macros/story-milestone" />
-                              </td>
                             </metal:extra-info>
                             <metal:after-columns fill-slot="after-columns">
                               <td class="quick-booking">
