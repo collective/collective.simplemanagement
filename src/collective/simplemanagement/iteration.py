@@ -77,6 +77,12 @@ class IterationViewMixin(object):
         self.totals = adpt.totals
         return stories
 
+    @property
+    def user_can_manage_project(self):
+        return checkPermission(
+            'simplemanagement.ManageProject', self.context
+        )
+
     def user_can_edit(self):
         return checkPermission('cmf.ModifyPortalContent', self.context)
 

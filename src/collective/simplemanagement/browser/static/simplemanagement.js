@@ -204,11 +204,11 @@
             var position = ui.item.index(),
                 item_id = ui.item.attr('id'),
                 rows = ui.item.parent().children(),
+                iteration_url = ui.item.parents('table').data('iterationurl'),
                 row, i;
 
             $.getJSON(
-                // TODO: get url from tr.data-url or something similar
-                './story_move?story_id=' + item_id + '&new_position=' + position,
+                iteration_url + '/story_move?story_id=' + item_id + '&new_position=' + position,
                 function(data){
                     if(data['success'] === false) {
                         alert(data['error']);

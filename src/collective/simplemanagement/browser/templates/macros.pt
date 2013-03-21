@@ -116,9 +116,10 @@
     tal:define="iteration_view nocall:iteration/@@view;
                 stories iteration_view/stories;
                 totals iteration_view/totals;
-                can_edit iteration_view/user_can_edit">
+                can_manage iteration_view/user_can_manage_project">
     <table class="listing stories"
-        tal:attributes="class python:can_edit and 'listing stories sortable' or 'stories listing'">
+        tal:attributes="class python:can_manage and 'listing stories sortable' or 'stories listing';
+        data-iterationurl iteration/absolute_url">
       <caption>
         <a href=""
            title=""
@@ -172,7 +173,8 @@
     tal:define="iteration_view nocall:iteration/@@view;
                 stories iteration_view/stories;
                 totals iteration_view/totals;
-                can_edit iteration_view/user_can_edit">
+                can_edit iteration_view/user_can_edit;
+                can_manage iteration_view/user_can_manage_project">
     <h3><a href=""
        title=""
        tal:attributes="href iteration/absolute_url;
@@ -193,7 +195,7 @@
   <metal:stories define-macro="stories"
       tal:define="view_details view_details|nothing">
     <ul class=""
-        tal:attributes="class python:can_edit and 'stories sortable' or 'stories'"
+        tal:attributes="class python:can_manage and 'stories sortable' or 'stories'"
         tal:condition="stories">
       <li class="story-container"
         tal:repeat="story stories"

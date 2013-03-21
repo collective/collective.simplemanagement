@@ -24,7 +24,7 @@
         tal:define="stories view/stories;
                   totals view/totals;
                   view_details python:True;
-                  can_edit view/user_can_edit">
+                  can_manage view/user_can_manage_project">
 
         <div tal:condition="view/user_can_add_story"
              id="addstory-container" class="clearfix simplemanagement-addstory">
@@ -34,11 +34,11 @@
             tal:content="structure view/add_story_form" />
         </div>
 
-
         <div tal:condition="stories" id="stories-wrapper">
 
           <table class="listing stories"
-              tal:attributes="class python:can_edit and 'listing stories sortable' or 'stories listing'">
+              tal:attributes="class python:can_manage and 'listing stories sortable' or 'stories listing';
+              data-iterationurl context/absolute_url">
             <thead>
               <tr>
                 <th i18n:translate="">Story</th>

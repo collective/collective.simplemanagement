@@ -17,19 +17,16 @@
          tal:define="iterations view/iterations"
          tal:condition="iterations">
       <!-- iterations -->
-      <div id="project-iterations">
-
-          <div tal:condition="iterations/current">
-            <div tal:repeat="iteration iterations/current">
-              <metal:iteration
-                use-macro="context/simpemanagement-macros/iteration-compact" />
-            </div>
-          </div>
-          <p class="discreet" tal:condition="not:iterations/current"
-             i18n:translate="">
-            There are no current iterations
-          </p>
+      <div tal:condition="iterations/current">
+        <div tal:repeat="iteration iterations/current">
+          <metal:iteration
+            use-macro="context/simpemanagement-macros/iteration-compact" />
+        </div>
       </div>
+      <p class="discreet" tal:condition="not:iterations/current"
+         i18n:translate="">
+        There are no current iterations
+      </p>
 
       <div class="visualClear"><!-- clear floats--></div>
 
