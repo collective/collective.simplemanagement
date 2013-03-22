@@ -111,9 +111,7 @@ def get_booking_holes(userid, bookings, expected_working_time=None,
 
     # then we check that total time matches our constraints
     holes_utility = getUtility(IBookingHoles)
-    holes = tuple(holes_utility.iter_user(userid,
-                                       from_date,
-                                       to_date))
+    holes = tuple(holes_utility.iter_user(userid, from_date, to_date))
     missing = []
     for dt, tm in sorted(_missing.items()):
         if tm >= expected_working_time:

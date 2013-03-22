@@ -146,10 +146,11 @@ class WorklogBackend(WorklogBase):
             'assigned_to': resource,
             'booking_date': DateTime(date_.strftime("%Y-%m-%d"))
         })
+
         holes = booking_holes.iter_user(
             resource,
-            datetime.combine(date_, time(0)),
-            datetime.combine(date_ + ONE_DAY, time(0))
+            date_,
+            date_ + ONE_DAY
         )
         return (bookings_, holes)
 

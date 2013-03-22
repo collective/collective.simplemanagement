@@ -416,7 +416,8 @@ ul.stories .actions {
 
 .tooltip .wrapper .notch {
     position: absolute;
-    top: -0.65em;
+    top: -0.64em;
+    right: 2em;
     margin: 0;
     border-top: 0;
     border-left: 0.5em solid transparent;
@@ -427,13 +428,13 @@ ul.stories .actions {
     height: 0;
 }
 
-.tooltip .wrapper.right .notch {
+/*.tooltip .wrapper.right .notch {
     left: 2em;
 }
 
 .tooltip .wrapper.left .notch {
     right: 2em;
-}
+}*/
 
 .tooltip a {
     padding: 0 .2em;

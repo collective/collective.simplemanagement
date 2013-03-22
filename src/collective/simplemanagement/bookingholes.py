@@ -36,12 +36,13 @@ class BookingHoles(Persistent):
             del self.users[user_id][day]
 
     def iter_user(self, user_id, from_, to):
-        # XXX: do we need datetime date objects?
-        if isinstance(from_, datetime):
-            from_ = from_.date()
+        assert isinstance(from_, date)
+        assert isinstance(to, date)
+        # if isinstance(from_, datetime):
+        #     from_ = from_.date()
 
-        if isinstance(to, datetime):
-            to = to.date()
+        # if isinstance(to, datetime):
+        #     to = to.date()
 
         user_holes = self.users.get(user_id, None)
         if user_holes is not None:

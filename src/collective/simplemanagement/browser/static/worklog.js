@@ -102,7 +102,9 @@
                 $(this).tooltip({
                     disabled: true,
                     events: { def: "click,blur" },
-                    position: left ? 'bottom left' : 'bottom right',
+                    position: "bottom left",
+                    offset: [10, -123],
+                    // position: left ? 'bottom left' : 'bottom right',
                     onBeforeShow: function() {
                         var trigger = this.getTrigger();
                         var tip = this.getTip();
@@ -120,10 +122,6 @@
                                 var details = self.details_template.
                                     clone();
                                 tip.append(details);
-                                if(left)
-                                    details.addClass('left');
-                                else
-                                    details.addClass('right');
                                 var tbody = details.find('table tbody');
                                 var row_template = tbody.find('tr').detach();
                                 if(data.length === 0) {
