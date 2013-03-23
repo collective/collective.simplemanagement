@@ -428,13 +428,20 @@ ul.stories .actions {
     height: 0;
 }
 
-/*.tooltip .wrapper.right .notch {
-    left: 2em;
+.tooltip .wrapper .notch-bottom {
+    position: absolute;
+    bottom: -1em;
+    right: 1em;
+    margin: 0;
+    border-top: 0.5em solid white;
+    border-left: 0.5em solid transparent;
+    border-right: 0.5em solid transparent;
+    border-bottom: 0.5em solid transparent;
+    padding: 0;
+    width: 0;
+    height: 0;
 }
 
-.tooltip .wrapper.left .notch {
-    right: 2em;
-}*/
 
 .tooltip a {
     padding: 0 .2em;
@@ -489,7 +496,7 @@ table.stories tbody tr td.numeric-data {
 }
 
 table.stories tbody tr td.info {
-    width: 5em;
+    width: 7em;
 }
 
 table.stories tbody tr td.actions {
