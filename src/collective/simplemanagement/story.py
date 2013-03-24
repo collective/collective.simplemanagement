@@ -105,13 +105,17 @@ class View(grok.View):
 
 class StoryQuickForm(form.AddForm):
     template = ViewPageTemplateFile("browser/templates/quick_form.pt")
-    fields = field.Fields(IQuickForm) + field.Fields(IStory).select(
-        # 'text',
-        'estimate',
-        'assigned_to',
-        # 'epic'
-    )
-    fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
+
+    @property
+    def fields(self):
+        fields = field.Fields(IQuickForm) + field.Fields(IStory).select(
+            'estimate',
+            'assigned_to',
+        )
+        fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
+
+        _sorted = ['title', 'estimate', 'description', 'assigned_to']
+        return fields.select(*_sorted)
 
     convert_funcs = {
         'epic': lambda x: create_relation('/'.join(x.getPhysicalPath()))
