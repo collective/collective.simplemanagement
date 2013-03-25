@@ -1,9 +1,14 @@
+from Acquisition import aq_inner
 from datetime import date
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
 from zope.security import checkPermission
 
+from z3c.form.interfaces import IFormLayer
+
 from five import grok
+from plone.z3cform import z2
+
 from plone.memoize.instance import memoize
 from plone.dexterity.content import Container
 from Products.CMFCore.utils import getToolByName
@@ -16,6 +21,7 @@ from .utils import get_user_details
 from .utils import get_text
 from .utils import AttrDict
 from .iteration import IterationViewMixin
+from .story import StoryQuickForm
 from . import messageFactory as _
 
 
@@ -38,6 +44,23 @@ class View(grok.View):
         return AttrDict({
             'portal_catalog': getToolByName(self.context, 'portal_catalog')
         })
+
+    @property
+    def user_can_manage_project(self):
+        return checkPermission(
+            'simplemanagement.ManageProject', self.context
+        )
+
+    def user_can_add_story(self):
+        return checkPermission('cmf.AddPortalContent', self.context)
+
+    def add_story_form(self, iteration):
+        z2.switch_on(self, request_layer=IFormLayer)
+        addform = StoryQuickForm(aq_inner(self.context), self.request)
+        # set current iterazion path as story container
+        addform._container = '/'.join(iteration.getPhysicalPath())
+        addform.update()
+        return addform.render()
 
     def iterations(self):
         iterations = {
@@ -225,9 +248,3 @@ class Backlog(grok.View, IterationViewMixin):
     grok.context(IProject)
     grok.require('cmf.ModifyPortalContent')
     grok.name('backlog')
-
-    @property
-    def user_can_manage_project(self):
-        return checkPermission(
-            'simplemanagement.ManageProject', self.context
-        )

@@ -16,11 +16,22 @@
     <div id="iterations"
          tal:define="iterations view/iterations"
          tal:condition="iterations">
+
       <!-- iterations -->
       <div tal:condition="iterations/current">
         <div tal:repeat="iteration iterations/current">
           <metal:iteration
-            use-macro="context/simpemanagement-macros/iteration-compact" />
+            use-macro="context/simpemanagement-macros/iteration-compact">
+            <metal:extra fill-slot="extra">
+              <div tal:condition="view/user_can_add_story"
+                   id="addstory-container" class="clearfix simplemanagement-addstory">
+                <h3><a i18n:translate="" href="#">Add Story</a></h3>
+                <div id="addstory-form" style="display: none"
+                     class="simplemanagement-addstory-form-wrapper"
+                     tal:content="structure python:view.add_story_form(iteration)" />
+              </div>
+            </metal:extra>
+          </metal:iteration>
         </div>
       </div>
       <p class="discreet" tal:condition="not:iterations/current"

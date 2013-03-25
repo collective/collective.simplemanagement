@@ -3,7 +3,9 @@ from five import grok
 from zope.security import checkPermission
 
 from z3c.form.interfaces import IFormLayer
+from z3c.form.interfaces import HIDDEN_MODE
 from z3c.form import form, field
+
 from z3c.relationfield.relation import create_relation
 
 from plone.z3cform import z2
@@ -105,6 +107,7 @@ class View(grok.View):
 
 class StoryQuickForm(form.AddForm):
     template = ViewPageTemplateFile("browser/templates/quick_form.pt")
+    _container = None
 
     @property
     def fields(self):
@@ -114,16 +117,32 @@ class StoryQuickForm(form.AddForm):
         )
         fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
 
-        _sorted = ['title', 'estimate', 'description', 'assigned_to']
+        _sorted = [
+            'title', 'estimate', 'description',
+            'assigned_to', 'container'
+        ]
         return fields.select(*_sorted)
 
     convert_funcs = {
         'epic': lambda x: create_relation('/'.join(x.getPhysicalPath()))
     }
 
+    def updateWidgets(self):
+        super(StoryQuickForm, self).updateWidgets()
+        container_wdgt = self.widgets['container']
+        if self._container:
+            container_wdgt.value = self._container
+            container_wdgt.update()
+
     def create(self, data):
+        container_path = data.pop('container', None)
+        if container_path:
+            container = self.context.restrictedTraverse(
+                container_path.encode('utf-8'))
+        else:
+            container = self.context
         item = createContentInContainer(
-            self.context,
+            container,
             'Story',
             title=data.pop('title'))
         for k, v in data.items():

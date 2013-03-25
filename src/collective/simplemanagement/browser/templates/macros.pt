@@ -117,22 +117,24 @@
                 totals iteration_view/totals;
                 sortable python:True;
                 can_manage iteration_view/user_can_manage_project">
+
+    <h2>
+      <a href=""
+         title=""
+         tal:attributes="href iteration/absolute_url;
+                         title iteration/Description">
+        <span tal:content="iteration/title" />
+        (<span
+            tal:content="python:context.toLocalizedTime(iteration.start.isoformat())"/>
+        -
+         <span
+            tal:content="python:context.toLocalizedTime(iteration.end.isoformat())" />)
+      </a>
+    </h2>
+    <metal:extra define-slot="extra" />
     <table class="listing stories"
         tal:attributes="class python:can_manage and 'listing stories sortable' or 'stories listing';
         data-iterationurl iteration/absolute_url">
-      <caption>
-        <a href=""
-           title=""
-           tal:attributes="href iteration/absolute_url;
-                           title iteration/Description">
-          <span tal:content="iteration/title" />
-          (<span
-              tal:content="python:context.toLocalizedTime(iteration.start.isoformat())"/>
-          -
-           <span
-              tal:content="python:context.toLocalizedTime(iteration.end.isoformat())" />)
-        </a>
-      </caption>
       <thead>
         <tr>
           <th i18n:translate=""

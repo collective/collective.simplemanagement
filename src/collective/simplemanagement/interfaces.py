@@ -32,6 +32,11 @@ class IQuickForm(Interface):
         required=False,
     )
 
+    container = schema.TextLine(
+        title=_(u'Container'),
+        required=False,
+    )
+
 
 class IBrowserLayer(IDefaultPloneLayer):
     """The browser layer of the package"""
