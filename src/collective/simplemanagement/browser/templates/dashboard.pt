@@ -107,7 +107,8 @@
                                    class="bookform"
                                    title="Add Booking"
                                    i18n:attributes="title"
-                                   tal:attributes="rel string:${story/url}/create_booking">Book time</a>
+                                   tal:attributes="rel string:${story/url}/create_booking;
+                                                   id string:bookform-${story/UID}">Book time</a>
                               </td>
                             </metal:after-columns>
                           </metal:stories>
@@ -184,7 +185,9 @@
 
               </dd>
             </dl>
-            <metal:booking-form use-macro="context/simpemanagement-macros/booking-form" />
+            <div id="booking-tooltip-form"
+                 class="booking-form"
+                 tal:content="structure view/add_booking_form" />
         <div tal:replace="structure provider:plone.belowcontentbody" />
       </metal:main>
     </metal:bodytext>

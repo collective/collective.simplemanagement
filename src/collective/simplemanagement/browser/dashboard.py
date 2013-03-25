@@ -1,16 +1,30 @@
 import datetime
 
+from Acquisition import aq_inner
+
 from zope.security import checkPermission
+
+from z3c.form import form, field, button
+from z3c.form.interfaces import IFormLayer
+from z3c.form.browser import text
+from z3c.relationfield.relation import create_relation
 
 from plone.memoize.instance import memoize as instance_memoize
 from plone.memoize.view import memoize as view_memoize
+from plone.z3cform import z2
+from plone.z3cform.layout import wrap_form
+from plone.dexterity.utils import createContentInContainer
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from .. import messageFactory as _
 from ..configure import Settings
 from ..interfaces import IMyStoriesListing
 from ..interfaces import IProject
+from ..interfaces import IQuickForm
+from ..interfaces import IBooking
 from ..utils import timeago
 from ..utils import AttrDict
 from ..utils import get_bookings
@@ -19,6 +33,53 @@ from ..utils import get_wf_state_info
 from ..utils import get_employee_ids
 from ..utils import get_user_details
 from ..utils import get_project
+from .date_widget import BookingDateFieldWidget
+
+
+class BookingForm(form.AddForm):
+    template = ViewPageTemplateFile("templates/booking_form.pt")
+    fields = field.Fields(IQuickForm).select('title') + field.Fields(IBooking)
+    fields['date'].widgetFactory = BookingDateFieldWidget
+    fields['related'].widgetFactory = text.TextFieldWidget
+
+    convert_funcs = {
+        'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
+    }
+
+    def create(self, data):
+        item = createContentInContainer(
+            self.context,
+            'Booking',
+            title=data.pop('title'))
+        for k, v in data.items():
+            if v and k in self.convert_funcs:
+                v = self.convert_funcs[k](v)
+            setattr(item, k, v)
+        return item
+
+    def add(self, obj):
+        obj.reindexObject()
+
+    def nextURL(self):
+        return self.context.absolute_url()
+
+    @button.buttonAndHandler(_('Book time'), name='add')
+    def handleAdd(self, __):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        obj = self.createAndAdd(data)
+        if obj is not None:
+            # mark only as finished if we get the new object
+            self._finishedAdd = True
+
+    @button.buttonAndHandler(_(u'Cancel'), name='cancel')
+    def handleCancel(self, __):
+        pass
+
+
+AddBooking = wrap_form(BookingForm)
 
 
 class DashboardMixin(BrowserView):
@@ -143,6 +204,12 @@ class TicketsMixIn(object):
 
 
 class DashboardView(DashboardMixin, TicketsMixIn):
+
+    def add_booking_form(self):
+        z2.switch_on(self, request_layer=IFormLayer)
+        addform = BookingForm(aq_inner(self.context), self.request)
+        addform.update()
+        return addform.render()
 
     def projects(self):
         listing = IMyStoriesListing(self.context)

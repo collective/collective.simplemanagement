@@ -1,0 +1,4 @@
+<h2 i18n:translate="" i18n:domain="collective.simplemenagament">
+  Add booking
+</h2>
+<metal:block use-macro="context/@@ploneform-macros/titlelessform" />
