@@ -66,7 +66,9 @@
                             resource.portrait);
                     }
                     res_row.find('td.date-column').each(function(k) {
-                        $('a', this).
+                        var total = week_hours[k].total,
+                            link = $('a', this);
+                        link.
                             attr(
                                 'data-details-url',
                                 week_hours[k].href).
@@ -74,6 +76,12 @@
                                 week_hours[k].total).
                             addClass(
                                 week_hours[k]['class']);
+                        if (total == '0.00') {
+                            link.hide();
+                        }
+                        else {
+                            link.show();
+                        }
                     });
                     if((j%2) === 0) {
                         res_row.removeClass('odd');

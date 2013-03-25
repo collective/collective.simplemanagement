@@ -58,9 +58,9 @@
               <table class="listing">
                 <thead>
                   <tr>
-                    <th>Project</th>
-                    <th>Story</th>
-                    <th>Hours</th>
+                    <th i18n:translate="">Project</th>
+                    <th i18n:translate="">Story</th>
+                    <th i18n:translate="">Hours</th>
                   </tr>
                 </thead>
                 <tbody>
