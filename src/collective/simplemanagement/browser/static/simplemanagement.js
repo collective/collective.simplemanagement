@@ -322,6 +322,7 @@
                     tooltip: "mouseenter"
                 },
                 position: "bottom left",
+                offset: [-25, -10],
                 onBeforeShow: function() {
                     var api = this;
                     var tip = this.getTip();
