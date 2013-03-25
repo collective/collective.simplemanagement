@@ -1,0 +1,16 @@
+<tal:root>
+  <input type="hidden" id="" name=""
+         class="hidden-widget" size="" alt="" title=""
+         tabindex="" disabled="" readonly="" accesskey="" maxlength="" value=""
+         tal:attributes="id view/id;
+                         name view/name;
+                         title view/title;
+                         alt view/alt;
+                         tabindex view/tabindex;
+                         disabled view/disabled;
+                         readonly view/readonly;
+                         accesskey view/accesskey;
+                         maxlength view/maxlength;
+                         value view/value;
+                         size view/size" />
+</tal:root>

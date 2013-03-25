@@ -176,7 +176,11 @@
         $('.quickedit').prepOverlay({
             subtype: 'iframe',
             closeselector: '.button-field',
-            config: {onClose: function(el){window.location.reload()}},
+            config: {
+                onClose: function(el){
+                    window.location.reload();
+                }
+            },
             width:'70%'
         });
 
@@ -184,9 +188,11 @@
             subtype: 'ajax',
             filter: common_content_filter,
             formselector: 'form#booking_form',
-            config: {onClose: function(el){
-                window.location.reload()
-            }},
+            config: {
+                onClose: function(el){
+                    window.location.reload();
+                }
+            },
             width:'80%'
         });
 
@@ -216,7 +222,7 @@
                     for (i=0; i<rows.length; i++) {
                         row = $(rows[i]);
                         row.removeClass("odd even");
-                        if (i % 2 == 0) {
+                        if((i%2) === 0) {
                             row.addClass("even");
                         } else {
                             row.addClass("odd");
@@ -268,24 +274,71 @@
                 });
             }
         });
-        $(".bookform").tooltip({
-            disabled: true,
-            events: { def: "click,blur"},
-            position: "bottom left",
-            onBeforeShow: function(){
-                var tip = this.getTip();
-                tip.empty();
-                tip.html($('.booking-form').html());
-                tip.addClass('booking-form');
-                tip.find('form').attr('action', this.getTrigger().attr('rel'));
-                tip.find('.datepicker').datepicker({
-                    altField: ".date"
+        $(".bookform").each(function () {
+            var trigger = $(this);
+            var setupForm = function(form, api) {
+                form.attr('action', trigger.attr('rel'));
+                form.find('.datepicker').each(function() {
+                    var div = $(this);
+                    var widget_id = /([a-z\-]+)-picker/.exec(
+                        div.attr('id'))[1];
+                    div.datepicker({
+                        altField: $('#'+widget_id),
+                        altFormat: div.attr('data-format'),
+                        dateFormat: div.attr('data-format')
+                    });
                 });
-                var form = tip.find('form');
-                form.bind('submit', function(evt){
-                    tip.hide();
-                });
-            }
+                form.find('input[name="form.buttons.cancel"]').click(
+                    function(e) {
+                        e.preventDefault();
+                        api.hide();
+                    }
+                );
+                var parent = form.parent();
+                var options = {
+                    success: function (response, status, xhr, form) {
+                        response = response.replace(
+                                /<script(.|\s)*?\/script>/gi, "");
+                        var new_html = $('<div />').append(
+                            response).find('form#form');
+                        if(new_html.length > 0) {
+                            parent.find('form#form').remove();
+                            parent.append(new_html);
+                            form = parent.find('form#form');
+                            setupForm(form, api);
+                        }
+                        else {
+                            api.hide();
+                            window.location.reload();
+                        }
+                    }
+                };
+                form.ajaxForm(options);
+            };
+            trigger.tooltip({
+                disabled: true,
+                events: {
+                    def: "click,blur",
+                    tooltip: "mouseenter"
+                },
+                position: "bottom left",
+                onBeforeShow: function() {
+                    var api = this;
+                    var tip = this.getTip();
+                    $(".bookform").each(function() {
+                        if($(this).attr('id') !== trigger.attr('id')) {
+                            var api = $(this).data('tooltip');
+                            if(api.isShown(true))
+                                api.hide();
+                        }
+                    });
+                    tip.empty();
+                    tip.html($('.booking-form').html());
+                    tip.addClass('booking-form');
+                    var form = tip.find('form');
+                    setupForm(form, api);
+                }
+            });
         });
 
         $('select.hole-reasons').change(function(){

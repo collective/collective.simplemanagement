@@ -84,6 +84,7 @@ class StoriesListing(object):
 
             data = {
                 'id': brain.getId,
+                'UID': IUUID(story),
                 'text': story.get_text(),
                 'status': brain.review_state,
                 'url': brain.getURL(),
