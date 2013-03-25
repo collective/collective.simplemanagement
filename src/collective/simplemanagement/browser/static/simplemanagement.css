@@ -683,17 +683,20 @@ table.stories td.data.warning {
     display: none
 }
 
+table#tickets-listing {
+    border-collapse: separate;
+}
 .severity-Low {
-    background-color: green;
+    border-left: 8px solid green;
 }
 .severity-Medium {
-    background-color: transparent;
+    border-left: 8px solid orange;
 }
 .severity-Critical {
-    background-color: red;
+    border-left: 8px solid red;
 }
 .severity-Important {
-    background-color: orange;
+    border-left: 8px solid orange;
 }
 
 .state-unconfirmed {

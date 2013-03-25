@@ -25,9 +25,8 @@
         <tbody>
           <tr tal:repeat="item tickets"
               class="ticket">
-            <td>
-              <span tal:attributes="class string:handle severity-${item/severity}"
-                >&nbsp;</span>
+            <td
+              tal:attributes="class string:severity-${item/severity}">
               <a href=""
                  title=""
                  tal:attributes="href item/url">
