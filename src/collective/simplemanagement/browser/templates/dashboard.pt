@@ -89,7 +89,8 @@
                     <table class="listing stories">
                       <thead>
                         <tr>
-                          <th i18n:translate="">Story</th>
+                          <th i18n:translate=""
+                            colspan="2">Story</th>
                           <th i18n:translate="">Estimate</th>
                           <th i18n:translate="">Done</th>
                           <th i18n:translate="">Actions</th>

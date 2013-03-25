@@ -41,7 +41,8 @@
               data-iterationurl context/absolute_url">
             <thead>
               <tr>
-                <th i18n:translate="">Story</th>
+                <th i18n:translate=""
+                  colspan="2">Story</th>
                 <th i18n:translate="">Assignees</th>
                 <th i18n:translate="">Estimate</th>
                 <th i18n:translate="">Done</th>
@@ -65,7 +66,8 @@
 
             <tfoot>
               <tr>
-                <th i18n:translate="">Totals</th>
+                <th i18n:translate=""
+                  colspan="2">Totals</th>
                 <th class="info">&nbsp;</th>
                 <td tal:attributes="class string:data numeric-data ${totals/time_status}"
                     tal:content="totals/estimate"></td>

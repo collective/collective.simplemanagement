@@ -493,65 +493,49 @@ table.stories tbody tr td.quick-booking {
     width: 80px;
 }
 
-#tickets-listing tbody tr.ticket td:first-child,
-table.stories tbody tr.story td:first-child {
-    padding-left: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
 
-#tickets-listing tbody tr.ticket td:first-child a,
-table.stories tbody tr.story td:first-child a {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-}
-
-#tickets-listing tbody tr.ticket span.handle,
-table.stories tbody tr.story span.handle {
-    display: block;
-    float: left;
-    width: 1em;
-    padding-left: 0.4em;
-    padding-right: 0.4em;
-    padding-top: 0.8em;
-    height: 5em;
-    margin: 0.2em 1em 0.2em 0.2em;
+#tickets-listing tbody tr.ticket td.handle,
+table.stories tbody tr.story td.handle {
+    width: .5em;
+    padding: 0.8em .4em 0 .4em;
+    border: 2px solid white;
+    border-width: 2px 0;
     font-size: 50%
 }
 
-table.stories tbody tr.story span.handle.todo {
+table.stories tbody tr.story td.handle.todo {
     background-color: #444444;
     color: #444444;
 }
 
-table.stories tbody tr.story span.handle.done {
+table.stories tbody tr.story td.handle.done {
     background-color: #8DC73E;
     color: #8DC73E;
 }
 
-table.stories tbody tr.story span.handle.in_progress {
+table.stories tbody tr.story td.handle.in_progress {
     background-color: #448CCA;
     color: #448CCA;
 }
 
-table.stories tbody tr.story span.handle.suspended {
+table.stories tbody tr.story td.handle.suspended {
     background-color: #FF7F0E;
     color: #FF7F0E;
 }
 
-table.stories.sortable tbody tr.story span.handle.todo {
+table.stories.sortable tbody tr.story td.handle.todo {
     color: #FFFFFF;
 }
 
-table.stories.sortable tbody tr.story span.handle.done {
+table.stories.sortable tbody tr.story td.handle.done {
     color: #FFFFFF;
 }
 
-table.stories.sortable tbody tr.story span.handle.in_progress {
+table.stories.sortable tbody tr.story td.handle.in_progress {
     color: #FFFFFF;
 }
 
-table.stories.sortable tbody tr.story span.handle.suspended {
+table.stories.sortable tbody tr.story td.handle.suspended {
     color: #FFFFFF;
 }
 

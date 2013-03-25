@@ -154,7 +154,6 @@ class DashboardView(DashboardMixin, TicketsMixIn):
                 projects[prj['UID']]['stories'] = []
 
             projects[prj['UID']]['stories'].append(st)
-
         projects = [p[1] for p in projects.items()]
         projects.sort(key=lambda x: x['priority'])
         return projects

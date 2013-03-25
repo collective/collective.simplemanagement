@@ -82,11 +82,9 @@
      define-macro="story-compact">
     <tr class="story"
         tal:attributes="id story/id">
+      <td tal:attributes="class string:handle ${story/status}"
+          >☰</td>
       <td>
-        <span tal:attributes="class string:handle ${story/status};">
-          ☰
-        </span>
-
         <a href=""
            title=""
            tal:attributes="href story/url;
@@ -135,7 +133,8 @@
       </caption>
       <thead>
         <tr>
-          <th i18n:translate="">Story</th>
+          <th i18n:translate=""
+            colspan="2">Story</th>
           <th class="info" i18n:translate="">Assignees</th>
           <th class="data numeric-data" i18n:translate="">Estimate</th>
           <th class="data numeric-data" i18n:translate="">Done</th>
@@ -144,7 +143,8 @@
       </thead>
       <tfoot tal:condition="totals|nothing">
         <tr>
-          <th i18n:translate="">Totals</th>
+          <th i18n:translate=""
+            colspan="2">Totals</th>
           <th class="info">&nbsp;</th>
           <td tal:attributes="class string:data numeric-data ${totals/time_status}"
               tal:content="totals/estimate"></td>
