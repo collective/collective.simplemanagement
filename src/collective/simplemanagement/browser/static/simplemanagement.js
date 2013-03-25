@@ -246,7 +246,7 @@
 
         $('.status').tooltip({
             position: "center left",
-            offset: [-40, -200],
+            offset: [-50, -175],
             events: {def: "click,blur"},
             onBeforeShow: function(){
                 var tip = this.getTip();
