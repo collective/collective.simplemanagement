@@ -62,5 +62,8 @@
       id="simplemanagement.ManageProject"
       title="Simplemanagement: Manage project" />
 
+  <permission
+      id="simplemanagement.AddBooking"
+      title="Simplemanagement: Add booking" />
 
 </configure>

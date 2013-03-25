@@ -62,7 +62,7 @@ class View(grok.View):
     grok.require('zope2.View')
 
     def user_can_booking(self):
-        return checkPermission('cmf.AddPortalContent', self.context)
+        return checkPermission('simplemanagement.AddBooking', self.context)
 
     def get_epic(self):
         return get_epic_by_story(self.context)
