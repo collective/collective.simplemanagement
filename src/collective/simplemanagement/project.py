@@ -1,6 +1,7 @@
 from datetime import date
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
+from zope.security import checkPermission
 
 from five import grok
 from plone.memoize.instance import memoize
@@ -224,3 +225,9 @@ class Backlog(grok.View, IterationViewMixin):
     grok.context(IProject)
     grok.require('cmf.ModifyPortalContent')
     grok.name('backlog')
+
+    @property
+    def user_can_manage_project(self):
+        return checkPermission(
+            'simplemanagement.ManageProject', self.context
+        )

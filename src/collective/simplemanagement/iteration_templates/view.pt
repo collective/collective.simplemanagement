@@ -24,6 +24,7 @@
         tal:define="stories view/stories;
                   totals view/totals;
                   view_details python:True;
+                  sortable python:True;
                   can_manage view/user_can_manage_project">
 
         <div tal:condition="view/user_can_add_story"
@@ -34,57 +35,9 @@
             tal:content="structure view/add_story_form" />
         </div>
 
-        <div tal:condition="stories" id="stories-wrapper">
+        <metal:stories
+          use-macro="context/simpemanagement-macros/stories" />
 
-          <table class="listing stories"
-              tal:attributes="class python:can_manage and 'listing stories sortable' or 'stories listing';
-              data-iterationurl context/absolute_url">
-            <thead>
-              <tr>
-                <th i18n:translate=""
-                  colspan="2">Story</th>
-                <th i18n:translate="">Assignees</th>
-                <th i18n:translate="">Estimate</th>
-                <th i18n:translate="">Done</th>
-                <th i18n:translate="">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tal:stories repeat="story stories">
-                <metal:stories
-                  use-macro="context/simpemanagement-macros/story-compact">
-
-                  <metal:after-columns fill-slot="after-columns">
-                    <td class="actions">
-                      <metal:story-actions
-                        use-macro="context/simpemanagement-macros/story-actions" />
-                    </td>
-                  </metal:after-columns>
-                </metal:stories>
-              </tal:stories>
-            </tbody>
-
-            <tfoot>
-              <tr>
-                <th i18n:translate=""
-                  colspan="2">Totals</th>
-                <th class="info">&nbsp;</th>
-                <td tal:attributes="class string:data numeric-data ${totals/time_status}"
-                    tal:content="totals/estimate"></td>
-                <td tal:attributes="class string:data numeric-data ${totals/time_status}"
-                    tal:content="totals/hours"></td>
-                <th class="actions">&nbsp;</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        <div tal:condition="not:stories">
-          <p class="discreet"
-              i18n:translate="">
-              No stories in this iteration.
-              Add a new one or bring them in via the iteration planner.
-          </p>
-        </div>
 
       </metal:block>
     </metal:content-core>

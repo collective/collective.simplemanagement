@@ -82,7 +82,8 @@
      define-macro="story-compact">
     <tr class="story"
         tal:attributes="id story/id">
-      <td tal:attributes="class string:handle ${story/status}"
+      <td tal:attributes="class string:handle ${story/status};
+          title story/status"
           >☰</td>
       <td>
         <a href=""
@@ -114,6 +115,7 @@
     tal:define="iteration_view nocall:iteration/@@view;
                 stories iteration_view/stories;
                 totals iteration_view/totals;
+                sortable python:True;
                 can_manage iteration_view/user_can_manage_project">
     <table class="listing stories"
         tal:attributes="class python:can_manage and 'listing stories sortable' or 'stories listing';
@@ -192,71 +194,56 @@
     </metal:stories>
   </metal:iteration>
 
-  <metal:stories define-macro="stories"
-      tal:define="view_details view_details|nothing">
-    <ul class=""
-        tal:attributes="class python:can_manage and 'stories sortable' or 'stories'"
-        tal:condition="stories">
-      <li class="story-container"
-        tal:repeat="story stories"
-        tal:attributes="class string:${story/status} story-container;
-                        id story/id">
-        <div class="story-block clearfix"
-            tal:define="assignees story/assignees;
-                        epic story/epic;
-                        timing story">
-          <metal:timing
-            use-macro="context/simpemanagement-macros/story-timing" />
+  <metal:stories define-macro="stories">
+    <div tal:condition="stories" id="stories-wrapper">
 
-          <metal:actions
-            use-macro="context/simpemanagement-macros/story-actions" />
+      <table class="listing stories"
+          tal:define="sortable sortable|nothing"
+          tal:attributes="class python:(can_manage and sortable) and 'listing stories sortable' or 'stories listing';
+          data-iterationurl context/absolute_url">
+        <thead>
+          <tr>
+            <th i18n:translate=""
+              colspan="2">Story</th>
+            <th i18n:translate="">Assignees</th>
+            <th i18n:translate="">Estimate</th>
+            <th i18n:translate="">Done</th>
+            <th i18n:translate="">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tal:stories repeat="story stories">
+            <metal:stories
+              use-macro="context/simpemanagement-macros/story-compact">
 
-          <h4>
-            <a href=""
-              title=""
-              tal:attributes="href story/url;
-                              title story/description"
-              tal:content="story/title" />
-          </h4>
+              <metal:after-columns fill-slot="after-columns">
+                <td class="actions">
+                  <metal:story-actions
+                    use-macro="context/simpemanagement-macros/story-actions" />
+                </td>
+              </metal:after-columns>
+            </metal:stories>
+          </tal:stories>
+        </tbody>
 
-          <p tal:content="story/description"></p>
-          <div tal:condition="view_details"
-            class="story-text">
-            <p tal:replace="structure story/text" />
-          </div>
-
-          <metal:epic
-            use-macro="context/simpemanagement-macros/epic" />
-
-          <metal:assignes
-            use-macro="context/simpemanagement-macros/assignees" />
-
-        </div>
-      </li>
-    </ul>
-
-    <div class="totals clearfix" tal:condition="totals|nothing">
-      <table class="timing">
-        <tr>
-          <th class="totals-label" rowspan="2"
-            i18n:translate="">Totals</th>
-          <th class="nosort column" i18n:translate="">Estimate</th>
-          <th class="nosort column" i18n:translate="">Actual hours</th>
-          <th class="nosort column" i18n:translate="">Difference</th>
-        </tr>
-        <tr>
-          <td class="estimate" tal:content="totals/estimate"></td>
-          <td class="actual_hours" tal:content="totals/hours"></td>
-          <td tal:content="totals/difference"
-            tal:attributes="class string:difference ${totals/time_status}">
-          </td>
-        </tr>
+        <tfoot>
+          <tr>
+            <th i18n:translate=""
+              colspan="2">Totals</th>
+            <th class="info">&nbsp;</th>
+            <td tal:attributes="class string:data numeric-data ${totals/time_status}"
+                tal:content="totals/estimate"></td>
+            <td tal:attributes="class string:data numeric-data ${totals/time_status}"
+                tal:content="totals/hours"></td>
+            <th class="actions">&nbsp;</th>
+          </tr>
+        </tfoot>
       </table>
     </div>
     <div tal:condition="not:stories">
       <p class="discreet"
           i18n:translate="">
-          No stories in this iteration.
+          No stories found.
           Add a new one or bring them in via the iteration planner.
       </p>
     </div>

@@ -136,4 +136,7 @@ class StoryQuickForm(form.AddForm):
         obj.reindexObject()
 
     def nextURL(self):
+        if self.request.HTTP_REFERER:
+            return self.request.HTTP_REFERER
+
         return self.context.absolute_url()
