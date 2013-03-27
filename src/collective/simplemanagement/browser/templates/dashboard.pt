@@ -117,7 +117,7 @@
                             <metal:after-columns fill-slot="after-columns">
                               <td class="quick-booking">
                                 <a i18n:translate=""
-                                   class="bookform"
+                                   class="bookform btn"
                                    title="Add Booking"
                                    i18n:attributes="title"
                                    tal:attributes="rel string:${story/url}/create_booking;
