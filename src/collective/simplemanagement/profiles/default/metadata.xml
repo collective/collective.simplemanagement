@@ -7,6 +7,5 @@
   <dependency>profile-Products.Poi:default</dependency>
   <dependency>profile-abstract.z3cform.usertokeninput:default</dependency>
   <dependency>profile-collective.js.jqueryui:default</dependency>
-  <dependency>profile-plone.app.widgets:default</dependency>
  </dependencies>
 </metadata>
