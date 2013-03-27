@@ -436,16 +436,18 @@
   </metal:stories-planning>
 
   <metal:employee-form define-macro="employee-form">
-    <div id="employees-form-wrapper"
+    <div class="employees-form-wrapper"
          tal:define="selected python:request.get('employee')">
-      <form tal:attributes="action string:dashboard#fieldsetlegend-tickets">
+      <form tal:attributes="action form_action|string:dashboard#tickets">
         <div class="field">
           <label class="formQuestion" for="employee"
             i18n:translate="">Filter results by employee</label>
           <select name="employee"
+            class="pat-select2" data-select2-width="20em"
+            i18n:attributes="data-placeholder"
+            data-placeholder="Select an employee"
             onchange="this.form.submit()">
-            <option value=""
-              i18n:translate="">Select an employee</option>
+            <option value=""></option>
             <tal:options repeat="emp employees">
               <option tal:condition="python:selected == emp['user_id']"
                       tal:attributes="value emp/user_id"
@@ -456,9 +458,9 @@
                       tal:content="emp/fullname" />
             </tal:options>
           </select>
-          <a class="reset"
+          <a class="reset btn"
             tal:condition="selected"
-            tal:attributes="href string:dashboard#fieldsetlegend-tickets">
+            tal:attributes="href string:dashboard#tickets">
               <span i18n:translate="">Reset filter</span>
           </a>
         </div>

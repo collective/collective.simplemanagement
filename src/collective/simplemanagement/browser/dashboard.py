@@ -141,6 +141,13 @@ class DashboardMixin(BrowserView):
             'simplemanagement.ManageProject', self.context
         )
 
+    def _get_employee_filter(self):
+        if self.user_can_manage_project:
+            user_id = self.request.get('employee', self.user.getId())
+        else:
+            user_id = self.user.getId()
+        return user_id
+
 
 class TicketsMixIn(object):
 
@@ -164,10 +171,7 @@ class TicketsMixIn(object):
 
     def _get_tickets(self):
         pc = self.tools['portal_catalog']
-        if self.user_can_manage_project:
-            user_id = self.request.get('employee', self.user.getId())
-        else:
-            user_id = self.user.getId()
+        user_id = self._get_employee_filter()
 
         query = {
             'portal_type': 'PoiIssue',
@@ -245,7 +249,7 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         })
 
     # @view_memoize
-    def bookings(self, userid, from_date, to_date):
+    def _bookings(self, userid, from_date, to_date):
         cat = self.tools.portal_catalog
         bookings = get_bookings(
             userid=userid,
@@ -255,16 +259,50 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         )
         return bookings
 
+    def bookings(self):
+        user_id = self.user.getId()
+        project = None
+        is_project_context = IProject.providedBy(self.context)
+        if is_project_context:
+            project = self.context
+
+        from_date = datetime.date.today() - datetime.timedelta(days=30)
+        _bookings = get_bookings(
+            user_id,
+            project=project,
+            from_date=from_date
+        )
+        for booking in _bookings:
+            story = booking.getObject().__parent__
+            if not is_project_context:
+                project = get_project(story)
+
+            yield {
+                'date': self.context.toLocalizedTime(booking.date.isoformat()),
+                'date2': timeago(booking.date),
+                'time': booking.time,
+                'url': booking.getURL(),
+                'title': booking.Title,
+                'project': {
+                    'title': project.Title(),
+                    'url': project.absolute_url()
+                },
+                'story': {
+                    'title': story.Title(),
+                    'url': story.absolute_url()
+                },
+
+            }
+
     def booking_holes(self):
-        member = self.portal_state.member()
-        userid = member.getId()
+        userid = self.user.getId()
         hole_settings = self.hole_settings
         man_day_hours = hole_settings.man_day_hours
         expected_working_time = man_day_hours - \
             (man_day_hours * hole_settings.warning_delta_percent)
         from_date = hole_settings.from_date
         to_date = hole_settings.to_date
-        bookings = self.bookings(userid, from_date, to_date)
+        bookings = self._bookings(userid, from_date, to_date)
         holes = get_booking_holes(userid, bookings,
                                   expected_working_time=expected_working_time,
                                   man_day_hours=man_day_hours,

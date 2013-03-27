@@ -74,8 +74,9 @@ def get_bookings(userid=None, project=None, portal_catalog=None,
         'portal_type': 'Booking',
     }
     if sort:
-        # this is not working in tests (???)
+        # XXX: this is not working in tests (???)
         query['sort_on'] = 'booking_date'
+        query['sort_order'] = 'descending'
     if userid:
         query['Creator'] = userid
     if project:

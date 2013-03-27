@@ -77,10 +77,11 @@
                 <a class="previous"
                    href=""
                    title="">Previous</a>
-                <span>Month name</span>
+                &nbsp;
                 <a class="next"
                    href=""
                    title="">Next</a>
+                <span>Month name</span>
               </h2>
               <table class="listing">
                 <thead>

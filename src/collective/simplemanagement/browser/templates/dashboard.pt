@@ -14,20 +14,32 @@
   <body metal:use-macro="content">
 
     <metal:bodytext fill-slot="main">
-      <metal:main define-macro="main" tal:define="helpers context/@@simplemanagement_helpers;">
+      <metal:main define-macro="main"
+        tal:define="helpers context/@@simplemanagement_helpers;
+                    employees view/employees;
+                    employee_details view/employee_details">
         <div tal:replace="structure provider:plone.abovecontenttitle" />
         <h1 class="documentFirstHeading">Dashboard</h1>
       <!-- <div tal:replace="structure provider:plone.belowcontenttitle" />     -->
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
-          <div id="content-core">
-
-            <dl class="enableFormTabbing">
-              <dt id="fieldsetlegend-stories"
-                  i18n:translate="">Stories</dt>
-              <dd id="fieldset-stories"
+        <div id="content-core">
+          <div id="overview">
+            <ul class="tabs">
+              <li><a href="#stories"
+                i18n:translate="">Stories</a></li>
+              <li><a href="#tickets"
+                i18n:translate="">Tickets</a></li>
+              <li><a href="#bookings"
+                i18n:translate="">Booking</a></li>
+            </ul>
+            <div class="panes">
+              <!-- Stories pane -->
+              <div id="stories-wrapper"
+                  class="pane"
                   tal:define="booking_holes view/booking_holes;">
-                <div id="missed-bookings" class="alert alert-top alert-booking"
+                <div id="missed-bookings" class="pat-expose alert alert-top alert-booking"
+                  data-expose-triggers="hover"
                      tal:condition="booking_holes">
                   <h2 i18n:translate="">Please complete your booking</h2>
                   <p class="claim"
@@ -120,14 +132,11 @@
 
                 </div>
 
-              </dd>
+              </div>
 
-              <dt id="fieldsetlegend-tickets"
-                  i18n:translate="">Tickets</dt>
-              <dd id="fieldset-tickets"
-                tal:define="tickets view/tickets;
-                            employees view/employees;
-                            employee_details view/employee_details">
+              <!-- Tickets pane -->
+              <div id="tickets-wrapper" class="pane"
+                tal:define="tickets view/tickets">
 
                 <h2 i18n:translate="" tal:condition="not:employee_details">
                   You have
@@ -151,12 +160,14 @@
 
                 <metal:tickets
                   use-macro="context/simpemanagement-ticketsmacros/tickets" />
-              </dd>
+              </div>
 
-              <!-- Booking History -->
-              <dt id="fieldsetlegend-booking"
-                  i18n:translate="">Booking</dt>
-              <dd id="fieldset-booking">
+              <!-- Booking History pane -->
+              <div id="booking-wrapper" class="pane">
+
+                <h2 i18n:translate="">
+                  Your booking
+                </h2>
 
                 <table class="listing">
                   <thead>
@@ -168,10 +179,13 @@
                       <th i18n:translate="">Story</th>
                     </tr>
                   </thead>
-<!--                   <tbody>
+                   <tbody>
                     <tr tal:repeat="book view/bookings">
-                      <td><a href=""
-                          tal:content="book/date">today</a></td>
+                      <td><span
+                          tal:content="book/date">today</span>
+                           (<span class="discreet"
+                            tal:content="book/date2" />)
+                      </td>
                       <td tal:content="book/time">3.0</td>
                       <td><a tal:attributes="href book/url"
                              tal:content="book/title">closed ticket #1</a></td>
@@ -181,14 +195,18 @@
                              tal:attributes="href book/story/url">Story 1</a></td>
                     </tr>
                   </tbody>
--->
                 </table>
 
-              </dd>
-            </dl>
-            <div id="booking-tooltip-form"
-                 class="booking-form"
-                 tal:content="structure view/add_booking_form" />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div id="booking-tooltip-form"
+             class="booking-form"
+             tal:content="structure view/add_booking_form" />
+
         <div tal:replace="structure provider:plone.belowcontentbody" />
       </metal:main>
     </metal:bodytext>
