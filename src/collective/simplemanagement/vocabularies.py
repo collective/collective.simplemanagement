@@ -2,6 +2,8 @@ from zope.interface import implements
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.interfaces import IVocabularyFactory
 
+from Products.CMFCore.utils import getToolByName
+
 from .configure import Settings
 from .utils import get_project
 
@@ -61,4 +63,18 @@ class milestonesVocab(object):
                             milestone.name
                         )
                     )
+        return SimpleVocabulary(terms)
+
+
+class classifiersVocab(object):
+    implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        catalog = getToolByName(context, 'portal_catalog')
+        terms = []
+        for term in catalog.uniqueValuesFor('classifiers'):
+            terms.append(
+                SimpleVocabulary.createTerm(term, term, term)
+            )
+
         return SimpleVocabulary(terms)
