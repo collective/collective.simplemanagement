@@ -45,7 +45,6 @@ setup(
         'abstract.z3cform.usertokeninput',
         'collective.js.jqueryui > 1.8.16.9',
         'collective.prettydate',
-        'plone.app.widgets',
         # 'collective.dexteritytextindexer'
     ],
     extras_require={
