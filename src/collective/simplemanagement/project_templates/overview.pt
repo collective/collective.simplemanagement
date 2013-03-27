@@ -7,10 +7,10 @@
 
   <div id="overview" class="clearfix">
     <ul class="tabs">
-      <li><a href="#" i18n:translate="">Planning</a></li>
-      <li><a href="#" i18n:translate="">Details</a></li>
-      <li><a href="#" i18n:translate="">Documentation</a></li>
-      <li><a href="#" i18n:translate="">Notes</a></li>
+      <li><a href="#planning" i18n:translate="">Planning</a></li>
+      <li><a href="#details" i18n:translate="">Details</a></li>
+      <li><a href="#documentation" i18n:translate="">Documentation</a></li>
+      <li><a href="#notes" i18n:translate="">Notes</a></li>
     </ul>
 
     <div class="panes">

@@ -130,6 +130,7 @@ class StoryQuickForm(form.AddForm):
     def updateWidgets(self):
         super(StoryQuickForm, self).updateWidgets()
         container_wdgt = self.widgets['container']
+        container_wdgt.mode = HIDDEN_MODE
         if self._container:
             container_wdgt.value = self._container
             container_wdgt.update()
