@@ -203,7 +203,6 @@
         </div>
 
         <div id="booking-tooltip-form"
-             class="booking-form"
              tal:content="structure view/add_booking_form" />
 
         <div tal:replace="structure provider:plone.belowcontentbody" />

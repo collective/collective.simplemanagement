@@ -12,7 +12,6 @@
             var self = this;
             this.element = $(element);
             this.element_id = this.element.attr('id');
-            this.has_sortable = false;
             this.left_selector = $('#'+this.element_id+'-left');
             this.right_selector = $('#'+this.element_id+'-right');
             this.loadStories(this.left_selector);
@@ -29,6 +28,8 @@
             var self = this;
             var uuid = $('option:selected', selector).val();
             var container = $('#'+selector.attr('id')+'-container');
+            container.attr('data-sortable', '');
+            container.empty();
             container.load(
                 './@@stories',
                 {
@@ -36,18 +37,17 @@
                     widget_id: this.element_id
                 },
                 function(response, status, request) {
-                    self.makeSortable();
+                    self.makeSortable(container);
                 }
             );
         },
 
-        makeSortable: function() {
+        makeSortable: function(element) {
             var self = this;
-            if(this.has_sortable) {
-                $('ul.sortable', this.element).sortable('destroy');
-                this.has_sortable = false;
+            if(element.attr('data-sortable') === 'true') {
+                element.find('ul.sortable').sortable('destroy');
             }
-            $('ul.sortable', this.element).sortable({
+            element.find('ul.sortable').sortable({
                 update: function(event, ui) {
                     self.update(event, ui);
                 },
@@ -79,7 +79,7 @@
                 revert: true,
                 connectWith: '.'+this.element_id+'-stories'
             });
-            this.has_sortable = true;
+            element.attr('data-sortable', 'true');
         },
 
         update: function(event, ui) {
