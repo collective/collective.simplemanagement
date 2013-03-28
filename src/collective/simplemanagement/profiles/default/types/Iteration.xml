@@ -21,7 +21,7 @@
   <element value="folder_listing"/>
  </property>
  <property name="default_view_fallback">False</property>
- <property name="add_permission">cmf.AddPortalContent</property>
+ <property name="add_permission">simplemanagement.AddIteration</property>
  <property name="klass">collective.simplemanagement.iteration.Iteration</property>
  <property name="behaviors">
   <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>

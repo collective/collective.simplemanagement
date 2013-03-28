@@ -52,7 +52,7 @@
     name="story_move"
     class=".story_move.StoryMove"
     layer="..interfaces.IBrowserLayer"
-    permission="cmf.ModifyPortalContent"
+    permission="simplemanagement.ManageProject"
   />
 
   <browser:page
@@ -60,7 +60,7 @@
     name="story_move"
     class=".story_move.StoryMove"
     layer="..interfaces.IBrowserLayer"
-    permission="cmf.ModifyPortalContent"
+    permission="simplemanagement.ManageProject"
   />
 
   <browser:page
@@ -129,7 +129,7 @@
     name="worklog"
     class=".worklog.Worklog"
     layer="..interfaces.IBrowserLayer"
-    permission="cmf.ManagePortal"
+    permission="simplemanagement.ManageProject"
     template="templates/worklog.pt"
   />
 
@@ -138,7 +138,7 @@
     name="worklog"
     class=".worklog.Worklog"
     layer="..interfaces.IBrowserLayer"
-    permission="cmf.ManagePortal"
+    permission="simplemanagement.ManageProject"
     template="templates/worklog.pt"
   />
 
@@ -147,7 +147,7 @@
     name="worklog_backend"
     class=".worklog.WorklogBackend"
     layer="..interfaces.IBrowserLayer"
-    permission="cmf.ManagePortal"
+    permission="simplemanagement.ManageProject"
   />
 
   <browser:page
@@ -155,7 +155,7 @@
     name="worklog_backend"
     class=".worklog.WorklogBackend"
     layer="..interfaces.IBrowserLayer"
-    permission="cmf.ManagePortal"
+    permission="simplemanagement.ManageProject"
   />
 
   <browser:page

@@ -1,0 +1,25 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           i18n_domain="collective.simplemanagement">
+
+  <permission
+      id="simplemanagement.ManageProject"
+      title="Simplemanagement: Manage project" />
+
+  <permission
+      id="simplemanagement.AddBooking"
+      title="Simplemanagement: Add booking" />
+
+  <permission
+      id="simplemanagement.AddProject"
+      title="Simplemanagement: Add project" />
+
+  <permission
+      id="simplemanagement.AddIteration"
+      title="Simplemanagement: Add iteration" />
+
+  <permission
+      id="simplemanagement.AddStory"
+      title="Simplemanagement: Add story" />
+
+</configure>

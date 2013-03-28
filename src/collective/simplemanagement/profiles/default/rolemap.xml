@@ -19,5 +19,24 @@
       <role name="Site Administrator"/>
     </permission>
 
+    <permission name="Simplemanagement: Add project" acquire="False">
+      <role name="Manager"/>
+      <role name="PM"/>
+      <role name="Site Administrator"/>
+    </permission>
+
+    <permission name="Simplemanagement: Add iteration" acquire="False">
+      <role name="Manager"/>
+      <role name="PM"/>
+      <role name="Site Administrator"/>
+    </permission>
+
+    <permission name="Simplemanagement: Add story" acquire="False">
+      <role name="Manager"/>
+      <role name="PM"/>
+      <role name="Employee"/>
+      <role name="Site Administrator"/>
+    </permission>
+
   </permissions>
 </rolemap>

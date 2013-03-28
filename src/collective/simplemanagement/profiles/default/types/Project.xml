@@ -25,7 +25,7 @@
   <element value="folder_listing"/>
  </property>
  <property name="default_view_fallback">False</property>
- <property name="add_permission">cmf.AddPortalContent</property>
+ <property name="add_permission">simplemanagement.AddProject</property>
  <property name="klass">collective.simplemanagement.project.Project</property>
  <property name="behaviors">
   <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
@@ -55,18 +55,18 @@
          condition_expr=""
          icon_expr="" link_target="" url_expr="string:${object_url}/@@backlog"
          visible="True" i18n:attributes="title">
-  <permission value="View"/>
+  <permission value="Simplemanagement: Manage project"/>
  </action>
  <action title="Planning" action_id="planning" category="object"
          condition_expr=""
          icon_expr="" link_target="" url_expr="string:${object_url}/@@planning"
          visible="True" i18n:attributes="title">
-  <permission value="Modify portal content"/>
+  <permission value="Simplemanagement: Manage project"/>
  </action>
  <action title="Worklog" action_id="worklog" category="object"
          condition_expr=""
          icon_expr="" link_target="" url_expr="string:${object_url}/@@worklog"
          visible="True" i18n:attributes="title">
-  <permission value="Manage Portal"/>
+  <permission value="Simplemanagement: Manage project"/>
  </action>
 </object>

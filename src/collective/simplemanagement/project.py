@@ -52,7 +52,7 @@ class View(grok.View):
         )
 
     def user_can_add_story(self):
-        return checkPermission('cmf.AddPortalContent', self.context)
+        return checkPermission('simplemanagement.AddStory', self.context)
 
     def add_story_form(self, iteration):
         z2.switch_on(self, request_layer=IFormLayer)

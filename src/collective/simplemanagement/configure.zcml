@@ -7,6 +7,7 @@
   <i18n:registerTranslations directory="locales" />
 
   <grok:grok package="." />
+  <include file="permission.zcml" />
   <include package=".browser" />
 
   <subscriber for=".interfaces.IProject
@@ -56,14 +57,5 @@
   <utility name="Employee" factory=".sharing.EmployeeRole"/>
   <utility name="Customer" factory=".sharing.CustomerRole"/>
   <utility name="PM" factory=".sharing.PMRole"/>
-
-  <!-- Permissions -->
-  <permission
-      id="simplemanagement.ManageProject"
-      title="Simplemanagement: Manage project" />
-
-  <permission
-      id="simplemanagement.AddBooking"
-      title="Simplemanagement: Add booking" />
 
 </configure>
