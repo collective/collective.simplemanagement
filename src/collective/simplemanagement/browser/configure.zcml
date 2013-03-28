@@ -162,7 +162,7 @@
      for="..interfaces.IStory"
      name="create_booking"
      layer="..interfaces.IBrowserLayer"
-     permission="cmf.AddPortalContent"
+     permission="simplemanagement.AddBooking"
      class=".dashboard.AddBooking"
    />
 
