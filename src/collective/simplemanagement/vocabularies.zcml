@@ -34,4 +34,9 @@
       name="collective.simplemanagement.classifiers"
       provides="zope.schema.interfaces.IVocabularyFactory" />
 
+  <utility
+      factory=".vocabularies.iterationsVocab"
+      name="collective.simplemanagement.projectiterations"
+      provides="zope.schema.interfaces.IVocabularyFactory" />
+
 </configure>

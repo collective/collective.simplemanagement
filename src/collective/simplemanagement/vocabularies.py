@@ -78,3 +78,25 @@ class classifiersVocab(object):
             )
 
         return SimpleVocabulary(terms)
+
+
+class iterationsVocab(object):
+    implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        project = get_project(context)
+        terms = []
+        catalog = getToolByName(context, 'portal_catalog')
+        if project is not None:
+            res = catalog.search({
+                'path': '/'.join(project.getPhysicalPath()),
+                'portal_type': 'Iteration'
+            })
+
+            for term in res:
+                path = term.getPath()
+                terms.append(
+                    SimpleVocabulary.createTerm(
+                        path, path, term.Title)
+                )
+        return SimpleVocabulary(terms)

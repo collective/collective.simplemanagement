@@ -21,7 +21,7 @@ from .utils import get_user_details
 from .utils import get_text
 from .utils import AttrDict
 from .iteration import IterationViewMixin
-from .story import StoryQuickForm
+from .story import ProjectStoryQuickForm
 from . import messageFactory as _
 
 
@@ -56,9 +56,12 @@ class View(grok.View):
 
     def add_story_form(self, iteration):
         z2.switch_on(self, request_layer=IFormLayer)
-        addform = StoryQuickForm(aq_inner(self.context), self.request)
-        # set current iterazion path as story container
-        addform._container = '/'.join(iteration.getPhysicalPath())
+        addform = ProjectStoryQuickForm(
+            aq_inner(self.context),
+            self.request
+        )
+        # set current iteration path as story container
+        # addform._container = '/'.join(iteration.getPhysicalPath())
         addform.update()
         return addform.render()
 

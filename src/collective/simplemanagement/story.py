@@ -1,3 +1,4 @@
+import logging
 from Acquisition import aq_inner
 from five import grok
 from zope.security import checkPermission
@@ -20,6 +21,7 @@ from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 from .booking import BookingForm
 from .interfaces import IStory
 from .interfaces import IQuickForm
+from .interfaces import IProjectStoryQuickForm
 from .interfaces import IBooking
 from .utils import get_timings
 from .utils import get_user_details
@@ -27,6 +29,9 @@ from .utils import get_assignees_details
 from .utils import get_epic_by_story
 from .utils import get_text
 from .utils import get_project
+
+
+logger = logging.getLogger('collective.simplemanagement')
 
 
 class Story(Container):
@@ -107,7 +112,7 @@ class View(grok.View):
 
 class StoryQuickForm(form.AddForm):
     template = ViewPageTemplateFile("browser/templates/quick_form.pt")
-    _container = None
+    # _container = None
 
     @property
     def fields(self):
@@ -119,7 +124,7 @@ class StoryQuickForm(form.AddForm):
 
         _sorted = [
             'title', 'estimate', 'description',
-            'assigned_to', 'container'
+            'assigned_to'
         ]
         return fields.select(*_sorted)
 
@@ -127,23 +132,9 @@ class StoryQuickForm(form.AddForm):
         'epic': lambda x: create_relation('/'.join(x.getPhysicalPath()))
     }
 
-    def updateWidgets(self):
-        super(StoryQuickForm, self).updateWidgets()
-        container_wdgt = self.widgets['container']
-        container_wdgt.mode = HIDDEN_MODE
-        if self._container:
-            container_wdgt.value = self._container
-            container_wdgt.update()
-
-    def create(self, data):
-        container_path = data.pop('container', None)
-        if container_path:
-            container = self.context.restrictedTraverse(
-                container_path.encode('utf-8'))
-        else:
-            container = self.context
+    def create_story(self, context, data):
         item = createContentInContainer(
-            container,
+            context,
             'Story',
             title=data.pop('title'))
         for k, v in data.items():
@@ -151,6 +142,9 @@ class StoryQuickForm(form.AddForm):
                 v = self.convert_funcs[k](v)
             setattr(item, k, v)
         return item
+
+    def create(self, data):
+        return self.create_story(self.context, data)
 
     def add(self, obj):
         obj.reindexObject()
@@ -160,3 +154,30 @@ class StoryQuickForm(form.AddForm):
             return self.request.HTTP_REFERER
 
         return self.context.absolute_url()
+
+
+class ProjectStoryQuickForm(StoryQuickForm):
+
+    @property
+    def fields(self):
+        fields = field.Fields(IProjectStoryQuickForm) + \
+            field.Fields(IStory).select('estimate', 'assigned_to')
+
+        fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
+
+        _sorted = [
+            'title', 'estimate', 'description',
+            'assigned_to', 'container'
+        ]
+        return fields.select(*_sorted)
+
+    def create(self, data):
+        context = data['container']
+        if context:
+            try:
+                context = self.context.restrictedTraverse(context)
+            except KeyError:
+                logger.exception("An error occurred while creating the booking hole")
+        else:
+            context = self.context
+        return self.create_story(context, data)

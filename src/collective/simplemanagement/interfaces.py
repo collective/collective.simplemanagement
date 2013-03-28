@@ -32,9 +32,13 @@ class IQuickForm(Interface):
         required=False,
     )
 
-    container = schema.TextLine(
+
+class IProjectStoryQuickForm(IQuickForm):
+
+    container = schema.Choice(
         title=_(u'Container'),
         required=False,
+        vocabulary='collective.simplemanagement.projectiterations'
     )
 
 
