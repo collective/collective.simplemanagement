@@ -1,0 +1,15 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           i18n_domain="collective.simplemanagement">
+
+  <adapter name="start" factory=".indexers.start" />
+  <adapter name="end" factory=".indexers.end" />
+  <adapter name="booking_date" factory=".indexers.date" />
+  <adapter name="SearchableText"
+           factory=".indexers.SearchableText_project" />
+  <adapter name="SearchableText"
+             factory=".indexers.SearchableText_iteration" />
+  <adapter name="SearchableText"
+             factory=".indexers.SearchableText_story" />
+
+</configure>

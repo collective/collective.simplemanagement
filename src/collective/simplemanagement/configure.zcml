@@ -8,6 +8,7 @@
 
   <grok:grok package="." />
   <include file="permission.zcml" />
+  <include file="indexers.zcml" />
   <include package=".browser" />
 
   <subscriber for=".interfaces.IProject
@@ -17,10 +18,6 @@
   <subscriber for=".interfaces.IProject
                    zope.lifecycleevent.interfaces.IObjectModifiedEvent"
               handler=".events.update_tracker_managers" />
-
-  <adapter name="start" factory=".indexers.start" />
-  <adapter name="end" factory=".indexers.end" />
-  <adapter name="booking_date" factory=".indexers.date" />
 
   <adapter
     for=".interfaces.IIteration"

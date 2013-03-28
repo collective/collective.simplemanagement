@@ -44,8 +44,7 @@ setup(
         'Products.Poi',
         'abstract.z3cform.usertokeninput',
         'collective.js.jqueryui > 1.8.16.9',
-        'collective.prettydate',
-        # 'collective.dexteritytextindexer'
+        'collective.prettydate'
     ],
     extras_require={
         'test': [

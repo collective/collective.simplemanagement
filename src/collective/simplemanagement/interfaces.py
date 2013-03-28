@@ -180,7 +180,7 @@ class IIteration(form.Schema):
 
 class IEpic(form.Schema):
 
-    text = schema.Text(title=_(u"Text"))
+    text = RichText(title=_(u"Text"))
     estimate = schema.Decimal(
         title=_(u"Estimate (man days)"),
         default=Decimal('0.00')
@@ -193,6 +193,7 @@ class IStory(form.Schema):
         title=_(u"Text"),
         required=False
     )
+
     estimate = schema.Decimal(
         title=_(u"Estimate (man hours)"),
         default=Decimal('0.00')
