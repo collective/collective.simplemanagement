@@ -177,7 +177,7 @@ class ProjectStoryQuickForm(StoryQuickForm):
             try:
                 context = self.context.restrictedTraverse(context)
             except KeyError:
-                logger.exception("An error occurred while creating the booking hole")
+                logger.exception("An error occurred while adding story")
         else:
             context = self.context
         return self.create_story(context, data)
