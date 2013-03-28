@@ -253,7 +253,7 @@
                 tip.empty();
                 var trigger = this.getTrigger();
                 var url = trigger.attr('href');
-                var handle_span = $(trigger).parents('tr').find('span.handle');
+                var handle_span = $(trigger).parent().siblings('.handle');
                 $.get(url + '/wf_actions', function(data) {
                     tip.html(data);
                     var links = $(tip).find('a');

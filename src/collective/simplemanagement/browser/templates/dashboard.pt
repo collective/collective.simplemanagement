@@ -20,17 +20,16 @@
                     employee_details view/employee_details">
         <div tal:replace="structure provider:plone.abovecontenttitle" />
         <h1 class="documentFirstHeading">Dashboard</h1>
-      <!-- <div tal:replace="structure provider:plone.belowcontenttitle" />     -->
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
         <div id="content-core">
           <div id="overview">
             <ul class="tabs">
-              <li><a href="#stories"
+              <li><a href="dashboard#stories"
                 i18n:translate="">Stories</a></li>
-              <li><a href="#tickets"
+              <li><a href="dashboard#tickets"
                 i18n:translate="">Tickets</a></li>
-              <li><a href="#bookings"
+              <li><a href="dashboard#bookings"
                 i18n:translate="">Booking</a></li>
             </ul>
             <div class="panes">
