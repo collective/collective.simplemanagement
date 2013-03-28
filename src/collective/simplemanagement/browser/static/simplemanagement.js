@@ -274,6 +274,7 @@
                 });
             }
         });
+        var booking_form = $('#booking-tooltip-form').detach();
         $(".bookform").each(function () {
             var trigger = $(this);
             var setupForm = function(form, api) {
@@ -334,7 +335,7 @@
                         }
                     });
                     tip.empty();
-                    tip.html($('.booking-form').html());
+                    tip.html(booking_form.html());
                     tip.addClass('booking-form');
                     var form = tip.find('form');
                     setupForm(form, api);
