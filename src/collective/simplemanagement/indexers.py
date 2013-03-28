@@ -24,7 +24,10 @@ def date(obj):
 
 
 def SearchableText(obj, text=False):
-    return ' '.join((obj.id, obj.title, obj.description, ))
+    text = [obj.id, obj.title]
+    if obj.description:
+        text.append(obj.description)
+    return ' '.join(text)
 
 
 @indexer(IProject)
