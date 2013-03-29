@@ -11,11 +11,19 @@ def setupGroups(site):
 
     if not uf.searchGroups(id='PM'):
         title = site.translate(_(u'Project managers'))
-        gtool.addGroup('PM', title=title, roles=['PM'])
+        gtool.addGroup(
+            'PM',
+            title=title,
+            roles=['Contributor', 'Editor', 'PM', 'Reader', 'Reviewer']
+        )
 
     if not uf.searchGroups(id='employees'):
         title = site.translate(_(u"Employees"))
-        gtool.addGroup('employees', title=title, roles=['Employee'])
+        gtool.addGroup(
+            'employees',
+            title=title,
+            roles=['Contributor', 'Editor', 'Employee', 'Reader']
+        )
 
 
 def setupSimpleManagement(context):
