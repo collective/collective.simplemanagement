@@ -13,6 +13,10 @@
 
   <div id="project-view">
 
+    <metal:storyform
+      use-macro="context/simpemanagement-macros/addstory-form" />
+
+
     <div id="iterations"
          tal:define="iterations view/iterations"
          tal:condition="iterations">
@@ -23,13 +27,6 @@
           <metal:iteration
             use-macro="context/simpemanagement-macros/iteration-compact">
             <metal:extra fill-slot="extra">
-              <div tal:condition="view/user_can_add_story"
-                   id="addstory-container" class="clearfix simplemanagement-addstory">
-                <h3><a i18n:translate="" href="#">Add Story</a></h3>
-                <div id="addstory-form" style="display: none"
-                     class="simplemanagement-addstory-form-wrapper"
-                     tal:content="structure python:view.add_story_form(iteration)" />
-              </div>
             </metal:extra>
           </metal:iteration>
         </div>
@@ -41,10 +38,6 @@
 
       <div class="visualClear"><!-- clear floats--></div>
 
-      <div id="project-actions">
-        <a href="all-iterations">
-          <span i18n:translate="">See all iterations</span></a>
-      </div>
     </div>
 
     <tal:content

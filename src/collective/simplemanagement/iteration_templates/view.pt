@@ -27,13 +27,8 @@
                   sortable python:True;
                   can_manage view/user_can_manage_project">
 
-        <div tal:condition="view/user_can_add_story"
-             id="addstory-container" class="clearfix simplemanagement-addstory">
-          <h3><a i18n:translate="" href="#">Add Story</a></h3>
-          <div id="addstory-form" style="display: none"
-               class="simplemanagement-addstory-form-wrapper"
-            tal:content="structure view/add_story_form" />
-        </div>
+        <metal:storyform
+          use-macro="context/simpemanagement-macros/addstory-form" />
 
         <metal:stories
           use-macro="context/simpemanagement-macros/stories" />

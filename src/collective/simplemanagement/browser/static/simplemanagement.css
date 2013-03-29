@@ -16,10 +16,10 @@
 
 #overview .panes {
     clear: both;
-    height: 220px;
     overflow: hidden;
+    height: auto;
+    min-height: 220px;
 }
-
 
 
 #overview .panes > div {
@@ -27,17 +27,22 @@
     border-style: solid;
     border-width: 0 1px 1px;
     display: none;
-    height: 180px;
     padding: 15px 20px;
     overflow-y: auto;
 }
 
-/* reset head for tabs in dashboard */
-#overview .panes > div,
-.template-dashboard #overview .panes {
-    height: auto;
-    min-height: 180px;
+.portaltype-project.template-view #overview .panes {
+    height: 220px;
 }
+
+.portaltype-project.template-view #overview .panes > div {
+    height: 180px;
+}
+
+/* reset head for tabs in dashboard */
+/*#overview .panes > div,
+.template-dashboard #overview .panes {
+}*/
 
 
 #overview ul.tabs li {

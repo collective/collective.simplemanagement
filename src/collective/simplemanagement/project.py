@@ -54,14 +54,12 @@ class View(grok.View):
     def user_can_add_story(self):
         return checkPermission('simplemanagement.AddStory', self.context)
 
-    def add_story_form(self, iteration):
+    def add_story_form(self):
         z2.switch_on(self, request_layer=IFormLayer)
         addform = ProjectStoryQuickForm(
             aq_inner(self.context),
             self.request
         )
-        # set current iteration path as story container
-        # addform._container = '/'.join(iteration.getPhysicalPath())
         addform.update()
         return addform.render()
 
@@ -98,7 +96,7 @@ class View(grok.View):
 
 class AllIterations(View):
     grok.context(IProject)
-    grok.name('all-iterations')
+    grok.name('alliterations')
     grok.require('zope2.View')
 
 

@@ -37,3 +37,4 @@ lib64
 .#*
 .emacs*
 .*~
+rebuild_i18n.log

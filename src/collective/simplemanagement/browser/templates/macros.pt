@@ -467,4 +467,14 @@
       </form>
     </div>
   </metal:employee-form>
+
+  <metal:addstory-form define-macro="addstory-form">
+    <div tal:condition="view/user_can_add_story"
+         id="addstory-container" class="clearfix simplemanagement-addstory">
+      <h3><a i18n:translate="" href="#">Add Story</a></h3>
+      <div id="addstory-form" style="display: none"
+           class="simplemanagement-addstory-form-wrapper"
+           tal:content="structure view/add_story_form" />
+    </div>
+  </metal:addstory-form>
 </html>
