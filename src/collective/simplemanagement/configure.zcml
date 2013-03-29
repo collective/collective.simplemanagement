@@ -10,6 +10,7 @@
   <include file="permission.zcml" />
   <include file="indexers.zcml" />
   <include package=".browser" />
+  <include package=".portlets" />
 
   <subscriber for=".interfaces.IProject
                    zope.lifecycleevent.interfaces.IObjectAddedEvent"

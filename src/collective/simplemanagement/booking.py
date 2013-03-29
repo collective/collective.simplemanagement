@@ -15,8 +15,8 @@ from .interfaces import IQuickForm
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("story_templates/booking_form.pt")
     fields = field.Fields(IQuickForm).select('title') + \
-            field.Fields(IBooking).select('time') + \
-            field.Fields(IBooking).select('date')
+        field.Fields(IBooking).select('time') + \
+        field.Fields(IBooking).select('date')
 
     name = 'booking_form'
 
@@ -48,8 +48,7 @@ class Booking(dexterity.Item):
 
     def get_related(self):
         related = self.related
-        if bool(related) and \
-            not related.isBroken():
+        if bool(related) and not related.isBroken():
             related = related.to_object
             return {
                 'title': related.Title(),

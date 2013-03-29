@@ -11,9 +11,64 @@
       <property name="icon_expr"/>
       <property name="available_expr"/>
       <property name="permissions">
-        <element value="Manage portal"/>
+        <element value="Simplemanagement: Manage project"/>
       </property>
       <property name="visible">True</property>
     </object>
   </object>
+  <object name="simplemanagement" meta_type="CMF Action Category">
+    <property name="title"></property>
+    <object name="dashboard" meta_type="CMF Action" i18n:domain="plone">
+     <property name="title" i18n:translate="">Dashboard</property>
+     <property name="description" i18n:translate=""></property>
+     <property name="url_expr">string:dashboard</property>
+     <property name="link_target"></property>
+     <property name="icon_expr"></property>
+     <property name="available_expr"></property>
+     <property name="permissions">
+      <element value="Simplemanagement: Add booking"/>
+     </property>
+     <property name="visible">True</property>
+    </object>
+    <object name="worklog" meta_type="CMF Action"
+       i18n:domain="collective.simplemanagement">
+     <property name="title" i18n:translate="">Worklog</property>
+     <property name="description" i18n:translate=""></property>
+     <property name="url_expr">string:worklog</property>
+     <property name="link_target"></property>
+     <property name="icon_expr"></property>
+     <property name="available_expr"></property>
+     <property name="permissions">
+      <element value="Simplemanagement: Manage project"/>
+     </property>
+     <property name="visible">True</property>
+    </object>
+    <object name="planning" meta_type="CMF Action"
+       i18n:domain="collective.simplemanagement">
+     <property name="title" i18n:translate="">Planning</property>
+     <property name="description" i18n:translate=""></property>
+     <property name="url_expr">string:planning</property>
+     <property name="link_target"></property>
+     <property name="icon_expr"></property>
+     <property name="available_expr"></property>
+     <property name="permissions">
+      <element value="Simplemanagement: Manage project"/>
+     </property>
+     <property name="visible">True</property>
+    </object>
+    <object name="iterations" meta_type="CMF Action"
+       i18n:domain="collective.simplemanagement">
+     <property name="title" i18n:translate="">Iterations</property>
+     <property name="description" i18n:translate=""></property>
+     <property name="url_expr">string:alliterations</property>
+     <property name="link_target"></property>
+     <property name="icon_expr"></property>
+     <property name="available_expr"></property>
+     <property name="permissions">
+      <element value="Simplemanagement: Manage project"/>
+     </property>
+     <property name="visible">True</property>
+    </object>
+  </object>
+
 </object>

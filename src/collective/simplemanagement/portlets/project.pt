@@ -1,0 +1,27 @@
+<tal:block i18n:domain="collective.simplemanagement">
+<dl class="portlet portletProject">
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <span class="tile" i18n:translate="">Project</span>
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <dd class="portletItem">
+        <ul id="project-actions">
+            <li tal:repeat="item view/actions">
+              <a href=""
+                tal:attributes="href item/url;
+                        title item/description;
+                        class string:action-${item/id}"
+                        i18n:attributes="title">
+                <span tal:content="item/title"
+                      i18n:translate=""/>
+              </a>
+            </li>
+        </ul>
+
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+</dl>
+</tal:block>

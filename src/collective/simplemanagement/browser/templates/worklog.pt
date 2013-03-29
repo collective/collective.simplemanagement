@@ -8,7 +8,7 @@
   <head>
     <metal:block fill-slot="top_slot"
                  tal:define="dummy python:request.set('disable_border',1);
-                             disable_column_one python:request.set('disable_plone.leftcolumn',1);
+
                              disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
   </head>
   <body metal:use-macro="content">
@@ -18,8 +18,7 @@
                   tal:define="helpers context/@@simplemanagement_helpers;">
         <div tal:replace="structure provider:plone.abovecontenttitle" />
         <h1 class="documentFirstHeading" i18n:translate="">Worklog</h1>
-        <!-- <div tal:replace="structure provider:plone.belowcontenttitle" />
-             -->
+
         <div tal:replace="structure provider:plone.abovecontentbody" />
         <script type="text/javascript"
                 tal:content="python:view.js_init('worklog')" />
