@@ -16,7 +16,7 @@
       <property name="visible">True</property>
     </object>
   </object>
-  <object name="simplemanagement" meta_type="CMF Action Category">
+  <object name="simplemanagement_actions" meta_type="CMF Action Category">
     <property name="title"></property>
     <object name="dashboard" meta_type="CMF Action" i18n:domain="plone">
      <property name="title" i18n:translate="">Dashboard</property>

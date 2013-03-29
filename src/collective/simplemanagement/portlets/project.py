@@ -35,7 +35,7 @@ class Renderer(base.Renderer):
 
     def _actions(self):
         pa = getToolByName(self.context, 'portal_actions')
-        return pa.simplemanagement.values()
+        return pa.simplemanagement_actions.values()
 
     def actions(self):
         project_url = self._project.absolute_url()
