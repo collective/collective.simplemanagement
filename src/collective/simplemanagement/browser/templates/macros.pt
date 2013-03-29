@@ -85,6 +85,12 @@
       <td tal:attributes="class string:handle ${story/status};
           title story/status"
           >☰</td>
+      <metal:before-columns define-slot="before-columns">
+        <td class="actions">
+          <metal:story-actions
+                 use-macro="context/simpemanagement-macros/story-actions" />
+        </td>
+      </metal:before-columns>
       <td>
         <a href=""
            title=""
@@ -103,10 +109,6 @@
       <td tal:attributes="class string:data numeric-data ${story/time_status}"
           tal:content="story/resource_time"></td>
       <metal:after-columns define-slot="after-columns">
-        <td class="actions">
-          <metal:story-actions
-                 use-macro="context/simpemanagement-macros/story-actions" />
-        </td>
       </metal:after-columns>
     </tr>
   </metal:story-compact>
@@ -137,24 +139,24 @@
         data-iterationurl iteration/absolute_url">
       <thead>
         <tr>
-          <th i18n:translate=""
-            colspan="2">Story</th>
+          <th class="actions" colspan="2"
+            i18n:translate="">Actions</th>
+          <th i18n:translate="">Story</th>
           <th class="info" i18n:translate="">Assignees</th>
           <th class="data numeric-data" i18n:translate="">Estimate</th>
           <th class="data numeric-data" i18n:translate="">Done</th>
-          <th class="actions" i18n:translate="">Actions</th>
         </tr>
       </thead>
       <tfoot tal:condition="totals|nothing">
         <tr>
           <th i18n:translate=""
-            colspan="2">Totals</th>
+            colspan="3">Totals</th>
           <th class="info">&nbsp;</th>
           <td tal:attributes="class string:data numeric-data ${totals/time_status}"
               tal:content="totals/estimate"></td>
           <td tal:attributes="class string:data numeric-data ${totals/time_status}"
               tal:content="totals/hours"></td>
-          <th class="actions">&nbsp;</th>
+
         </tr>
       </tfoot>
       <tbody tal:condition="stories">
@@ -206,24 +208,18 @@
         <thead>
           <tr>
             <th i18n:translate=""
-              colspan="2">Story</th>
+              colspan="2">Actions</th>
+            <th i18n:translate="">Story</th>
             <th i18n:translate="">Assignees</th>
             <th i18n:translate="">Estimate</th>
             <th i18n:translate="">Done</th>
-            <th i18n:translate="">Actions</th>
+
           </tr>
         </thead>
         <tbody>
           <tal:stories repeat="story stories">
             <metal:stories
               use-macro="context/simpemanagement-macros/story-compact">
-
-              <metal:after-columns fill-slot="after-columns">
-                <td class="actions">
-                  <metal:story-actions
-                    use-macro="context/simpemanagement-macros/story-actions" />
-                </td>
-              </metal:after-columns>
             </metal:stories>
           </tal:stories>
         </tbody>
@@ -231,13 +227,12 @@
         <tfoot>
           <tr>
             <th i18n:translate=""
-              colspan="2">Totals</th>
+              colspan="3">Totals</th>
             <th class="info">&nbsp;</th>
             <td tal:attributes="class string:data numeric-data ${totals/time_status}"
                 tal:content="totals/estimate"></td>
             <td tal:attributes="class string:data numeric-data ${totals/time_status}"
                 tal:content="totals/hours"></td>
-            <th class="actions">&nbsp;</th>
           </tr>
         </tfoot>
       </table>

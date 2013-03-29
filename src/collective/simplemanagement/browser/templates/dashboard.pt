@@ -111,8 +111,12 @@
                         <tal:stories repeat="story project/stories">
                           <metal:stories
                             use-macro="context/simpemanagement-macros/story-compact">
-                            <metal:extra-info fill-slot="extra-info">
-                            </metal:extra-info>
+
+                            <metal:before-columns
+                              fill-slot="before-columns" />
+                            <metal:extra-info
+                              fill-slot="extra-info" />
+
                             <metal:after-columns fill-slot="after-columns">
                               <td class="quick-booking">
                                 <a i18n:translate=""
