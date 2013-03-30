@@ -143,7 +143,7 @@ class WorklogBackend(WorklogBase):
         bookings_ = self.tools.portal_catalog.searchResults({
             'path': '/'.join(self.context.getPhysicalPath()),
             'portal_type': 'Booking',
-            'assigned_to': resource,
+            'Creator': resource,
             'booking_date': DateTime(date_.strftime("%Y-%m-%d"))
         })
 
@@ -182,6 +182,8 @@ class WorklogBackend(WorklogBase):
                         resource,
                         booking_holes
                     )
+                    if bookings_:
+                        import pdb; pdb.set_trace( )
                     total = reduce(
                         lambda x, y: x + y,
                         [ b.time for b in bookings_ ],
