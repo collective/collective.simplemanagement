@@ -5,7 +5,9 @@
       lang="en"
       i18n:domain="collective.simplemanagement">
 
-  <div id="overview" class="clearfix">
+  <div id="overview" class="clearfix"
+    tal:define="portal_state context/@@plone_portal_state;
+                portal_url portal_state/portal_url;">
     <ul class="tabs">
       <li><a href="#planning" i18n:translate="">Planning</a></li>
       <li><a href="#details" i18n:translate="">Details</a></li>
@@ -86,7 +88,8 @@
             <dd>
               <ul id="classifiers">
                 <li tal:repeat="item context/classifiers">
-                  <span tal:replace="item"/>
+                  <a tal:content="item"
+                    tal:attributes="href string:${portal_url}/@@search?portal_type:list=Project&classifiers:list=${item}" />
                 </li>
               </ul>
             </dd>
