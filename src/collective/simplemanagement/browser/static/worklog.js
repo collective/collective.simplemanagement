@@ -110,12 +110,11 @@
                 $(this).tooltip({
                     disabled: true,
                     events: { def: "click,blur" },
-                    position: "bottom left",
-                    offset: [10, -123],
-                    // position: left ? 'bottom left' : 'bottom right',
                     onBeforeShow: function() {
-                        var trigger = this.getTrigger();
-                        var tip = this.getTip();
+                        var trigger = this.getTrigger(),
+                            tip = this.getTip(),
+                            base_pos = trigger.offset();
+
                         tip.empty();
                         tip.html(
                             '<img '+
@@ -126,8 +125,8 @@
                             {},
                             function(data) {
                                 tip.empty();
-                                var row;
-                                var details = self.details_template.
+                                var row, original_offset,
+                                    details = self.details_template.
                                     clone();
                                 tip.append(details);
                                 var tbody = details.find('table tbody');
@@ -135,7 +134,7 @@
                                 if(data.length === 0) {
                                     row = row_template.clone();
                                     row.find('td:eq(0)').attr(
-                                        'colspan', '3');
+                                        'colspan', '4');
                                     row.find('td:eq(1)').remove();
                                     row.find('td:eq(1)').remove();
                                     tbody.append(row);
@@ -148,9 +147,10 @@
                                         row.find('td:eq(0)').text(
                                             data[i].reason);
                                         row.find('td:eq(0)').attr(
-                                            'colspan', '2');
-                                        row.find('td:eq(2)').text(
+                                            'colspan', '3');
+                                        row.find('td:eq(3)').text(
                                             data[i].hours);
+                                        row.find('td:eq(1)').remove();
                                         row.find('td:eq(1)').remove();
                                         break;
                                     }
@@ -160,6 +160,8 @@
                                         row.find('td:eq(1)').text(
                                             data[i].story);
                                         row.find('td:eq(2)').text(
+                                            data[i].booking);
+                                        row.find('td:eq(3)').text(
                                             data[i].hours);
                                         break;
                                     }
@@ -168,8 +170,21 @@
                                     }
                                     tbody.append(row);
                                 }
+                                tip.show();
+                                tip.css({
+                                    position: 'absolute'
+                                });
+                                tip.offset({
+                                    top: base_pos['top'] + 30,
+                                    left: base_pos['left'] - tip.width() + 45
+                                });
+                                // TODO: FIX tooltip hide
+                                trigger.mouseleave(function(){
+                                    tip.hide();
+                                });
                             },
                             "json");
+                        return false;
                     }
                 });
             });

@@ -682,7 +682,7 @@ table.stories td.data.warning {
 }
 
 .tooltip .booking-details {
-    width: 20em;
+    width: auto;
 }
 
 .tooltip .booking-details table {
@@ -801,4 +801,8 @@ table#tickets-listing {
 .employees-form-wrapper label {
     display: inline-block;
     padding: 0.3em 1em 0.3em 0;
+}
+
+.data-column {
+    text-align: right;
 }

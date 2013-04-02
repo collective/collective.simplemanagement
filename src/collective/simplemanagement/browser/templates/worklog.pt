@@ -59,12 +59,15 @@
                   <tr>
                     <th i18n:translate="">Project</th>
                     <th i18n:translate="">Story</th>
+                    <th i18n:translate=""
+                        i18n:domain="plone">Description</th>
                     <th i18n:translate="">Hours</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><i i18n:translate="">No results</i></td>
+                    <td></td>
                     <td></td>
                     <td class="data-column"></td>
                   </tr>

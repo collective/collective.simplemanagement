@@ -182,8 +182,7 @@ class WorklogBackend(WorklogBase):
                         resource,
                         booking_holes
                     )
-                    if bookings_:
-                        import pdb; pdb.set_trace( )
+
                     total = reduce(
                         lambda x, y: x + y,
                         [ b.time for b in bookings_ ],
@@ -243,6 +242,7 @@ class WorklogBackend(WorklogBase):
                 'type': 'booking',
                 'project': get_project(booking).title,
                 'story': get_story(booking).title,
+                'booking': booking.Title(),
                 'hours': str(quantize(booking.time))
             })
         booking_details.extend(
