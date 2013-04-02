@@ -8,16 +8,17 @@
 
     <dd class="portletItem">
         <ul id="project-actions">
-            <li tal:repeat="item view/actions">
-              <a href=""
-                tal:attributes="href item/url;
-                        title item/description;
-                        class string:action-${item/id}"
-                        i18n:attributes="title">
-                <span tal:content="item/title"
-                      i18n:translate=""/>
-              </a>
-            </li>
+            <tal:items repeat="item view/actions">
+              <li tal:attributes="class item/class">
+                <a href=""
+                  tal:attributes="href item/url;
+                          title item/description"
+                          i18n:attributes="title">
+                  <span tal:content="item/title"
+                        i18n:translate=""/>
+                </a>
+              </li>
+            </tal:items>
         </ul>
 
         <span class="portletBottomLeft"></span>
