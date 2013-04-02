@@ -16,4 +16,5 @@
     <column value="time"/>
     <column value="estimate"/>
     <column value="date"/>
+    <column value="active"/>
  </object>

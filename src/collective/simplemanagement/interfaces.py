@@ -163,11 +163,15 @@ class IProject(form.Schema):
         required=False
     )
 
-    form.omitted('priority')
+    form.omitted('priority', 'active')
     priority = schema.Int(
         title=_(u"Priority"),
         default=100,
         min=0
+    )
+    active = schema.Bool(
+        title=_(u"Active"),
+        default=True
     )
 
 
