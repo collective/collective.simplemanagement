@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-03-28 23:07+0000\n"
+"POT-Creation-Date: 2013-04-07 14:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.simplemanagement\n"
 
-#: ../project_templates/overview.pt:38
+#: ../project_templates/overview.pt:40
 msgid "${budget} man days"
 msgstr ""
 
-#: ../project_templates/overview.pt:46
+#: ../project_templates/overview.pt:48
 msgid "${initial_estimate} man days"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:151
+#: ../events.py:50
+msgid "${project_name}'s documents"
+msgstr ""
+
+#: ../events.py:18
+msgid "${project_name}'s issues"
+msgstr ""
+
+#: ../browser/templates/dashboard.pt:154
 msgid "${user} has ${n_ticket} ticket/s assigned"
 msgstr ""
 
-#: ../events.py:38
-msgid "%(project_name)s's documents"
-msgstr ""
-
-#: ../events.py:14
-msgid "%(project_name)s's issues"
-msgstr ""
-
-#: ../browser/templates/dashboard.pt:59
+#: ../browser/templates/dashboard.pt:58
 msgid "(${time} hours booked)"
 msgstr ""
 
@@ -45,16 +45,16 @@ msgstr ""
 msgid "(None)"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:71
+#: ../browser/templates/dashboard.pt:70
 msgid "- select reason -"
 msgstr ""
 
-#: ../events.py:24
-msgid "<p>Here are collected all the issues relative to the project <em>%(project_name)s</em>.</p><p>If you found any problems, please report it here by clicking <em>New issue</em>.</p>"
+#: ../events.py:26
+msgid "<p>Here are collected all the issues relative to the project <em>${project_name}</em>.</p><p>If you found any problems, please report it here by clicking <em>New issue</em>.</p>"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:107
-#: ../browser/templates/macros.pt:145
+#: ../browser/templates/dashboard.pt:106
+#: ../browser/templates/macros.pt:142
 msgid "Actions"
 msgstr ""
 
@@ -62,17 +62,16 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: ../browser/templates/macros.pt:287
+#: ../browser/templates/macros.pt:282
 msgid "Actual hours"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:118
+#: ../browser/templates/dashboard.pt:121
 #: ../story_templates/view.pt:31
 msgid "Add Booking"
 msgstr ""
 
-#: ../browser/templates/macros.pt:474
-#: ../project_templates/backlog.pt:35
+#: ../browser/templates/macros.pt:469
 msgid "Add Story"
 msgstr ""
 
@@ -80,12 +79,12 @@ msgstr ""
 msgid "April"
 msgstr ""
 
-#: ../browser/templates/macros.pt:308
+#: ../browser/templates/macros.pt:303
 msgid "Assignee"
 msgstr ""
 
-#: ../browser/templates/macros.pt:142
-#: ../interfaces.py:207
+#: ../browser/templates/macros.pt:145
+#: ../interfaces.py:211
 msgid "Assignees"
 msgstr ""
 
@@ -98,26 +97,26 @@ msgid "August"
 msgstr ""
 
 #: ../profiles/default/types/Project.xml
-#: ../project.py:188
+#: ../project.py:191
 #: ../project_templates/backlog.pt:11
 msgid "Backlog"
 msgstr ""
 
 #: ../browser/dashboard.py:66
-#: ../browser/templates/dashboard.pt:118
+#: ../browser/templates/dashboard.pt:121
 msgid "Book time"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:32
+#: ../browser/templates/dashboard.pt:31
 #: ../profiles/default/types/Booking.xml
 msgid "Booking"
 msgstr ""
 
-#: ../interfaces.py:336
+#: ../interfaces.py:340
 msgid "Booking check days delta end"
 msgstr ""
 
-#: ../interfaces.py:332
+#: ../interfaces.py:336
 msgid "Booking check days delta start"
 msgstr ""
 
@@ -151,7 +150,7 @@ msgid "Current iterations (${n_iterations})"
 msgstr ""
 
 #: ../interfaces.py:84
-#: ../project_templates/overview.pt:69
+#: ../project_templates/overview.pt:71
 #: ../sharing.py:8
 msgid "Customer"
 msgstr ""
@@ -161,8 +160,8 @@ msgid "Data successfully updated."
 msgstr ""
 
 #: ../booking_templates/view.pt:14
-#: ../browser/templates/dashboard.pt:174
-#: ../browser/templates/macros.pt:305
+#: ../browser/templates/dashboard.pt:177
+#: ../browser/templates/macros.pt:300
 msgid "Date"
 msgstr ""
 
@@ -174,17 +173,13 @@ msgstr ""
 msgid "December"
 msgstr ""
 
-#: ../interfaces.py:31
-msgid "Description"
-msgstr ""
-
 #: ../browser/templates/macros.pt:63
-#: ../browser/templates/worklog.pt:118
-#: ../project_templates/overview.pt:11
+#: ../browser/templates/worklog.pt:120
+#: ../project_templates/overview.pt:13
 msgid "Details"
 msgstr ""
 
-#: ../browser/templates/macros.pt:288
+#: ../browser/templates/macros.pt:283
 msgid "Difference"
 msgstr ""
 
@@ -192,16 +187,16 @@ msgstr ""
 msgid "Difference from initial"
 msgstr ""
 
-#: ../project_templates/overview.pt:12
+#: ../project_templates/overview.pt:14
 msgid "Documentation"
 msgstr ""
 
-#: ../project_templates/overview.pt:147
+#: ../project_templates/overview.pt:150
 msgid "Documents folder"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:106
-#: ../browser/templates/macros.pt:144
+#: ../browser/templates/dashboard.pt:105
+#: ../browser/templates/macros.pt:147
 msgid "Done"
 msgstr ""
 
@@ -219,19 +214,19 @@ msgstr ""
 msgid "Employee"
 msgstr ""
 
-#: ../setuphandlers.py:17
+#: ../setuphandlers.py:21
 msgid "Employees"
 msgstr ""
 
-#: ../interfaces.py:356
+#: ../interfaces.py:360
 msgid "Employess group"
 msgstr ""
 
-#: ../interfaces.py:177
+#: ../interfaces.py:181
 msgid "End"
 msgstr ""
 
-#: ../project_templates/overview.pt:31
+#: ../project_templates/overview.pt:33
 msgid "End Date:"
 msgstr ""
 
@@ -243,22 +238,22 @@ msgstr ""
 msgid "Environment"
 msgstr ""
 
-#: ../interfaces.py:344
+#: ../interfaces.py:348
 msgid "Environment types"
 msgstr ""
 
-#: ../project_templates/overview.pt:109
+#: ../project_templates/overview.pt:112
 msgid "Environments"
 msgstr ""
 
-#: ../browser/templates/macros.pt:274
+#: ../browser/templates/macros.pt:269
 #: ../epic_templates/view.pt:88
-#: ../interfaces.py:216
+#: ../interfaces.py:220
 msgid "Epic"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:105
-#: ../browser/templates/macros.pt:143
+#: ../browser/templates/dashboard.pt:104
+#: ../browser/templates/macros.pt:146
 #: ../epic_templates/view.pt:89
 msgid "Estimate"
 msgstr ""
@@ -267,7 +262,7 @@ msgstr ""
 msgid "Estimate (man days)"
 msgstr ""
 
-#: ../interfaces.py:202
+#: ../interfaces.py:206
 msgid "Estimate (man hours)"
 msgstr ""
 
@@ -275,7 +270,7 @@ msgstr ""
 msgid "Expected end date"
 msgstr ""
 
-#: ../project_templates/overview.pt:26
+#: ../project_templates/overview.pt:28
 msgid "Expected end date:"
 msgstr ""
 
@@ -283,15 +278,15 @@ msgstr ""
 msgid "February"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:77
+#: ../browser/templates/dashboard.pt:76
 msgid "Fill it!"
 msgstr ""
 
-#: ../browser/templates/macros.pt:443
+#: ../browser/templates/macros.pt:438
 msgid "Filter results by employee"
 msgstr ""
 
-#: ../browser/templates/worklog.pt:101
+#: ../browser/templates/worklog.pt:103
 msgid "Fri"
 msgstr ""
 
@@ -299,7 +294,7 @@ msgstr ""
 msgid "Future iterations (${n_iterations})"
 msgstr ""
 
-#: ../project_templates/overview.pt:147
+#: ../project_templates/overview.pt:150
 msgid "Go to the documents folder"
 msgstr ""
 
@@ -307,13 +302,13 @@ msgstr ""
 msgid "Here you can plan your iterations: choose a destination iteration on the right panel and drag stories from the backlog to it, or the other way around, or select two iterations to move stories between them. If you wish to create a copy of the story, instead of moving it, keep Ctrl pressed while dragging."
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:175
-#: ../browser/templates/worklog.pt:63
-#: ../interfaces.py:235
+#: ../browser/templates/dashboard.pt:178
+#: ../browser/templates/worklog.pt:64
+#: ../interfaces.py:239
 msgid "Hours"
 msgstr ""
 
-#: ../interfaces.py:357
+#: ../interfaces.py:361
 msgid "Identifier of the group containing all employees"
 msgstr ""
 
@@ -321,7 +316,7 @@ msgstr ""
 msgid "Initial estimate"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:67
+#: ../browser/templates/dashboard.pt:66
 msgid "It's okay, I"
 msgstr ""
 
@@ -334,8 +329,12 @@ msgstr ""
 msgid "Iteration planning"
 msgstr ""
 
-#: ../browser/templates/macros.pt:363
+#: ../browser/templates/macros.pt:358
 msgid "Iteration:"
+msgstr ""
+
+#: ../profiles/default/actions.xml
+msgid "Iterations"
 msgstr ""
 
 #: ../browser/worklog.py:22
@@ -350,7 +349,7 @@ msgstr ""
 msgid "June"
 msgstr ""
 
-#: ../project_templates/overview.pt:126
+#: ../project_templates/overview.pt:129
 msgid "Last documents"
 msgstr ""
 
@@ -358,7 +357,7 @@ msgstr ""
 msgid "Left panel"
 msgstr ""
 
-#: ../interfaces.py:328
+#: ../interfaces.py:332
 msgid "Man day hours"
 msgstr ""
 
@@ -375,7 +374,7 @@ msgid "Milestone"
 msgstr ""
 
 #: ../interfaces.py:138
-#: ../project_templates/overview.pt:55
+#: ../project_templates/overview.pt:57
 msgid "Milestones"
 msgstr ""
 
@@ -387,7 +386,7 @@ msgstr ""
 msgid "Modified"
 msgstr ""
 
-#: ../browser/templates/worklog.pt:93
+#: ../browser/templates/worklog.pt:95
 msgid "Mon"
 msgstr ""
 
@@ -399,7 +398,7 @@ msgstr ""
 msgid "No changes were applied."
 msgstr ""
 
-#: ../browser/templates/worklog.pt:68
+#: ../browser/templates/worklog.pt:69
 msgid "No results"
 msgstr ""
 
@@ -407,16 +406,16 @@ msgstr ""
 msgid "No stories associated"
 msgstr ""
 
-#: ../browser/templates/macros.pt:246
+#: ../browser/templates/macros.pt:241
 msgid "No stories found. Add a new one or bring them in via the iteration planner."
 msgstr ""
 
-#: ../browser/templates/macros.pt:167
+#: ../browser/templates/macros.pt:169
 msgid "No stories in this iteration. Add a new one or bring them in via the iteration planner."
 msgstr ""
 
 #: ../interfaces.py:162
-#: ../project_templates/overview.pt:13
+#: ../project_templates/overview.pt:15
 msgid "Notes"
 msgstr ""
 
@@ -424,11 +423,11 @@ msgstr ""
 msgid "November"
 msgstr ""
 
-#: ../interfaces.py:365
+#: ../interfaces.py:369
 msgid "Number of weeks after month"
 msgstr ""
 
-#: ../interfaces.py:360
+#: ../interfaces.py:364
 msgid "Number of weeks before month"
 msgstr ""
 
@@ -437,7 +436,7 @@ msgid "October"
 msgstr ""
 
 #: ../interfaces.py:148
-#: ../project_templates/overview.pt:71
+#: ../project_templates/overview.pt:73
 msgid "Operatives"
 msgstr ""
 
@@ -449,16 +448,17 @@ msgstr ""
 msgid "Past iterations (${n_iterations})"
 msgstr ""
 
+#: ../profiles/default/actions.xml
 #: ../profiles/default/types/Project.xml
-#: ../project_templates/overview.pt:10
+#: ../project_templates/overview.pt:12
 msgid "Planning"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:43
+#: ../browser/templates/dashboard.pt:42
 msgid "Please complete your booking"
 msgstr ""
 
-#: ../interfaces.py:352
+#: ../interfaces.py:356
 msgid "Possible reasons to be off duty"
 msgstr ""
 
@@ -467,13 +467,13 @@ msgid "Priority"
 msgstr ""
 
 #: ../browser/templates/ticketsmacros.pt:18
-#: ../browser/templates/worklog.pt:61
-#: ../profiles/default/types/Project.xml
+#: ../browser/templates/worklog.pt:60
+#: ../portlets/project.pt:5
 msgid "Project"
 msgstr ""
 
 #: ../interfaces.py:112
-#: ../project_templates/overview.pt:85
+#: ../project_templates/overview.pt:87
 msgid "Project classifiers"
 msgstr ""
 
@@ -481,37 +481,41 @@ msgstr ""
 msgid "Project managers"
 msgstr ""
 
-#: ../interfaces.py:340
+#: ../profiles/default/portlets.xml
+msgid "Project portlet"
+msgstr ""
+
+#: ../interfaces.py:344
 msgid "Project statuses"
 msgstr ""
 
-#: ../browser/templates/macros.pt:357
+#: ../browser/templates/macros.pt:352
 msgid "Project:"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:177
+#: ../browser/templates/dashboard.pt:180
 msgid "Projects"
 msgstr ""
 
-#: ../interfaces.py:385
+#: ../interfaces.py:389
 msgid "Reason"
 msgstr ""
 
 #: ../booking_templates/view.pt:21
-#: ../browser/templates/macros.pt:309
+#: ../browser/templates/macros.pt:304
 msgid "Related"
 msgstr ""
 
-#: ../interfaces.py:237
+#: ../interfaces.py:241
 msgid "Related activity"
 msgstr ""
 
 #: ../interfaces.py:123
-#: ../project_templates/overview.pt:99
+#: ../project_templates/overview.pt:102
 msgid "Repositories"
 msgstr ""
 
-#: ../browser/templates/macros.pt:464
+#: ../browser/templates/macros.pt:459
 msgid "Reset filter"
 msgstr ""
 
@@ -519,11 +523,11 @@ msgstr ""
 msgid "Resource"
 msgstr ""
 
-#: ../interfaces.py:348
+#: ../interfaces.py:352
 msgid "Resource roles"
 msgstr ""
 
-#: ../browser/templates/worklog.pt:29
+#: ../browser/templates/worklog.pt:28
 msgid "Resources"
 msgstr ""
 
@@ -535,7 +539,7 @@ msgstr ""
 msgid "Role"
 msgstr ""
 
-#: ../browser/templates/worklog.pt:103
+#: ../browser/templates/worklog.pt:105
 msgid "Sat"
 msgstr ""
 
@@ -543,11 +547,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: ../project_templates/view.pt:43
-msgid "See all iterations"
-msgstr ""
-
-#: ../browser/templates/macros.pt:445
+#: ../browser/templates/macros.pt:440
 msgid "Select an employee"
 msgstr ""
 
@@ -563,7 +563,7 @@ msgstr ""
 msgid "Some keywords that describe the project and used technologies"
 msgstr ""
 
-#: ../interfaces.py:176
+#: ../interfaces.py:180
 msgid "Start"
 msgstr ""
 
@@ -571,7 +571,7 @@ msgstr ""
 msgid "Start date"
 msgstr ""
 
-#: ../project_templates/overview.pt:21
+#: ../project_templates/overview.pt:23
 msgid "Start date:"
 msgstr ""
 
@@ -580,22 +580,22 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:28
+#: ../browser/templates/dashboard.pt:27
 #: ../epic_templates/view.pt:65
 msgid "Stories"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:103
-#: ../browser/templates/macros.pt:140
-#: ../browser/templates/worklog.pt:62
+#: ../browser/templates/dashboard.pt:102
+#: ../browser/templates/macros.pt:144
+#: ../browser/templates/worklog.pt:61
 msgid "Story"
 msgstr ""
 
-#: ../browser/templates/worklog.pt:105
+#: ../browser/templates/worklog.pt:107
 msgid "Sun"
 msgstr ""
 
-#: ../interfaces.py:187
+#: ../interfaces.py:191
 msgid "Text"
 msgstr ""
 
@@ -611,16 +611,16 @@ msgstr ""
 msgid "The backlog contains all the stories that haven't been planned yet."
 msgstr ""
 
-#: ../events.py:43
-msgid "The documents that have been gathered for %(project_name)s"
+#: ../events.py:54
+msgid "The documents that have been gathered for ${project_name}"
 msgstr ""
 
-#: ../interfaces.py:217
+#: ../interfaces.py:221
 msgid "The epic the story belongs to"
 msgstr ""
 
-#: ../events.py:19
-msgid "The issues relative to %(project_name)s"
+#: ../events.py:22
+msgid "The issues relative to ${project_name}"
 msgstr ""
 
 #: ../interfaces.py:92
@@ -631,27 +631,27 @@ msgstr ""
 msgid "The man days that this project is paid for"
 msgstr ""
 
-#: ../interfaces.py:333
+#: ../interfaces.py:337
 msgid "The number of days ..."
 msgstr ""
 
-#: ../interfaces.py:329
+#: ../interfaces.py:333
 msgid "The number of hours a person works in a day"
 msgstr ""
 
-#: ../interfaces.py:366
+#: ../interfaces.py:370
 msgid "The number of weeks to show in monthly views that actually fall in the next month"
 msgstr ""
 
-#: ../interfaces.py:361
+#: ../interfaces.py:365
 msgid "The number of weeks to show in monthly views that actually fall in the previous month"
 msgstr ""
 
-#: ../interfaces.py:322
+#: ../interfaces.py:326
 msgid "The percentage (between 0 and 1) after which a deviation needs to be highlighted"
 msgstr ""
 
-#: ../interfaces.py:208
+#: ../interfaces.py:212
 msgid "The user IDs of the people that are responsible to act on this story"
 msgstr ""
 
@@ -664,7 +664,7 @@ msgstr ""
 msgid "There are no current iterations"
 msgstr ""
 
-#: ../project_templates/overview.pt:155
+#: ../project_templates/overview.pt:158
 msgid "There are no documents in this project because the designated area is missing. We suggest to create it."
 msgstr ""
 
@@ -672,20 +672,20 @@ msgstr ""
 msgid "There are no past iterations"
 msgstr ""
 
-#: ../project_templates/overview.pt:142
+#: ../project_templates/overview.pt:145
 msgid "This project doesn't contain any documents"
 msgstr ""
 
-#: ../browser/templates/worklog.pt:99
+#: ../browser/templates/worklog.pt:101
 msgid "Thu"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:30
+#: ../browser/templates/dashboard.pt:29
 msgid "Tickets"
 msgstr ""
 
 #: ../booking_templates/view.pt:16
-#: ../browser/templates/macros.pt:307
+#: ../browser/templates/macros.pt:302
 msgid "Time"
 msgstr ""
 
@@ -693,17 +693,17 @@ msgstr ""
 msgid "Time spent"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:176
-#: ../browser/templates/macros.pt:306
+#: ../browser/templates/dashboard.pt:179
+#: ../browser/templates/macros.pt:301
 #: ../browser/templates/ticketsmacros.pt:17
 msgid "Title"
 msgstr ""
 
-#: ../browser/templates/macros.pt:150
+#: ../browser/templates/macros.pt:152
 msgid "Totals"
 msgstr ""
 
-#: ../browser/templates/worklog.pt:95
+#: ../browser/templates/worklog.pt:97
 msgid "Tue"
 msgstr ""
 
@@ -742,16 +742,20 @@ msgstr ""
 msgid "View details"
 msgstr ""
 
-#: ../interfaces.py:321
+#: ../interfaces.py:325
 msgid "Warning delta"
 msgstr ""
 
-#: ../browser/templates/worklog.pt:97
+#: ../browser/templates/worklog.pt:99
 msgid "Wed"
 msgstr ""
 
-#: ../browser/templates/worklog.pt:89
+#: ../browser/templates/worklog.pt:91
 msgid "Week"
+msgstr ""
+
+#: ../story.py:116
+msgid "When you add a story it will be put in the first current iteration whether exists or in the project backlog"
 msgstr ""
 
 #: ../browser/templates/worklog.pt:20
@@ -760,28 +764,28 @@ msgstr ""
 msgid "Worklog"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:142
+#: ../browser/templates/dashboard.pt:145
 msgid "You have ${n_ticket} ticket/s assigned"
 msgstr ""
 
-#: ../browser/templates/macros.pt:371
+#: ../browser/templates/macros.pt:366
 msgid "You have no stories assigned"
 msgstr ""
 
-#: ../browser/templates/macros.pt:391
+#: ../browser/templates/macros.pt:386
 msgid "You have no tickets assigned"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:44
+#: ../browser/templates/dashboard.pt:43
 msgid "You seem to have missing bookings for the following days:"
 msgstr ""
 
-#: ../browser/templates/dashboard.pt:167
+#: ../browser/templates/dashboard.pt:170
 msgid "Your booking"
 msgstr ""
 
 #. Default: "Budget <small>as is by offer:</small>"
-#: ../project_templates/overview.pt:37
+#: ../project_templates/overview.pt:39
 msgid "budget_label"
 msgstr ""
 
@@ -790,7 +794,7 @@ msgid "due ${deadline}"
 msgstr ""
 
 #. Default: "Estimate <small>at the beginning, by the project manager:</small>"
-#: ../project_templates/overview.pt:41
+#: ../project_templates/overview.pt:43
 msgid "estimate_label"
 msgstr ""
 

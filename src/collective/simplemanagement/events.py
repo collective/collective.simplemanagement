@@ -1,4 +1,7 @@
 # pylint: disable=W0613
+from Products.CMFCore.WorkflowCore import WorkflowException
+from Products.CMFCore.utils import getToolByName
+
 from . import messageFactory as _
 from .configure import TRACKER_ID, DOCUMENTS_ID
 
@@ -6,44 +9,54 @@ from .configure import TRACKER_ID, DOCUMENTS_ID
 def create_project_collaterals(obj, event):
     """Creates a PoiTracker and a Documents folder within a new project
     """
+    _translate = lambda c, v: c.translate(v)
     _title = obj.title or u'Project'
     if TRACKER_ID not in obj:
         obj.invokeFactory('PoiTracker', TRACKER_ID)
         tracker = obj[TRACKER_ID]
-        tracker.setTitle(
-            _(u"%(project_name)s's issues") % {
-                'project_name': _title
-            }
+        import pdb; pdb.set_trace( )
+        title = _(
+            u"${project_name}'s issues",
+            mapping={'project_name': _title}
         )
-        tracker.setDescription(
-            _(u"The issues relative to %(project_name)s") % {
-                'project_name': _title
-            }
+        description = _(
+            u"The issues relative to ${project_name}",
+            mapping={'project_name': _title}
         )
-        tracker.setHelpText(
-            _(u"<p>Here are collected all the issues "
-              u"relative to the project <em>%(project_name)s</em>.</p>"
-              u"<p>If you found any problems, "
-              u"please report it here by clicking <em>New issue</em>.</p>") % {
-                'project_name': _title
-            }
+        helper_text = _(
+            u"<p>Here are collected all the issues "
+            u"relative to the project <em>${project_name}</em>.</p>"
+            u"<p>If you found any problems, "
+            u"please report it here by clicking "
+            u"<em>New issue</em>.</p>", mapping={'project_name': _title}
         )
+
+        tracker.setTitle(_translate(obj, title))
+        tracker.setDescription(_translate(obj, description))
+        tracker.setHelpText(_translate(obj, helper_text))
         if obj.operatives:
-            tracker.setManagers([ o.user_id for o in obj.operatives ])
+            tracker.setManagers([o.user_id for o in obj.operatives])
+
+        workflowTool = getToolByName(tracker, "portal_workflow")
+        try:
+            workflowTool.doActionFor(tracker, "protect")
+        except WorkflowException:
+            pass
+
         tracker.reindexObject()
     if DOCUMENTS_ID not in obj:
         obj.invokeFactory('Folder', DOCUMENTS_ID)
         documents = obj[DOCUMENTS_ID]
-        documents.setTitle(
-            _(u"%(project_name)s's documents") % {
-                'project_name': _title
-            }
+        title = _(
+            u"${project_name}'s documents",
+            mapping={'project_name': _title}
         )
-        documents.setDescription(
-            _(u"The documents that have been gathered for %(project_name)s") % {
-                'project_name': _title
-            }
+        description = _(
+            u"The documents that have been gathered "
+            u"for ${project_name}", mapping={'project_name': _title}
         )
+        documents.setTitle(_translate(obj, title))
+        documents.setDescription(_translate(obj, description))
         documents.reindexObject()
 
 

@@ -38,5 +38,29 @@
       <role name="Site Administrator"/>
     </permission>
 
+
+    <!-- poi related permissions -->
+    <permission name="Poi: Add Tracker" acquire="True">
+      <role name="Manager"/>
+      <role name="PM"/>
+      <role name="Site Administrator"/>
+    </permission>
+
+    <permission name="Poi: Add Issue" acquire="True">
+      <role name="Manager"/>
+      <role name="PM"/>
+      <role name="Employee"/>
+      <role name="Customer"/>
+      <role name="Site Administrator"/>
+    </permission>
+
+    <permission name="Poi: Add Response" acquire="True">
+      <role name="Manager"/>
+      <role name="PM"/>
+      <role name="Employee"/>
+      <role name="Customer"/>
+      <role name="Site Administrator"/>
+    </permission>
+
   </permissions>
 </rolemap>
