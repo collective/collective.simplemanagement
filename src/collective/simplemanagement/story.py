@@ -7,8 +7,6 @@ from z3c.form.interfaces import IFormLayer
 from z3c.form.interfaces import HIDDEN_MODE
 from z3c.form import form, field
 
-from z3c.relationfield.relation import create_relation
-
 from plone.z3cform import z2
 from plone.dexterity.content import Container
 from plone.dexterity.utils import createContentInContainer
@@ -21,7 +19,6 @@ from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 from .booking import BookingForm
 from .interfaces import IStory
 from .interfaces import IQuickForm
-from .interfaces import IProjectStoryQuickForm
 from .interfaces import IBooking
 from .utils import get_timings
 from .utils import get_user_details
@@ -29,6 +26,7 @@ from .utils import get_assignees_details
 from .utils import get_epic_by_story
 from .utils import get_text
 from .utils import get_project
+from . import messageFactory as _
 
 
 logger = logging.getLogger('collective.simplemanagement')
@@ -112,25 +110,12 @@ class View(grok.View):
 
 class StoryQuickForm(form.AddForm):
     template = ViewPageTemplateFile("browser/templates/quick_form.pt")
-    # _container = None
-
-    @property
-    def fields(self):
-        fields = field.Fields(IQuickForm) + field.Fields(IStory).select(
-            'estimate',
-            'assigned_to',
-        )
-        fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
-
-        _sorted = [
-            'title', 'estimate', 'description',
-            'assigned_to'
-        ]
-        return fields.select(*_sorted)
-
-    convert_funcs = {
-        'epic': lambda x: create_relation('/'.join(x.getPhysicalPath()))
-    }
+    fields = field.Fields(IQuickForm) + \
+        field.Fields(IStory).select('estimate')
+    container = None
+    description = _(
+        u"When you add a story it will be put in the "
+        u"first current iteration whether exists or in the project backlog")
 
     def create_story(self, context, data):
         item = createContentInContainer(
@@ -138,8 +123,6 @@ class StoryQuickForm(form.AddForm):
             'Story',
             title=data.pop('title'))
         for k, v in data.items():
-            if v and k in self.convert_funcs:
-                v = self.convert_funcs[k](v)
             setattr(item, k, v)
         return item
 
@@ -158,26 +141,8 @@ class StoryQuickForm(form.AddForm):
 
 class ProjectStoryQuickForm(StoryQuickForm):
 
-    @property
-    def fields(self):
-        fields = field.Fields(IProjectStoryQuickForm) + \
-            field.Fields(IStory).select('estimate', 'assigned_to')
-
-        fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
-
-        _sorted = [
-            'title', 'estimate', 'description',
-            'assigned_to', 'container'
-        ]
-        return fields.select(*_sorted)
-
     def create(self, data):
-        context = data['container']
-        if context:
-            try:
-                context = self.context.restrictedTraverse(context)
-            except KeyError:
-                logger.exception("An error occurred while adding story")
-        else:
-            context = self.context
+        context = self.context
+        if self.container:
+            context = self.container
         return self.create_story(context, data)

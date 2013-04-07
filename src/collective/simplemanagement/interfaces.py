@@ -27,10 +27,10 @@ class IQuickForm(Interface):
         title=_(u'Title'),
     )
 
-    description = schema.Text(
-        title=_(u'Description'),
-        required=False,
-    )
+    # description = schema.Text(
+    #     title=_(u'Description'),
+    #     required=False,
+    # )
 
 
 class IProjectStoryQuickForm(IQuickForm):

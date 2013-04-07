@@ -60,6 +60,9 @@ class View(grok.View):
             aq_inner(self.context),
             self.request
         )
+        iterations = self.iterations()
+        if iterations and iterations['current']:
+            addform.container = iterations['current'][0]
         addform.update()
         return addform.render()
 

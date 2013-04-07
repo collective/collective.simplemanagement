@@ -739,44 +739,6 @@ table#tickets-listing {
     margin: 0 0 1em 0;
 }
 
-
-#addstory-form #formfield-form-widgets-estimate,
-#addstory-form #formfield-form-widgets-assigned_to,
-#addstory-form #formfield-form-widgets-description,
-#addstory-form #formfield-form-widgets-title {
- clear: none;
- width: 40%;
- float: left;
-
-}
-#addstory-form #formfield-form-widgets-description,
-#addstory-form #formfield-form-widgets-assigned_to {
-    margin-top: 1.5em;
-}
-
-#addstory-form .field textarea[name$=".description"],
-#addstory-form .field input[type="text"][name$=".title"] {
-    font-size: 100% !important;
-    font-weight: normal;
-}
-
-#addstory-form #formfield-form-widgets-description {
-    clear: left;
-}
-
-#addstory-form  .field {
-    margin: 0 1em;
-}
-
-#addstory-form #formfield-form-widgets-assigned_to .token-input-list-facebook {
-    clear: none;
-}
-
-#addstory-form  div.formControls {
-    clear: both;
-    padding-top: 1em;
-}
-
 #content a.btn {
     display: inline-block;
     padding: 0.3em 0.5em;
