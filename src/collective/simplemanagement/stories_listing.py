@@ -7,7 +7,7 @@ from plone.app.discussion.interfaces import IConversation
 from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IStoriesListing
-from .interfaces import IMyStoriesListing
+from .interfaces import IUserStoriesListing
 from .utils import get_timings
 from .utils import get_assignees_details
 from .utils import get_epic_by_story
@@ -18,7 +18,7 @@ from .utils import get_project
 
 class StoriesListing(object):
     implements(IStoriesListing)
-
+    _user_id = None
     totals = {
         'hours': 0,
         'difference': 0,
@@ -37,12 +37,12 @@ class StoriesListing(object):
         return self.context.restrictedTraverse('plone_portal_state')
 
     @property
-    def user(self):
-        user = None
+    def user_id(self):
+        user_id = self._user_id
         portal_state = self.portal_state()
-        if not portal_state.anonymous():
-            user = portal_state.member()
-        return user
+        if not (user_id or portal_state.anonymous()):
+            user_id = portal_state.member().getId()
+        return user_id
 
     @property
     def _query(self):
@@ -131,8 +131,8 @@ class StoriesListing(object):
         return stories
 
 
-class MyStoriesListing(StoriesListing):
-    implements(IMyStoriesListing)
+class UserStoriesListing(StoriesListing):
+    implements(IUserStoriesListing)
 
     @property
     def _query(self):
@@ -141,18 +141,10 @@ class MyStoriesListing(StoriesListing):
                 'query': '/'.join(self.context.getPhysicalPath()),
             },
             'portal_type': 'Story',
-            'assigned_to': self.user.getId(),
+            'assigned_to': self.user_id,
             'review_state': ('todo', 'suspended', 'in_progress')
         }
 
-
-# class ProjectMyStoriesListing(StoriesListing):
-#     implements(IMyStoriesListing)
-
-#     @property
-#     def _query(self):
-#         return {
-#             'portal_type': 'Story',
-#             'assigned_to': self.user.getId(),
-#             'review_state': ('todo', 'suspended', 'in_progress')
-#         }
+    def stories(self, user_id=None, project_info=False):
+        self._user_id = user_id
+        return super(UserStoriesListing, self).stories(project_info)

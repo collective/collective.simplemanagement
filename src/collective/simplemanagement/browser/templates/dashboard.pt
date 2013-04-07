@@ -50,9 +50,10 @@
               <div id="stories-wrapper"
                   class="pane"
                   tal:define="booking_holes view/booking_holes;">
-                <div id="missed-bookings" class="pat-expose alert alert-top alert-booking"
+                <div id="missed-bookings"
+                  class="pat-expose alert alert-top alert-booking"
                   data-expose-triggers="hover"
-                     tal:condition="booking_holes">
+                  tal:condition="python: booking_holes and not employee_details">
                   <h2 i18n:translate="">Please complete your booking</h2>
                   <p class="claim"
                     i18n:translate="">You seem to have missing bookings
@@ -117,7 +118,8 @@
                             colspan="2">Story</th>
                           <th i18n:translate="">Estimate</th>
                           <th i18n:translate="">Done</th>
-                          <th i18n:translate="">Actions</th>
+                          <th i18n:translate=""
+                            tal:condition="not: employee_details">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -131,7 +133,8 @@
                               fill-slot="extra-info" />
 
                             <metal:after-columns fill-slot="after-columns">
-                              <td class="quick-booking">
+                              <td class="quick-booking"
+                                tal:condition="not: employee_details">
                                 <a i18n:translate=""
                                    class="bookform btn"
                                    title="Add Booking"
@@ -167,10 +170,6 @@
 
               <!-- Booking History pane -->
               <div id="booking-wrapper" class="pane">
-
-                <h2 i18n:translate="">
-                  Your booking
-                </h2>
 
                 <table class="listing">
                   <thead>

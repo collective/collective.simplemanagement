@@ -433,7 +433,7 @@
   <metal:employee-form define-macro="employee-form">
     <div class="employees-form-wrapper"
          tal:define="selected python:request.get('employee')">
-      <form tal:attributes="action form_action|string:dashboard#tickets">
+      <form tal:attributes="action form_action|string:dashboard">
         <div class="field">
           <label class="formQuestion" for="employee"
             i18n:translate="">Filter results by employee</label>
@@ -455,7 +455,7 @@
           </select>
           <a class="reset btn"
             tal:condition="selected"
-            tal:attributes="href string:dashboard#tickets">
+            tal:attributes="href string:dashboard">
               <span i18n:translate="">Reset filter</span>
           </a>
         </div>

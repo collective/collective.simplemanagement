@@ -21,7 +21,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from .. import messageFactory as _
 from ..configure import Settings
-from ..interfaces import IMyStoriesListing
+from ..interfaces import IUserStoriesListing
 from ..interfaces import IProject
 from ..interfaces import IQuickForm
 from ..interfaces import IBooking
@@ -216,9 +216,13 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         return addform.render()
 
     def projects(self):
-        listing = IMyStoriesListing(self.context)
+        listing = IUserStoriesListing(self.context)
         projects = {}
-        for st in listing.stories(project_info=True):
+        stories = listing.stories(
+            user_id=self._get_employee_filter(),
+            project_info=True
+        )
+        for st in stories:
             prj = st.pop('project')
             if prj['UID'] not in projects:
                 projects[prj['UID']] = prj
@@ -260,7 +264,7 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         return bookings
 
     def bookings(self):
-        user_id = self.user.getId()
+        user_id = self._get_employee_filter()
         project = None
         is_project_context = IProject.providedBy(self.context)
         if is_project_context:

@@ -242,8 +242,17 @@ class IStoriesListing(Interface):
         """
 
 
-class IMyStoriesListing(IStoriesListing):
-    """This adapter return all stories assigned to myself"""
+class IUserStoriesListing(IStoriesListing):
+    """This adapter return all stories assigned to a specific user
+    """
+
+    def stories(user_id=None, project_info=False):
+        """return stories details if project_info is True
+        each story contains also information about project and iteration
+
+        This method returns all stories assigned to the current
+        logged in user or filters stories by user_id parameter
+        """
 
 
 class IBacklogView(Interface):

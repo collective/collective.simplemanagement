@@ -4,6 +4,8 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Added IUserStoriesListing adapter to listing stories by user [giorgio]
+- Removed IMyStoriesListing adapter [giorgio]
 - added "Simplemanagement: Manage project" permission to
   Manager, PM and Site Administrator [giorgio]
 - fix Dexterity2.0 relations issue [giorgio]

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2013-04-07 15:28+0000\n"
+"POT-Creation-Date: 2013-04-07 18:23+0000\n"
 "PO-Revision-Date: 2012-08-23 22:03+0000\n"
 "Last-Translator: Giorgio Borelli <giorgio@abstract.it>\n"
 "Language-Team: Giorgio Borelli <giorgio@abstract.it>\n"
@@ -37,7 +37,7 @@ msgstr "${project_name} - Tracker"
 msgid "${username} dashboard"
 msgstr "Dashboard di ${username}"
 
-#: ../browser/templates/dashboard.pt:72
+#: ../browser/templates/dashboard.pt:73
 msgid "(${time} hours booked)"
 msgstr "(${time} ore segnate)"
 
@@ -45,7 +45,7 @@ msgstr "(${time} ore segnate)"
 msgid "(None)"
 msgstr "(nessuno/a)"
 
-#: ../browser/templates/dashboard.pt:84
+#: ../browser/templates/dashboard.pt:85
 msgid "- select reason -"
 msgstr "- seleziona una motivazione -"
 
@@ -53,7 +53,7 @@ msgstr "- seleziona una motivazione -"
 msgid "<p>Here are collected all the issues relative to the project <em>${project_name}</em>.</p><p>If you found any problems, please report it here by clicking <em>New issue</em>.</p>"
 msgstr "<p>Qui sono conservate tutte le richieste e le segnalazioni dei problemi di funzionamento relativi al progetto <em>${project_name}</em> </p><p>Se trovi un qualcisasi problema, segnalalo qui cliccando sul pulsante <em>Genera una nuova richiesta</em>.</p>"
 
-#: ../browser/templates/dashboard.pt:120
+#: ../browser/templates/dashboard.pt:121
 #: ../browser/templates/macros.pt:142
 msgid "Actions"
 msgstr "Azioni"
@@ -66,7 +66,7 @@ msgstr "Attivo"
 msgid "Actual hours"
 msgstr "Effettuate"
 
-#: ../browser/templates/dashboard.pt:135
+#: ../browser/templates/dashboard.pt:138
 #: ../story_templates/view.pt:31
 msgid "Add Booking"
 msgstr "Aggiungi Booking"
@@ -103,7 +103,7 @@ msgid "Backlog"
 msgstr "Backlog"
 
 #: ../browser/dashboard.py:66
-#: ../browser/templates/dashboard.pt:135
+#: ../browser/templates/dashboard.pt:138
 msgid "Book time"
 msgstr "Scarica ore"
 
@@ -112,11 +112,11 @@ msgstr "Scarica ore"
 msgid "Booking"
 msgstr "Booking"
 
-#: ../interfaces.py:325
+#: ../interfaces.py:334
 msgid "Booking check days delta end"
 msgstr "Fine del periodo di grazia dal booking"
 
-#: ../interfaces.py:322
+#: ../interfaces.py:331
 msgid "Booking check days delta start"
 msgstr "Inizio del periodo di grazia dal booking"
 
@@ -156,7 +156,7 @@ msgid "Data successfully updated."
 msgstr "Dati modificati"
 
 #: ../booking_templates/view.pt:14
-#: ../browser/templates/dashboard.pt:178
+#: ../browser/templates/dashboard.pt:177
 #: ../browser/templates/macros.pt:300
 msgid "Date"
 msgstr "Data"
@@ -191,7 +191,7 @@ msgstr "Documentazione"
 msgid "Documents folder"
 msgstr "Cartella documentazione"
 
-#: ../browser/templates/dashboard.pt:119
+#: ../browser/templates/dashboard.pt:120
 #: ../browser/templates/macros.pt:147
 msgid "Done"
 msgstr "Fatto"
@@ -214,7 +214,7 @@ msgstr "Impiegato"
 msgid "Employees"
 msgstr "Impiegati"
 
-#: ../interfaces.py:344
+#: ../interfaces.py:353
 msgid "Employess group"
 msgstr "Gruppo impiegati"
 
@@ -234,7 +234,7 @@ msgstr "Data di fine"
 msgid "Environment"
 msgstr "Ambiente"
 
-#: ../interfaces.py:332
+#: ../interfaces.py:341
 msgid "Environment types"
 msgstr "Ambienti, tipologia"
 
@@ -248,7 +248,7 @@ msgstr "Ambienti"
 msgid "Epic"
 msgstr "Epic"
 
-#: ../browser/templates/dashboard.pt:118
+#: ../browser/templates/dashboard.pt:119
 #: ../browser/templates/macros.pt:146
 #: ../epic_templates/view.pt:89
 msgid "Estimate"
@@ -274,7 +274,7 @@ msgstr "Data di fine prevista:"
 msgid "February"
 msgstr "Febbraio"
 
-#: ../browser/templates/dashboard.pt:90
+#: ../browser/templates/dashboard.pt:91
 msgid "Fill it!"
 msgstr "Completa il booking!"
 
@@ -282,7 +282,7 @@ msgstr "Completa il booking!"
 msgid "Filter results by employee"
 msgstr "Filtra i risultati per impiegato"
 
-#: ../browser/templates/dashboard.pt:159
+#: ../browser/templates/dashboard.pt:162
 msgid "Found ${n_ticket} ticket/s"
 msgstr "Trovato/i ${n_ticket} ticket"
 
@@ -302,13 +302,13 @@ msgstr "Vai alla cartella documenti"
 msgid "Here you can plan your iterations: choose a destination iteration on the right panel and drag stories from the backlog to it, or the other way around, or select two iterations to move stories between them. If you wish to create a copy of the story, instead of moving it, keep Ctrl pressed while dragging."
 msgstr "Qui puoi pianificare le iterazioni: scegli una iterazione di destinazione nella colonna di destra e trascina le storie dal backlog (a destra) sino alla colonna di sinistra. Puoi inoltre selezionare due differenti iterazioni e spostare le storie tra di esse. Se vuoi invece creare una copia della storia, al posto di spostarla, tieni premuto il tasto CTRL mentre la sposti."
 
-#: ../browser/templates/dashboard.pt:179
+#: ../browser/templates/dashboard.pt:178
 #: ../browser/templates/worklog.pt:64
 #: ../interfaces.py:225
 msgid "Hours"
 msgstr "Ore"
 
-#: ../interfaces.py:345
+#: ../interfaces.py:354
 msgid "Identifier of the group containing all employees"
 msgstr "Identificativo del gruppo che contiene tutti gli impiegati"
 
@@ -316,7 +316,7 @@ msgstr "Identificativo del gruppo che contiene tutti gli impiegati"
 msgid "Initial estimate"
 msgstr "Stima iniziale"
 
-#: ../browser/templates/dashboard.pt:80
+#: ../browser/templates/dashboard.pt:81
 msgid "It's okay, I"
 msgstr "Tutto ok…"
 
@@ -353,7 +353,7 @@ msgstr "Giugno"
 msgid "Last documents"
 msgstr "Ultimi documenti"
 
-#: ../interfaces.py:318
+#: ../interfaces.py:327
 msgid "Man day hours"
 msgstr "Ore lavorative giornaliere"
 
@@ -419,11 +419,11 @@ msgstr "Note"
 msgid "November"
 msgstr "Novembre"
 
-#: ../interfaces.py:353
+#: ../interfaces.py:362
 msgid "Number of weeks after month"
 msgstr "Numero di settimane dopo la fine del mese corrente"
 
-#: ../interfaces.py:348
+#: ../interfaces.py:357
 msgid "Number of weeks before month"
 msgstr "Numero di settimane prima dell'inizio del mese corrente"
 
@@ -450,11 +450,11 @@ msgstr "Iterazioni passate (${n_iterations})"
 msgid "Planning"
 msgstr "Pianificazione"
 
-#: ../browser/templates/dashboard.pt:56
+#: ../browser/templates/dashboard.pt:57
 msgid "Please complete your booking"
 msgstr "Completa il tuo booking"
 
-#: ../interfaces.py:340
+#: ../interfaces.py:349
 msgid "Possible reasons to be off duty"
 msgstr "Possibili ragioni d'assenza"
 
@@ -481,7 +481,7 @@ msgstr "Project manager"
 msgid "Project portlet"
 msgstr "Portlet progetto"
 
-#: ../interfaces.py:328
+#: ../interfaces.py:337
 msgid "Project statuses"
 msgstr "Stati del progetto"
 
@@ -489,11 +489,11 @@ msgstr "Stati del progetto"
 msgid "Project:"
 msgstr "Progetto:"
 
-#: ../browser/templates/dashboard.pt:181
+#: ../browser/templates/dashboard.pt:180
 msgid "Projects"
 msgstr "Progetti"
 
-#: ../interfaces.py:373
+#: ../interfaces.py:382
 msgid "Reason"
 msgstr "Motivazione"
 
@@ -519,7 +519,7 @@ msgstr "Azzera i filtri"
 msgid "Resource"
 msgstr "Risorsa"
 
-#: ../interfaces.py:336
+#: ../interfaces.py:345
 msgid "Resource roles"
 msgstr "Ruoli risorsa"
 
@@ -577,7 +577,7 @@ msgstr "Stato"
 msgid "Stories"
 msgstr "Storie"
 
-#: ../browser/templates/dashboard.pt:116
+#: ../browser/templates/dashboard.pt:117
 #: ../browser/templates/macros.pt:144
 #: ../browser/templates/worklog.pt:61
 msgid "Story"
@@ -623,19 +623,19 @@ msgstr "I giorni uomo richiesti per il completamento dell'attività stimati dal 
 msgid "The man days that this project is paid for"
 msgstr "I giorni uomo disponibili per questo progetto"
 
-#: ../interfaces.py:319
+#: ../interfaces.py:328
 msgid "The number of hours a person works in a day"
 msgstr "Il numero di ore che una persona è tenuta a lavorare in un giorno"
 
-#: ../interfaces.py:354
+#: ../interfaces.py:363
 msgid "The number of weeks to show in monthly views that actually fall in the next month"
 msgstr "Numero di settimane da visualizzare nelle viste mensili che cadrebbero nel mese successivo"
 
-#: ../interfaces.py:349
+#: ../interfaces.py:358
 msgid "The number of weeks to show in monthly views that actually fall in the previous month"
 msgstr "Numero di settimane da visualizzare nelle viste mensili che cadrebbero nel mese precedente"
 
-#: ../interfaces.py:312
+#: ../interfaces.py:321
 msgid "The percentage (between 0 and 1) after which a deviation needs to be highlighted"
 msgstr "La precentualie (tra 0 e 1) dopo la quale la deviazione dal pianificato dev'essere evidenziata"
 
@@ -681,7 +681,7 @@ msgstr "Ora"
 msgid "Time spent"
 msgstr "Ore spese"
 
-#: ../browser/templates/dashboard.pt:180
+#: ../browser/templates/dashboard.pt:179
 #: ../browser/templates/macros.pt:301
 #: ../browser/templates/ticketsmacros.pt:17
 msgid "Title"
@@ -730,7 +730,7 @@ msgstr "Visualizza"
 msgid "View details"
 msgstr "Visualizza i dettagli"
 
-#: ../interfaces.py:311
+#: ../interfaces.py:320
 msgid "Warning delta"
 msgstr "Warning delta"
 
@@ -760,13 +760,9 @@ msgstr "Non hai storie assegnate"
 msgid "You have no tickets assigned"
 msgstr "Non hai ticket assegnati"
 
-#: ../browser/templates/dashboard.pt:57
+#: ../browser/templates/dashboard.pt:58
 msgid "You seem to have missing bookings for the following days:"
 msgstr "Sembra che tu non abbia inserito dei booking nei seguenti giorni:"
-
-#: ../browser/templates/dashboard.pt:171
-msgid "Your booking"
-msgstr "I tuoi booking"
 
 #: ../browser/templates/dashboard.pt:21
 msgid "Your dashboard"
