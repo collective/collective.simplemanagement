@@ -35,7 +35,6 @@
         <form id="planning" class="row simplemanagement-planner">
           <div class="cell position-0 width-8">
             <fieldset>
-              <legend i18n:translate="">Left panel</legend>
               <label for="planning-left" i18n:translate="">Iteration</label>
               <select id="planning-left" name="planning-left">
                 <option tal:repeat="iteration iterations_left"
@@ -50,7 +49,6 @@
           </div>
           <div class="cell position-8 width-8">
             <fieldset>
-              <legend i18n:translate="">Right panel</legend>
               <label for="planning-right" i18n:translate="">Iteration</label>
               <select id="planning-right" name="planning-right">
                 <option tal:repeat="iteration iterations_right"

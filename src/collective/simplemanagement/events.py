@@ -14,7 +14,6 @@ def create_project_collaterals(obj, event):
     if TRACKER_ID not in obj:
         obj.invokeFactory('PoiTracker', TRACKER_ID)
         tracker = obj[TRACKER_ID]
-        import pdb; pdb.set_trace( )
         title = _(
             u"${project_name}'s issues",
             mapping={'project_name': _title}

@@ -27,20 +27,6 @@ class IQuickForm(Interface):
         title=_(u'Title'),
     )
 
-    # description = schema.Text(
-    #     title=_(u'Description'),
-    #     required=False,
-    # )
-
-
-class IProjectStoryQuickForm(IQuickForm):
-
-    container = schema.Choice(
-        title=_(u'Container'),
-        required=False,
-        vocabulary='collective.simplemanagement.projectiterations'
-    )
-
 
 class IBrowserLayer(IDefaultPloneLayer):
     """The browser layer of the package"""
@@ -333,12 +319,10 @@ class ISettings(Interface):
         description=_(u"The number of hours a person works in a day")
     )
     booking_check_delta_days_start = schema.Int(
-        title=_(u"Booking check days delta start"),
-        description=_(u"The number of days ...")
+        title=_(u"Booking check days delta start")
     )
     booking_check_delta_days_end = schema.Int(
-        title=_(u"Booking check days delta end"),
-        description=_(u"The number of days ...")
+        title=_(u"Booking check days delta end")
     )
     statuses = schema.List(
         title=_(u"Project statuses"),

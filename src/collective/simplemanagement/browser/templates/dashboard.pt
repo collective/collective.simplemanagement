@@ -18,10 +18,24 @@
                     employees view/employees;
                     employee_details view/employee_details">
         <div tal:replace="structure provider:plone.abovecontenttitle" />
-        <h1 class="documentFirstHeading">Dashboard</h1>
+        <h1 class="documentFirstHeading"
+            i18n:translate=""
+            tal:condition="not: employee_details">Your dashboard</h1>
+
+        <h1 class="documentFirstHeading"
+            tal:condition="employee_details"
+            i18n:translate=""><span
+              tal:replace="employee_details/fullname"
+              i18n:name="username" /> dashboard</h1>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
         <div id="content-core">
+
+          <tal:pm condition="view/user_can_manage_project">
+            <metal:form
+              use-macro="context/simpemanagement-macros/employee-form" />
+          </tal:pm>
+
           <div id="overview">
             <ul class="tabs">
               <li><a href="dashboard#stories"
@@ -140,25 +154,12 @@
               <div id="tickets-wrapper" class="pane"
                 tal:define="tickets view/tickets">
 
-                <h2 i18n:translate="" tal:condition="not:employee_details">
-                  You have
+                <h2 i18n:translate="">
+                  Found
                   <span i18n:name="n_ticket"
                       tal:replace="view/n_tickets"></span>
-                  ticket/s assigned
+                  ticket/s
                 </h2>
-
-                <tal:pm condition="view/user_can_manage_project">
-                  <h2 i18n:translate="" tal:condition="employee_details">
-                    <span i18n:name="user"
-                      tal:replace="employee_details/fullname"/> has
-                    <span i18n:name="n_ticket"
-                        tal:replace="view/n_tickets"></span>
-                    ticket/s assigned
-                  </h2>
-
-                  <metal:form
-                    use-macro="context/simpemanagement-macros/employee-form" />
-                </tal:pm>
 
                 <metal:tickets
                   use-macro="context/simpemanagement-ticketsmacros/tickets" />
