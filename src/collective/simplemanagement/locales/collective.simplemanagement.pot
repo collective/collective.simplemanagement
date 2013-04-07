@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-04-07 15:07+0000\n"
+"POT-Creation-Date: 2013-04-07 15:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,7 +141,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: ../project_templates/alliterations.pt:31
+#: ../project_templates/alliterations.pt:38
 msgid "Current iterations (${n_iterations})"
 msgstr ""
 
@@ -290,7 +290,7 @@ msgstr ""
 msgid "Fri"
 msgstr ""
 
-#: ../project_templates/alliterations.pt:36
+#: ../project_templates/alliterations.pt:43
 msgid "Future iterations (${n_iterations})"
 msgstr ""
 
@@ -440,7 +440,7 @@ msgstr ""
 msgid "PM"
 msgstr ""
 
-#: ../project_templates/alliterations.pt:26
+#: ../project_templates/alliterations.pt:33
 msgid "Past iterations (${n_iterations})"
 msgstr ""
 
@@ -647,7 +647,7 @@ msgstr ""
 msgid "The user IDs of those that have operative roles in this project (coders, designers, project managers, accounts etc.). Customers should not be included in this list.Adding someone here will add them automatically as managers to the default tracker."
 msgstr ""
 
-#: ../project_templates/alliterations.pt:63
+#: ../project_templates/alliterations.pt:70
 #: ../project_templates/view.pt:34
 msgid "There are no current iterations"
 msgstr ""
@@ -656,7 +656,7 @@ msgstr ""
 msgid "There are no documents in this project because the designated area is missing. We suggest to create it."
 msgstr ""
 
-#: ../project_templates/alliterations.pt:50
+#: ../project_templates/alliterations.pt:57
 msgid "There are no past iterations"
 msgstr ""
 
@@ -784,5 +784,10 @@ msgstr ""
 #. Default: "Estimate <small>at the beginning, by the project manager:</small>"
 #: ../project_templates/overview.pt:43
 msgid "estimate_label"
+msgstr ""
+
+#. Default: "There are no iterations.<br /> To add a new iteration <a href=\"++add++Iteration\">click here</a>"
+#: ../project_templates/alliterations.pt:15
+msgid "no_iterations"
 msgstr ""
 

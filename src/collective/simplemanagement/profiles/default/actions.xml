@@ -27,6 +27,7 @@
      <property name="available_expr"></property>
      <property name="permissions">
       <element value="Simplemanagement: Add booking"/>
+      <element value="Simplemanagement: Manage project"/>
      </property>
      <property name="visible">True</property>
     </object>

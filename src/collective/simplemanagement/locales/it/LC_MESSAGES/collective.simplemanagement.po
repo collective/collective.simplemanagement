@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2013-04-07 15:07+0000\n"
+"POT-Creation-Date: 2013-04-07 15:28+0000\n"
 "PO-Revision-Date: 2012-08-23 22:03+0000\n"
 "Last-Translator: Giorgio Borelli <giorgio@abstract.it>\n"
 "Language-Team: Giorgio Borelli <giorgio@abstract.it>\n"
@@ -141,7 +141,7 @@ msgstr "Epic correlate"
 msgid "Created"
 msgstr "Creazione"
 
-#: ../project_templates/alliterations.pt:31
+#: ../project_templates/alliterations.pt:38
 msgid "Current iterations (${n_iterations})"
 msgstr "Iterazioni correnti (${n_iterations})"
 
@@ -290,7 +290,7 @@ msgstr "Trovato/i ${n_ticket} ticket"
 msgid "Fri"
 msgstr "Ven"
 
-#: ../project_templates/alliterations.pt:36
+#: ../project_templates/alliterations.pt:43
 msgid "Future iterations (${n_iterations})"
 msgstr "Iterazioni future (${n_iterations})"
 
@@ -440,7 +440,7 @@ msgstr "Risorse di riferimento"
 msgid "PM"
 msgstr "PM"
 
-#: ../project_templates/alliterations.pt:26
+#: ../project_templates/alliterations.pt:33
 msgid "Past iterations (${n_iterations})"
 msgstr "Iterazioni passate (${n_iterations})"
 
@@ -647,7 +647,7 @@ msgstr "I nomi utente delle persone che parteciperanno a questa storia"
 msgid "The user IDs of those that have operative roles in this project (coders, designers, project managers, accounts etc.). Customers should not be included in this list.Adding someone here will add them automatically as managers to the default tracker."
 msgstr "I nomi utente di chi ha un ruolo operativo in questo progetto (sviluppatori, grafici, project manager, account ecc.). I Clienti non devono essere inclusi in questa lista. Le persone aggiunte in questo elenco saranno assegnate come manager del tracker."
 
-#: ../project_templates/alliterations.pt:63
+#: ../project_templates/alliterations.pt:70
 #: ../project_templates/view.pt:34
 msgid "There are no current iterations"
 msgstr "Non c'e nessuna iterazione corrente"
@@ -656,7 +656,7 @@ msgstr "Non c'e nessuna iterazione corrente"
 msgid "There are no documents in this project because the designated area is missing. We suggest to create it."
 msgstr "Non ci sono documenti per questo progetto poiché non esiste l'apposita area. Ti suggerisco di crearla."
 
-#: ../project_templates/alliterations.pt:50
+#: ../project_templates/alliterations.pt:57
 msgid "There are no past iterations"
 msgstr "Non ci sono iterazioni passate"
 
@@ -785,4 +785,9 @@ msgstr "scadenza ${deadline}"
 #: ../project_templates/overview.pt:43
 msgid "estimate_label"
 msgstr "Stima <small>iniziale, effettuata dal project manager:</small>"
+
+#. Default: "There are no iterations.<br /> To add a new iteration <a href=\"++add++Iteration\">click here</a>"
+#: ../project_templates/alliterations.pt:15
+msgid "no_iterations"
+msgstr "Non esiste nessuna iterazione per il progetto corrente.<br/>Per aggiungere una nuova iterazione <a href=\"++add++Iteration\">clicca qui</a>"
 

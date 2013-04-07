@@ -146,3 +146,12 @@ class ProjectStoryQuickForm(StoryQuickForm):
         if self.container:
             context = self.container
         return self.create_story(context, data)
+
+    def nextURL(self):
+        if not self.container:
+            return "%s/backlog" % self.context.absolute_url()
+        if self.request.HTTP_REFERER:
+            return self.request.HTTP_REFERER
+
+        return self.context.absolute_url()
+

@@ -9,10 +9,17 @@
 
 <metal:content-core fill-slot="content-core">
   <metal:block define-macro="content-core"
-    tal:define="portal_state nocall:context/@@plone_portal_state">
+    tal:define="portal_state nocall:context/@@plone_portal_state;
+                iterations view/iterations">
 
     <div id="iterations"
-         tal:define="iterations view/iterations">
+         tal:condition="not:iterations"
+         i18n:translate="no_iterations">
+      There are no iterations.<br/>
+      To add a new iteration <a href="++add++Iteration">click here</a>
+    </div>
+    <div id="iterations"
+         tal:condition="iterations">
 
       <metal:storyform
         use-macro="context/simpemanagement-macros/addstory-form" />
