@@ -13,6 +13,7 @@ from plone.memoize.instance import memoize as instance_memoize
 from plone.memoize.view import memoize as view_memoize
 from plone.z3cform import z2
 from plone.z3cform.layout import wrap_form
+from plone.uuid.interfaces import IUUID
 from plone.dexterity.utils import createContentInContainer
 
 from Products.CMFCore.utils import getToolByName
@@ -130,6 +131,8 @@ class DashboardMixin(BrowserView):
 
         if prj:
             return {
+                'UID': IUUID(prj),
+                'priority': prj.priority,
                 'title': prj.Title(),
                 'description': prj.Description(),
                 'url': prj.absolute_url(),
@@ -189,11 +192,11 @@ class TicketsMixIn(object):
         return results
 
     def _format_ticket(self, item):
+
         return {
             'url': item.getURL(),
             'title': item.Title,
             'id': item.getId,
-            'created': item.created,
             'modified': item.modified,
             'severity': item.getSeverity,
             'review_state': get_wf_state_info(item, self.context),
@@ -201,7 +204,18 @@ class TicketsMixIn(object):
         }
 
     def tickets(self):
-        return [self._format_ticket(item) for item in self._get_tickets()]
+        projects = {}
+        for item in self._get_tickets():
+            ticket = self._format_ticket(item)
+            prj = ticket.pop('project')
+            if not projects.get(prj['UID']):
+                projects[prj['UID']] = prj
+                projects[prj['UID']]['tickets'] = []
+            projects[prj['UID']]['tickets'].append(ticket)
+        projects = [p[1] for p in projects.items()]
+        projects.sort(key=lambda x: x['priority'])
+
+        return projects
 
     def timeago(self, timestamp):
         return timeago(timestamp.utcdatetime())
@@ -277,12 +291,13 @@ class DashboardView(DashboardMixin, TicketsMixIn):
             project=project,
             from_date=from_date
         )
+        results = []
         for booking in _bookings:
             story = booking.getObject().__parent__
             if not is_project_context:
                 project = get_project(story)
 
-            yield {
+            results.append({
                 'date': self.context.toLocalizedTime(booking.date.isoformat()),
                 'date2': timeago(booking.date),
                 'time': booking.time,
@@ -297,7 +312,8 @@ class DashboardView(DashboardMixin, TicketsMixIn):
                     'url': story.absolute_url()
                 },
 
-            }
+            })
+        return results
 
     def booking_holes(self):
         userid = self.user.getId()

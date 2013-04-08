@@ -49,7 +49,8 @@
               <!-- Stories pane -->
               <div id="stories-wrapper"
                   class="pane"
-                  tal:define="booking_holes view/booking_holes;">
+                  tal:define="booking_holes view/booking_holes;
+                             projects view/projects">
                 <div id="missed-bookings"
                   class="pat-expose alert alert-top alert-booking"
                   data-expose-triggers="hover"
@@ -103,13 +104,30 @@
                   </div>
                 </div>
 
-                <div id="projects">
-                  <div class="project" tal:repeat="project view/projects">
+                <div id="projects"
+                  tal:condition="not: projects">
+                  <span class="label"
+                    i18n:translate=""
+                    tal:condition="employee_details">
+                    There are not stories assigned to
+                    <span tal:replace="employee_details/fullname"
+                      i18n:name="username" />
+                  </span>
+                  <span class="label"
+                    i18n:translate=""
+                    tal:condition="not: employee_details">
+                    There are not stories assigned to you.</span>
+                </div>
+
+                <div id="projects"
+                  tal:condition="projects">
+                  <div class="project" tal:repeat="project projects">
                     <h2>
                       <span>
-                        <a tal:attributes="href project/url"
-                          tal:content="project/priority"></a></span>
+                        <a tal:attributes="href project/url">
+                          <span tal:content="project/priority"></span>
                         <span tal:replace="project/title">Project #1</span>
+                        </a>
                     </h2>
                     <table class="listing stories">
                       <thead>
@@ -155,7 +173,7 @@
 
               <!-- Tickets pane -->
               <div id="tickets-wrapper" class="pane"
-                tal:define="tickets view/tickets">
+                tal:define="results view/tickets">
 
                 <p class="label" i18n:translate="">
                   Found
@@ -164,14 +182,43 @@
                   ticket/s
                 </p>
 
-                <metal:tickets
-                  use-macro="context/simpemanagement-ticketsmacros/tickets" />
+                <div class="project" tal:repeat="project results">
+                  <h2>
+                    <span>
+                      <a tal:attributes="href project/url">
+                        <span tal:content="project/priority"></span>
+                      <span tal:replace="project/title">Project #1</span>
+                      </a>
+                  </h2>
+                  <div class="tickets-wrapper"
+                    tal:define="tickets project/tickets">
+                    <metal:tickets
+                      use-macro="context/simpemanagement-ticketsmacros/tickets" />
+                  </div>
+                </div>
               </div>
 
               <!-- Booking History pane -->
-              <div id="booking-wrapper" class="pane">
+              <div id="booking-wrapper" class="pane"
+                   tal:define="bookings view/bookings">
 
-                <table class="listing">
+                <div tal:condition="not: bookings">
+                  <span class="label"
+                    i18n:translate=""
+                    tal:condition="employee_details">
+                    <span tal:replace="employee_details/fullname"
+                      i18n:name="username" />
+                    have no bookings yet
+                  </span>
+
+                  <span class="label"
+                    i18n:translate=""
+                    tal:condition="not: employee_details">
+                    You have no bookings yet</span>
+                </div>
+
+                <table class="listing"
+                  tal:condition="bookings">
                   <thead>
                     <tr>
                       <th i18n:translate="">Date</th>
@@ -182,7 +229,7 @@
                     </tr>
                   </thead>
                    <tbody>
-                    <tr tal:repeat="book view/bookings">
+                    <tr tal:repeat="book bookings">
                       <td><span
                           tal:content="book/date">today</span>
                            (<span class="discreet"

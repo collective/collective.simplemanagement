@@ -6,51 +6,37 @@
       i18n:domain="collective.simplemanagement">
 
   <metal:tickets define-macro="tickets">
-
-    <div id="tickets-wrapper">
-
-      <table id="tickets-listing"
-             class="listing"
-             tal:condition="tickets">
-        <thead>
-          <tr>
-            <th i18n:translate="">Title</th>
-            <th i18n:translate="">Project</th>
-            <th i18n:translate="">Created</th>
-            <th i18n:translate="">Modified</th>
-            <th i18n:translate="">Severity</th>
-            <th i18n:translate="">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr tal:repeat="item tickets"
-              class="ticket">
-            <td
-              tal:attributes="class string:severity-${item/severity}">
-              <a href=""
-                 title=""
-                 tal:attributes="href item/url">
-                <span tal:content="item/title"></span>
-                (# <span tal:content="item/id"></span>)
-              </a>
-            </td>
-            <td>
-              <a tal:condition="item/project"
-                  tal:attributes="href item/project/url;
-                      title item/project/description"
-                  tal:content="item/project/title" />
-            </td>
-            <td tal:content="python: view.timeago(item['created'])"></td>
-            <td tal:content="python: view.timeago(item['modified'])"></td>
-            <td tal:content="item/severity"></td>
-            <td>
-              <span class="state-published"
-                tal:content="item/review_state/title"
-                tal:attributes="class string:state-${item/review_state/state}">Pubblicato</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="tickets-listing listing"
+           tal:condition="tickets">
+      <thead>
+        <tr>
+          <th i18n:translate="">Title</th>
+          <th i18n:translate="">Modified</th>
+          <th i18n:translate="">Severity</th>
+          <th i18n:translate="">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr tal:repeat="item tickets"
+            class="ticket">
+          <td
+            tal:attributes="class string:severity-${item/severity}">
+            <a href=""
+               title=""
+               tal:attributes="href item/url">
+              <span tal:content="item/title"></span>
+              (# <span tal:content="item/id"></span>)
+            </a>
+          </td>
+          <td tal:content="python: view.timeago(item['modified'])"></td>
+          <td tal:content="item/severity"></td>
+          <td>
+            <span class="state-published"
+              tal:content="item/review_state/title"
+              tal:attributes="class string:state-${item/review_state/state}">Pubblicato</span></td>
+        </tr>
+      </tbody>
+    </table>
 
   </metal:tickets>
 
