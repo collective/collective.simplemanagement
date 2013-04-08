@@ -157,12 +157,12 @@
               <div id="tickets-wrapper" class="pane"
                 tal:define="tickets view/tickets">
 
-                <h2 i18n:translate="">
+                <p class="label" i18n:translate="">
                   Found
                   <span i18n:name="n_ticket"
                       tal:replace="view/n_tickets"></span>
                   ticket/s
-                </h2>
+                </p>
 
                 <metal:tickets
                   use-macro="context/simpemanagement-ticketsmacros/tickets" />

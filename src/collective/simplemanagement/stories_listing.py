@@ -65,8 +65,9 @@ class StoriesListing(object):
     #     conversation = IConversation(story)
     #     return [i for i in conversation.getThreads()]
 
-    def stories(self, project_info=False):
+    def stories(self, project_states=None, project_info=False):
         brains = self._stories()
+        pw = getToolByName(self.context, 'portal_workflow')
         stories = []
         self.totals = {
             'hours': 0,
@@ -76,6 +77,12 @@ class StoriesListing(object):
 
         for brain in brains:
             story = brain.getObject()
+            project = get_project(story)
+            if project_states:
+                _state = pw.getInfoFor(project, 'review_state')
+                if _state not in project_states:
+                    continue
+
             timings = get_timings(story, portal_catalog=self.portal_catalog)
 
             self.totals['estimate'] += timings['estimate']
@@ -102,7 +109,6 @@ class StoriesListing(object):
             }
 
             if project_info:
-                project = get_project(story)
                 iteration = get_iteration(story)
                 data.update({
                     'project': {
@@ -110,7 +116,7 @@ class StoriesListing(object):
                         'description': project.Description(),
                         'url': project.absolute_url(),
                         'priority': project.priority,
-                        'UID': IUUID(project)
+                        'UID': IUUID(project),
                     },
                 })
                 if iteration:
@@ -145,6 +151,10 @@ class UserStoriesListing(StoriesListing):
             'review_state': ('todo', 'suspended', 'in_progress')
         }
 
-    def stories(self, user_id=None, project_info=False):
+    def stories(self, project_states=None, project_info=False, user_id=None):
         self._user_id = user_id
-        return super(UserStoriesListing, self).stories(project_info)
+        stories = super(UserStoriesListing, self).stories(
+            project_states=project_states,
+            project_info=project_info
+        )
+        return stories

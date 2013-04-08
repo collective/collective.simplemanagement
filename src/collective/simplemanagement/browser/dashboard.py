@@ -220,6 +220,7 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         projects = {}
         stories = listing.stories(
             user_id=self._get_employee_filter(),
+            project_states=['development', 'maintenance'],
             project_info=True
         )
         for st in stories:

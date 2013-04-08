@@ -181,7 +181,7 @@ def get_user_details(context, user_id, **kwargs):
         'portal_membership',
         getToolByName(context, 'portal_membership')
     )
-    pu = kwargs.get(
+    portal_url = kwargs.get(
         'portal_url',
         getToolByName(context, 'portal_url')
     )
@@ -194,7 +194,7 @@ def get_user_details(context, user_id, **kwargs):
     }
     if usr:
         data['fullname'] = usr.getProperty('fullname') or user_id
-        data['href'] = '%s/author/%s' % (pu(), user_id)
+        data['href'] = "%s/dashboard?employee=%s" % (portal_url(), user_id)
         data['portrait'] = pm.getPersonalPortrait(user_id)
         if data['portrait'] is not None:
             data['portrait'] = data['portrait'].absolute_url()

@@ -74,8 +74,11 @@
             <dd>
               <ul>
                 <li tal:repeat="operative view/operatives">
-                  <span><a tal:attributes="href operative/user/href"
-                    tal:content="operative/user/fullname" /></span>
+                  <a tal:attributes="href operative/user/href"
+                    tal:omit-tag="not:view/user_can_manage_project">
+                    <span
+                      tal:content="operative/user/fullname" />
+                  </a>
                   (<em tal:content="operative/role"></em>)
                 </li>
               </ul>
