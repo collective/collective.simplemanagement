@@ -18,7 +18,10 @@ class Epic(Container):
     grok.implements(IEpic)
 
     def get_text(self):
-        return get_text(self, self.text)
+        text = self.text
+        if text:
+            return self.text.output
+        # return get_text(self, self.text)
 
 
 class View(grok.View):
