@@ -244,20 +244,19 @@
 
         $('.simple-tooltip[title]').tooltip();
 
-        $('.status').tooltip({
-            position: "center left",
-            offset: [-50, -175],
-            events: {def: "click,blur"},
-            onBeforeShow: function(){
-                var tip = this.getTip();
-                tip.empty();
-                var trigger = this.getTrigger();
-                var url = trigger.attr('href');
-                var handle_span = $(trigger).parent().siblings('.handle');
+        $('.status').drawer({
+            group: '.status',
+            position: "top-left",
+            css_class: "tooltip",
+            offset: [-10, 15],
+            content: function(callback, drawer) {
+                var handle_span = drawer.trigger.parent().
+                    siblings('.handle');
+                var url = drawer.trigger.attr('href');
                 $.get(url + '/wf_actions', function(data) {
-                    tip.html(data);
-                    var links = $(tip).find('a');
-                    links.bind('click', function(evt){
+                    var content = $(data);
+                    content.find('a').bind('click', function(evt){
+                        evt.preventDefault();
                         $.getJSON($(this).attr('href'), function(data) {
                             if(data === false) {
                                 alert('An error occurred');
@@ -266,11 +265,11 @@
                                 handle_span.removeClass(
                                     'done in_progress suspended todo');
                                 handle_span.addClass(data);
-                                tip.hide();
+                                drawer.hide();
                             }
                         });
-                        evt.preventDefault();
                     });
+                    callback(content);
                 });
             }
         });
@@ -316,29 +315,16 @@
                 };
                 form.ajaxForm(options);
             };
-            trigger.tooltip({
-                disabled: true,
-                events: {
-                    def: "click,blur",
-                    tooltip: "mouseenter"
-                },
-                position: "bottom left",
-                offset: [-25, -10],
-                onBeforeShow: function() {
-                    var api = this;
-                    var tip = this.getTip();
-                    $(".bookform").each(function() {
-                        if($(this).attr('id') !== trigger.attr('id')) {
-                            var api = $(this).data('tooltip');
-                            if(api.isShown(true))
-                                api.hide();
-                        }
-                    });
-                    tip.empty();
-                    tip.html(booking_form.html());
-                    tip.addClass('booking-form');
-                    var form = tip.find('form');
-                    setupForm(form, api);
+            trigger.drawer({
+                group: '.bookform',
+                css_class: 'tooltip booking-form',
+                position: "left",
+                offset: [0, -10],
+                content: function(callback, drawer) {
+                    var content = $(booking_form.html());
+                    var form = content.find('form');
+                    setupForm(form, drawer);
+                    callback(content);
                 }
             });
         });

@@ -406,8 +406,9 @@ ul.stories .actions {
     background: white;
     border: 1px solid #bbb;
     padding: 0.2em;
-    box-shadow: 0 0 0.7em #777;
-    font-size: 85%;
+    box-shadow: 0.1em 0.1em 0.3em #777;
+    font-size: 80%;
+    z-index: 10000;
 }
 
 .tooltip .wrapper {
@@ -430,7 +431,7 @@ ul.stories .actions {
 
 .tooltip .wrapper .notch-bottom {
     position: absolute;
-    bottom: -1em;
+    bottom: -1.1em;
     right: 1em;
     margin: 0;
     border-top: 0.5em solid white;
@@ -444,8 +445,8 @@ ul.stories .actions {
 
 .tooltip .wrapper .notch-right {
     position: absolute;
-    right: -33px;
-    top: -12px;
+    right: -2.5em;
+    top: 50%;
     border-left: 0.5em solid white;
     border-right: 0.5em solid transparent;
     border-top: 0.5em solid transparent;
