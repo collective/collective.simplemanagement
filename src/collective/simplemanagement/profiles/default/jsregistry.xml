@@ -7,7 +7,6 @@
     enabled="True"
     expression=""
     id="++resource++simplemanagement/jquery.drawer.js"
-    before="++resource++simplemanagement/simplemanagement.js"
     inline="False" />
   <javascript
     cacheable="True"
