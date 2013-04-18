@@ -105,31 +105,20 @@
             var self = this;
             var tbody = this.calendar_table.find('tbody');
             tbody.find('td.date-column a[title]').each(function(i) {
-                var left = false;
-                if((i%7) > 3) left = true;
-                $(this).tooltip({
-                    disabled: true,
-                    events: { def: "click,blur" },
-                    onBeforeShow: function() {
-                        var trigger = this.getTrigger(),
-                            tip = this.getTip(),
-                            base_pos = trigger.offset();
-
-                        tip.empty();
-                        tip.html(
-                            '<img '+
-                                'src="./++resource++simplemanagement/'+
-                                'barloader.gif" />');
+                $(this).drawer({
+                    group: tbody.find('td.date-column a[title]'),
+                    position: 'bottom-left',
+                    css_class: 'tooltip',
+                    offset: [ 7, 20 ],
+                    content: function(callback, drawer) {
+                        var trigger = drawer.trigger;
                         $.get(
                             trigger.attr('data-details-url'),
                             {},
                             function(data) {
-                                tip.empty();
-                                var row, original_offset,
-                                    details = self.details_template.
-                                    clone();
-                                tip.append(details);
-                                var tbody = details.find('table tbody');
+                                var row,
+                                    content = self.details_template.clone();
+                                var tbody = content.find('table tbody');
                                 var row_template = tbody.find('tr').detach();
                                 if(data.length === 0) {
                                     row = row_template.clone();
@@ -170,21 +159,9 @@
                                     }
                                     tbody.append(row);
                                 }
-                                tip.show();
-                                tip.css({
-                                    position: 'absolute'
-                                });
-                                tip.offset({
-                                    top: base_pos['top'] + 30,
-                                    left: base_pos['left'] - tip.width() + 45
-                                });
-                                // TODO: FIX tooltip hide
-                                trigger.mouseleave(function(){
-                                    tip.hide();
-                                });
+                                callback(content);
                             },
                             "json");
-                        return false;
                     }
                 });
             });
