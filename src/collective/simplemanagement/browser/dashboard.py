@@ -232,9 +232,12 @@ class DashboardView(DashboardMixin, TicketsMixIn):
     def projects(self):
         listing = IUserStoriesListing(self.context)
         projects = {}
+        project_states = ['development', 'maintenance']
+        if self.request.form.get('planning') == 'on':
+            project_states.extend(['offer', 'planning'])
         stories = listing.stories(
             user_id=self._get_employee_filter(),
-            project_states=['development', 'maintenance'],
+            project_states=project_states,
             project_info=True
         )
         for st in stories:
