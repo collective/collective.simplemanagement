@@ -48,7 +48,6 @@ class WorklogBase(BrowserView):
         })
 
     def resources(self):
-        settings = Settings()
         if IProject.providedBy(self.context):
             # TODO: use utility functions
             bookings = self.tools.portal_catalog.searchResults({
@@ -56,7 +55,9 @@ class WorklogBase(BrowserView):
                 'portal_type': 'Booking'
             })
             resources = []
-            for operative in self.context.operatives:
+            operatives = self.content.operatives \
+                if self.context.operatives is not None else []
+            for operative in operatives:
                 if operative.user_id not in resources:
                     resources.append(operative.user_id)
             for booking in bookings:
