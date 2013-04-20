@@ -336,20 +336,26 @@
             var $self = $(this);
             var date = $(this).attr('data-date');
             var time = $(this).attr('data-time');
-            var reason = $(this).parent().find(':selected').val();
+            var reason = $(this).siblings(':selected').val();
             $.getJSON(
-                './create-hole?date=' + date + '&time=' + time + '&reason=' + reason,
+                './create-hole?date=' + date +
+                             '&time=' + time +
+                             '&reason=' + reason,
                 function(data){
                     if(data['success']===true) {
                         var $container = $('#missed-bookings');
                         if($container.find('.booking-hole').length==1){
-                            $container.fadeOut(500, function(){
-                                $(this).remove();
-                            });
+                            $container.animate(
+                                { height: 0, opacity: 0 }, 'slow',
+                                function() {
+                                    $(this).remove();
+                                });
                         }else{
-                            $self.closest('.booking-hole').fadeOut(500, function(){
-                                $(this).remove();
-                            });
+                            $self.closest('.booking-hole').animate(
+                                { height: 0, opacity: 0 }, 'slow',
+                                function() {
+                                    $(this).remove();
+                                });
                         }
                     }else{
                         alert(data['error']);
