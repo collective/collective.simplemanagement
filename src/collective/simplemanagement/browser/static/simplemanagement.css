@@ -725,6 +725,7 @@ table#tickets-listing {
 }
 
 /* Add story form */
+
 #addstory-container h3 a {
     background: url("./spindown-closed.gif") no-repeat scroll 0 50% transparent;
     padding-left: 1em;
@@ -739,6 +740,8 @@ table#tickets-listing {
     border: 1px solid #dddddd;
     margin: 0 0 1em 0;
 }
+
+#project-view #addstory-form { display: none }
 
 #content a.btn {
     display: inline-block;
