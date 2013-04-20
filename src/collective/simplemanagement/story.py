@@ -1,10 +1,8 @@
-import logging
 from Acquisition import aq_inner
 from five import grok
 from zope.security import checkPermission
 
 from z3c.form.interfaces import IFormLayer
-from z3c.form.interfaces import HIDDEN_MODE
 from z3c.form import form, field
 
 from plone.z3cform import z2
@@ -13,8 +11,6 @@ from plone.dexterity.utils import createContentInContainer
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
 from .booking import BookingForm
 from .interfaces import IStory
@@ -29,7 +25,16 @@ from .utils import get_project
 from . import messageFactory as _
 
 
-logger = logging.getLogger('collective.simplemanagement')
+def create_story(context, data, reindex=True):
+    item = createContentInContainer(
+        context,
+        'Story',
+        title=data.pop('title'))
+    for k, v in data.items():
+        setattr(item, k, v)
+    if reindex:
+        item.reindexObject()
+    return item
 
 
 class Story(Container):
@@ -117,17 +122,8 @@ class StoryQuickForm(form.AddForm):
         u"When you add a story it will be put in the "
         u"first current iteration whether exists or in the project backlog")
 
-    def create_story(self, context, data):
-        item = createContentInContainer(
-            context,
-            'Story',
-            title=data.pop('title'))
-        for k, v in data.items():
-            setattr(item, k, v)
-        return item
-
     def create(self, data):
-        return self.create_story(self.context, data)
+        return create_story(self.context, data, reindex=False)
 
     def add(self, obj):
         obj.reindexObject()

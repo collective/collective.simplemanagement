@@ -150,18 +150,35 @@
         });
 
         $('.simplemanagement-addstory').each(function() {
-            var container = $(this);
-            var link = $('a', container);
-            var wrapper = $('div.simplemanagement-addstory-form-wrapper');
-            if($('dl.portalMessage', wrapper).length > 0){
-                wrapper.css('display', 'block');
+            var $container = $(this);
+            var $link = $('a', $container);
+            var $wrapper = $('.simplemanagement-addstory-form-wrapper', $container);
+            var $form = $('form', $container);
+
+            if($('dl.portalMessage', $wrapper).length > 0){
+                $wrapper.css('display', 'block');
                 add_form_link.addClass('open');
             }
 
-            link.bind('click', function(evt) {
+            $link.bind('click', function(evt) {
                 $(this).toggleClass('open');
                 evt.preventDefault();
-                wrapper.toggle("slow");
+                $wrapper.toggle("slow");
+            });
+
+            // ajax submit
+            $form.ajaxForm({
+                type: 'POST',
+                dataType: 'json',
+                url: './add-story',
+                data: $form.serialize(),
+                success: function(result) {
+                    if(result.success){
+                        $wrapper.toggle('slow');
+                    }else{
+                        alert('error');
+                    }
+                }
             });
         });
 

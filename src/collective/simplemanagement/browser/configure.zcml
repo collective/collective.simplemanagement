@@ -66,7 +66,7 @@
   <browser:page
     for="*"
     name="create-hole"
-    class=".holes_helpers.CreateHole"
+    class=".ajaxforms.CreateHole"
     layer="..interfaces.IBrowserLayer"
     permission="zope2.View"
   />
@@ -77,6 +77,14 @@
     class=".holes_helpers.FlushHoles"
     layer="..interfaces.IBrowserLayer"
     permission="cmf.ManagePortal"
+  />
+
+  <browser:page
+    for="*"
+    name="add-story"
+    class=".ajaxforms.AddStory"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
   />
 
   <!-- macros -->
