@@ -736,8 +736,9 @@ table#tickets-listing {
 }
 
 #addstory-form {
-    padding: 1em 1em 0 1em;
-    border: 1px solid #dddddd;
+    width: 60%;
+    padding: 1em 1.2em 0 1em;
+    border: 1px solid #ddd;
     margin: 0 0 1em 0;
 }
 
@@ -746,7 +747,7 @@ table#tickets-listing {
 #content a.btn {
     display: inline-block;
     padding: 0.3em 0.5em;
-    background-color: #dddddd;
+    background-color: #ddd;
     background-image: linear-gradient(to bottom, #eee, #ddd 85%, #ccc);
     border: 1px solid #999;
     color: #333 !important;
