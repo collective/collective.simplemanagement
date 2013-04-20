@@ -71,5 +71,6 @@ class AddStory(Mixin):
         data = {}
         for i in ('title', 'estimate'):
             data[i] = form.get("form.widgets.%s" % i)
+        data['estimate'] = Decimal(data['estimate'])
         create_story(self.context, data)
         return self.success
