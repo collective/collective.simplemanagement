@@ -405,10 +405,11 @@ ul.stories .actions {
     display: none;
     background: white;
     border: 1px solid #bbb;
-    padding: 0.2em;
+    padding: 0.2em 0.2em 0.2em 0.5em;
     box-shadow: 0.1em 0.1em 0.3em #777;
     font-size: 80%;
     z-index: 10000;
+    border-radius: 5px;
 }
 
 .tooltip .wrapper {
@@ -464,6 +465,11 @@ ul.stories .actions {
 
 .tooltip .disable {
     color: #dddddd;
+}
+
+.tooltip a.close{
+    padding: 8px;
+    background: url('close-16x16.png') no-repeat center center;
 }
 
 #dashboard ul.details {

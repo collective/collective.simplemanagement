@@ -21,11 +21,12 @@
 
     <metal:content-core fill-slot="content-core">
       <metal:block define-macro="content-core"
-        tal:define="stories view/stories;
-                  totals view/totals;
-                  view_details python:True;
-                  sortable python:True;
-                  can_manage view/user_can_manage_project">
+        tal:define="stories           view/stories;
+                    totals            view/totals;
+                    view_details      python:True;
+                    sortable          python:True;
+                    can_manage        view/user_can_manage_project;
+                    can_add_story     view/user_can_add_story;">
 
         <metal:storyform
           use-macro="context/simpemanagement-macros/addstory-form" />

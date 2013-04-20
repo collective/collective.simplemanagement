@@ -24,6 +24,13 @@
             tal:content="act/title" />
       </a>
     </tal:actions>
+    <a class="close"
+       href="#"
+       title="Close tooltip"
+       i18n:attributes="title"
+       onclick="return false">
+      <span>&nbsp;</span>
+    </a>
   </div>
   <b class="notch-bottom"></b>
 </div>

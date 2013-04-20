@@ -272,7 +272,7 @@
                 var url = drawer.trigger.attr('href');
                 $.get(url + '/wf_actions', function(data) {
                     var content = $(data);
-                    content.find('a').bind('click', function(evt){
+                    $('a', content).not('.close').bind('click', function(evt){
                         evt.preventDefault();
                         $.getJSON($(this).attr('href'), function(data) {
                             if(data === false) {
@@ -286,10 +286,14 @@
                             }
                         });
                     });
+                    $('a.close', content).click(function(){
+                        drawer.hide();
+                    });
                     callback(content);
                 });
             }
         });
+
         var booking_form = $('#booking-tooltip-form').detach();
         $(".bookform").each(function () {
             var trigger = $(this);
