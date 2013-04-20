@@ -4,6 +4,9 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Ajaxified add story form [simahawk]
+- Add story form hidden by default [simahawk]
+- Add close icon to actions tooltips [simahawk]
 - Added IUserStoriesListing adapter to listing stories by user [giorgio]
 - Removed IMyStoriesListing adapter [giorgio]
 - added "Simplemanagement: Manage project" permission to
