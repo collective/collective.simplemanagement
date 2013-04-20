@@ -155,6 +155,10 @@
             var $wrapper = $('.simplemanagement-addstory-form-wrapper', $container);
             var $form = $('form', $container);
 
+            // make sure is always closed on load
+            $wrapper.hide();
+            $link.removeClass('open');
+
             if($('dl.portalMessage', $wrapper).length > 0){
                 $wrapper.css('display', 'block');
                 add_form_link.addClass('open');
