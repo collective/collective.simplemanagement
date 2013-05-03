@@ -12,11 +12,18 @@ from .interfaces import IBooking
 from .interfaces import IQuickForm
 
 
+from collective.z3cform.timewidget import TimeFieldWidget
+
+
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("browser/templates/titleless_form.pt")
-    fields = field.Fields(IQuickForm).select('title') + \
-        field.Fields(IBooking).select('time') + \
-        field.Fields(IBooking).select('date')
+
+    @property
+    def fields(self):
+        fields = field.Fields(IQuickForm).select('title') + \
+            field.Fields(IBooking).select('time') + \
+            field.Fields(IBooking).select('date')
+        fields['time'].custom_widget = TimeFieldWidget
 
     name = 'booking_form'
 
