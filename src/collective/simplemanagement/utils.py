@@ -210,13 +210,16 @@ def get_assignees_details(story):
 def get_epic_by_story(story):
     obj = getattr(story, 'epic', None)
     if not obj:
-        return
+        return {}
 
     if isinstance(obj, RelationValue):
         if obj.isBroken():
             return
 
         obj = obj.to_object
+
+    if not obj:
+        return {}
 
     return {
         'url': obj.absolute_url(),
