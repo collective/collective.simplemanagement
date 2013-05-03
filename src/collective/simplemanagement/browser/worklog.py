@@ -61,7 +61,7 @@ class WorklogBase(BrowserView):
                 if operative.user_id not in resources:
                     resources.append(operative.user_id)
             for booking in bookings:
-                for assignee in booking.assigned_to:
+                for assignee in booking.assigned_to or []:
                     if assignee not in resources:
                         resources.append(assignee)
         else:
