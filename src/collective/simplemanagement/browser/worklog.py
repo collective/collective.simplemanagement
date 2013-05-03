@@ -55,7 +55,7 @@ class WorklogBase(BrowserView):
                 'portal_type': 'Booking'
             })
             resources = []
-            operatives = self.content.operatives \
+            operatives = self.context.operatives \
                 if self.context.operatives is not None else []
             for operative in operatives:
                 if operative.user_id not in resources:
