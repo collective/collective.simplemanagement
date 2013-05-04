@@ -32,7 +32,7 @@ class Settings(object):
     def __getattr__(self, name):
         if name in self._vocabularies:
             return [
-                tuple(line.split("|", 1)) for line in \
-                    getattr(self.storage, name)
+                tuple(line.split("|", 1))
+                for line in getattr(self.storage, name)
             ]
         return getattr(self.storage, name)

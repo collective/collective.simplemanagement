@@ -15,7 +15,6 @@ from collective.prettydate.interfaces import IPrettyDate
 from .interfaces import IStory
 from .interfaces import IProject
 from .interfaces import IIteration
-from .interfaces import IEpic
 from .interfaces import IBookingHoles
 from .configure import Settings, DECIMAL_QUANT
 
@@ -121,7 +120,7 @@ def get_booking_holes(userid, bookings, expected_working_time=None,
             continue
         the_hole = [x for x in holes if dt == x.day]
         if the_hole and \
-            (the_hole[0].hours + tm) >= expected_working_time:
+                (the_hole[0].hours + tm) >= expected_working_time:
             # if we have a hole matching our booking date
             # and hole hours + booked time matches our constraint
             # we are ok with this booking
@@ -150,10 +149,7 @@ def get_timings(context, portal_catalog=None):
             'portal_type': 'Story'
         })
         estimate = sum([s.estimate for s in stories], Decimal("0.00"))
-    bookings = pc.searchResults({
-        'path': '/'.join(context.getPhysicalPath()),
-        'portal_type': 'Booking'
-    })
+    bookings = get_bookings(project=context)
     hours = sum([b.time for b in bookings if b.time], Decimal("0.00"))
     difference = estimate - hours
     return {
@@ -229,8 +225,9 @@ def get_epic_by_story(story):
 
 
 def get_text(context, text,
-    source_mimetype='text/x-web-markdown', target_mimetype=None):
-    """return the body text of an item
+             source_mimetype='text/x-web-markdown',
+             target_mimetype=None):
+    """ return the body text of an item
     """
     transforms = getToolByName(context, 'portal_transforms')
 
@@ -308,7 +305,8 @@ def get_wf_state_info(brain, context=None):
     :rtype: dict
     """
     if not context:
-        context = brain.getObject()
+        purl = getToolByName(brain, 'portal_url')
+        context = purl.getPortalObject()
     wt = getToolByName(context, 'portal_workflow')
     _info = {
         'title': None,
