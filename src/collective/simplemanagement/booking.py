@@ -10,9 +10,7 @@ from plone.dexterity.utils import createContentInContainer
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from .interfaces import IBooking
 from .interfaces import IQuickForm
-
-
-from collective.z3cform.timewidget import TimeFieldWidget
+from .browser.widgets.time_widget import TimeFieldWidget
 
 
 class BookingForm(form.AddForm):
@@ -23,7 +21,8 @@ class BookingForm(form.AddForm):
         fields = field.Fields(IQuickForm).select('title') + \
             field.Fields(IBooking).select('time') + \
             field.Fields(IBooking).select('date')
-        fields['time'].custom_widget = TimeFieldWidget
+        fields['time'].widgetFactory = TimeFieldWidget
+        return fields
 
     name = 'booking_form'
 

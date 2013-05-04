@@ -5,7 +5,8 @@ from z3c.form.interfaces import IFieldWidget, IFormLayer
 from z3c.form.converter import DateDataConverter
 from z3c.form.widget import Widget, FieldWidget
 from z3c.form.browser.widget import HTMLTextInputWidget
-from ..utils import timeago
+
+from ...utils import timeago
 from .interfaces import IBookingDateWidget
 
 

@@ -8,6 +8,8 @@ from z3c.relationfield.schema import RelationChoice
 from plone.directives import form
 from plone.formwidget.contenttree import ObjPathSourceBinder
 
+from ..browser.widgets.time_widget import TimeFieldWidget
+
 from .. import _
 
 
@@ -17,7 +19,10 @@ class IBooking(form.Schema):
         title=_(u"Date"),
         default=date.today()
     )
+
     time = schema.Decimal(title=_(u"Hours"))
+    form.widget(time=TimeFieldWidget)
+
     related = RelationChoice(
         title=_(u"Related activity"),
         source=ObjPathSourceBinder(),

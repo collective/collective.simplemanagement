@@ -12,3 +12,8 @@ class IBookingDateWidget(IWidget):
     def formatted_value():
         """Returns the formatted value
         """
+
+
+class ITimeWidget(IWidget):
+    """ a time widget
+    """

@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      tal:omit-tag="">
+
+<span class="timewidget" 
+     tal:attributes=" id view/id;
+                      class view/klass;
+                      style view/style;
+                      title view/title;
+                      lang view/lang;
+                      onclick view/onclick;
+                      ondblclick view/ondblclick;
+                      onmousedown view/onmousedown;
+                      onmouseup view/onmouseup;
+                      onmouseover view/onmouseover;
+                      onmousemove view/onmousemove;
+                      onmouseout view/onmouseout;
+                      onkeypress view/onkeypress;
+                      onkeydown view/onkeydown;
+                      onkeyup view/onkeyup">
+
+  <input type="hidden" class="hidden-widget" 
+         tal:attributes="name string:${view/name}-empty-marker;
+                         value view/value;" />
+
+  <select class="hour"
+          tal:attributes="name string:${view/name}-hour">
+    <option value="0">--</option>
+    <tal:opt repeat="item view/hours">
+      <option
+        tal:attributes="value    item/value;
+                        selected python: item['selected'] or None"
+        tal:content="item/value"
+        />
+    </tal:opt>
+  </select>
+
+  <select class="minute"
+          tal:attributes="name string:${view/name}-minute">
+    <option value="0">--</option>
+    <tal:opt repeat="item view/minutes">
+      <option
+        tal:attributes="value    item/value;
+                        selected python: item['selected'] or None"
+        tal:content="item/value"
+        />
+    </tal:opt>
+  </select>
+
+</span>
+
+</html>

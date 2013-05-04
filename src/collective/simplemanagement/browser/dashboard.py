@@ -34,13 +34,15 @@ from ..utils import get_wf_state_info
 from ..utils import get_employee_ids
 from ..utils import get_user_details
 from ..utils import get_project
-from .date_widget import BookingDateFieldWidget
+from .widgets.date_widget import BookingDateFieldWidget
+from .widgets.time_widget import TimeFieldWidget
 
 
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("templates/booking_form.pt")
     fields = field.Fields(IQuickForm).select('title') + field.Fields(IBooking)
     fields['date'].widgetFactory = BookingDateFieldWidget
+    fields['time'].widgetFactory = TimeFieldWidget
     fields['related'].widgetFactory = text.TextFieldWidget
 
     convert_funcs = {

@@ -22,6 +22,7 @@ from .utils import get_assignees_details
 from .utils import get_epic_by_story
 from .utils import get_text
 from .utils import get_project
+from .utils import get_bookings
 from . import messageFactory as _
 
 
@@ -97,14 +98,8 @@ class View(grok.View):
         return booking
 
     def get_booking(self):
-        catalog = getToolByName(self.context, 'portal_catalog')
-        query = {
-            'path': '/'.join(self.context.getPhysicalPath()),
-            'object_provides': IBooking.__identifier__,
-            'sort_on': 'booking_date'
-        }
-
-        return [self.booking_format(el) for el in catalog(**query)]
+        return [self.booking_format(el)
+                for el in get_bookings(project=self.context)]
 
     def form_contents(self):
         z2.switch_on(self, request_layer=IFormLayer)
@@ -150,4 +145,3 @@ class ProjectStoryQuickForm(StoryQuickForm):
             return self.request.HTTP_REFERER
 
         return self.context.absolute_url()
-

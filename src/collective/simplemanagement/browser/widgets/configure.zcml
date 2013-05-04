@@ -1,0 +1,64 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:gs="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    i18n_domain="collective.simplemanagement">
+
+  <!-- Date widget -->
+  <class class=".date_widget.BookingDateWidget">
+    <require permission="zope.Public"
+             interface=".interfaces.IBookingDateWidget"
+             />
+  </class>
+
+  <adapter
+    factory=".date_widget.BookingDateDataConverter"
+    for="zope.schema.interfaces.IDate
+         .interfaces.IBookingDateWidget"
+    />
+
+  <z3c:widgetTemplate
+    mode="display"
+    template="date_display.pt"
+    layer="z3c.form.interfaces.IFormLayer"
+    widget=".interfaces.IBookingDateWidget"
+    />
+
+  <z3c:widgetTemplate
+    mode="hidden"
+    template="date_hidden.pt"
+    layer="z3c.form.interfaces.IFormLayer"
+    widget=".interfaces.IBookingDateWidget"
+    />
+
+  <z3c:widgetTemplate
+    mode="input"
+    template="date_input.pt"
+    layer="z3c.form.interfaces.IFormLayer"
+    widget=".interfaces.IBookingDateWidget"
+    />
+
+  <!-- time widget -->
+  <adapter
+    factory=".time_widget.TimeConverter"
+    for="zope.schema.interfaces.IDecimal
+         .interfaces.ITimeWidget"
+    />
+
+  <z3c:widgetTemplate
+    mode="display"
+    template="time_display.pt"
+    layer="z3c.form.interfaces.IFormLayer"
+    widget=".interfaces.ITimeWidget"
+    />
+
+  <z3c:widgetTemplate
+    mode="input"
+    template="time_input.pt"
+    layer="z3c.form.interfaces.IFormLayer"
+    widget=".interfaces.ITimeWidget"
+    />
+
+</configure>
