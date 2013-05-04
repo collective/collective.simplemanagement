@@ -67,7 +67,8 @@ def get_bookings(userid=None, project=None, portal_catalog=None,
     ``sort`` disable sorting
     """
     if portal_catalog is None:
-        pc = getToolByName(getSite(), 'portal_catalog')
+        context = project or getSite()
+        pc = getToolByName(context, 'portal_catalog')
     else:
         pc = portal_catalog
     query = {
