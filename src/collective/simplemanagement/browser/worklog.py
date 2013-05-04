@@ -15,7 +15,7 @@ from ..interfaces import IBookingHoles, IProject
 from ..configure import ONE_DAY, ONE_WEEK, Settings
 from ..utils import (AttrDict, datetimerange, get_user_details,
                      get_difference_class, quantize, get_project,
-                     get_story, get_employee_ids)
+                     get_story, get_employee_ids, get_bookings)
 
 
 MONTHS = (
@@ -48,18 +48,14 @@ class WorklogBase(BrowserView):
         })
 
     def resources(self):
+        resources = []
         if IProject.providedBy(self.context):
-            # TODO: use utility functions
-            bookings = self.tools.portal_catalog.searchResults({
-                'path': '/'.join(self.context.getPhysicalPath()),
-                'portal_type': 'Booking'
-            })
-            resources = []
-            operatives = self.context.operatives \
-                if self.context.operatives is not None else []
+            operatives = self.context.operatives or []
             for operative in operatives:
                 if operative.user_id not in resources:
                     resources.append(operative.user_id)
+
+            bookings = get_bookings(project=self.context)
             for booking in bookings:
                 for assignee in booking.assigned_to or []:
                     if assignee not in resources:
