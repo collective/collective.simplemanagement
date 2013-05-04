@@ -57,7 +57,8 @@ def get_iteration(context, default=None):
 
 
 def get_bookings(userid=None, project=None, portal_catalog=None,
-                 from_date=None, to_date=None, sort=True):
+                 from_date=None, to_date=None, booking_date=None,
+                 sort=True):
     """ returns bookings.
     ``userid`` limits results to objs belonging to that user.
     ``project`` a project obj. If given, results will be limited to that proj.
@@ -73,10 +74,6 @@ def get_bookings(userid=None, project=None, portal_catalog=None,
     query = {
         'portal_type': 'Booking',
     }
-    if sort:
-        # XXX: this is not working in tests (???)
-        query['sort_on'] = 'booking_date'
-        query['sort_order'] = 'descending'
     if userid:
         query['Creator'] = userid
     if project:
@@ -88,6 +85,13 @@ def get_bookings(userid=None, project=None, portal_catalog=None,
     elif from_date and to_date:
         query['booking_date'] = {'query': [from_date, to_date],
                                  'range': 'minmax'}
+    if booking_date:
+        query['booking_date'] = booking_date
+    if sort:
+        # XXX: this is not working in tests (???)
+        query['sort_on'] = 'booking_date'
+        query['sort_order'] = 'descending'
+
     return pc.searchResults(query)
 
 

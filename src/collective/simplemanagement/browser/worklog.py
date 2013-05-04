@@ -15,7 +15,8 @@ from ..interfaces import IBookingHoles, IProject
 from ..configure import ONE_DAY, ONE_WEEK, Settings
 from ..utils import (AttrDict, datetimerange, get_user_details,
                      get_difference_class, quantize, get_project,
-                     get_story, get_employee_ids, get_bookings)
+                     get_story, get_employee_ids, get_bookings,
+                     get_booking_holes)
 
 
 MONTHS = (
@@ -135,25 +136,21 @@ class WorklogBackend(WorklogBase):
             (next_year, next_month)
         )
 
-    def get_bookings_and_holes(self, date_, resource, booking_holes):
-        # TODO: use utility functions
-        bookings_ = self.tools.portal_catalog.searchResults({
-            'path': '/'.join(self.context.getPhysicalPath()),
-            'portal_type': 'Booking',
-            'Creator': resource,
-            'booking_date': DateTime(date_.strftime("%Y-%m-%d"))
-        })
+    def get_bookings_and_holes(self, date_, resource):
+        booking_date = DateTime(date_.strftime("%Y-%m-%d"))
 
-        holes = booking_holes.iter_user(
-            resource,
-            date_,
-            date_ + ONE_DAY
-        )
-        return (bookings_, holes)
+        bookings = get_bookings(project=self.context,
+                                userid=resource,
+                                booking_date=booking_date)
+
+        holes = get_booking_holes(resource,
+                                  bookings,
+                                  from_date=date_,
+                                  to_date=date_ + ONE_DAY)
+        return (bookings, holes)
 
     def monthly_bookings(self):
         settings = Settings()
-        booking_holes = getUtility(IBookingHoles)
         resources = self.request.get(
             'resources',
             [ r['user_id'] for r in self.resources() ]
@@ -177,7 +174,6 @@ class WorklogBackend(WorklogBase):
                     bookings_, holes = self.get_bookings_and_holes(
                         date_,
                         resource,
-                        booking_holes
                     )
 
                     total = reduce(
@@ -226,11 +222,9 @@ class WorklogBackend(WorklogBase):
         })
 
     def booking_details(self):
-        booking_holes = getUtility(IBookingHoles)
         bookings_, holes = self.get_bookings_and_holes(
             self.date,
-            self.resource_id,
-            booking_holes
+            self.resource_id
         )
         booking_details = []
         for booking in bookings_:
@@ -242,10 +236,11 @@ class WorklogBackend(WorklogBase):
                 'booking': booking.Title(),
                 'hours': str(quantize(booking.time))
             })
-        booking_details.extend(
-            [ { 'type': 'hole', 'reason': h.reason,
-                'hours': str(quantize(h.hours)) } for h in holes ]
-        )
+        holes = [{'type': 'hole',
+                  'reason': h.reason,
+                  'hours': str(quantize(h.hours))}
+                 for h in holes]
+        booking_details.extend(holes)
         return json.dumps(booking_details)
 
     def __call__(self):
