@@ -55,13 +55,13 @@ class WorklogBase(BrowserView):
                 'portal_type': 'Booking'
             })
             resources = []
-            operatives = self.content.operatives \
+            operatives = self.context.operatives \
                 if self.context.operatives is not None else []
             for operative in operatives:
                 if operative.user_id not in resources:
                     resources.append(operative.user_id)
             for booking in bookings:
-                for assignee in booking.assigned_to:
+                for assignee in booking.assigned_to or []:
                     if assignee not in resources:
                         resources.append(assignee)
         else:
