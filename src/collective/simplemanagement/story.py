@@ -86,9 +86,11 @@ class View(grok.View):
 
     def booking_format(self, brain):
         obj = brain.getObject()
+        description = brain.Description
+        description = description and description.splitlines()
         booking = {
             'title': brain.Title,
-            'description': brain.Description,
+            'description': description,
             'time': brain.time,
             'href': brain.getURL(),
             'date': self.context.toLocalizedTime(brain.date.isoformat()),

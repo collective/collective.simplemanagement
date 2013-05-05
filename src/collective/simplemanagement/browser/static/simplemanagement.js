@@ -389,5 +389,16 @@
            );
         });
 
+        $('.listing .show-more').drawer({
+            group: '.show-more',
+            position: "top-left",
+            css_class: "tooltip",
+            offset: [-10, 15],
+            content: function(callback, drawer) {
+                var selector = drawer.trigger.data('content');
+                callback($(drawer.trigger).siblings(selector).html());
+            }
+        });
+
     });
 })(jQuery);

@@ -27,7 +27,7 @@
           use-macro="context/simpemanagement-macros/assignees" />
 
       <div tal:condition="view/user_can_booking"
-           id="booking-form" class="clearfix">
+           id="booking-form" class="clearfix inline-form">
         <h2 i18n:translate="">Add Booking</h2>
         <div tal:content="structure view/form_contents" />
       </div>
