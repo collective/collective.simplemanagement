@@ -13,6 +13,33 @@ from .interfaces import IQuickForm
 from .browser.widgets.time_widget import TimeFieldWidget
 
 
+convert_funcs = {
+    'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
+}
+
+
+def create_booking(context, data, reindex=True):
+    """ create booking in given `context`.
+        `data` must contains booking params.
+        `reindex` switches on/off new item reindexing.
+    """
+    assert 'title' in data.keys()
+    item = createContentInContainer(
+        context,
+        'Booking',
+        title=data.pop('title')
+    )
+    if not 'date' in data.keys():
+        data['date'] = date.today()
+    for k, v in data.items():
+        if v and k in convert_funcs:
+            v = convert_funcs[k](v)
+        setattr(item, k, v)
+    if reindex:
+        item.reindexObject()
+    return item
+
+
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("browser/templates/titleless_form.pt")
 
@@ -26,21 +53,8 @@ class BookingForm(form.AddForm):
 
     name = 'booking_form'
 
-    convert_funcs = {
-        'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
-    }
-
     def create(self, data):
-        item = createContentInContainer(
-            self.context,
-            'Booking',
-            title=data.pop('title'))
-        for k, v in data.items():
-            if v and k in self.convert_funcs:
-                v = self.convert_funcs[k](v)
-            setattr(item, k, v)
-        item.date = date.today()
-        return item
+        return create_booking(self.context, data, reindex=False)
 
     def add(self, obj):
         obj.reindexObject()

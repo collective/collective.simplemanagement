@@ -13,20 +13,7 @@ from ..utils import get_bookings
 from ..utils import get_booking_holes
 from ..interfaces import IBookingHoles
 from ..bookingholes import BookingHole
-
-
-def create_booking(context, title, **kwargs):
-    item = createContentInContainer(
-        context,
-        'Booking',
-        title=title
-    )
-    data = kwargs.copy()
-    if not data.get('date'):
-        data['date'] = date.today()
-    for k, v in data.items():
-        setattr(item, k, v)
-    return item
+from ..booking import create_booking
 
 
 class TestBookingCheck(unittest.TestCase):
@@ -71,9 +58,11 @@ class TestBookingCheck(unittest.TestCase):
         for i, (dt, tm) in enumerate(self.booking_data):
             bkng = create_booking(
                 story,
-                'Booking %s %s' % (userid, i),
-                date=dt,
-                time=tm
+                {
+                    'title': 'Booking %s %s' % (userid, i),
+                    'date': dt,
+                    'time': tm,
+                }
             )
             if userid:
                 bkng.setCreators((userid))
