@@ -400,5 +400,39 @@
             }
         });
 
+        // ajax submit
+        $('#booking_form').ajaxForm({
+            type: 'POST',
+            dataType: 'json',
+            url: './ajax-create_booking',
+            data: $(this).serialize(),
+            success: function(result) {
+                if(result.success){
+                    var $target = $('div.booking');
+                    if(!$target.length) {
+                        $target = $('<div class="booking" />');
+                        $(this).after($target);
+                    }
+                    reload_booking($target);
+                }else{
+                    alert('error');
+                }
+            }
+        });
+
     });
 })(jQuery);
+
+
+function reload_booking(sel) {
+    $.getJSON(
+        './reload-booking',
+        function(data){
+            if(data['success']===true) {
+                $(sel).html(data['html']);
+            }else{
+                alert(data['error']);
+            }
+        }
+    );
+}

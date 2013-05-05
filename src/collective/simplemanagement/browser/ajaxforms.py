@@ -2,21 +2,32 @@ import datetime
 import json
 from decimal import Decimal
 
+from zope.pagetemplate.pagetemplatefile import PageTemplateFile
+
 from Products.Five.browser import BrowserView
+
+from .. import logger
 from ..bookingholes import create_hole
 from ..story import create_story
 from ..configure import Settings
-from .. import logger
+from ..booking import BookingForm
+
+from .engine import MacroRenderer
 
 
 class Mixin(BrowserView):
     """ mixin klass for ajax views
     """
 
-    success = {
+    _success = {
         'success': True,
         'error': None
     }
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+        self.success = self._success.copy()
 
     def __call__(self):
         try:
@@ -73,4 +84,26 @@ class AddStory(Mixin):
             data[i] = form.get("form.widgets.%s" % i)
         data['estimate'] = Decimal(data['estimate'])
         create_story(self.context, data)
+        return self.success
+
+
+class AddBooking(Mixin):
+
+    def process(self):
+        form = BookingForm(self.context, self.request)
+        form.update()
+        data, errors = form.extractData()
+        form.createAndAdd(data)
+        return self.success
+
+
+class ReloadBooking(Mixin):
+
+    def process(self):
+        view = self.context.restrictedTraverse('view')
+        bookings = view.get_booking()
+        template = PageTemplateFile("templates/macros.pt")
+        renderer = MacroRenderer(template, 'booking-list', context=self.context)
+        html = renderer(**dict(booking_list=bookings))
+        self.success.update({'html': html})
         return self.success

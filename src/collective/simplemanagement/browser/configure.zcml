@@ -88,6 +88,14 @@
     permission="zope2.View"
   />
 
+  <browser:page
+    for="*"
+    name="reload-booking"
+    class=".ajaxforms.ReloadBooking"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+  />
+
   <!-- macros -->
   <browser:page
     for="*"
@@ -173,6 +181,14 @@
      layer="..interfaces.IBrowserLayer"
      permission="simplemanagement.AddBooking"
      class=".dashboard.AddBooking"
+   />
+
+  <browser:page
+     for="..interfaces.IStory"
+     name="ajax-create_booking"
+     layer="..interfaces.IBrowserLayer"
+     permission="simplemanagement.AddBooking"
+     class=".ajaxforms.AddBooking"
    />
 
   <!-- TODO: fix adapter for attribute... -->

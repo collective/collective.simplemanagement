@@ -294,7 +294,7 @@
 
   <metal:booking define-macro="booking-list">
     <table class="listing"
-      tal:condition="booking_list">
+           tal:condition="booking_list">
       <thead>
         <tr>
           <th i18n:translate="">Date</th>
@@ -305,41 +305,42 @@
         </tr>
       </thead>
       <tbody>
-        <tr tal:repeat="booking booking_list">
-          <td tal:content="booking/date" />
-          <td class="booking-details">
-            <span class="label">
-              <a tal:attributes="href booking/href"
-                 tal:content="booking/title"/>
-            </span>
-
-            <tal:more condition="booking/description">
-              <a href="#" class="show-more"
-                 data-content=".description"
-                 title="show more"
-                 i18n:attributes="title">[+]</a>
-              <div class="description">
-                <tal:desc repeat="line booking/description">
-                  <div class="desc-item discreet"
-                       tal:content="line" />
-                </tal:desc>
-              </div>
-            </tal:more>
-            
-          </td>
-          <td class="actual_hours" tal:content="booking/time" />
-          <td><a tal:attributes="href booking/creator/href"
-            tal:content="booking/creator/fullname" />
-          <td tal:define="related booking/related">
-            <span tal:condition="related">
-              <a href=""
-                tal:attributes="
-                  href related/href;
-                  title related/description"
-                tal:content="related/title"/>
-            </span>
-          </td>
-        </tr>
+        <tal:row repeat="booking booking_list">
+          <tr tal:define="odd repeat/booking/odd"
+              tal:attributes="class python: odd and 'odd' or 'even'">
+            <td tal:content="booking/date" />
+            <td class="booking-details">
+              <span class="label">
+                <a tal:attributes="href booking/href"
+                   tal:content="booking/title"/>
+              </span>
+              <tal:more condition="booking/description">
+                <a href="#" class="show-more"
+                   data-content=".description"
+                   title="show more"
+                   i18n:attributes="title">[+]</a>
+                <div class="description">
+                  <tal:desc repeat="line booking/description">
+                    <div class="desc-item discreet"
+                         tal:content="line" />
+                  </tal:desc>
+                </div>
+              </tal:more>
+            </td>
+            <td class="actual_hours" tal:content="booking/time" />
+            <td><a tal:attributes="href booking/creator/href"
+              tal:content="booking/creator/fullname" />
+            <td tal:define="related booking/related">
+              <span tal:condition="related">
+                <a href=""
+                  tal:attributes="
+                    href related/href;
+                    title related/description"
+                  tal:content="related/title"/>
+              </span>
+            </td>
+          </tr>
+        </tal:row>
       </tbody>
     </table>
   </metal:booking>

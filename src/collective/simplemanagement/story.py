@@ -15,7 +15,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from .booking import BookingForm
 from .interfaces import IStory
 from .interfaces import IQuickForm
-from .interfaces import IBooking
 from .utils import get_timings
 from .utils import get_user_details
 from .utils import get_assignees_details
