@@ -92,8 +92,6 @@ class AddBooking(Mixin):
     def process(self):
         form = BookingForm(self.context, self.request)
         form.update()
-        data, errors = form.extractData()
-        form.createAndAdd(data)
         return self.success
 
 

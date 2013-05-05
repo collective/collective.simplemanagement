@@ -401,6 +401,8 @@
         });
 
         // ajax submit
+
+        // TODO: prevent unload protection!
         $('#booking_form').ajaxForm({
             type: 'POST',
             dataType: 'json',
