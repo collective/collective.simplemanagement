@@ -667,6 +667,14 @@ table.stories td.data.warning {
     height: 24px;
 }
 
+#worklog .resources li {
+    background: none repeat scroll 0 0 #FFF;
+    border-radius: 5px ;
+    display: inline-block !important;
+    margin-right: 4px;
+    padding: 2px 5px;
+}
+
 #worklog .calendar {
     position: relative;
 }
