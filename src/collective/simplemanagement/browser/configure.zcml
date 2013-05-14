@@ -96,6 +96,14 @@
     permission="zope2.View"
   />
 
+  <browser:page
+    for="*"
+    name="reload-booking-form"
+    class=".ajaxforms.ReloadBookingForm"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+  />
+
   <!-- macros -->
   <browser:page
     for="*"

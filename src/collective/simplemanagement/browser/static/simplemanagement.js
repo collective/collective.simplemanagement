@@ -144,6 +144,12 @@
 
     $(document).ready(function(){
 
+        // taken from kss-bbb.js
+        var spinner = $('<div id="ajax-spinner"><img src="' + portal_url + '/spinner.gif" alt=""/></div>');
+        spinner.appendTo('body').hide();
+        $(document).ajaxStart(function() { spinner.show(); });
+        $(document).ajaxStop(function() { spinner.hide(); });
+
         $('.simplemanagement-planner').each(function() {
             simplemanagement.planners.push(
                 new simplemanagement.Planner(this));
@@ -416,6 +422,8 @@
                         $(this).after($target);
                     }
                     reload_booking($target);
+                    reload_booking_form($('#booking_form'));
+                    return false;
                 }else{
                     alert('error');
                 }
@@ -432,6 +440,22 @@ function reload_booking(sel) {
         function(data){
             if(data['success']===true) {
                 $(sel).html(data['html']);
+            }else{
+                alert(data['error']);
+            }
+        }
+    );
+}
+
+
+function reload_booking_form(sel) {
+    $.getJSON(
+        './reload-booking-form',
+        function(data){
+            if(data['success']===true) {
+                // just replace the content
+                // to avoid rebind of events on the form
+                $(sel).html($(data['html']).html());
             }else{
                 alert(data['error']);
             }

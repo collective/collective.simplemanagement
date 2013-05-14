@@ -9,6 +9,7 @@ from Products.Five.browser import BrowserView
 from .. import logger
 from ..bookingholes import create_hole
 from ..story import create_story
+from ..story import View as StoryView
 from ..configure import Settings
 from ..booking import BookingForm
 
@@ -104,4 +105,12 @@ class ReloadBooking(Mixin):
         renderer = MacroRenderer(template, 'booking-list', context=self.context)
         html = renderer(**dict(booking_list=bookings))
         self.success.update({'html': html})
+        return self.success
+
+
+class ReloadBookingForm(Mixin):
+
+    def process(self):
+        view = StoryView(self.context, self.request)
+        self.success.update({'html': view.form_contents()})
         return self.success
