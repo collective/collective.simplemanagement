@@ -9,19 +9,26 @@
   <include package="z3c.form" />
   <include package=".widgets" />
 
+  <include package="z3c.jbot" file="meta.zcml" />
+
+  <browser:jbot
+    directory="template_overrides"
+    layer="..interfaces.IBrowserLayer"
+    />
+
   <browser:resourceDirectory
     directory="static"
     name="simplemanagement"
     layer="..interfaces.IBrowserLayer"
-  />
+    />
 
   <!-- TODO: we should really give this thing an interface hey -->
   <browser:page
     for="*"
-    name="simplemanagement_helpers"
+    name="sm_helpers"
     layer="..interfaces.IBrowserLayer"
     permission="zope2.View"
-    class=".helpers.Helper"
+    class=".helpers.Helpers"
     allowed_attributes="timeago"
     />
 

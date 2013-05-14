@@ -806,3 +806,23 @@ table#tickets-listing {
 #content #planning fieldset {
     border: 0;
 }
+
+#sm-personal-tools{
+    position: absolute;
+    top:0;
+    left: 44%;
+}
+#sm-personal-tools ul li{
+    display: inline;
+    text-transform: uppercase;
+}
+#sm-personaltools-dashboard{
+    background-color: #FF7700;
+    padding: 0px 10px 4px 10px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+#sm-personaltools-dashboard a{
+    padding-top:4px;
+    color: white;
+}

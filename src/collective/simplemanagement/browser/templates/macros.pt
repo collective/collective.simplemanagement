@@ -11,7 +11,7 @@
                 define="milestone story/milestone">
       <a href="javascript:void(0)"
          class="simple-tooltip"
-         tal:define="helpers nocall:context/@@simplemanagement_helpers"
+         tal:define="helpers nocall:context/@@sm_helpers"
          tal:condition="milestone/deadline"
          tal:attributes="title string:${milestone/name} (${milestone/status})"
          i18n:translate="">

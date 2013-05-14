@@ -14,7 +14,7 @@
 
     <metal:bodytext fill-slot="main">
       <metal:main define-macro="main"
-        tal:define="helpers context/@@simplemanagement_helpers;
+        tal:define="helpers context/@@sm_helpers;
                     employees view/employees;
                     employee_details view/employee_details">
         <div tal:replace="structure provider:plone.abovecontenttitle" />
