@@ -439,7 +439,8 @@ function reload_booking(sel) {
         './reload-booking',
         function(data){
             if(data['success']===true) {
-                $(sel).html(data['html']);
+                $(sel).html(data['bookings_html']);
+                $('table.timing').html(data['timing_html']);
             }else{
                 alert(data['error']);
             }
