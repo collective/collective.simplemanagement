@@ -324,6 +324,7 @@ ul.stories .actions {
 }
 
 #content a.status,
+#content a.iteration,
 #content a.quickedit,
 #content a.quick-booking,
 #content a.story-quickview {
@@ -351,12 +352,16 @@ ul.stories .actions {
     background-image: url('booking.png');
 }
 
-
 #content a.status {
     background-image: url('tag_red.png');
 }
 
+#content a.iteration {
+    background-image: url('iteration.png');
+}
+
 #content a.status span,
+#content a.iteration span,
 #content a.story-quickview span,
 #content a.quick-booking span,
 #content a.quickedit span {
@@ -540,7 +545,7 @@ table.stories tbody tr td.info {
 }
 
 table.stories tbody tr td.actions {
-    width: 80px;
+    width: 100px;
 }
 
 table.stories tbody tr td.quick-booking {

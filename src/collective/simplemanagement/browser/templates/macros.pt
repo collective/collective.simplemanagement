@@ -75,6 +75,14 @@
          i18n:attributes="title">
          <span i18n:translate="">Edit</span></a>
       <a href="#"
+         tal:condition="story/can_edit"
+         title="Change iteration"
+         class="iteration"
+         i18n:attributes="title"
+         tal:attributes="href story/url"
+         onclick="return false">
+         <span>Iteration</span></a>
+      <a href="#"
          tal:condition="story/can_review"
          title="Change status"
          class="status"

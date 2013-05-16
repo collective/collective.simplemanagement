@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.simplemanagement"
+      tal:omit-tag="">
+
+<div class="wrapper">
+  <div class="ch_iteration">
+    <tal:iterations repeat="item view/iterations">
+      <span tal:condition="not:item/available"
+        tal:attributes="title item/description;
+          class string:disable ${item/id}">
+        <span
+          tal:content="item/title"/>
+      </span>
+      <a href=""
+         tal:condition="item/available"
+         tal:attributes="title item/description;
+              href string:${context/absolute_url}/change_iteration?destination=${item/uid};
+              class item/id">
+            <span
+            tal:content="item/title" />
+      </a><br/>
+    </tal:iterations>
+    <a class="close"
+       href="#"
+       title="Close tooltip"
+       i18n:attributes="title"
+       onclick="return false">
+      <span>&nbsp;</span>
+    </a>
+  </div>
+  <b class="notch-bottom"></b>
+</div>
+</html>

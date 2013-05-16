@@ -310,6 +310,36 @@
             }
         });
 
+        $('.iteration').drawer({
+            group: '.iteration',
+            position: "top-left",
+            css_class: "tooltip",
+            offset: [-10, 15],
+            content: function(callback, drawer) {
+                var handle_span = drawer.trigger.parent().
+                    siblings('.handle');
+                var url = drawer.trigger.attr('href');
+                $.get(url + '/ch_iteration', function(data) {
+                    var content = $(data);
+                    $('a', content).not('.close').bind('click', function(evt){
+                        evt.preventDefault();
+                        $.getJSON($(this).attr('href'), function(data) {
+                            if(data === false) {
+                                alert('An error occurred');
+                            }
+                            else {
+                                window.location.reload();
+                            }
+                        });
+                    });
+                    $('a.close', content).click(function(){
+                        drawer.hide();
+                    });
+                    callback(content);
+                });
+            }
+        });
+
         var booking_form = $('#booking-tooltip-form').detach();
         $(".bookform").each(function () {
             var trigger = $(this);

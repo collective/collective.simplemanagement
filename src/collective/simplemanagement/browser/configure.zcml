@@ -55,6 +55,21 @@
       />
   </browser:pages>
 
+  <browser:pages
+    for="..interfaces.IStory"
+    class=".ch_iteration.ChangeIteration"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View">
+      <browser:page
+        attribute="ch_iteration"
+        name="ch_iteration"
+      />
+      <browser:page
+        attribute="change_iteration"
+        name="change_iteration"
+      />
+  </browser:pages>
+
   <browser:page
     for="..interfaces.IIteration"
     name="story_move"
