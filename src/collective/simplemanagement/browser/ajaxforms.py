@@ -100,11 +100,20 @@ class ReloadBooking(Mixin):
 
     def process(self):
         view = self.context.restrictedTraverse('view')
-        bookings = view.get_booking()
         template = PageTemplateFile("templates/macros.pt")
+
+        bookings = view.get_booking()
         renderer = MacroRenderer(template, 'booking-list', context=self.context)
-        html = renderer(**dict(booking_list=bookings))
-        self.success.update({'html': html})
+        bookings_html = renderer(**dict(booking_list=bookings))
+
+        timing = view.timing()
+        renderer = MacroRenderer(template, 'story-timing', context=self.context)
+        timing_html = renderer(**dict(timing=timing))
+
+        self.success.update({
+            'bookings_html': bookings_html,
+            'timing_html': timing_html
+        })
         return self.success
 
 
