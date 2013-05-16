@@ -4,6 +4,7 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- added booking action to iteration view [miziodel]
 - Ajaxified add story form [simahawk]
 - Add story form hidden by default [simahawk]
 - Add close icon to actions tooltips [simahawk]

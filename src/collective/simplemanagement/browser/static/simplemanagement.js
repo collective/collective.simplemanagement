@@ -211,7 +211,7 @@
             width:'70%'
         });
 
-        $('.story-quickview').prepOverlay({
+        $('.quick-booking').prepOverlay({
             subtype: 'ajax',
             filter: common_content_filter,
             formselector: 'form#booking_form',
@@ -220,6 +220,12 @@
                     window.location.reload();
                 }
             },
+            width:'80%'
+        });
+
+        $('.story-quickview').prepOverlay({
+            subtype: 'ajax',
+            filter: common_content_filter,
             width:'80%'
         });
 

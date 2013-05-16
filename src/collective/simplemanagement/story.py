@@ -72,6 +72,8 @@ class View(grok.View):
     grok.require('zope2.View')
 
     def user_can_booking(self):
+        if self.request.get('nobook'):
+            return False
         return checkPermission('simplemanagement.AddBooking', self.context)
 
     def get_epic(self):
