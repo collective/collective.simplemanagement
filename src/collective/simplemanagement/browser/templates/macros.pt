@@ -59,8 +59,14 @@
          title="View details"
          class="story-quickview"
          i18n:attributes="title"
-         tal:attributes="href story/url">
+         tal:attributes="href python:story['url'] + '?nobook=1'">
         <span i18n:translate="">Details</span></a>
+      <a href=""
+         title="Booking"
+         class="quick-booking"
+         i18n:attributes="title"
+         tal:attributes="href story/url">
+        <span i18n:translate="">Booking</span></a>
       <a href=""
          tal:condition="story/can_edit"
          title="Edit story"
@@ -68,6 +74,14 @@
          tal:attributes="href python:story['url'] + '/quickedit?ajax_load=1&ajax_include_head=1'"
          i18n:attributes="title">
          <span i18n:translate="">Edit</span></a>
+      <a href="#"
+         tal:condition="story/can_edit"
+         title="Change iteration"
+         class="iteration"
+         i18n:attributes="title"
+         tal:attributes="href story/url"
+         onclick="return false">
+         <span>Iteration</span></a>
       <a href="#"
          tal:condition="story/can_review"
          title="Change status"

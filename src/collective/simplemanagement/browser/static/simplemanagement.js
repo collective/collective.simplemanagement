@@ -211,7 +211,7 @@
             width:'70%'
         });
 
-        $('.story-quickview').prepOverlay({
+        $('.quick-booking').prepOverlay({
             subtype: 'ajax',
             filter: common_content_filter,
             formselector: 'form#booking_form',
@@ -220,6 +220,12 @@
                     window.location.reload();
                 }
             },
+            width:'80%'
+        });
+
+        $('.story-quickview').prepOverlay({
+            subtype: 'ajax',
+            filter: common_content_filter,
             width:'80%'
         });
 
@@ -293,6 +299,36 @@
                                     'done in_progress suspended todo');
                                 handle_span.addClass(data);
                                 drawer.hide();
+                            }
+                        });
+                    });
+                    $('a.close', content).click(function(){
+                        drawer.hide();
+                    });
+                    callback(content);
+                });
+            }
+        });
+
+        $('.iteration').drawer({
+            group: '.iteration',
+            position: "top-left",
+            css_class: "tooltip",
+            offset: [-10, 15],
+            content: function(callback, drawer) {
+                var handle_span = drawer.trigger.parent().
+                    siblings('.handle');
+                var url = drawer.trigger.attr('href');
+                $.get(url + '/ch_iteration', function(data) {
+                    var content = $(data);
+                    $('a', content).not('.close').bind('click', function(evt){
+                        evt.preventDefault();
+                        $.getJSON($(this).attr('href'), function(data) {
+                            if(data === false) {
+                                alert('An error occurred');
+                            }
+                            else {
+                                window.location.reload();
                             }
                         });
                     });
