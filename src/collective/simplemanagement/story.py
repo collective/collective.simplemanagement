@@ -10,6 +10,7 @@ from plone.dexterity.content import Container
 from plone.dexterity.utils import createContentInContainer
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from .booking import BookingForm
@@ -87,14 +88,16 @@ class View(grok.View):
         obj = brain.getObject()
         description = brain.Description
         description = description and description.splitlines()
+        user_details = get_user_details(self.context, brain.Creator)
         booking = {
-            'title': brain.Title,
-            'description': description,
+            # we force to unicode since the macro rendering engine needs unicode
+            'title': safe_unicode(brain.Title),
+            'description': safe_unicode(description),
             'time': brain.time,
-            'href': brain.getURL(),
+            'href': safe_unicode(brain.getURL()),
             'date': self.context.toLocalizedTime(brain.date.isoformat()),
             'related': obj.get_related(),
-            'creator': get_user_details(self.context, brain.Creator)
+            'creator': safe_unicode(user_details)
         }
         return booking
 

@@ -1,3 +1,5 @@
+#-*- coding: utf8 -*-
+
 # taken from https://pypi.python.org/pypi/anthill.tal.macrorenderer/
 # and updated
 
@@ -67,7 +69,7 @@ class MacroRenderer(object):
 
         self._ensure_context()
 
-        output = StringIO(u'')
+        output = StringIO('')
         try:
             context = self.pt.pt_getContext()
         except TypeError:
@@ -75,6 +77,7 @@ class MacroRenderer(object):
 
         # context['options'] = kw
         context.update(kw)
+        import pdb;pdb.set_trace()
 
         self._patch()
         TALInterpreter(self.m_program, None, self.pt.pt_getEngineContext(context), output)()

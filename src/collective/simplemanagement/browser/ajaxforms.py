@@ -1,3 +1,5 @@
+#-*- coding: utf8 -*-
+
 import datetime
 import json
 from decimal import Decimal
