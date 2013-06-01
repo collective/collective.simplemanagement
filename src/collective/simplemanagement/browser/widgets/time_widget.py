@@ -3,6 +3,8 @@ from decimal import Decimal
 from zope.interface import implementsOnly, implementer
 from zope.component import adapter
 from zope.schema.interfaces import IField
+from zope.schema.fieldproperty import FieldProperty
+
 from z3c.form.interfaces import IFieldWidget
 from z3c.form.interfaces import IFormLayer
 from z3c.form.widget import Widget
@@ -16,6 +18,10 @@ from .interfaces import ITimeWidget
 class TimeWidget(HTMLTextInputWidget, Widget):
     implementsOnly(ITimeWidget)
     klass = u"time-widget"
+    show_min = FieldProperty(ITimeWidget['show_min'])
+    hour_free_input = FieldProperty(ITimeWidget['hour_free_input'])
+    hour_start = FieldProperty(ITimeWidget['hour_start'])
+    hour_stop = FieldProperty(ITimeWidget['hour_stop'])
 
     @property
     def current_hour(self):
@@ -37,10 +43,8 @@ class TimeWidget(HTMLTextInputWidget, Widget):
         return None
 
     def hours(self):
-        # (Pdb++) self.value
-        # '0|0'  ???????
         hour = self.current_hour
-        for i in range(1, 9):
+        for i in xrange(self.hour_start, self.hour_stop + 1):
             item = {
                 'value': i,
                 'selected': hour == i
@@ -72,7 +76,7 @@ def TimeFieldWidget(field, request):
 class TimeConverter(DecimalDataConverter):
 
     def toWidgetValue(self, value):
-        import pdb;pdb.set_trace()
+        # import pdb;pdb.set_trace()
         # res = super(self.__class__, self).toWidgetValue(value)
         # print res
         pass

@@ -23,7 +23,8 @@
          tal:attributes="name string:${view/name}-empty-marker;
                          value view/value;" />
 
-  <select class="hour"
+  <select tal:condition="not:view/hour_free_input"
+          class="hour"
           tal:attributes="name string:${view/name}-hour">
     <option value="0">--</option>
     <tal:opt repeat="item view/hours">
@@ -35,7 +36,13 @@
     </tal:opt>
   </select>
 
+  <input tal:condition="view/hour_free_input"
+         tal:attributes="name string:${view/name}-hour;
+                         value view/current_hour"
+         />
+
   <select class="minute"
+          tal:condition="view/show_min"
           tal:attributes="name string:${view/name}-minute">
     <option value="0">--</option>
     <tal:opt repeat="item view/minutes">
