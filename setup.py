@@ -37,6 +37,7 @@ setup(
         'plone.app.collection',
         'plone.app.dexterity [grok,relations]',
         'plone.app.relationfield',
+        'plone.autoform >= 1.4',
         'plone.formwidget.contenttree',
         'plone.namedfile [blobs]',
         'plone.app.blocks',

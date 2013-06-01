@@ -11,6 +11,7 @@ from plone.app.textfield import RichText
 
 from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
+from ..browser.widgets.time_widget import TimeFieldWidget
 from .. import _
 
 
@@ -41,6 +42,10 @@ class IStory(form.Schema):
         required=False
     )
 
+    form.widget('estimate',
+                TimeFieldWidget,
+                show_min=False,
+                hour_free_input=True)
     estimate = schema.Decimal(
         title=_(u"Estimate (man hours)"),
         default=Decimal('0.00')

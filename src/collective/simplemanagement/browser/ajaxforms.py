@@ -12,6 +12,7 @@ from .. import logger
 from ..bookingholes import create_hole
 from ..story import create_story
 from ..story import View as StoryView
+from ..story import StoryQuickForm
 from ..configure import Settings
 from ..booking import BookingForm
 
@@ -61,6 +62,7 @@ class Mixin(BrowserView):
 class CreateHole(Mixin):
 
     def process(self):
+        # TODO: use a form in here
         date = [int(x) for x in self.request['date'].split('-')]
         date = datetime.date(*date),
         time = int(self.request['time'])
@@ -81,12 +83,8 @@ class CreateHole(Mixin):
 class AddStory(Mixin):
 
     def process(self):
-        form = self.request.form
-        data = {}
-        for i in ('title', 'estimate'):
-            data[i] = form.get("form.widgets.%s" % i)
-        data['estimate'] = Decimal(data['estimate'])
-        create_story(self.context, data)
+        form = StoryQuickForm(self.context, self.request)
+        form.update()
         return self.success
 
 

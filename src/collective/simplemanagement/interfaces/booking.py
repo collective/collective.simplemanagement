@@ -20,8 +20,8 @@ class IBooking(form.Schema):
         default=date.today()
     )
 
+    form.widget('time', TimeFieldWidget)
     time = schema.Decimal(title=_(u"Hours"))
-    form.widget(time=TimeFieldWidget)
 
     related = RelationChoice(
         title=_(u"Related activity"),

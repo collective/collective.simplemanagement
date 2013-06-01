@@ -13,6 +13,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from .browser.widgets.time_widget import TimeFieldWidget
+
 from .booking import BookingForm
 from .interfaces import IStory
 from .interfaces import IQuickForm
@@ -116,12 +118,17 @@ class View(grok.View):
 
 class StoryQuickForm(form.AddForm):
     template = ViewPageTemplateFile("browser/templates/quick_form.pt")
-    fields = field.Fields(IQuickForm) + \
-        field.Fields(IStory).select('estimate')
     container = None
     description = _(
         u"When you add a story it will be put in the "
         u"first current iteration whether exists or in the project backlog")
+
+    @property
+    def fields(self):
+        fields = field.Fields(IQuickForm) + \
+            field.Fields(IStory).select('estimate')
+        fields['estimate'].widgetFactory = TimeFieldWidget
+        return fields
 
     def create(self, data):
         return create_story(self.context, data, reindex=False)
@@ -134,6 +141,11 @@ class StoryQuickForm(form.AddForm):
             return self.request.HTTP_REFERER
 
         return self.context.absolute_url()
+
+    def updateWidgets(self):
+        super(StoryQuickForm, self).updateWidgets()
+        self.widgets['estimate'].hour_free_input = 1
+        self.widgets['estimate'].show_min = 0
 
 
 class ProjectStoryQuickForm(StoryQuickForm):
