@@ -223,6 +223,15 @@
 
   <browser:page
     for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    name="compass"
+    class=".compass.Compass"
+    layer="..interfaces.IBrowserLayer"
+    permission="simplemanagement.ManageProject"
+    template="templates/compass.pt"
+  />
+
+  <browser:page
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
     name="worklog_backend"
     class=".worklog.WorklogBackend"
     layer="..interfaces.IBrowserLayer"

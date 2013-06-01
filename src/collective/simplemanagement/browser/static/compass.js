@@ -12,4 +12,11 @@
         this._data = data;
     };
 
+    compass.Project = function(options) {
+    };
+
+    compass.Projects = function(data) {
+        this._data = data;
+    };
+
 })(jQuery);

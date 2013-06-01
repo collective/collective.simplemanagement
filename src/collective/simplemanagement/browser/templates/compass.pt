@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.simplemanagement">
+  <head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1);
+
+                             disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
+  </head>
+  <body metal:use-macro="content">
+
+    <metal:bodytext fill-slot="main">
+      <metal:main define-macro="main"
+                  tal:define="helpers context/@@sm_helpers;">
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+        <h1 class="documentFirstHeading" i18n:translate="">Compass</h1>
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+        <div id="content-core" class="row">
+          <div class="cell position-0 width-3">
+            <h2 i18n:translate="">People</h2>
+          </div>
+          <div class="cell position-3 width-10">
+            <h2 i18n:translate="">Active projects</h2>
+          </div>
+          <div class="cell position-13 width-3">
+            <h2 i18n:translate="">Inactive projects</h2>
+          </div>
+        </div>
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+      </metal:main>
+    </metal:bodytext>
+  </body>
+</html>
