@@ -4,6 +4,8 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Improve TimeWidget and use it for story form to fix #1 [simahawk]
+- Depend on plone.autoform >= 1.4 [simahawk]
 - added change iteration action to iteration view [miziodel]
 - added booking action to iteration view [miziodel]
 - Ajaxified add story form [simahawk]
