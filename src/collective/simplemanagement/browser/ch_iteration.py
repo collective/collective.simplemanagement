@@ -1,5 +1,8 @@
 import json
 
+from Acquisition import aq_inner
+from Acquisition import aq_parent
+
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
@@ -19,7 +22,7 @@ class ChangeIteration(BrowserView):
         """return a list of iterations available for the context
         """
         iterations = []
-        context_iteration = self.context.aq_parent.id
+        iteration_context = aq_parent(aq_inner(self.context))
         project = get_project(self.context)
         query = {'path': {'query': '/'.join(project.getPhysicalPath())},
                  'portal_type': 'Iteration',
@@ -31,7 +34,7 @@ class ChangeIteration(BrowserView):
                 'uid': brain.UID,
                 'title': brain.Title,
                 'description': brain.description,
-                'available': context_iteration != brain.id,
+                'available': iteration_context.id != brain.getId,
             })
 
         self.iterations = iterations
