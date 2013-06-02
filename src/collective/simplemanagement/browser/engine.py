@@ -77,10 +77,9 @@ class MacroRenderer(object):
 
         # context['options'] = kw
         context.update(kw)
-        import pdb;pdb.set_trace()
 
-        self._patch()
+        # self._patch()
         TALInterpreter(self.m_program, None, self.pt.pt_getEngineContext(context), output)()
-        self._unpatch()
+        # self._unpatch()
 
         return output.getvalue()
