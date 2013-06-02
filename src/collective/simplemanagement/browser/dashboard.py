@@ -34,6 +34,7 @@ from ..utils import get_wf_state_info
 from ..utils import get_employee_ids
 from ..utils import get_user_details
 from ..utils import get_project
+from ..booking import create_booking
 from .widgets.date_widget import BookingDateFieldWidget
 from .widgets.time_widget import TimeFieldWidget
 
@@ -45,20 +46,8 @@ class BookingForm(form.AddForm):
     fields['time'].widgetFactory = TimeFieldWidget
     fields['related'].widgetFactory = text.TextFieldWidget
 
-    convert_funcs = {
-        'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
-    }
-
     def create(self, data):
-        item = createContentInContainer(
-            self.context,
-            'Booking',
-            title=data.pop('title'))
-        for k, v in data.items():
-            if v and k in self.convert_funcs:
-                v = self.convert_funcs[k](v)
-            setattr(item, k, v)
-        return item
+        create_booking(data, reindex=0)
 
     def add(self, obj):
         obj.reindexObject()
