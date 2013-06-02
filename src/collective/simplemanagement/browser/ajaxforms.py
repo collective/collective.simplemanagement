@@ -27,6 +27,7 @@ class Mixin(BrowserView):
         'success': True,
         'error': None
     }
+    FormKlass = None
 
     def __init__(self, context, request):
         self.context = context
@@ -40,12 +41,20 @@ class Mixin(BrowserView):
             logger.exception(self.error_msg)
             result = {
                 'success': False,
-                'error': str(e)
+                'error': self.error_msg + '\n' + str(e)
             }
         self.request.response.setHeader("Content-type", "application/json")
         return json.dumps(result)
 
     def process(self):
+        FormKlass = getattr(self, 'FormKlass')
+        if FormKlass is not None:
+            form = FormKlass(self.context, self.request)
+            form.update()
+            return self.success
+        return self._process()
+
+    def _process(self):
         """ process ajax request
         """
         raise NotImplementedError("You mus provide a `process` method!")
@@ -82,18 +91,12 @@ class CreateHole(Mixin):
 
 class AddStory(Mixin):
 
-    def process(self):
-        form = StoryQuickForm(self.context, self.request)
-        form.update()
-        return self.success
+    FormKlass = StoryQuickForm
 
 
 class AddBooking(Mixin):
 
-    def process(self):
-        form = BookingForm(self.context, self.request)
-        form.update()
-        return self.success
+    FormKlass = BookingForm
 
 
 class ReloadBooking(Mixin):
@@ -119,7 +122,7 @@ class ReloadBooking(Mixin):
 
 class ReloadBookingForm(Mixin):
 
-    def process(self):
+    def _process(self):
         view = StoryView(self.context, self.request)
         self.success.update({'html': view.form_contents()})
         return self.success
