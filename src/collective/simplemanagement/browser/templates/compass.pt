@@ -20,9 +20,26 @@
         <h1 class="documentFirstHeading" i18n:translate="">Compass</h1>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
-        <div id="content-core" class="row">
+        <div id="content-core" class="compassview row"
+             tal:attributes="data-roles view/roles;
+                             data-people view/employees;
+                             data-urls view/urls">
           <div class="cell position-0 width-3">
             <h2 i18n:translate="">People</h2>
+            <input type="text"
+                   name="filter-people"
+                   value=""
+                   class="filter-data"
+                   placeholder="Filter by name..."
+                   data-bind="value: people_filter, valueUpdate: 'afterkeydown'"
+                   i18n:attributes="placeholder" />
+            <div class="container" data-bind="foreach: shown_people">
+              <div class="thumbnail user" data-bind="attr: { 'data-id': id }">
+                <img data-bind="attr: { src: avatar }"
+                     width="100" />
+                <span class="title" data-bind="text: name"></span>
+              </div>
+            </div>
           </div>
           <div class="cell position-3 width-10">
             <h2 i18n:translate="">Active projects</h2>
