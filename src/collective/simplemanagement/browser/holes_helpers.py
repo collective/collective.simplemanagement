@@ -16,7 +16,7 @@ class FlushHoles(BrowserView):
             # just a guard for accidental calling
             return '\n'.join([
                 'you must provide a "do-it-really" in order to flush!',
-                'you can also pass a "userid" for dropping only single user\'s holes'
+                'you also must provide a "userid" for dropping only single user\'s holes'
             ])
         result = 'BOOKING HOLES UTILITY FLUSHED'
         util = component.getUtility(IBookingHoles)
@@ -28,5 +28,13 @@ class FlushHoles(BrowserView):
             else:
                 result = 'userid %s not found!' % userid
         else:
-            util.users = OOBTree()
+            if self.request.get('do-it-really-really'):
+                util.users = OOBTree()
+            else:
+                return '\n'.join([
+                    'you must provide a "do-it-really-really" in order to flush all data REALLY!!',
+                    '#############################################################################',
+                    "WARNING! you are going to drop all booking holes for this portal!!!",
+                    '#############################################################################',
+                ])
         return result
