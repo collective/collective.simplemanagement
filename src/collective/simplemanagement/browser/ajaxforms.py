@@ -73,7 +73,7 @@ class CreateHole(Mixin):
     def process(self):
         # TODO: use a form in here
         date = [int(x) for x in self.request['date'].split('-')]
-        date = datetime.date(*date),
+        date = datetime.date(*date)
         time = int(self.request['time'])
         reason = self.request['reason']
 
