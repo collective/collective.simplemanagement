@@ -38,3 +38,15 @@ class FlushHoles(BrowserView):
                     '#############################################################################',
                 ])
         return result
+
+
+class HolesMgmt(BrowserView):
+
+    def holes(self):
+        util = component.getUtility(IBookingHoles)
+        for hole in util:
+            # {'hours': Decimal('7.0'),
+            # 'reason': 'undefined',
+            # 'user_id': 'm.delmonte',
+            # 'day': (datetime.date(2013, 5, 30),)}
+            yield hole

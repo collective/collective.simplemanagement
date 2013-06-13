@@ -96,11 +96,27 @@
 
   <browser:page
     for="*"
+    name="holes-mgmt"
+    class=".holes_helpers.HolesMgmt"
+    layer="..interfaces.IBrowserLayer"
+    template="templates/holes_mgmt.pt"
+    permission="cmf.ManagePortal"
+    />
+
+  <!--
+  *****************************************************
+  THIS VIEW IS POTENTIALLY DANGEROUS SINCE IT CAN FLUSH
+  ALL THE BOOKING HOLES OF YOUR INSTANCE.
+  UNCOMMENT THIS ONLY IF YOU REALLY NEED THIS!
+  *****************************************************
+  <browser:page
+    for="*"
     name="flush-holes"
     class=".holes_helpers.FlushHoles"
     layer="..interfaces.IBrowserLayer"
     permission="cmf.ManagePortal"
-  />
+    />
+  -->
 
   <browser:page
     for="*"
