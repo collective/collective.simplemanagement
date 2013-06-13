@@ -16,3 +16,4 @@ from booking import IBookingHoles
 from timeline import ITimeline
 from backlog import IBacklogView
 from settings import ISettings
+from utilities import IMassiveBookingUploader
