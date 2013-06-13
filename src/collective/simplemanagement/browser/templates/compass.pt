@@ -23,7 +23,8 @@
         <div id="content-core" class="compassview row"
              tal:attributes="data-roles view/roles;
                              data-people view/employees;
-                             data-urls view/urls">
+                             data-urls view/urls;
+                             data-translations view/translations">
           <div class="cell position-0 width-3">
             <h2 i18n:translate="">People</h2>
             <input type="text"
@@ -36,13 +37,65 @@
             <div class="container" data-bind="foreach: shown_people">
               <div class="thumbnail user" data-bind="attr: { 'data-id': id }">
                 <img data-bind="attr: { src: avatar }"
-                     width="100" />
+                     width="80" />
                 <span class="title" data-bind="text: name"></span>
               </div>
             </div>
           </div>
           <div class="cell position-3 width-10">
             <h2 i18n:translate="">Active projects</h2>
+            <div class="container" data-bind="foreach: active_projects">
+              <div class="project" data-bind="attr: { 'data-id': id }">
+                <div>
+                  <div data-bind="css: css_class">&nbsp;</div>
+                  <div>
+                    <a href="#" class="arrow"
+                       title="title"
+                       data-bind="click: toggle"
+                       i18n:attributes="title"
+                       i18n:translate="">Open</a>
+                    <h3 data-bind="text: name"></h3>
+                  </div>
+                  <div data-bind="visible: !(open())">
+                    <span data-bind="text: formattedEffort"></span>
+                  </div>
+                  <div class="people float-right"
+                       data-bind="visible: !(open()), foreach: people">
+                    <div class="thumbnail-small user"
+                         data-bind="attr: { 'data-id': id }">
+                      <img data-bind="attr: { src: avatar }"
+                           width="50" />
+                      <span class="title" data-bind="text: role"></span>
+                    </div>
+                  </div>
+                </div>
+                <div data-bind="visible: open">
+                  <p class="spinner"
+                     data-bind="if: stage() < 2">Loading data...</p>
+                  <div data-bind="if: stage() >= 2">
+                    <div class="iterations" data-bind="foreach: iterations">
+                      <div class="iteration">
+                        <a href="#"
+                           title="Delete"
+                           i18n:attributes="title"
+                           i18n:translate="">Delete</a>
+                      </div>
+                    </div>
+                    <div class="people float-right">
+                      <!-- ko foreach: people -->
+                      <div class="thumbnail-small user"
+                           data-bind="attr: { 'data-id': id }">
+                        <img data-bind="attr: { src: avatar }"
+                             width="50" />
+                        <span class="title" data-bind="text: role"></span>
+                      </div>
+                      <!-- /ko -->
+                      <div class="thumbnail-small user placeholder"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="cell position-13 width-3">
             <h2 i18n:translate="">Inactive projects</h2>

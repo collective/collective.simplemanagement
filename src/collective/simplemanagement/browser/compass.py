@@ -8,6 +8,7 @@ from zope.publisher.interfaces import IPublishTraverse, NotFound
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 from ..utils import get_employee_ids, get_user_details, jsonmethod, shorten
+from .. import messageFactory as _
 
 
 class Compass(BrowserView):
@@ -18,6 +19,16 @@ class Compass(BrowserView):
         super(Compass, self).__init__(context, request)
         self.method = None
 
+    def translations(self):
+        return json.dumps({
+            "week": _("week"),
+            "weeks": _("{week} weeks"),
+            "day": _("{day} day"),
+            "days": _("{day} days"),
+            "no_effort": _(u"No effort planned"),
+            "effort": _(u"{days} in the next {weeks}")
+        })
+
     def roles(self):
         roles_factory = getUtility(
             IVocabularyFactory,
@@ -27,7 +38,7 @@ class Compass(BrowserView):
         for term in roles_factory(self.context):
             roles[term.token] = {
                 'name': term.title,
-                'shortname': shorten(term.title, 4)
+                'shortname': shorten(term.title, 3)
             }
         return json.dumps(roles)
 

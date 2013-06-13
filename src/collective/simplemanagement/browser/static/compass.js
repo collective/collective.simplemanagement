@@ -8,6 +8,13 @@
     }
     var compass = sm.compass;
 
+    compass.format = function(format, data) {
+        return format.replace(/\{([a-zA-Z_0-9]+)\}/g,
+                              function(a, g1) { return data[g1]; });
+    };
+
+    var f = compass.format;
+
     compass.Project = function(app, data) {
         this.app = app;
         this.id = ko.observable(data.id);
@@ -21,6 +28,7 @@
         this.end = ko.observable(null);
         this.iterations = ko.observableArray([]);
         this.stage = ko.observable(0);
+        this.open = ko.observable(false);
         if(this.active()) {
             this._people(data.people);
             if((typeof data.effort) !== "undefined")
@@ -30,9 +38,43 @@
             this.stage(1);
         }
         this.people = ko.computed(this.getPeople, this);
+        this.formattedEffort = ko.computed(this.getFormattedEffort, this);
+        this.css_class = ko.computed(function() {
+            return 'status-indicator state-' + this.status();
+        }, this);
     };
 
     compass.Project.prototype = {
+        toggle: function() {
+            var open = this.open(), stage = this.stage();
+            if(!open && stage < 2)
+                this.load();
+            if(open) this.open(false);
+            else this.open(true);
+        },
+        getFormattedEffort: function() {
+            var effort = this.effort(),
+                end = this.end(),
+                now = new Date(),
+                n_weeks, weeks, days;
+            if(effort === null)
+                return this.app.translate("no_effort");
+            if(effort === 1)
+                days = f(this.app.translate("day"), { day: effort });
+            else
+                days = f(this.app.translate("days"), { day: effort });
+            n_weeks = parseInt(
+                (end.getTime()-now.getTime())/(1000*60*60*24*7),
+                10);
+            if(n_weeks <= 0) n_weeks = 1;
+            if(n_weeks === 1)
+                weeks = f(this.app.translate("week"), { week: n_weeks });
+            else
+                weeks = f(this.app.translate("weeks"), { week: n_weeks });
+            return f(
+                this.app.translate("effort"),
+                { days: days, weeks: weeks });
+        },
         getPeople: function() {
             var i, l, role, user_id, user_data;
             var people_map = this._people();
@@ -73,10 +115,11 @@
         }
     };
 
-    compass.Main = function(roles, people, urls) {
+    compass.Main = function(roles, people, urls, translations) {
         this.roles = roles;
         this._people = people;
         this.urls = urls;
+        this.translations = translations;
         this.people_filter = ko.observable('');
         this.shown_people = ko.computed(this.getShownPeople, this);
         this.active_projects = ko.observableArray([]);
@@ -86,6 +129,9 @@
     };
 
     compass.Main.prototype = {
+        translate: function(id) {
+            return this.translations[id];
+        },
         getShownPeople: function() {
             var f_id, f_name;
             var people = [];
@@ -135,7 +181,8 @@
             var app = new compass.Main(
                 $.parseJSON(element.attr('data-roles')),
                 $.parseJSON(element.attr('data-people')),
-                $.parseJSON(element.attr('data-urls')));
+                $.parseJSON(element.attr('data-urls')),
+                $.parseJSON(element.attr('data-translations')));
             app.load();
             compass.apps.push(app);
             ko.applyBindings(app, this);
