@@ -1,6 +1,8 @@
 from datetime import date
 
 from zope.interface import Interface
+from zope.interface import invariant
+from zope.interface import Invalid
 from zope import schema
 
 from z3c.relationfield.schema import RelationChoice
@@ -13,21 +15,45 @@ from ..browser.widgets.time_widget import TimeFieldWidget
 from .. import _
 
 
+def have_time(value):
+    if value:
+        return True
+    print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+    raise Invalid("AAAAAAAAAAAAAAAAaaa")
+
+
 class IBooking(form.Schema):
 
     date = schema.Date(
         title=_(u"Date"),
-        default=date.today()
+        default=date.today(),
+        required=True,
     )
 
     form.widget('time', TimeFieldWidget)
-    time = schema.Decimal(title=_(u"Hours"))
+    time = schema.Decimal(
+        title=_(u"Hours"),
+        required=True,
+        constraint=have_time,
+    )
 
     related = RelationChoice(
         title=_(u"Related activity"),
         source=ObjPathSourceBinder(),
         required=False
     )
+
+    # @invariant
+    # def validate_time(data):
+    #     if not data.time:
+    #         print 'aaaaaaaaaaaaaaaaaaaa'
+    #         raise Invalid("NOOOOOOOOOOOOOOOOOO")
+
+# @form.validator(field=IBooking['time'])
+# def validate_time(value):
+#     if not value:
+#         print 'no value for time'
+#         raise schema.ValidationError(_(u"You must provide a time!"))
 
 
 class IBookingHole(Interface):
