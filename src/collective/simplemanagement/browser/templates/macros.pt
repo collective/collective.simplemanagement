@@ -493,7 +493,7 @@
 
   <metal:addstory-form define-macro="addstory-form">
     <div id="addstory-container" class="clearfix simplemanagement-addstory">
-      <h3><a class="open" i18n:translate="" href="#">Add Story</a></h3>
+      <h3>Add Story</h3>
       <div id="addstory-form"
            class="simplemanagement-addstory-form-wrapper"
            tal:content="structure view/add_story_form" />

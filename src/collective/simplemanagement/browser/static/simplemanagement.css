@@ -783,22 +783,27 @@ table#tickets-listing {
 /* Add story form */
 
 #addstory-container h3 a {
-    background: url("./spindown-closed.gif") no-repeat scroll 0 50% transparent;
     padding-left: 1em;
 }
 
-#addstory-container h3 a.open {
-    background-image: url('./spindown-open.gif');
+#addstory-container div.formControls{
+    float: right;
+    margin-top: -40px;
+}
+
+.clearfix.simplemanagement-addstory {
+    border: 1px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    margin-bottom: 10px;
+    width: 70%;
 }
 
 #addstory-form {
-    width: 60%;
     padding: 1em 1.2em 0 1em;
-    border: 1px solid #ddd;
     margin: 0 0 1em 0;
 }
 
-#project-view #addstory-form { display: none }
+/*#project-view #addstory-form { display: none }*/
 
 #content a.btn {
     display: inline-block;
