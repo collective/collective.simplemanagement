@@ -4,6 +4,9 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Added load content profile. This step allow to import sample data
+  [gborelli]
+
 - Improve TimeWidget and use it for story form to fix #1 [simahawk]
 - Depend on plone.autoform >= 1.4 [simahawk]
 - added change iteration action to iteration view [miziodel]

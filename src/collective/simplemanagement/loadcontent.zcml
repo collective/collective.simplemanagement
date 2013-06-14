@@ -1,0 +1,46 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:transmogrifier="http://namespaces.plone.org/transmogrifier"
+    i18n_domain="collective.simplemanagement">
+
+    <include package="collective.transmogrifier" file="meta.zcml"/>
+    <include package="collective.transmogrifier.sections"/>
+    <include package="plone.app.transmogrifier"/>
+    <include package="transmogrify.dexterity"/>
+
+    <genericsetup:registerProfile
+        name="loadcontent"
+        title="Simple management (Load content)"
+        directory="profiles/loadcontent"
+        description="Load default content of the collective.simplemanagement package"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+
+    <genericsetup:importStep
+        name="loadcontent"
+        title="Setup extra develop steps"
+        description=""
+        handler=".loadcontent.load_content">
+      <depends name="plone-final"/>
+    </genericsetup:importStep>
+
+
+    <genericsetup:importStep
+        name="create_users"
+        title="Setup users for testing"
+        description=""
+        handler=".loadcontent.create_users">
+      <depends name="plone-final"/>
+    </genericsetup:importStep>
+
+
+    <transmogrifier:registerConfig
+         name="loadcontent"
+         title="Load content"
+         configuration="loadcontent.cfg"
+         />
+
+</configure>

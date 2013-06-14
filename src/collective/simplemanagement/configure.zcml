@@ -1,4 +1,5 @@
 <configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:zcml="http://namespaces.zope.org/zcml"
            xmlns:i18n="http://namespaces.zope.org/i18n"
            xmlns:grok="http://namespaces.zope.org/grok"
            i18n_domain="collective.simplemanagement">
@@ -11,6 +12,21 @@
   <include file="indexers.zcml" />
   <include package=".browser" />
   <include package=".portlets" />
+
+  <!--
+    Extra generic setup profile to import sample data.
+    It depends on:
+      * plone.app.transmogrifier
+      * transmogrify.dexterity
+
+    Use this buildout configuration to enable it:
+    eggs =
+      collective.simplemanagement [loadcontent]
+   -->
+  <configure zcml:condition="installed collective.transmogrifier">
+    <include file="loadcontent.zcml" />
+  </configure>
+
 
   <subscriber for=".interfaces.IProject
                    zope.lifecycleevent.interfaces.IObjectAddedEvent"

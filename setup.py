@@ -53,6 +53,10 @@ setup(
             'mock',
             'plone.app.testing'
         ],
+        'loadcontent': [
+            'plone.app.transmogrifier',
+            'transmogrify.dexterity'
+        ]
     },
     entry_points="""
     # -*- Entry points: -*-
