@@ -51,7 +51,20 @@ class Mixin(BrowserView):
         if FormKlass is not None:
             form = FormKlass(self.context, self.request)
             form.update()
-            return self.success
+            data, errors = form.extractData()
+            if not errors:
+                return self.success
+            else:
+                info = []
+                for err in errors:
+                    info.append({
+                        'message': err.message,
+                        'fieldname': err.widget.field.__name__,
+                        'label': err.widget.label,
+                    })
+                self.success['errors'] = info
+                self.success['error'] = True
+                return self.success
         return self._process()
 
     def _process(self):
@@ -97,6 +110,23 @@ class AddStory(Mixin):
 class AddBooking(Mixin):
 
     FormKlass = BookingForm
+
+
+class ReloadStories(Mixin):
+    # XXX: TODO!
+
+    def process(self):
+        view = self.context.restrictedTraverse('view')
+        template = PageTemplateFile("templates/macros.pt")
+
+        stories = view.get_stories()
+        renderer = MacroRenderer(template, 'stories-list', context=self.context)
+        stories_html = renderer(**dict(stories_list=stories))
+
+        self.success.update({
+            'stories_html': stories_html,
+        })
+        return self.success
 
 
 class ReloadBooking(Mixin):

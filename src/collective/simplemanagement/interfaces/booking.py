@@ -1,8 +1,6 @@
 from datetime import date
 
 from zope.interface import Interface
-from zope.interface import invariant
-from zope.interface import Invalid
 from zope import schema
 
 from z3c.relationfield.schema import RelationChoice
@@ -13,13 +11,6 @@ from plone.formwidget.contenttree import ObjPathSourceBinder
 from ..browser.widgets.time_widget import TimeFieldWidget
 
 from .. import _
-
-
-def have_time(value):
-    if value:
-        return True
-    print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-    raise Invalid("AAAAAAAAAAAAAAAAaaa")
 
 
 class IBooking(form.Schema):
@@ -34,7 +25,6 @@ class IBooking(form.Schema):
     time = schema.Decimal(
         title=_(u"Hours"),
         required=True,
-        constraint=have_time,
     )
 
     related = RelationChoice(
@@ -43,17 +33,16 @@ class IBooking(form.Schema):
         required=False
     )
 
-    # @invariant
-    # def validate_time(data):
-    #     if not data.time:
-    #         print 'aaaaaaaaaaaaaaaaaaaa'
-    #         raise Invalid("NOOOOOOOOOOOOOOOOOO")
 
-# @form.validator(field=IBooking['time'])
-# def validate_time(value):
-#     if not value:
-#         print 'no value for time'
-#         raise schema.ValidationError(_(u"You must provide a time!"))
+@form.validator(field=IBooking['time'])
+def validate_time(value):
+    if not value:
+        raise schema.ValidationError(_(u"You must provide a time!"))
+
+
+@form.error_message(field=IBooking['time'], error=schema.ValidationError)
+def validate_time_error(value):
+    return _("You must provide a value for time!")
 
 
 class IBookingHole(Interface):
@@ -67,6 +56,10 @@ class IBookingHole(Interface):
     """
 
     day = schema.Date()
+    form.widget('hours',
+                TimeFieldWidget,
+                show_min=False,
+                hour_free_input=True)
     hours = schema.Decimal()
     user_id = schema.TextLine()
     reason = schema.Choice(
