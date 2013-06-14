@@ -22,6 +22,13 @@ Installation
 Please, refer to `official documentation`__.
 
 
+Metrics
+--------
+
+.. image:: https://secure.travis-ci.org/collective/collective.simplemanagement.png
+    :target: http://travis-ci.org/collective/collective.simplemanagement
+
+
 Credits
 -------
 
