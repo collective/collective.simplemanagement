@@ -446,22 +446,48 @@
 
         // TODO: prevent unload protection!
         $('#booking_form').ajaxForm({
+            /* ajaxify booking form */
             type: 'POST',
             dataType: 'json',
             url: './ajax-create_booking',
             data: $(this).serialize(),
             success: function(result) {
-                if(result.success){
+                var $form = $('#booking_form');
+                // flush errors
+                $form.siblings('.errors').remove();
+                if(result.success && !result.error){
+                    // update booking
                     var $target = $('div.booking');
                     if(!$target.length) {
                         $target = $('<div class="booking" />');
                         $(this).after($target);
                     }
                     reload_booking($target);
-                    reload_booking_form($('#booking_form'));
+                    /* XXX 2013-06-13:
+                    /  do not reload the form because the calendar widget
+                    /  from plone.formwidget.datetime cannot be rebound
+                    /  since it has a lot of inline JS */
+                    // reload_booking_form($('#booking_form'));
+                    // debugger;
+                    // clean up fields manually
+                    // TODO...
+                    return false;
+                }else if (result.success && result.error) {
+                    // show errors
+                    // XXX 2013-06-13: we can do better?
+                    var $errwrapper = $('<div class="errors" />');
+                    $form.after($errwrapper);
+                    var item;
+                    $.each(result.errors, function(){
+                        item = '<div class="error">';
+                        item += '<span class="label">' + this.label + ':</span>';
+                        item += '<span class="message">' + this.message + '</span>';
+                        item += '</div>';
+                        $errwrapper.append(item);
+                    });
                     return false;
                 }else{
-                    alert('error');
+                    alert(data['error']);
                 }
             }
         });
@@ -484,18 +510,36 @@ function reload_booking(sel) {
     );
 }
 
-
-function reload_booking_form(sel) {
+function reload_stories(sel) {
     $.getJSON(
-        './reload-booking-form',
+        './reload-stories',
         function(data){
             if(data['success']===true) {
-                // just replace the content
-                // to avoid rebind of events on the form
-                $(sel).html($(data['html']).html());
+                $(sel).html(data['stories_html']);
             }else{
                 alert(data['error']);
             }
         }
     );
+}
+
+
+function get_booking_form(){
+    $.getJSON(
+        './reload-booking-form',
+        function(data){
+            if(data['success']===true) {
+                return data['html'];
+            }else{
+                return false;
+            }
+        }
+    );
+}
+
+function reload_booking_form(sel) {
+    var content = get_booking_form();
+    if (content) {
+        $(sel).html(content).html();
+    }
 }

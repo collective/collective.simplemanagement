@@ -132,6 +132,23 @@
     display: inline;
 }
 
+#booking-form .errors .label {
+    background: none repeat scroll 0 0 red;
+    border-radius: 5px;
+    color: white;
+}
+#booking-form .errors span {
+    display: inline;
+    font-weight: bold;
+    margin-right: 10px;
+    padding: 5px;
+}
+#booking-form .errors .error {
+    padding: 2px 0px;
+    border: none;
+    margin: 5px 0;
+}
+
 #booking-form .field input[type="text"][name$=".title"],
 #content #booking-form input.text-widget {
     line-height: 100%;
@@ -836,4 +853,8 @@ table#tickets-listing {
 #sm-personaltools-dashboard a{
     padding-top:4px;
     color: white;
+}
+
+.tooltip .ch_iteration li{
+    display: block;
 }

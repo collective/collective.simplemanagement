@@ -51,7 +51,20 @@ class Mixin(BrowserView):
         if FormKlass is not None:
             form = FormKlass(self.context, self.request)
             form.update()
-            return self.success
+            data, errors = form.extractData()
+            if not errors:
+                return self.success
+            else:
+                info = []
+                for err in errors:
+                    info.append({
+                        'message': err.message,
+                        'fieldname': err.widget.field.__name__,
+                        'label': err.widget.label,
+                    })
+                self.success['errors'] = info
+                self.success['error'] = True
+                return self.success
         return self._process()
 
     def _process(self):
