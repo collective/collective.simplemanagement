@@ -160,20 +160,25 @@
             var $link = $('a', $container);
             var $wrapper = $('.simplemanagement-addstory-form-wrapper', $container);
             var $form = $('form', $container);
-
+            var form_prefix = 'formfield-form-widgets';
+            var $title = $('#' + form_prefix + '-title', $wrapper);
+            var $other_fields = $('#' + form_prefix + '-estimate', $wrapper);
             // make sure is always closed on load
-            $wrapper.hide();
-            $link.removeClass('open');
+            // $wrapper.hide();
+            $other_fields.hide();
+            // $link.removeClass('open');
 
             if($('dl.portalMessage', $wrapper).length > 0){
                 $wrapper.css('display', 'block');
                 add_form_link.addClass('open');
             }
 
-            $link.bind('click', function(evt) {
-                $(this).toggleClass('open');
+            $title.bind('keyup', function(evt) {
+                // $(this).toggleClass('open');
                 evt.preventDefault();
-                $wrapper.toggle("slow");
+                if($other_fields.is(':hidden')) {
+                    $other_fields.toggle("slow");
+                }
             });
 
             // ajax submit
@@ -184,9 +189,21 @@
                 data: $form.serialize(),
                 success: function(result) {
                     if(result.success){
-                        $wrapper.toggle('slow');
-                    }else{
-                        alert('error');
+                        // XXX 2013-06-14: handle story listing reload.
+                        // Note: we should extract the macro from "iteration-compact"
+                        // see macros.pt
+
+                        // if(result.success && !result.error){
+                        // // update booking
+                        // var $target = $('div.stories.listing');
+                        // if(!$target.length) {
+                        //     $target = $('div.stories.listing');
+                        //     $(this).after($target);
+                        // }
+                        // reload_stories($target);
+                        // }else{
+                        //     alert(data['error']);
+                        // }
                     }
                 }
             });
