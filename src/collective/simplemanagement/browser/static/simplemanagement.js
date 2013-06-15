@@ -494,11 +494,14 @@
                     if(resp.success && !resp.error){
                         // TODO reload story listing
                         // empty fields
-                        $('input', $title).val('');
+                        $(':input', $title).val('');
                         $other_fields.each(function(){
                             // $(this).toggle('slow');
-                            $('input', $(this)).val('');
+                            $(':input', $(this)).val('');
                         });
+                        // remove token input elements
+                        $('.token-input-token-facebook', $form).remove();
+
                         // $('.formControls', $form).toggle('slow');
                         if(resp.result && resp.result.created) {
                             var $created = $('<div class="created" />');

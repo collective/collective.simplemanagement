@@ -15,6 +15,7 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from collective.z3cform.widgets.token_input_widget import TokenInputFieldWidget
+from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
 from .browser.widgets.time_widget import TimeFieldWidget
 from .booking import BookingForm
@@ -134,10 +135,15 @@ class StoryQuickForm(form.AddForm):
     @property
     def fields(self):
         fields = field.Fields(IQuickForm)
-        fields += field.Fields(IStory).select('estimate', 'text')
+        fields += field.Fields(IStory).select(
+            'estimate',
+            'text',
+            'assigned_to'
+        )
         fields += field.Fields(ICategorization).select('subjects')
         fields['estimate'].widgetFactory = TimeFieldWidget
         fields['subjects'].widgetFactory = TokenInputFieldWidget
+        fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
         return fields
 
     def create(self, data):
