@@ -782,8 +782,9 @@ table#tickets-listing {
 
 /* Add story form */
 
-#addstory-container h3 a {
-    padding-left: 1em;
+#addstory-container h3 {
+    padding-left: 12px;
+    padding-top: 5px;
 }
 
 #addstory-container div.formControls{
@@ -799,8 +800,20 @@ table#tickets-listing {
 }
 
 #addstory-form {
-    padding: 1em 1.2em 0 1em;
+    padding: 0 1.2em 0 1em;
     margin: 0 0 1em 0;
+}
+#addstory-form .created {
+    background-color: green;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+#addstory-form .created a{
+    color: white !important;
+    margin-left: 10px;
+    display: inline-block;
 }
 
 /*#project-view #addstory-form { display: none }*/

@@ -155,60 +155,6 @@
                 new simplemanagement.Planner(this));
         });
 
-        $('.simplemanagement-addstory').each(function() {
-            var $container = $(this);
-            var $link = $('a', $container);
-            var $wrapper = $('.simplemanagement-addstory-form-wrapper', $container);
-            var $form = $('form', $container);
-            var form_prefix = 'formfield-form-widgets';
-            var $title = $('#' + form_prefix + '-title', $wrapper);
-            var $other_fields = $('#' + form_prefix + '-estimate', $wrapper);
-            // make sure is always closed on load
-            // $wrapper.hide();
-            $other_fields.hide();
-            // $link.removeClass('open');
-
-            if($('dl.portalMessage', $wrapper).length > 0){
-                $wrapper.css('display', 'block');
-                add_form_link.addClass('open');
-            }
-
-            $title.bind('keyup', function(evt) {
-                // $(this).toggleClass('open');
-                evt.preventDefault();
-                if($other_fields.is(':hidden')) {
-                    $other_fields.toggle("slow");
-                }
-            });
-
-            // ajax submit
-            $form.ajaxForm({
-                type: 'POST',
-                dataType: 'json',
-                url: './add-story',
-                data: $form.serialize(),
-                success: function(result) {
-                    if(result.success){
-                        // XXX 2013-06-14: handle story listing reload.
-                        // Note: we should extract the macro from "iteration-compact"
-                        // see macros.pt
-
-                        // if(result.success && !result.error){
-                        // // update booking
-                        // var $target = $('div.stories.listing');
-                        // if(!$target.length) {
-                        //     $target = $('div.stories.listing');
-                        //     $(this).after($target);
-                        // }
-                        // reload_stories($target);
-                        // }else{
-                        //     alert(data['error']);
-                        // }
-                    }
-                }
-            });
-        });
-
         $('#overview ul.tabs').tabs("#overview div.panes > div");
 
 
@@ -507,6 +453,83 @@
                     alert(data['error']);
                 }
             }
+        });
+
+
+        $('.simplemanagement-addstory').each(function() {
+            var $container = $(this);
+            var $link = $('a', $container);
+            var $wrapper = $('.simplemanagement-addstory-form-wrapper', $container);
+            var $form = $('form', $container);
+            var form_prefix = 'formfield-form-widgets-';
+            var $title = $('#' + form_prefix + 'title', $wrapper);
+            var $other_fields = $('div[id^="' + form_prefix + '"]').not($title);
+
+            // hide all fields but title on load
+            $other_fields.hide();
+            $('.formControls', $form).hide();
+            $('.created', $wrapper).remove();
+
+            if($('dl.portalMessage', $wrapper).length > 0){
+                $wrapper.css('display', 'block');
+                add_form_link.addClass('open');
+            }
+
+            $title.bind('keyup', function(evt) {
+                // $(this).toggleClass('open');
+                evt.preventDefault();
+                if($other_fields.is(':hidden')) {
+                    $other_fields.toggle('slow');
+                    $('.formControls', $form).toggle('slow');
+                }
+            });
+
+            // ajax submit
+            $form.ajaxForm({
+                type: 'POST',
+                dataType: 'json',
+                url: './add-story',
+                data: $form.serialize(),
+                success: function(resp) {
+                    if(resp.success && !resp.error){
+                        // TODO reload story listing
+                        // empty fields
+                        $('input', $title).val('');
+                        $other_fields.each(function(){
+                            // $(this).toggle('slow');
+                            $('input', $(this)).val('');
+                        });
+                        // $('.formControls', $form).toggle('slow');
+                        if(resp.result && resp.result.created) {
+                            var $created = $('<div class="created" />');
+                            $created.append('<span class="label">' + resp.result.created.msg + '</span>');
+                            var url = '<a class="created-url"'; 
+                            url += 'href="' + resp.result.created.url  +'">';
+                            url += resp.result.created.title + '</a>';
+                            $created.append(url);
+                            $created.hide();
+                            $form.before($created);
+                            $created.toggle('slow');
+                        }
+                        return false;
+                    }else if (resp.success && resp.error) {
+                        // XXX 2013-06-13: we can do better?
+                        var $errwrapper = $('<div class="errors" />');
+                        $form.after($errwrapper);
+                        var item;
+                        $.each(resp.errors, function(){
+                            item = '<div class="error">';
+                            item += '<span class="label">' + this.label + ':</span>';
+                            item += '<span class="message">' + this.message + '</span>';
+                            item += '</div>';
+                            $errwrapper.append(item);
+                        });
+                        return false;
+                    }else{
+                        alert(data['error']);
+                    }
+                }
+            });
         });
 
     });

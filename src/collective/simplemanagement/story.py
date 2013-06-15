@@ -8,13 +8,15 @@ from z3c.form import form, field
 from plone.z3cform import z2
 from plone.dexterity.content import Container
 from plone.dexterity.utils import createContentInContainer
+from plone.app.dexterity.behaviors.metadata import ICategorization
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from .browser.widgets.time_widget import TimeFieldWidget
+from collective.z3cform.widgets.token_input_widget import TokenInputFieldWidget
 
+from .browser.widgets.time_widget import TimeFieldWidget
 from .booking import BookingForm
 from .interfaces import IStory
 from .interfaces import IQuickForm
@@ -29,12 +31,17 @@ from . import messageFactory as _
 
 
 def create_story(context, data, reindex=True):
+    ## XXX FIXME 2013-06-15:
+    ## subjects are stored into 'subject' attribute
+    ## see https://github.com/plone/plone.app.dexterity/blob/master/plone/app/dexterity/behaviors/metadata.py#L331
+    ## we should use behavior magic to do this
+    if 'subjects' in data:
+        data['subject'] = data.pop('subjects')
     item = createContentInContainer(
         context,
         'Story',
-        title=data.pop('title'))
-    for k, v in data.items():
-        setattr(item, k, v)
+        **data
+    )
     if reindex:
         item.reindexObject()
     return item
@@ -122,16 +129,20 @@ class StoryQuickForm(form.AddForm):
     description = _(
         u"When you add a story it will be put in the "
         u"first current iteration whether exists or in the project backlog")
+    created = None
 
     @property
     def fields(self):
-        fields = field.Fields(IQuickForm) + \
-            field.Fields(IStory).select('estimate')
+        fields = field.Fields(IQuickForm)
+        fields += field.Fields(IStory).select('estimate', 'text')
+        fields += field.Fields(ICategorization).select('subjects')
         fields['estimate'].widgetFactory = TimeFieldWidget
+        fields['subjects'].widgetFactory = TokenInputFieldWidget
         return fields
 
     def create(self, data):
-        return create_story(self.context, data, reindex=False)
+        self.created = create_story(self.context, data, reindex=False)
+        return self.created
 
     def add(self, obj):
         obj.reindexObject()

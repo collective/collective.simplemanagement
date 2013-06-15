@@ -1,4 +1,4 @@
-#-*- coding: utf8 -*-
+#-*- coding: utf-8 -*-
 
 import datetime
 import json
@@ -10,12 +10,11 @@ from Products.Five.browser import BrowserView
 
 from .. import logger
 from ..bookingholes import create_hole
-from ..story import create_story
 from ..story import View as StoryView
 from ..story import StoryQuickForm
 from ..configure import Settings
 from ..booking import BookingForm
-
+from .. import _
 from .engine import MacroRenderer
 
 
@@ -25,9 +24,12 @@ class Mixin(BrowserView):
 
     _success = {
         'success': True,
-        'error': None
+        'error': None,
+        'result': None,
     }
     FormKlass = None
+    creation_form = False
+    created_message = _(u'Created:')
 
     def __init__(self, context, request):
         self.context = context
@@ -53,6 +55,16 @@ class Mixin(BrowserView):
             form.update()
             data, errors = form.extractData()
             if not errors:
+                if self.creation_form and form.created:
+                    self.success.update({
+                        'result': {
+                            'created': {
+                                'msg': self.created_message,
+                                'title': form.created.title,
+                                'url': form.created.absolute_url(),
+                            }
+                        }
+                    })
                 return self.success
             else:
                 info = []
@@ -105,6 +117,8 @@ class CreateHole(Mixin):
 class AddStory(Mixin):
 
     FormKlass = StoryQuickForm
+    creation_form = True
+    created_message = _(u'Created story:')
 
 
 class AddBooking(Mixin):
@@ -116,16 +130,16 @@ class ReloadStories(Mixin):
     # XXX: TODO!
 
     def process(self):
-        view = self.context.restrictedTraverse('view')
-        template = PageTemplateFile("templates/macros.pt")
+        # view = self.context.restrictedTraverse('view')
+        # template = PageTemplateFile("templates/macros.pt")
 
-        stories = view.get_stories()
-        renderer = MacroRenderer(template, 'stories-list', context=self.context)
-        stories_html = renderer(**dict(stories_list=stories))
+        # stories = view.get_stories()
+        # renderer = MacroRenderer(template, 'stories-list', context=self.context)
+        # stories_html = renderer(**dict(stories_list=stories))
 
-        self.success.update({
-            'stories_html': stories_html,
-        })
+        # self.success.update({
+        #     'stories_html': stories_html,
+        # })
         return self.success
 
 
