@@ -1,0 +1,17 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.simplemanagement">
+
+  <genericsetup:upgradeStep
+      title="Update catalog"
+      description=""
+      source="1.0"
+      destination="1001"
+      handler=".upgrades.upgrade_to_1001"
+      sortkey="1"
+      profile="collective.simplemanagement:default"
+      />
+
+</configure>

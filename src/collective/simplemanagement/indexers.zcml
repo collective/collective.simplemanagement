@@ -5,6 +5,7 @@
   <adapter name="start" factory=".indexers.start" />
   <adapter name="end" factory=".indexers.end" />
   <adapter name="booking_date" factory=".indexers.date" />
+  <adapter name="order_number" factory=".indexers.order_number" />
   <adapter name="SearchableText"
            factory=".indexers.SearchableText_project" />
   <adapter name="SearchableText"

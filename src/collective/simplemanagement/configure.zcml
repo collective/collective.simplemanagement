@@ -10,6 +10,8 @@
   <grok:grok package="." />
   <include file="permission.zcml" />
   <include file="indexers.zcml" />
+  <include file="upgrades.zcml" />
+
   <include package=".browser" />
   <include package=".portlets" />
 

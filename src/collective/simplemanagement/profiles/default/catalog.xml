@@ -10,6 +10,9 @@
     <index name="booking_date" meta_type="DateIndex">
       <indexed_attr value="date"/>
     </index>
+    <index name="order_number" meta_type="FieldIndex">
+        <indexed_attr value="order_number" />
+    </index>
 
     <!-- metadata -->
     <column value="assigned_to"/>
@@ -17,4 +20,6 @@
     <column value="estimate"/>
     <column value="date"/>
     <column value="active"/>
+    <column value="order_number" />
+
  </object>

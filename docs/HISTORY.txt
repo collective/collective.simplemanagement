@@ -4,56 +4,155 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- add order_number field on project and catalog index
+  [gborelli]
+
 - Added load content profile. This step allow to import sample data
   [gborelli]
 
-- Improve TimeWidget and use it for story form to fix #1 [simahawk]
-- Depend on plone.autoform >= 1.4 [simahawk]
-- added change iteration action to iteration view [miziodel]
-- added booking action to iteration view [miziodel]
-- Ajaxified add story form [simahawk]
-- Add story form hidden by default [simahawk]
-- Add close icon to actions tooltips [simahawk]
-- Added IUserStoriesListing adapter to listing stories by user [giorgio]
-- Removed IMyStoriesListing adapter [giorgio]
+- Improve TimeWidget and use it for story form to fix #1
+  [simahawk]
+
+- Depend on plone.autoform >= 1.4
+  [simahawk]
+
+- added change iteration action to iteration view
+  [miziodel]
+
+- added booking action to iteration view
+  [miziodel]
+
+- Ajaxified add story form
+  [simahawk]
+
+- Add story form hidden by default
+  [simahawk]
+
+- Add close icon to actions tooltips
+  [simahawk]
+
+- Added IUserStoriesListing adapter to listing stories by user
+  [giorgio]
+
+- Removed IMyStoriesListing adapter
+  [giorgio]
+
 - added "Simplemanagement: Manage project" permission to
-  Manager, PM and Site Administrator [giorgio]
-- fix Dexterity2.0 relations issue [giorgio]
-- added workflow to discussion item [giorgio]
-- added plone.formwidget.contenttree dependency [giorgio]
-- UI improvements [giorgio]
-- disabled form releated kss [giorgio]
-- added customer, employee, PM roles and groups [giorgio]
-- updated translations [giorgio]
-- added my tickets view in dasboard [gborelli]
-- added project dashboard view [gborelli]
-- added IMyStoriesLIsting adapter [gborelli]
-- changed dashboard view [gborelli]
-- added IStoryListing adapter for INavigationRoot [gborelli]
-- moved to collective namespace [simahawk]
-- prevent project view to brake if project created by zope admin [simahawk]
-- users' dashboard enhancements [gborelli]
-- added server side method to sort stories in iteration view [gborelli]
-- Change story status from iteration view fixes #9 [gborelli]
-- checked permission to add booking, story etc [gborelli]
-- added reopen transition on story wf - from done status to todo [gborelli]
-- added markdown support to story and epic [gborelli]
-- added Wysiwyg to Project notes [gborelli]
-- added dashboard view [gborelli]
-- added project overview view [gborelli]
-- changed story view [gborelli]
-- refactored timing_status method [gborelli]
-- added macros for assignees, timings and epic [gborelli]
-- normalized timings dict [gborelli]
-- allowed discussion for story [gborelli]
-- added collective.js.jqueryui [gborelli]
-- changed style for comments in iteration view [gborelli]
-- added static resources (javascript and css) [gborelli]
-- changed Project and Iteration view [gborelli]
-- added conversation_view to ISTory to display comments [gborelli]
-- added IStoriesListing adapter to list iteration's stories [gborelli]
-- added abstract.z3cform.usertokeninput dependency [gborelli]
-- added browser layer [gborelli]
-- added get_assignees_details in utils method in order to reuse it [gborelli]
-- added vocabularies for status, env_type and roles [gborelli]
+  Manager, PM and Site Administrator
+  [giorgio]
+
+- fix Dexterity2.0 relations issue
+  [giorgio]
+
+- added workflow to discussion item
+  [giorgio]
+
+- added plone.formwidget.contenttree dependency
+  [giorgio]
+
+- UI improvements
+  [giorgio]
+
+- disabled form releated kss
+  [giorgio]
+
+- added customer, employee, PM roles and groups
+  [giorgio]
+
+- updated translations
+  [giorgio]
+
+- added my tickets view in dasboard
+  [gborelli]
+
+- added project dashboard view
+  [gborelli]
+
+- added IMyStoriesLIsting adapter
+  [gborelli]
+
+- changed dashboard view
+  [gborelli]
+
+- added IStoryListing adapter for INavigationRoot
+  [gborelli]
+
+- moved to collective namespace
+  [simahawk]
+
+- prevent project view to brake if project created by zope admin
+  [simahawk]
+
+- users' dashboard enhancements
+  [gborelli]
+
+- added server side method to sort stories in iteration view
+  [gborelli]
+
+- Change story status from iteration view fixes #9
+  [gborelli]
+
+- checked permission to add booking, story etc
+  [gborelli]
+
+- added reopen transition on story wf - from done status to todo
+  [gborelli]
+
+- added markdown support to story and epic
+  [gborelli]
+
+- added Wysiwyg to Project notes
+  [gborelli]
+
+- added dashboard view
+  [gborelli]
+
+- added project overview view
+  [gborelli]
+
+- changed story view
+  [gborelli]
+
+- refactored timing_status method
+  [gborelli]
+
+- added macros for assignees, timings and epic
+  [gborelli]
+
+- normalized timings dict
+  [gborelli]
+
+- allowed discussion for story
+  [gborelli]
+
+- added collective.js.jqueryui
+  [gborelli]
+
+- changed style for comments in iteration view
+  [gborelli]
+
+- added static resources (javascript and css)
+  [gborelli]
+
+- changed Project and Iteration view
+  [gborelli]
+
+- added conversation_view to ISTory to display comments
+  [gborelli]
+
+- added IStoriesListing adapter to list iteration's stories
+  [gborelli]
+
+- added abstract.z3cform.usertokeninput dependency
+  [gborelli]
+
+- added browser layer
+  [gborelli]
+
+- added get_assignees_details in utils method in order to reuse it
+  [gborelli]
+
+- added vocabularies for status, env_type and roles
+  [gborelli]
+
 - create package structure and content types
