@@ -1,0 +1,116 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.simplemanagement">
+
+  <body metal:use-macro="content">
+
+    <metal:bodytext fill-slot="main">
+      <metal:main define-macro="main"
+        tal:define="helpers context/@@sm_helpers;
+                    bookings view/bookings;">
+
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+        <h1 class="documentFirstHeading"
+            i18n:translate="">Your report</h1>
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+        <div id="content-core">
+
+          <div id="overview">
+            <ul class="tabs">
+              <!-- <li><a href="#synoptic"
+                i18n:translate="">Sinottica</a></li> -->
+              <li><a href="#details"
+                i18n:translate="">Details</a></li>
+            </ul>
+            <div class="panes">
+              <!-- <div class="pane" id="synoptic">
+                sinottica........ TODO
+              </div> -->
+              <div id="booking-wrapper" class="pane">
+                <div class="filters">
+                  <form tal:attributes="action view/__name__">
+                    <select name="month">
+                      <tal:opt repeat="month view/months">
+                        <option
+                          tal:attributes="value month/value;
+                                          selected month/selected"
+                          tal:content="month/label"
+                          />
+                      </tal:opt>
+                    </select>
+                    <select name="year">
+                      <tal:opt repeat="year view/years">
+                        <option
+                          tal:attributes="value year/value;
+                                          selected year/selected"
+                          tal:content="year/label"
+                          />
+                      </tal:opt>
+                    </select>
+                    <select name="employee">
+                      <option value="all">All</option>
+                      <tal:opt repeat="resource view/resources">
+                        <option
+                          tal:attributes="value resource/user_id;
+                                          selected resource/selected;"
+                          tal:content="resource/fullname"
+                          />
+                      </tal:opt>
+                    </select>
+                    <input type="submit" value="Filter" />
+                  </form>
+                </div>
+                <div tal:condition="not: bookings">
+                  <span class="label"
+                    i18n:translate="">
+                    You have no bookings yet
+                  </span>
+                </div>
+
+                <table class="listing"
+                       tal:condition="bookings">
+                  <thead>
+                    <tr>
+                      <th i18n:translate="">Date</th>
+                      <th i18n:translate="">Log</th>
+                      <th i18n:translate="">Employee</th>
+                      <th i18n:translate="">Hours</th>
+                    </tr>
+                  </thead>
+                   <tbody>
+                    <tr tal:repeat="book bookings">
+                      <td>
+                        <span tal:content="book/date">today</span>
+                      </td>
+                      <td>
+                        <a tal:attributes="href book/url"
+                           tal:content="book/title">closed ticket #1
+                        </a>
+                      </td>
+                      <td>
+                        <span tal:content="book/user/fullname">John Doe</span>
+                        (<span class="discreet"
+                               tal:content="book/user/user_id">j.doe</span>)
+                      </td>
+                      <td tal:content="book/time">3.0</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+      </metal:main>
+    </metal:bodytext>
+  </body>
+</html>

@@ -87,6 +87,15 @@
   />
 
   <browser:page
+    for="..interfaces.IProject"
+    name="report"
+    class=".project_report.ReportView"
+    layer="..interfaces.IBrowserLayer"
+    template="templates/project_report.pt"
+    permission="simplemanagement.ManageProject"
+  />
+
+  <browser:page
     for="*"
     name="create-hole"
     class=".ajaxforms.CreateHole"
