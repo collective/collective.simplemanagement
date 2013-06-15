@@ -782,9 +782,13 @@ table#tickets-listing {
 
 /* Add story form */
 
+#addstory-container { margin: 15px 0 }
 #addstory-container h3 {
-    padding-left: 12px;
-    padding-top: 5px;
+    background: none repeat scroll 0 0 white;
+    float: left;
+    margin-left: 10px;
+    margin-top: -20px;
+    padding: 10px;
 }
 
 #addstory-container div.formControls{
@@ -803,6 +807,10 @@ table#tickets-listing {
     padding: 0 1.2em 0 1em;
     margin: 0 0 1em 0;
 }
+
+#addstory-form p.discreet,
+.portaltype-project #plone-document-byline{ display: none !important }
+
 #addstory-form .created {
     background-color: green;
     border-radius: 5px;
