@@ -4,7 +4,13 @@ Changelog
 1.0 (unreleased)
 ----------------
 
-- add order_number field on project and catalog index
+- Improve ajaxforms
+  [simahawk]
+
+- Improve add story quick form
+  [simahawk]
+
+- Add order_number field on project and catalog index
   [gborelli]
 
 - Added load content profile. This step allow to import sample data
