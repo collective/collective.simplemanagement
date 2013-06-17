@@ -39,6 +39,9 @@ from .widgets.date_widget import BookingDateFieldWidget
 from .widgets.time_widget import TimeFieldWidget
 
 
+# XXX 2013-06-17: we already have a booking form defined
+# into ..booking. Use that!!!
+
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("templates/booking_form.pt")
     fields = field.Fields(IQuickForm).select('title') + field.Fields(IBooking)
@@ -47,7 +50,7 @@ class BookingForm(form.AddForm):
     fields['related'].widgetFactory = text.TextFieldWidget
 
     def create(self, data):
-        create_booking(data, reindex=0)
+        return create_booking(self.context, data, reindex=0)
 
     def add(self, obj):
         obj.reindexObject()
