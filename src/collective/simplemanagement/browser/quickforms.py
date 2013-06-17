@@ -5,7 +5,7 @@ from z3c.form import form, field, button
 from plone.z3cform.layout import wrap_form
 
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+# from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
@@ -83,5 +83,7 @@ class StoryQuickeditForm(BaseQuickeEdit):
 
 StoryQuickedit = wrap_form(
     StoryQuickeditForm,
-    index=ViewPageTemplateFile('templates/quick_form.pt')
+    # it raises an error:
+    # LocationError: (<Products.Five.metaclass.MyFormWrapper object at 0xb98cd90>, 'status')
+    # index=ViewPageTemplateFile('templates/quick_form.pt')
 )
