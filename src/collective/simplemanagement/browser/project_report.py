@@ -1,5 +1,6 @@
 import datetime
 import calendar
+from decimal import Decimal
 
 from plone.memoize.view import memoize as view_memoize
 
@@ -94,9 +95,10 @@ class ReportView(DashboardMixin):
         return bookings
 
     def details_report(self):
-        results = []
+        total = Decimal('0.0')
+        _bookings = []
         for booking in self.get_bookings():
-            results.append({
+            _bookings.append({
                 'date': self.context.toLocalizedTime(booking.date.isoformat()),
                 'time': booking.time,
                 'url': booking.getURL(),
@@ -105,7 +107,11 @@ class ReportView(DashboardMixin):
                                          booking.Creator,
                                          **self.tools)
             })
-        return results
+            total += booking.time
+        return {
+            'bookings': _bookings,
+            'total': total
+        }
 
     def _group_by_month(self, bookings):
         res = {}

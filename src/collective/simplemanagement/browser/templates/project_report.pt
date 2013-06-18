@@ -9,11 +9,12 @@
   <body metal:use-macro="content">
 
     <metal:bodytext fill-slot="main">
-      <metal:main define-macro="main"
-        tal:define="helpers context/@@sm_helpers;
-                    details view/details_report;
-                    monthly view/monthly_report;
-                    resources view/resources;">
+      <div class="report-view"
+           metal:define-macro="main"
+           tal:define="helpers context/@@sm_helpers;
+                       details view/details_report;
+                       monthly view/monthly_report;
+                       resources view/resources;">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -80,27 +81,31 @@
                 </form>
 
                 <div class="results">
-                  <ul class="month" tal:repeat="month monthly">
-                    <li>
-                      <span class="label" tal:content="month/label" />
-                      <span class="label" i18n:translate="">
-                        Total: <span class="total"
-                                     i18n:name="month_total"
-                                     tal:content="month/total" />
-                      </span>
-                      <ul class="week" tal:repeat="week month/weeks/keys">
-                        <li>
-                          <span class="label" i18n:translate="">
-                            Settimana <span i18n:name="weekno"
-                                            tal:content="repeat/week/number" />:
-                            <span class="total"
-                                  i18n:name="week_total"
-                                  tal:content="python:month['weeks'][week]" />
-                          </span>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
+                  <tal:month repeat="month monthly">
+                    <dl class="month collapsible">
+                      <dt class="collapsibleHeader">
+                        <span class="label" tal:content="month/label" />
+                        <span class="total" i18n:translate="">
+                          <span class="digit"
+                                i18n:name="month_total"
+                                tal:content="month/total" /> hours
+                        </span>
+                      </dt>
+                      <dd class="collapsibleContent">
+                        <ul class="week" tal:repeat="week month/weeks/keys">
+                          <li>
+                            <span class="label" i18n:translate="">
+                              Week <span i18n:name="weekno"
+                                              tal:content="repeat/week/number" />:
+                              <span class="total"
+                                    i18n:name="week_total"
+                                    tal:content="python:month['weeks'][week]" /> hours
+                            </span>
+                          </li>
+                        </ul>
+                      </dd>
+                    </dl>
+                  </tal:month>
                 </div>
                 
               </div>
@@ -138,7 +143,7 @@
                     <input type="submit" value="Filter" />
                   </form>
                 </div>
-                <div tal:condition="not: details">
+                <div tal:condition="not: details/bookings">
                   <span class="label"
                     i18n:translate="">
                     You have no bookings yet
@@ -146,7 +151,7 @@
                 </div>
 
                 <table class="listing"
-                       tal:condition="details">
+                       tal:condition="details/bookings">
                   <thead>
                     <tr>
                       <th i18n:translate="">Date</th>
@@ -156,7 +161,7 @@
                     </tr>
                   </thead>
                    <tbody>
-                    <tr tal:repeat="book details">
+                    <tr tal:repeat="book details/bookings">
                       <td>
                         <span tal:content="book/date">today</span>
                       </td>
@@ -173,6 +178,13 @@
                       <td tal:content="book/time">3.0</td>
                     </tr>
                   </tbody>
+                  <thead>
+                    <tr>
+                      <th colspan="2"></th>
+                      <th i18n:translate="">Total</th>
+                      <th tal:content="details/total" />
+                    </tr>
+                  </thead>
                 </table>
 
               </div>
@@ -182,7 +194,7 @@
         </div>
 
         <div tal:replace="structure provider:plone.belowcontentbody" />
-      </metal:main>
+      </div>
     </metal:bodytext>
   </body>
 </html>

@@ -3,9 +3,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2013-04-07 18:23+0000\n"
-"PO-Revision-Date: 2012-08-23 22:03+0000\n"
-"Last-Translator: Giorgio Borelli <giorgio@abstract.it>\n"
+"POT-Creation-Date: 2013-06-18 09:23+0000\n"
+"PO-Revision-Date: 2013-06-18 11:27+0100\n"
+"Last-Translator: Simone Orsi <simone.orsi@domsense.com>\n"
 "Language-Team: Giorgio Borelli <giorgio@abstract.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -17,773 +17,872 @@ msgstr ""
 "Domain: collective.simplemanagement\n"
 "X-Is-Fallback-For: it-it it-ch it-sm it-hr it-si\n"
 
-#: ../project_templates/overview.pt:40
+#: ./../project_templates/overview.pt:40
 msgid "${budget} man days"
 msgstr "${budget} giorni uomo"
 
-#: ../project_templates/overview.pt:48
+#: ./../project_templates/overview.pt:48
 msgid "${initial_estimate} man days"
 msgstr "${initial_estimate} giorni uomo"
 
-#: ../events.py:49
+#: ./../browser/templates/project_report.pt:89
+msgid "${month_total} hours"
+msgstr "${month_total} ore"
+
+#: ./../events.py:49
 msgid "${project_name}'s documents"
 msgstr "Documenti di ${project_name}"
 
-#: ../events.py:17
+#: ./../events.py:17
 msgid "${project_name}'s issues"
 msgstr "${project_name} - Tracker"
 
-#: ../browser/templates/dashboard.pt:27
+#: ./../browser/templates/dashboard.pt:27
 msgid "${username} dashboard"
 msgstr "Dashboard di ${username}"
 
-#: ../browser/templates/dashboard.pt:73
+#: ./../browser/templates/dashboard.pt:209
+msgid "${username} have no bookings yet"
+msgstr "${username} non hai alcun booking al momento"
+
+#: ./../browser/templates/dashboard.pt:74
 msgid "(${time} hours booked)"
 msgstr "(${time} ore segnate)"
 
-#: ../browser/templates/macros.pt:26
+#: ./../browser/templates/macros.pt:26
 msgid "(None)"
 msgstr "(nessuno/a)"
 
-#: ../browser/templates/dashboard.pt:85
+#: ./../browser/templates/dashboard.pt:86
 msgid "- select reason -"
 msgstr "- seleziona una motivazione -"
 
-#: ../events.py:25
+#: ./../events.py:25
 msgid "<p>Here are collected all the issues relative to the project <em>${project_name}</em>.</p><p>If you found any problems, please report it here by clicking <em>New issue</em>.</p>"
 msgstr "<p>Qui sono conservate tutte le richieste e le segnalazioni dei problemi di funzionamento relativi al progetto <em>${project_name}</em> </p><p>Se trovi un qualcisasi problema, segnalalo qui cliccando sul pulsante <em>Genera una nuova richiesta</em>.</p>"
 
-#: ../browser/templates/dashboard.pt:121
-#: ../browser/templates/macros.pt:142
+#: ./../browser/templates/dashboard.pt:139
+#: ./../browser/templates/macros.pt:156
 msgid "Actions"
 msgstr "Azioni"
 
-#: ../interfaces.py:42
+#: ./../interfaces/project.py:25
 msgid "Active"
 msgstr "Attivo"
 
-#: ../browser/templates/macros.pt:282
+#: ./../browser/templates/macros.pt:296
 msgid "Actual hours"
 msgstr "Effettuate"
 
-#: ../browser/templates/dashboard.pt:138
-#: ../story_templates/view.pt:31
+#: ./../browser/templates/dashboard.pt:156
+#: ./../story_templates/view.pt:31
 msgid "Add Booking"
 msgstr "Aggiungi Booking"
 
-#: ../browser/templates/macros.pt:469
-msgid "Add Story"
-msgstr "Aggiungi Storia"
+#: ./../browser/templates/project_report.pt:71
+msgid "All"
+msgstr "Tutti"
 
-#: ../browser/worklog.py:25
+#: ./../browser/worklog.py:26
 msgid "April"
 msgstr "Aprile"
 
-#: ../browser/templates/macros.pt:303
+#: ./../browser/templates/macros.pt:317
 msgid "Assignee"
 msgstr "Assegnatario"
 
-#: ../browser/templates/macros.pt:145
-#: ../interfaces.py:197
+#: ./../browser/templates/macros.pt:159
+#: ./../interfaces/story.py:55
 msgid "Assignees"
 msgstr "Assegnatari"
 
-#: ../epic_templates/view.pt:52
+#: ./../epic_templates/view.pt:52
 msgid "Associated stories"
 msgstr "Storie associate"
 
-#: ../browser/worklog.py:29
+#: ./../browser/worklog.py:30
 msgid "August"
 msgstr "Agosto"
 
-#: ../profiles/default/types/Project.xml
-#: ../project.py:191
-#: ../project_templates/backlog.pt:11
+#: ./../profiles/default/types/Project.xml
+#: ./../project.py:191
+#: ./../project_templates/backlog.pt:11
 msgid "Backlog"
 msgstr "Backlog"
 
-#: ../browser/dashboard.py:66
-#: ../browser/templates/dashboard.pt:138
+#: ./../browser/dashboard.py:61
+#: ./../browser/templates/dashboard.pt:156
 msgid "Book time"
 msgstr "Scarica ore"
 
-#: ../browser/templates/dashboard.pt:45
-#: ../profiles/default/types/Booking.xml
+#: ./../browser/templates/dashboard.pt:45
+#: ./../browser/templates/macros.pt:64
+#: ./../profiles/default/types/Booking.xml
 msgid "Booking"
 msgstr "Booking"
 
-#: ../interfaces.py:334
+#: ./../interfaces/settings.py:28
 msgid "Booking check days delta end"
 msgstr "Fine del periodo di grazia dal booking"
 
-#: ../interfaces.py:331
+#: ./../interfaces/settings.py:25
 msgid "Booking check days delta start"
 msgstr "Inizio del periodo di grazia dal booking"
 
-#: ../interfaces.py:73
+#: ./../interfaces/project.py:63
 msgid "Budget (man days)"
 msgstr "Budget (in giorni uomo)"
 
-#: ../browser/dashboard.py:77
-#: ../browser/quickforms.py:68
+#: ./../browser/dashboard.py:72
+#: ./../browser/quickforms.py:68
 msgid "Cancel"
 msgstr "Annulla"
 
-#: ../browser/templates/macros.pt:71
+#: ./../browser/templates/macros.pt:77
+msgid "Change iteration"
+msgstr "Cambia iterazione"
+
+#: ./../browser/templates/macros.pt:85
 msgid "Change status"
 msgstr "Cambia stato"
 
-#: ../epic_templates/view.pt:46
+#: ./../browser/templates/ch_iteration.pt:27
+#: ./../browser/templates/wf_actions.pt:27
+msgid "Close tooltip"
+msgstr "Chudi tooltip"
+
+#: ./../epic_templates/view.pt:46
 msgid "Contained epics"
 msgstr "Epic correlate"
 
-#: ../browser/templates/ticketsmacros.pt:19
-msgid "Created"
-msgstr "Creazione"
+#: ./../browser/ajaxforms.py:121
+msgid "Created story:"
+msgstr "Storia creata:"
 
-#: ../project_templates/alliterations.pt:38
+#: ./../browser/ajaxforms.py:32
+msgid "Created:"
+msgstr "Creato:"
+
+#: ./../project_templates/alliterations.pt:38
 msgid "Current iterations (${n_iterations})"
 msgstr "Iterazioni correnti (${n_iterations})"
 
-#: ../interfaces.py:70
-#: ../project_templates/overview.pt:71
-#: ../sharing.py:8
+#: ./../interfaces/project.py:56
+#: ./../project_templates/overview.pt:71
+#: ./../sharing.py:8
 msgid "Customer"
 msgstr "Cliente"
 
-#: ../browser/quickforms.py:44
+#: ./../browser/quickforms.py:44
 msgid "Data successfully updated."
 msgstr "Dati modificati"
 
-#: ../booking_templates/view.pt:14
-#: ../browser/templates/dashboard.pt:177
-#: ../browser/templates/macros.pt:300
+#: ./../booking_templates/view.pt:14
+#: ./../browser/templates/dashboard.pt:224
+#: ./../browser/templates/macros.pt:314
 msgid "Date"
 msgstr "Data"
 
-#: ../interfaces.py:63
+#: ./../interfaces/project.py:48
 msgid "Deadline"
 msgstr "Deadline"
 
-#: ../browser/worklog.py:33
+#: ./../browser/worklog.py:34
 msgid "December"
 msgstr "Dicembre"
 
-#: ../browser/templates/macros.pt:63
-#: ../browser/templates/worklog.pt:120
-#: ../project_templates/overview.pt:13
+#: ./../browser/templates/macros.pt:63
+#: ./../browser/templates/project_report.pt:45
+#: ./../browser/templates/worklog.pt:120
 msgid "Details"
 msgstr "Dettagli"
 
-#: ../browser/templates/macros.pt:283
+#: ./../browser/templates/macros.pt:297
 msgid "Difference"
 msgstr "Differenza"
 
-#: ../epic_templates/view.pt:29
+#: ./../epic_templates/view.pt:29
 msgid "Difference from initial"
 msgstr "Differenza dalla stima iniziale"
 
-#: ../project_templates/overview.pt:14
+#: ./../project_templates/overview.pt:14
 msgid "Documentation"
 msgstr "Documentazione"
 
-#: ../project_templates/overview.pt:150
+#: ./../project_templates/overview.pt:153
 msgid "Documents folder"
 msgstr "Cartella documentazione"
 
-#: ../browser/templates/dashboard.pt:120
-#: ../browser/templates/macros.pt:147
+#: ./../browser/templates/dashboard.pt:138
+#: ./../browser/templates/macros.pt:161
 msgid "Done"
 msgstr "Fatto"
 
-#: ../browser/templates/macros.pt:70
-#: ../profiles/default/types/Booking.xml
-#: ../profiles/default/types/Epic.xml
+#: ./../browser/templates/macros.pt:76
+#: ./../profiles/default/types/Booking.xml
+#: ./../profiles/default/types/Epic.xml
 msgid "Edit"
 msgstr "Modifica"
 
-#: ../browser/templates/macros.pt:64
+#: ./../browser/templates/macros.pt:70
 msgid "Edit story"
 msgstr "Modifica storia"
 
-#: ../sharing.py:14
+#: ./../browser/templates/project_report.pt:159
+#: ./../sharing.py:14
 msgid "Employee"
 msgstr "Impiegato"
 
-#: ../setuphandlers.py:21
+#: ./../setuphandlers.py:21
 msgid "Employees"
 msgstr "Impiegati"
 
-#: ../interfaces.py:353
+#: ./../interfaces/settings.py:47
 msgid "Employess group"
 msgstr "Gruppo impiegati"
 
-#: ../interfaces.py:167
+#: ./../interfaces/story.py:21
 msgid "End"
 msgstr "Fine"
 
-#: ../project_templates/overview.pt:33
+#: ./../project_templates/overview.pt:33
 msgid "End Date:"
 msgstr "Data di fine:"
 
-#: ../interfaces.py:94
+#: ./../interfaces/project.py:84
 msgid "End date"
 msgstr "Data di fine"
 
-#: ../interfaces.py:119
+#: ./../interfaces/project.py:109
 msgid "Environment"
 msgstr "Ambiente"
 
-#: ../interfaces.py:341
+#: ./../interfaces/settings.py:35
 msgid "Environment types"
 msgstr "Ambienti, tipologia"
 
-#: ../project_templates/overview.pt:112
+#: ./../project_templates/overview.pt:115
 msgid "Environments"
 msgstr "Ambienti"
 
-#: ../browser/templates/macros.pt:269
-#: ../epic_templates/view.pt:88
-#: ../interfaces.py:206
+#: ./../browser/templates/macros.pt:283
+#: ./../epic_templates/view.pt:88
+#: ./../interfaces/story.py:64
 msgid "Epic"
 msgstr "Epic"
 
-#: ../browser/templates/dashboard.pt:119
-#: ../browser/templates/macros.pt:146
-#: ../epic_templates/view.pt:89
+#: ./../browser/templates/dashboard.pt:137
+#: ./../browser/templates/macros.pt:160
+#: ./../epic_templates/view.pt:89
 msgid "Estimate"
 msgstr "Stima"
 
-#: ../interfaces.py:77
+#: ./../interfaces/project.py:67
+#: ./../interfaces/story.py:23
 msgid "Estimate (man days)"
 msgstr "Estimate (in giorni uomo)"
 
-#: ../interfaces.py:192
+#: ./../interfaces/story.py:50
 msgid "Estimate (man hours)"
 msgstr "Estimate (in ore uomo)"
 
-#: ../interfaces.py:90
+#: ./../interfaces/project.py:80
 msgid "Expected end date"
 msgstr "Data di fine prevista"
 
-#: ../project_templates/overview.pt:28
+#: ./../project_templates/overview.pt:28
 msgid "Expected end date:"
 msgstr "Data di fine prevista:"
 
-#: ../browser/worklog.py:23
+#: ./../browser/worklog.py:24
 msgid "February"
 msgstr "Febbraio"
 
-#: ../browser/templates/dashboard.pt:91
+#: ./../browser/templates/dashboard.pt:92
 msgid "Fill it!"
 msgstr "Completa il booking!"
 
-#: ../browser/templates/macros.pt:438
+#: ./../browser/templates/macros.pt:466
 msgid "Filter results by employee"
 msgstr "Filtra i risultati per impiegato"
 
-#: ../browser/templates/dashboard.pt:162
+#: ./../browser/templates/dashboard.pt:180
 msgid "Found ${n_ticket} ticket/s"
 msgstr "Trovato/i ${n_ticket} ticket"
 
-#: ../browser/templates/worklog.pt:103
+#: ./../browser/templates/worklog.pt:103
 msgid "Fri"
 msgstr "Ven"
 
-#: ../project_templates/alliterations.pt:43
+#: ./../project_templates/alliterations.pt:43
 msgid "Future iterations (${n_iterations})"
 msgstr "Iterazioni future (${n_iterations})"
 
-#: ../project_templates/overview.pt:150
+#: ./../project_templates/overview.pt:153
 msgid "Go to the documents folder"
 msgstr "Vai alla cartella documenti"
 
-#: ../project_templates/planning.pt:18
+#: ./../project_templates/planning.pt:18
 msgid "Here you can plan your iterations: choose a destination iteration on the right panel and drag stories from the backlog to it, or the other way around, or select two iterations to move stories between them. If you wish to create a copy of the story, instead of moving it, keep Ctrl pressed while dragging."
 msgstr "Qui puoi pianificare le iterazioni: scegli una iterazione di destinazione nella colonna di destra e trascina le storie dal backlog (a destra) sino alla colonna di sinistra. Puoi inoltre selezionare due differenti iterazioni e spostare le storie tra di esse. Se vuoi invece creare una copia della storia, al posto di spostarla, tieni premuto il tasto CTRL mentre la sposti."
 
-#: ../browser/templates/dashboard.pt:178
-#: ../browser/templates/worklog.pt:64
-#: ../interfaces.py:225
+#: ./../browser/templates/holes_mgmt.pt:19
+msgid "Holes mgmt"
+msgstr "Gestione buchi booking"
+
+#: ./../browser/widgets/interfaces.py:31
+msgid "Hour free input"
+msgstr "Inserimento libero ore"
+
+#: ./../browser/widgets/interfaces.py:36
+msgid "Hour start"
+msgstr "Ora inizio"
+
+#: ./../browser/widgets/interfaces.py:41
+msgid "Hour stop"
+msgstr "Ora fine"
+
+#: ./../browser/templates/dashboard.pt:225
+#: ./../browser/templates/project_report.pt:160
+#: ./../browser/templates/worklog.pt:64
 msgid "Hours"
 msgstr "Ore"
 
-#: ../interfaces.py:354
+#: ./../interfaces/settings.py:48
 msgid "Identifier of the group containing all employees"
 msgstr "Identificativo del gruppo che contiene tutti gli impiegati"
 
-#: ../epic_templates/view.pt:37
+#: ./../epic_templates/view.pt:37
 msgid "Initial estimate"
 msgstr "Stima iniziale"
 
-#: ../browser/templates/dashboard.pt:81
+#: ./../browser/templates/dashboard.pt:82
 msgid "It's okay, I"
 msgstr "Tutto ok…"
 
-#: ../profiles/default/types/Iteration.xml
-#: ../project_templates/planning.pt:38
+#: ./../profiles/default/types/Iteration.xml
+#: ./../project_templates/planning.pt:38
 msgid "Iteration"
 msgstr "Iterazione"
 
-#: ../project_templates/planning.pt:11
+#: ./../project_templates/planning.pt:11
 msgid "Iteration planning"
 msgstr "Pianificazione iterazione"
 
-#: ../browser/templates/macros.pt:358
+#: ./../browser/templates/macros.pt:386
 msgid "Iteration:"
 msgstr "Iterazione:"
 
-#: ../profiles/default/actions.xml
+#: ./../profiles/default/actions.xml
 msgid "Iterations"
 msgstr "Iterazioni"
 
-#: ../browser/worklog.py:22
+#: ./../browser/worklog.py:23
 msgid "January"
 msgstr "Gennaio"
 
-#: ../browser/worklog.py:28
+#: ./../browser/worklog.py:29
 msgid "July"
 msgstr "Luglio"
 
-#: ../browser/worklog.py:27
+#: ./../browser/worklog.py:28
 msgid "June"
 msgstr "Giugno"
 
-#: ../project_templates/overview.pt:129
+#: ./../project_templates/overview.pt:132
 msgid "Last documents"
 msgstr "Ultimi documenti"
 
-#: ../interfaces.py:327
+#: ./../browser/templates/project_report.pt:158
+msgid "Log"
+msgstr ""
+
+#: ./../interfaces/settings.py:21
 msgid "Man day hours"
 msgstr "Ore lavorative giornaliere"
 
-#: ../browser/worklog.py:24
+#: ./../browser/worklog.py:25
 msgid "March"
 msgstr "Marzo"
 
-#: ../browser/worklog.py:26
+#: ./../browser/worklog.py:27
 msgid "May"
 msgstr "Maggio"
 
-#: ../interfaces.py:129
+#: ./../interfaces/project.py:119
+#: ./../interfaces/story.py:71
 msgid "Milestone"
 msgstr "Milestone"
 
-#: ../interfaces.py:124
-#: ../project_templates/overview.pt:57
+#: ./../interfaces/project.py:114
+#: ./../project_templates/overview.pt:57
 msgid "Milestones"
 msgstr "Milestone"
 
-#: ../interfaces.py:125
+#: ./../interfaces/project.py:115
 msgid "Milestones are the different phases of the project. Each milestone should formally define a self-sufficient deliverable, that can then be put into production."
 msgstr "Le milestone sono le differenti fasi del progetto. Ogni milestone dovrebbe definire una serie di deliverable auto sufficienti che possono essere messi in produzione."
 
-#: ../browser/templates/ticketsmacros.pt:20
+#: ./../browser/templates/ticketsmacros.pt:14
 msgid "Modified"
 msgstr "Ultima modifica"
 
-#: ../browser/templates/worklog.pt:95
+#: ./../browser/templates/worklog.pt:95
 msgid "Mon"
 msgstr "Lun"
 
-#: ../interfaces.py:48
+#: ./../interfaces/project.py:32
 msgid "Name"
 msgstr "Nome"
 
-#: ../browser/quickforms.py:43
+#: ./../browser/quickforms.py:43
 msgid "No changes were applied."
 msgstr "Nessuna modifica effettuata."
 
-#: ../browser/templates/worklog.pt:69
+#: ./../browser/templates/worklog.pt:69
 msgid "No results"
 msgstr "Nessun risultato"
 
-#: ../epic_templates/view.pt:75
+#: ./../epic_templates/view.pt:75
 msgid "No stories associated"
 msgstr "Nessuna storia associata"
 
-#: ../browser/templates/macros.pt:241
+#: ./../browser/templates/macros.pt:255
 msgid "No stories found. Add a new one or bring them in via the iteration planner."
 msgstr "Non è stata trovata alcuna storia. Aggiungine una nuova o ripianifica le iterazioni."
 
-#: ../browser/templates/macros.pt:169
+#: ./../browser/templates/macros.pt:183
 msgid "No stories in this iteration. Add a new one or bring them in via the iteration planner."
 msgstr "Non esistono storie in questa iterazione. Aggiungine una nuova o includine una attraverso l'iteration planner."
 
-#: ../interfaces.py:148
-#: ../project_templates/overview.pt:15
+#: ./../interfaces/project.py:138
+#: ./../project_templates/overview.pt:15
 msgid "Notes"
 msgstr "Note"
 
-#: ../browser/worklog.py:32
+#: ./../browser/worklog.py:33
 msgid "November"
 msgstr "Novembre"
 
-#: ../interfaces.py:362
+#: ./../interfaces/settings.py:56
 msgid "Number of weeks after month"
 msgstr "Numero di settimane dopo la fine del mese corrente"
 
-#: ../interfaces.py:357
+#: ./../interfaces/settings.py:51
 msgid "Number of weeks before month"
 msgstr "Numero di settimane prima dell'inizio del mese corrente"
 
-#: ../browser/worklog.py:31
+#: ./../browser/worklog.py:32
 msgid "October"
 msgstr "Otobre"
 
-#: ../interfaces.py:134
-#: ../project_templates/overview.pt:73
+#: ./../interfaces/project.py:124
+#: ./../project_templates/overview.pt:73
 msgid "Operatives"
 msgstr "Risorse di riferimento"
 
-#: ../sharing.py:20
+#: ./../interfaces/project.py:59
+msgid "Order number"
+msgstr "Numero ordine"
+
+#: ./../sharing.py:20
 msgid "PM"
 msgstr "PM"
 
-#: ../project_templates/alliterations.pt:33
+#: ./../project_templates/alliterations.pt:33
 msgid "Past iterations (${n_iterations})"
 msgstr "Iterazioni passate (${n_iterations})"
 
-#: ../profiles/default/actions.xml
-#: ../profiles/default/types/Project.xml
-#: ../project_templates/overview.pt:12
+#: ./../profiles/default/actions.xml
+#: ./../profiles/default/types/Project.xml
+#: ./../project_templates/overview.pt:12
 msgid "Planning"
 msgstr "Pianificazione"
 
-#: ../browser/templates/dashboard.pt:57
+#: ./../browser/templates/dashboard.pt:58
 msgid "Please complete your booking"
 msgstr "Completa il tuo booking"
 
-#: ../interfaces.py:349
+#: ./../interfaces/settings.py:43
 msgid "Possible reasons to be off duty"
 msgstr "Possibili ragioni d'assenza"
 
-#: ../interfaces.py:154
+#: ./../interfaces/project.py:144
 msgid "Priority"
 msgstr "Priorità"
 
-#: ../browser/templates/ticketsmacros.pt:18
-#: ../browser/templates/worklog.pt:60
-#: ../portlets/project.pt:5
+#: ./../browser/templates/worklog.pt:60
+#: ./../portlets/project.pt:5
+#: ./../portlets/project.py:20
 msgid "Project"
 msgstr "Progetto"
 
-#: ../interfaces.py:98
-#: ../project_templates/overview.pt:87
+#: ./../interfaces/project.py:88
+#: ./../project_templates/overview.pt:90
 msgid "Project classifiers"
 msgstr "Tipologia"
 
-#: ../setuphandlers.py:13
+#: ./../setuphandlers.py:13
 msgid "Project managers"
 msgstr "Project manager"
 
-#: ../profiles/default/portlets.xml
+#: ./../profiles/default/portlets.xml
 msgid "Project portlet"
 msgstr "Portlet progetto"
 
-#: ../interfaces.py:337
+#: ./../browser/templates/project_report.pt:23
+msgid "Project report: ${projname}"
+msgstr "Report progetto: ${projname}"
+
+#: ./../interfaces/settings.py:31
 msgid "Project statuses"
 msgstr "Stati del progetto"
 
-#: ../browser/templates/macros.pt:352
+#: ./../browser/templates/macros.pt:380
 msgid "Project:"
 msgstr "Progetto:"
 
-#: ../browser/templates/dashboard.pt:180
+#: ./../browser/templates/dashboard.pt:227
 msgid "Projects"
 msgstr "Progetti"
 
-#: ../interfaces.py:382
+#: ./../interfaces/booking.py:66
 msgid "Reason"
 msgstr "Motivazione"
 
-#: ../booking_templates/view.pt:21
-#: ../browser/templates/macros.pt:304
+#: ./../booking_templates/view.pt:21
+#: ./../browser/templates/macros.pt:318
 msgid "Related"
 msgstr "Ticket correlato"
 
-#: ../interfaces.py:227
+#: ./../interfaces/booking.py:31
 msgid "Related activity"
 msgstr "Attività correlata"
 
-#: ../interfaces.py:109
-#: ../project_templates/overview.pt:102
+#: ./../interfaces/project.py:99
+#: ./../project_templates/overview.pt:105
 msgid "Repositories"
 msgstr "Repository"
 
-#: ../browser/templates/macros.pt:459
+#: ./../browser/templates/macros.pt:487
 msgid "Reset filter"
 msgstr "Azzera i filtri"
 
-#: ../interfaces.py:142
+#: ./../interfaces/project.py:132
 msgid "Resource"
 msgstr "Risorsa"
 
-#: ../interfaces.py:345
+#: ./../interfaces/settings.py:39
 msgid "Resource roles"
 msgstr "Ruoli risorsa"
 
-#: ../browser/templates/worklog.pt:28
+#: ./../browser/templates/holes_mgmt.pt:25
+#: ./../browser/templates/worklog.pt:28
 msgid "Resources"
 msgstr "Risorse"
 
-#: ../interfaces.py:38
+#: ./../interfaces/project.py:20
 msgid "Role"
 msgstr "Ruolo"
 
-#: ../browser/templates/worklog.pt:105
+#: ./../browser/template_overrides/plone.app.layout.viewlets.personal_bar.pt:55
+msgid "SM Personal tools"
+msgstr "SM strumenti personali"
+
+#: ./../browser/templates/worklog.pt:105
 msgid "Sat"
 msgstr "Sab"
 
-#: ../browser/quickforms.py:52
+#: ./../browser/quickforms.py:52
 msgid "Save"
 msgstr "Salva"
 
-#: ../browser/templates/macros.pt:440
+#: ./../browser/templates/macros.pt:468
 msgid "Select an employee"
 msgstr "Seleziona un impiegato"
 
-#: ../browser/worklog.py:30
+#: ./../browser/worklog.py:31
 msgid "September"
 msgstr "Settembre"
 
-#: ../browser/templates/ticketsmacros.pt:21
+#: ./../browser/templates/ticketsmacros.pt:15
 msgid "Severity"
 msgstr "Importanza"
 
-#: ../interfaces.py:99
+#: ./../browser/widgets/interfaces.py:26
+msgid "Show minutes"
+msgstr "Mostra minuti"
+
+#: ./../browser/templates/project_report.pt:43
+msgid "Sinottica"
+msgstr ""
+
+#: ./../interfaces/project.py:89
 msgid "Some keywords that describe the project and used technologies"
 msgstr "Parole chiave che descrivono il progetto e le tecnologie utilizzate"
 
-#: ../interfaces.py:166
+#: ./../interfaces/story.py:20
 msgid "Start"
 msgstr "Inizio"
 
-#: ../interfaces.py:86
+#: ./../interfaces/project.py:76
 msgid "Start date"
 msgstr "Data di inizio"
 
-#: ../project_templates/overview.pt:23
+#: ./../project_templates/overview.pt:23
 msgid "Start date:"
 msgstr "Data di inizio:"
 
-#: ../browser/templates/ticketsmacros.pt:22
-#: ../interfaces.py:60
+#: ./../browser/templates/ticketsmacros.pt:16
+#: ./../interfaces/project.py:44
 msgid "Status"
 msgstr "Stato"
 
-#: ../browser/templates/dashboard.pt:41
-#: ../epic_templates/view.pt:65
+#: ./../browser/templates/dashboard.pt:41
+#: ./../epic_templates/view.pt:65
 msgid "Stories"
 msgstr "Storie"
 
-#: ../browser/templates/dashboard.pt:117
-#: ../browser/templates/macros.pt:144
-#: ../browser/templates/worklog.pt:61
+#: ./../browser/templates/dashboard.pt:135
+#: ./../browser/templates/macros.pt:158
+#: ./../browser/templates/worklog.pt:61
 msgid "Story"
 msgstr "Storia"
 
-#: ../browser/templates/worklog.pt:107
+#: ./../browser/templates/project_report.pt:31
+msgid "Story: ${storyname}"
+msgstr "Storia: ${storyname}"
+
+#: ./../browser/templates/worklog.pt:107
 msgid "Sun"
 msgstr "Dom"
 
-#: ../interfaces.py:177
+#: ./../interfaces/story.py:31
 msgid "Text"
 msgstr "Testo"
 
-#: ../interfaces.py:110
+#: ./../interfaces/project.py:100
 msgid "The HTTP URLs of the repositories (e.g. https://github.com/company/my.repository/)"
 msgstr "Inserisci gli URL dei repository (es. https://github.com/company/my.repository/)"
 
-#: ../interfaces.py:117
+#: ./../interfaces/project.py:107
 msgid "The URLs of the various online environments (staging, production)"
 msgstr "Inserisci gli URL dei vari ambienti online (staging, produzione ecc.)"
 
-#: ../project_templates/backlog.pt:18
+#: ./../project_templates/backlog.pt:18
 msgid "The backlog contains all the stories that haven't been planned yet."
 msgstr "Il backlog contiene tutte le storie non ancora pianificate in un'iterazione."
 
-#: ../events.py:53
+#: ./../events.py:53
 msgid "The documents that have been gathered for ${project_name}"
 msgstr "Questa cartella contiene tutti i documenti relativi al progetto ${project_name}"
 
-#: ../interfaces.py:207
+#: ./../interfaces/story.py:65
 msgid "The epic the story belongs to"
 msgstr "L'epic a cui appartiene la storia"
 
-#: ../events.py:21
+#: ./../events.py:21
 msgid "The issues relative to ${project_name}"
 msgstr "Tutti i ticket relativi a ${project_name}"
 
-#: ../interfaces.py:78
+#: ./../interfaces/project.py:68
 msgid "The man days required for completion, as initially estimated by the project manager"
 msgstr "I giorni uomo richiesti per il completamento dell'attività stimati dal project manager"
 
-#: ../interfaces.py:74
+#: ./../interfaces/project.py:64
 msgid "The man days that this project is paid for"
 msgstr "I giorni uomo disponibili per questo progetto"
 
-#: ../interfaces.py:328
+#: ./../interfaces/settings.py:22
 msgid "The number of hours a person works in a day"
 msgstr "Il numero di ore che una persona è tenuta a lavorare in un giorno"
 
-#: ../interfaces.py:363
+#: ./../interfaces/settings.py:57
 msgid "The number of weeks to show in monthly views that actually fall in the next month"
 msgstr "Numero di settimane da visualizzare nelle viste mensili che cadrebbero nel mese successivo"
 
-#: ../interfaces.py:358
+#: ./../interfaces/settings.py:52
 msgid "The number of weeks to show in monthly views that actually fall in the previous month"
 msgstr "Numero di settimane da visualizzare nelle viste mensili che cadrebbero nel mese precedente"
 
-#: ../interfaces.py:321
+#: ./../interfaces/settings.py:15
 msgid "The percentage (between 0 and 1) after which a deviation needs to be highlighted"
 msgstr "La precentualie (tra 0 e 1) dopo la quale la deviazione dal pianificato dev'essere evidenziata"
 
-#: ../interfaces.py:198
+#: ./../interfaces/story.py:56
 msgid "The user IDs of the people that are responsible to act on this story"
 msgstr "I nomi utente delle persone che parteciperanno a questa storia"
 
-#: ../interfaces.py:135
+#: ./../interfaces/project.py:125
 msgid "The user IDs of those that have operative roles in this project (coders, designers, project managers, accounts etc.). Customers should not be included in this list.Adding someone here will add them automatically as managers to the default tracker."
 msgstr "I nomi utente di chi ha un ruolo operativo in questo progetto (sviluppatori, grafici, project manager, account ecc.). I Clienti non devono essere inclusi in questa lista. Le persone aggiunte in questo elenco saranno assegnate come manager del tracker."
 
-#: ../project_templates/alliterations.pt:70
-#: ../project_templates/view.pt:34
+#: ./../project_templates/alliterations.pt:70
+#: ./../project_templates/view.pt:34
 msgid "There are no current iterations"
 msgstr "Non c'e nessuna iterazione corrente"
 
-#: ../project_templates/overview.pt:158
+#: ./../project_templates/overview.pt:161
 msgid "There are no documents in this project because the designated area is missing. We suggest to create it."
 msgstr "Non ci sono documenti per questo progetto poiché non esiste l'apposita area. Ti suggerisco di crearla."
 
-#: ../project_templates/alliterations.pt:57
+#: ./../project_templates/alliterations.pt:57
 msgid "There are no past iterations"
 msgstr "Non ci sono iterazioni passate"
 
-#: ../project_templates/overview.pt:145
+#: ./../browser/templates/dashboard.pt:113
+msgid "There are not stories assigned to ${username}"
+msgstr "Non ci sono storie assegnate a ${username}"
+
+#: ./../browser/templates/dashboard.pt:116
+msgid "There are not stories assigned to you."
+msgstr "Non ci sono storie assegnate a te."
+
+#: ./../project_templates/overview.pt:148
 msgid "This project doesn't contain any documents"
 msgstr "Il progetto non contiene nessun documento"
 
-#: ../browser/templates/worklog.pt:101
+#: ./../browser/templates/worklog.pt:101
 msgid "Thu"
 msgstr "Gio"
 
-#: ../browser/templates/dashboard.pt:43
+#: ./../browser/templates/dashboard.pt:43
 msgid "Tickets"
 msgstr "Ticket"
 
-#: ../booking_templates/view.pt:16
-#: ../browser/templates/macros.pt:302
+#: ./../booking_templates/view.pt:16
+#: ./../browser/templates/macros.pt:316
 msgid "Time"
 msgstr "Ora"
 
-#: ../epic_templates/view.pt:58
+#: ./../epic_templates/view.pt:58
 msgid "Time spent"
 msgstr "Ore spese"
 
-#: ../browser/templates/dashboard.pt:179
-#: ../browser/templates/macros.pt:301
-#: ../browser/templates/ticketsmacros.pt:17
+#: ./../browser/templates/dashboard.pt:226
+#: ./../browser/templates/macros.pt:315
+#: ./../browser/templates/ticketsmacros.pt:13
 msgid "Title"
 msgstr "Titolo"
 
-#: ../browser/templates/macros.pt:152
+#: ./../browser/templates/macros.pt:166
 msgid "Totals"
 msgstr "Totali"
 
-#: ../browser/templates/worklog.pt:97
+#: ./../browser/templates/worklog.pt:97
 msgid "Tue"
 msgstr "Mar"
 
-#: ../epic_templates/view.pt:27
-#: ../interfaces.py:50
+#: ./../epic_templates/view.pt:27
+#: ./../interfaces/project.py:34
 msgid "Type"
 msgstr "Tipo"
 
-#: ../interfaces.py:53
+#: ./../interfaces/project.py:37
 msgid "URL"
 msgstr "URL"
 
-#: ../interfaces.py:116
+#: ./../interfaces/project.py:106
 msgid "URLs"
 msgstr "URL"
 
-#: ../browser/templates/macros.pt:50
+#: ./../browser/templates/macros.pt:50
 msgid "Unassigned"
 msgstr "Non assegnato"
 
-#: ../interfaces.py:41
+#: ./../interfaces/project.py:23
 msgid "User ID"
 msgstr "Nome utente"
 
-#: ../epic_templates/view.pt:31
+#: ./../epic_templates/view.pt:31
 msgid "Value (man hours)"
 msgstr "Valore (in giorni uomo)"
 
-#: ../profiles/default/types/Booking.xml
-#: ../profiles/default/types/Epic.xml
-#: ../profiles/default/types/Iteration.xml
+#: ./../profiles/default/types/Booking.xml
+#: ./../profiles/default/types/Epic.xml
+#: ./../profiles/default/types/Iteration.xml
 msgid "View"
 msgstr "Visualizza"
 
-#: ../browser/templates/macros.pt:58
+#: ./../browser/templates/macros.pt:58
 msgid "View details"
 msgstr "Visualizza i dettagli"
 
-#: ../interfaces.py:320
+#: ./../interfaces/settings.py:14
 msgid "Warning delta"
 msgstr "Warning delta"
 
-#: ../browser/templates/worklog.pt:99
+#: ./../browser/templates/worklog.pt:99
 msgid "Wed"
 msgstr "Mer"
 
-#: ../browser/templates/worklog.pt:91
+#: ./../browser/templates/worklog.pt:91
 msgid "Week"
 msgstr "Settimana"
 
-#: ../story.py:116
+#: ./../browser/templates/project_report.pt:100
+msgid "Week ${weekno}: ${week_total} hours"
+msgstr "Settimana ${weekno}: ${week_total} ore"
+
+#: ./../story.py:130
 msgid "When you add a story it will be put in the first current iteration whether exists or in the project backlog"
 msgstr "Quando aggiungi una storia essa sarà automaticamente messa nella prima iterazione corrente trovata o, se non esiste, nel backlog"
 
-#: ../browser/templates/worklog.pt:20
-#: ../profiles/default/actions.xml
-#: ../profiles/default/types/Project.xml
+#: ./../browser/templates/worklog.pt:20
+#: ./../profiles/default/actions.xml
+#: ./../profiles/default/types/Project.xml
 msgid "Worklog"
 msgstr "Worklog"
 
-#: ../browser/templates/macros.pt:366
+#: ./../browser/templates/dashboard.pt:214
+#: ./../browser/templates/project_report.pt:147
+msgid "You have no bookings yet"
+msgstr "Non hai alcun booking al momento"
+
+#: ./../browser/templates/macros.pt:394
 msgid "You have no stories assigned"
 msgstr "Non hai storie assegnate"
 
-#: ../browser/templates/macros.pt:386
+#: ./../browser/templates/macros.pt:414
 msgid "You have no tickets assigned"
 msgstr "Non hai ticket assegnati"
 
-#: ../browser/templates/dashboard.pt:58
+#: ./../interfaces/booking.py:40
+msgid "You must provide a time!"
+msgstr "Devi fornire un tempo!"
+
+#: ./../interfaces/booking.py:45
+msgid "You must provide a value for time!"
+msgstr "Devi fornire un valore per il tempo!"
+
+#: ./../browser/templates/dashboard.pt:59
 msgid "You seem to have missing bookings for the following days:"
 msgstr "Sembra che tu non abbia inserito dei booking nei seguenti giorni:"
 
-#: ../browser/templates/dashboard.pt:21
+#: ./../browser/templates/dashboard.pt:21
 msgid "Your dashboard"
 msgstr "La tua dashboard"
 
 #. Default: "Budget <small>as is by offer:</small>"
-#: ../project_templates/overview.pt:39
+#: ./../project_templates/overview.pt:39
 msgid "budget_label"
 msgstr "Budget <small>come da offerta:</small>"
 
-#: ../browser/templates/macros.pt:18
+#: ./../browser/templates/macros.pt:18
 msgid "due ${deadline}"
 msgstr "scadenza ${deadline}"
 
 #. Default: "Estimate <small>at the beginning, by the project manager:</small>"
-#: ../project_templates/overview.pt:43
+#: ./../project_templates/overview.pt:43
 msgid "estimate_label"
 msgstr "Stima <small>iniziale, effettuata dal project manager:</small>"
 
 #. Default: "There are no iterations.<br /> To add a new iteration <a href=\"++add++Iteration\">click here</a>"
-#: ../project_templates/alliterations.pt:15
+#: ./../project_templates/alliterations.pt:15
 msgid "no_iterations"
 msgstr "Non esiste nessuna iterazione per il progetto corrente.<br/>Per aggiungere una nuova iterazione <a href=\"++add++Iteration\">clicca qui</a>"
+
+#: ./../browser/templates/macros.pt:332
+msgid "show more"
+msgstr "mostra di piú"
 
