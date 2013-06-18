@@ -18,7 +18,21 @@
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
         <h1 class="documentFirstHeading"
-            i18n:translate="">Your report</h1>
+            i18n:translate="">
+          Project report: <span i18n:name="projname"
+                         class="projname"
+                         tal:content="view/project/Title"
+                         />
+        </h1>
+        <tal:block condition="not: view/is_project">
+          <h3 class="documentFirstHeading"
+              i18n:translate="">
+            Story: <span i18n:name="storyname"
+                           class="storyname"
+                           tal:content="context/Title"
+                           />
+          </h3>
+        </tal:block>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
         <div id="content-core">

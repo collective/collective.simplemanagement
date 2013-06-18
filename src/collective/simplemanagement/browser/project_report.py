@@ -6,6 +6,7 @@ from plone.memoize.view import memoize as view_memoize
 from ..utils import get_user_details
 from ..utils import get_bookings
 from ..utils import get_project
+from ..interfaces import IProject
 
 from dashboard import DashboardMixin
 from worklog import MONTHS
@@ -36,9 +37,18 @@ class ReportView(DashboardMixin):
 
     @property
     @view_memoize
+    def project(self):
+        return get_project(self.context)
+
+    @property
+    def is_project(self):
+        return IProject.providedBy(self.context)
+
+    @property
+    @view_memoize
     def resources(self):
         resources = []
-        project = get_project(self.context)
+        project = self.project
 
         operatives = project.operatives or []
         for operative in operatives:
