@@ -366,7 +366,7 @@
             var $self = $(this);
             var date = $(this).attr('data-date');
             var time = $(this).attr('data-time');
-            var reason = $(this).siblings(':selected').val();
+            var reason = $(this).siblings('select').val();
             $.getJSON(
                 './create-hole?date=' + date +
                              '&time=' + time +

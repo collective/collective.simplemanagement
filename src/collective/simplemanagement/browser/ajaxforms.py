@@ -99,7 +99,7 @@ class CreateHole(Mixin):
         # TODO: use a form in here
         date = [int(x) for x in self.request['date'].split('-')]
         date = datetime.date(*date)
-        time = int(self.request['time'])
+        time = Decimal(self.request['time'])
         reason = self.request['reason']
 
         settings = Settings()
