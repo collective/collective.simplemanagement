@@ -45,7 +45,6 @@ class ReportView(DashboardMixin):
         return IProject.providedBy(self.context)
 
     @property
-    @view_memoize
     def resources(self):
         resources = []
         project = self.project
@@ -55,7 +54,7 @@ class ReportView(DashboardMixin):
             if operative.user_id not in resources:
                 resources.append(operative.user_id)
 
-        bookings = self.get_bookings()
+        bookings = self.get_bookings(ignore_userid=1)
         for booking in bookings:
             for assignee in booking.assigned_to or []:
                 if assignee not in resources:
@@ -80,7 +79,7 @@ class ReportView(DashboardMixin):
         to_date = datetime.datetime(year, month, daylast, 23, 59)
         return (from_date, to_date)
 
-    def get_bookings(self, date_range=None):
+    def get_bookings(self, date_range=None, ignore_userid=False):
         if date_range is None:
             date_range = self._date_range
         data = dict(
@@ -89,7 +88,7 @@ class ReportView(DashboardMixin):
             to_date=date_range[1],
         )
         userid = self.request.get('employee', 'all')
-        if userid != 'all':
+        if userid != 'all' and not ignore_userid:
             data['userid'] = userid
         bookings = get_bookings(**data)
         return bookings
