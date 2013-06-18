@@ -117,7 +117,7 @@ def get_booking_holes(userid, bookings, expected_working_time=None,
             _missing[booking.date] = booking.time
 
     # look up for entire-day hole
-    for adate, __ in datetimerange(from_date, to_date):
+    for adate, __ in datetimerange(from_date, to_date, exclude_weekend=1):
         if not adate in _missing:
             _missing[adate] = Decimal('0.0')
 
@@ -260,17 +260,21 @@ class datetimerange(object):
     """Just like ``xrange``, but working on ``datetime``.
     """
 
-    def __init__(self, from_, to, step=ONE_DAY):
+    weekend_days = (5, 6)
+
+    def __init__(self, from_, to, step=ONE_DAY, exclude_weekend=False):
         self.from_ = from_
         self.current = from_
         self.limit = to
         self.step = step
+        self.exclude_weekend = exclude_weekend
 
     def __iter__(self):
         return self.__class__(
             self.from_,
             self.limit,
-            self.step
+            self.step,
+            exclude_weekend=self.exclude_weekend,
         )
 
     def next(self):
@@ -278,6 +282,10 @@ class datetimerange(object):
             raise StopIteration()
         current = copy(self.current)
         next = current + self.step
+        if self.exclude_weekend:
+            while current.weekday() in self.weekend_days:
+                current += self.step
+                next += self.step
         self.current = next
         return (current, next)
 
