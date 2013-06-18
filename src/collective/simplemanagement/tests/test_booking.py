@@ -110,7 +110,7 @@ class TestBookingCheck(unittest.TestCase):
                                   man_day_hours=man_day_hours,
                                   from_date=from_date,
                                   to_date=to_date)
-        expected = 2
+        expected = 3  # we expect also entire missing day
         assert len(holes) == expected, \
                 'found %s holes instead of %s' % (len(holes), expected)
         # now we can create a hole for one of the missing booking
@@ -130,7 +130,7 @@ class TestBookingCheck(unittest.TestCase):
                                   man_day_hours=man_day_hours,
                                   from_date=from_date,
                                   to_date=to_date)
-        expected = 1
+        expected = 2
         assert len(holes) == expected, \
                 'found %s holes instead of %s' % (len(holes), expected)
 
