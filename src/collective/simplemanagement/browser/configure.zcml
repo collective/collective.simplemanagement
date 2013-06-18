@@ -86,7 +86,7 @@
   />
 
   <browser:page
-    for="..interfaces.IProject"
+    for="..interfaces.IReportable"
     name="report"
     class=".project_report.ReportView"
     layer="..interfaces.IBrowserLayer"

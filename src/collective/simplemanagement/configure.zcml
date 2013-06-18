@@ -74,4 +74,13 @@
   <utility name="Customer" factory=".sharing.CustomerRole"/>
   <utility name="PM" factory=".sharing.PMRole"/>
 
+  <class class=".project.Project">
+    <implements interface=".interfaces.IReportable" />
+  </class>
+
+  <class class=".story.Story">
+    <implements interface=".interfaces.IReportable" />
+  </class>
+
+
 </configure>
