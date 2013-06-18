@@ -16,7 +16,9 @@ from .interfaces import IStory
 from .interfaces import IProject
 from .interfaces import IIteration
 from .interfaces import IBookingHoles
-from .configure import Settings, DECIMAL_QUANT
+from .configure import Settings
+from .configure import DECIMAL_QUANT
+from .configure import ONE_DAY
 
 
 def quantize(value):
@@ -113,6 +115,11 @@ def get_booking_holes(userid, bookings, expected_working_time=None,
             _missing[booking.date] += booking.time
         else:
             _missing[booking.date] = booking.time
+
+    # look up for entire-day hole
+    for adate, __ in datetimerange(from_date, to_date):
+        if not adate in _missing:
+            _missing[adate] = Decimal('0.0')
 
     # then we check that total time matches our constraints
     holes_utility = getUtility(IBookingHoles)
@@ -253,7 +260,7 @@ class datetimerange(object):
     """Just like ``xrange``, but working on ``datetime``.
     """
 
-    def __init__(self, from_, to, step):
+    def __init__(self, from_, to, step=ONE_DAY):
         self.from_ = from_
         self.current = from_
         self.limit = to
