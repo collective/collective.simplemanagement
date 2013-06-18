@@ -1,9 +1,11 @@
 import datetime
 import calendar
 
+from plone.memoize.view import memoize as view_memoize
+
 from ..utils import get_user_details
 from ..utils import get_bookings
-from ..interfaces import IProject
+from ..utils import get_project
 
 from dashboard import DashboardMixin
 from worklog import MONTHS
@@ -33,14 +35,30 @@ class ReportView(DashboardMixin):
             }
 
     @property
+    @view_memoize
     def resources(self):
-        operatives = self.context.operatives or []
+        resources = []
+        project = get_project(self.context)
+
+        operatives = project.operatives or []
         for operative in operatives:
+            if operative.user_id not in resources:
+                resources.append(operative.user_id)
+
+        bookings = self.get_bookings()
+        for booking in bookings:
+            for assignee in booking.assigned_to or []:
+                if assignee not in resources:
+                    resources.append(assignee)
+        res = []
+        # resources now contains user ids
+        for userid in set(resources):
             details = get_user_details(self.context,
-                                       operative.user_id,
+                                       userid,
                                        **self.tools)
-            details['selected'] = self.request.get('employee') == operative.user_id
-            yield details
+            details['selected'] = self.request.get('employee') == userid
+            res.append(details)
+        return res
 
     @property
     def _date_range(self):
@@ -52,23 +70,23 @@ class ReportView(DashboardMixin):
         to_date = datetime.datetime(year, month, daylast, 23, 59)
         return (from_date, to_date)
 
-    def bookings(self):
-        userid = self.request.get('employee', 'all')
-        project = None
-        is_project_context = IProject.providedBy(self.context)
-        if is_project_context:
-            project = self.context
-
+    def get_bookings(self, date_range=None):
+        if date_range is None:
+            date_range = self._date_range
         data = dict(
-            project=project,
-            from_date=self._date_range[0],
-            to_date=self._date_range[1],
+            project=self.context,
+            from_date=date_range[0],
+            to_date=date_range[1],
         )
+        userid = self.request.get('employee', 'all')
         if userid != 'all':
             data['userid'] = userid
         bookings = get_bookings(**data)
+        return bookings
+
+    def details_report(self):
         results = []
-        for booking in bookings:
+        for booking in self.get_bookings():
             results.append({
                 'date': self.context.toLocalizedTime(booking.date.isoformat()),
                 'time': booking.time,
@@ -79,3 +97,35 @@ class ReportView(DashboardMixin):
                                          **self.tools)
             })
         return results
+
+    def _group_by_month(self, bookings):
+        res = {}
+        for item in bookings:
+            month = item.date.month
+            weekno = item.date.isocalendar()[1]
+            if not month in res:
+                res[month] = {weekno: item.time}  # weeks
+            else:
+                if not weekno in res[month]:
+                    res[month][weekno] = item.time
+                else:
+                    res[month][weekno] += item.time
+        return res
+
+    def monthly_report(self):
+        res = []
+        today = datetime.date.today()
+        year = int(self.request.get('year', today.year))
+        from_date = datetime.date(year, 1, 31)
+        to_date = datetime.date(year, 12, 31)
+        bookings = self.get_bookings(date_range=(from_date, to_date))
+        grouped = self._group_by_month(bookings)
+        for month, weeks in grouped.iteritems():
+            month_total = sum(weeks.values())
+            res.append({
+                'number': month,
+                'label': MONTHS[month - 1],
+                'total': month_total,
+                'weeks': weeks,
+            })
+        return res

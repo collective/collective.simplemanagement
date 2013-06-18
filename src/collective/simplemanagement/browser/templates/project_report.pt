@@ -11,7 +11,9 @@
     <metal:bodytext fill-slot="main">
       <metal:main define-macro="main"
         tal:define="helpers context/@@sm_helpers;
-                    bookings view/bookings;">
+                    details view/details_report;
+                    monthly view/monthly_report;
+                    resources view/resources;">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -23,15 +25,71 @@
 
           <div id="overview">
             <ul class="tabs">
-              <!-- <li><a href="#synoptic"
-                i18n:translate="">Sinottica</a></li> -->
+              <li><a href="#synoptic"
+                i18n:translate="">Sinottica</a></li>
               <li><a href="#details"
                 i18n:translate="">Details</a></li>
             </ul>
             <div class="panes">
-              <!-- <div class="pane" id="synoptic">
-                sinottica........ TODO
-              </div> -->
+              <div id="synoptic" class="pane">
+
+                <form tal:attributes="action view/__name__">
+                  <!-- <select name="month">
+                    <tal:opt repeat="month view/months">
+                      <option
+                        tal:attributes="value month/value;
+                                        selected month/selected"
+                        tal:content="month/label"
+                        />
+                    </tal:opt>
+                  </select> -->
+                  <select name="year">
+                    <tal:opt repeat="year view/years">
+                      <option
+                        tal:attributes="value year/value;
+                                        selected year/selected"
+                        tal:content="year/label"
+                        />
+                    </tal:opt>
+                  </select>
+                  <select name="employee">
+                    <option value="all" i18n:translate="">All</option>
+                    <tal:opt repeat="resource resources">
+                      <option
+                        tal:attributes="value resource/user_id;
+                                        selected resource/selected;"
+                        tal:content="resource/fullname"
+                        />
+                    </tal:opt>
+                  </select>
+                  <input type="submit" value="Filter" />
+                </form>
+
+                <div class="results">
+                  <ul class="month" tal:repeat="month monthly">
+                    <li>
+                      <span class="label" tal:content="month/label" />
+                      <span class="label" i18n:translate="">
+                        Total: <span class="total"
+                                     i18n:name="month_total"
+                                     tal:content="month/total" />
+                      </span>
+                      <ul class="week" tal:repeat="week month/weeks/keys">
+                        <li>
+                          <span class="label" i18n:translate="">
+                            Settimana <span i18n:name="weekno"
+                                            tal:content="repeat/week/number" />:
+                            <span class="total"
+                                  i18n:name="week_total"
+                                  tal:content="python:month['weeks'][week]" />
+                          </span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                
+              </div>
               <div id="booking-wrapper" class="pane">
                 <div class="filters">
                   <form tal:attributes="action view/__name__">
@@ -54,8 +112,8 @@
                       </tal:opt>
                     </select>
                     <select name="employee">
-                      <option value="all">All</option>
-                      <tal:opt repeat="resource view/resources">
+                      <option value="all" i18n:translate="">All</option>
+                      <tal:opt repeat="resource resources">
                         <option
                           tal:attributes="value resource/user_id;
                                           selected resource/selected;"
@@ -66,7 +124,7 @@
                     <input type="submit" value="Filter" />
                   </form>
                 </div>
-                <div tal:condition="not: bookings">
+                <div tal:condition="not: details">
                   <span class="label"
                     i18n:translate="">
                     You have no bookings yet
@@ -74,7 +132,7 @@
                 </div>
 
                 <table class="listing"
-                       tal:condition="bookings">
+                       tal:condition="details">
                   <thead>
                     <tr>
                       <th i18n:translate="">Date</th>
@@ -84,7 +142,7 @@
                     </tr>
                   </thead>
                    <tbody>
-                    <tr tal:repeat="book bookings">
+                    <tr tal:repeat="book details">
                       <td>
                         <span tal:content="book/date">today</span>
                       </td>
