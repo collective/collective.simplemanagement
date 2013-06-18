@@ -416,6 +416,8 @@
             data: $(this).serialize(),
             success: function(result) {
                 var $form = $('#booking_form');
+                // flush title
+                $('#form-widgets-title', $form).val('');
                 // flush errors
                 $form.siblings('.errors').remove();
                 if(result.success && !result.error){
