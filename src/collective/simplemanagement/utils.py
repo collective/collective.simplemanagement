@@ -137,7 +137,6 @@ def get_booking_holes(userid, bookings, expected_working_time=None,
             # we are ok with this booking
             continue
         missing.append(AttrDict({
-            # 'date': plone_view.toLocalizedTime(booking.date),
             'date': dt,
             'time': tm,
         }))

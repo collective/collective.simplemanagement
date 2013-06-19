@@ -68,7 +68,7 @@
                           <span class="booking-date"
                                 tal:content="python:helpers.timeago(hole.date)" />
                         </div>
-                        <div class="cell position-2 column-2">
+                        <div class="cell position-3 column-2">
                           <span class="booking-time"
                                 i18n:translate="">
                             (<span i18n:name="time"
@@ -77,7 +77,7 @@
                             hours booked)
                           </span>
                         </div>
-                        <div class="cell position-5 column-4">
+                        <div class="cell position-6 column-4">
                           <div class="actions">
                             <span class="take-it-easy"
                                   i18n:translate="">It's okay, I</span>
