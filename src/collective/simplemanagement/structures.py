@@ -13,6 +13,7 @@ class Resource(SimpleItem):
     role = FieldProperty(IResource['role'])
     user_id = FieldProperty(IResource['user_id'])
     active = FieldProperty(IResource['active'])
+    compass_effort = FieldProperty(IResource['compass_effort'])
 
     __name__ = None
     __parent__ = None

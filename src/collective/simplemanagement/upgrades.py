@@ -27,12 +27,12 @@ def upgrade_to_1001(context, logger=None):
 
 
 def upgrade_to_1002(context, logger=None):
-    if logger is None:
-        logger = getLogger('collective.simplemanagement')
+    logger = getLogger(logger)
     logger.info("Reloading catalog")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'catalog')
-    logger.info("Reindexing projects")
+    logger.info("Rebuilding catalog")
     pc = getToolByName(context, 'portal_catalog')
-    for brain in pc.searchResults(portal_type='Project'):
-        project = brain.getObject()
-        project.reindexObject()
+    pc.clearFindAndRebuild()
+    logger.info("Creating portal tool")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'toolset')
+

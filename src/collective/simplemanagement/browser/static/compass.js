@@ -99,13 +99,13 @@
             var self = this;
             $.ajax({
                 dataType: "json",
-                url: this.urls.project.get,
+                url: this.app.urls.project.get,
                 data: { id: this.id },
                 success: function(data, status, request) {
                     var i, l;
-                    self.people(data.people);
+                    self._people(data.people);
                     if((typeof data.end) !== "undefined")
-                        self.end(data.end);
+                        self.end(new Date(data.end));
                     for(i=0, l=data.iterations.length; i<l; i++) {
                         self.iterations.push(data.iterations[i]);
                     }

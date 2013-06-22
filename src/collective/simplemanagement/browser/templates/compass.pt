@@ -75,6 +75,12 @@
                   <div data-bind="if: stage() >= 2">
                     <div class="iterations" data-bind="foreach: iterations">
                       <div class="iteration">
+                        <input type="text" width="2"
+                               data-bind="value: effort"/>
+                        <span i18n:translate="">man days</span>
+                        <span i18n:translate="">from</span>
+                        <span i18n:translate="">to</span>
+                        <select
                         <a href="#"
                            title="Delete"
                            i18n:attributes="title"

@@ -60,103 +60,72 @@ class Compass(BrowserView):
         return json.dumps(users)
 
     def urls(self):
-        base = self.context.absolute_url()
-        return json.dumps({
-            'projects': {
-                'get': base + '/@@compass/get_projects'
-            },
-            'project': {
-                'get': base + '/@@compass/get_project_info'
-            }
-        })
+        base = self.context.absolute_url() + '/@@compass/'
+        urls = {}
+        for method_ in ['set_project_data', 'get_projects',
+                        'get_all_projects']:
+            urls[method_] = base + method_
+        return json.dumps(urls)
+
+    @jsonmethod()
+    def do_get_all_projects(self):
+        pass
+
+    @jsonmethod()
+    def do_set_project_data(self):
+        pu = getToolByName(self.context, 'portal_url')
+        portal = pu.getPortalObject()
+        project = portal.restrictedTraverse(self.request.form['project'])
+        data = json.loads(self.request.form['data'])
+        if 'notes' in data:
+            project.compass_notes = data['notes']
+        if 'effort' in data:
+            project.compass_effort = Decimal(data['effort'])
+        if 'people' in data:
+            operatives = project.operatives
+            if operatives is None:
+                operatives = []
+            for person in data['people']:
+                if person.get('remove', False):
+                    pass
+                else:
+                    pass
+
+    @jsonmethod()
+    def do_swap_priority(self):
+        pass
 
     @staticmethod
     def _get_operatives(project):
-        people = {}
+        people = []
         if project.operatives is not None:
             for operative in project.operatives:
                 if operative.active:
-                    people.setdefault(operative.role, []).append(
-                        operative.user_id
-                    )
+                    people.append({
+                        'id': operative.user_id,
+                        'role': operative.role,
+                        'effort': str(operative.compass_effort)
+                    })
         return people
-
-    @jsonmethod()
-    def do_get_project_info(self):
-        pc = getToolByName(self.context, 'portal_catalog')
-        pu = getToolByName(self.context, 'portal_url')
-        project = pu.getPortalObject().restrictedTraverse(
-            self.request.form['id']
-        )
-        project_info = {
-            'people': self._get_operatives(project),
-            'iterations': []
-        }
-        now = DateTime()
-        query = {
-            'path': '/'.join(project.getPhysicalPath()),
-            'portal_type': 'Iteration',
-            'end': {
-                'query': now-1,
-                'range': 'min'
-            },
-            'sort_on': 'end'
-        }
-        iterations = pc.searchResults(query)
-        for iteration in iterations:
-            project_info['iterations'].append({
-                'effort': int(iteration.estimate),
-                'start': iteration.start,
-                'end': iteration.end
-            })
-        if len(project_info['iterations']) > 0:
-            project_info['end'] = project_info['iterations'][0]['end']
-        return project_info
 
     @jsonmethod()
     def do_get_projects(self):
         projects = []
         pc = getToolByName(self.context, 'portal_catalog')
         for brain in pc.searchResults(portal_type='Project',
+                                      active=True,
                                       sort_on='priority'):
+            project = brain.getObject()
             info = {
                 'id': brain.getPath(),
                 'name': brain.Title,
                 'status': brain.review_state,
-                'active': brain.active,
                 'customer': brain.customer,
-                'priority': brain.priority
+                'priority': brain.priority,
+                'people': self._get_operatives(project),
+                'effort': str(project.compass_effort),
+                'notes': project.compass_notes
             }
-            if brain.active:
-                project = brain.getObject()
-                info['people'] = self._get_operatives(project)
-                now = DateTime()
-                query = {
-                    'path': '/'.join(project.getPhysicalPath()),
-                    'portal_type': 'Iteration',
-                    'start': {
-                        'query': now+1,
-                        'range': 'max'
-                    },
-                    'end': {
-                        'query': now-1,
-                        'range': 'min'
-                    },
-                    'sort_on': 'end'
-                }
-                iterations = pc.searchResults(query)
-                if len(iterations) == 0:
-                    del query['end']
-                    query['start']['range'] = 'min'
-                    iterations = pc.searchResults(query)[:1]
-                total_days = reduce(
-                    lambda x, y: x + y.estimate,
-                    iterations,
-                    Decimal('0.00')
-                )
-                if len(iterations) > 0:
-                    info['effort'] = int(total_days)
-                    info['end'] = iterations[-1].end
             projects.append(info)
         return projects
 
