@@ -8,6 +8,7 @@ from zope.publisher.interfaces import IPublishTraverse, NotFound
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 from ..utils import get_employee_ids, get_user_details, jsonmethod, shorten
+from ..structures import Resource
 from .. import messageFactory as _
 
 
@@ -69,7 +70,32 @@ class Compass(BrowserView):
 
     @jsonmethod()
     def do_get_all_projects(self):
-        pass
+        return []
+
+    @staticmethod
+    def _add_operative(user_id, role, effort, operatives):
+        for operative in operatives:
+            if operative.user_id == user_id:
+                operative.role = role
+                operative.compass_effort = effort
+                operative.active = True
+                return False
+        operative = Resource()
+        operative.role = role
+        operative.user_id = user_id
+        operative.active = True
+        operative.compass_effort = effort
+        operatives.append(operative)
+        return True
+
+    @staticmethod
+    def _del_operative(user_id, operatives):
+        for operative in operatives:
+            if operative.user_id == user_id:
+                operative.active = False
+                operative.compass_effort = Decimal('0.00')
+                return True
+        return False
 
     @jsonmethod()
     def do_set_project_data(self):
@@ -87,12 +113,19 @@ class Compass(BrowserView):
                 operatives = []
             for person in data['people']:
                 if person.get('remove', False):
-                    pass
+                    self._del_operative(person['id'], operatives)
                 else:
-                    pass
+                    self._add_operative(
+                        person['id'],
+                        person['role'],
+                        Decimal(person['effort']),
+                        operatives
+                    )
+            if len(operatives) > 0:
+                project.operatives = operatives
 
     @jsonmethod()
-    def do_swap_priority(self):
+    def do_set_priority(self):
         pass
 
     @staticmethod
