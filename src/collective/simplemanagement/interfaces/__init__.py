@@ -17,3 +17,4 @@ from timeline import ITimeline
 from backlog import IBacklogView
 from settings import ISettings
 from report import IReportable
+from compass import ICompassSettings

@@ -1,5 +1,8 @@
 import logging
+from zope.component import getUtility
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
+from .interfaces.compass import ICompassSettings
 
 
 
@@ -28,6 +31,15 @@ def upgrade_to_1001(context, logger=None):
 
 def upgrade_to_1002(context, logger=None):
     logger = getLogger(logger)
+    logger.info("Adding records to the registry")
+    registry = getUtility(IRegistry)
+    registry.registerInterface(ICompassSettings)
+    proxy = registry.forInterface(ICompassSettings)
+    proxy.default_plan_length = 2
+    proxy.minimum_plan_length = 1
+    proxy.maximum_plan_length = 4
+    logger.info("Reloading javascript registry")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'jsregistry')
     logger.info("Reloading catalog")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'catalog')
     logger.info("Rebuilding catalog")

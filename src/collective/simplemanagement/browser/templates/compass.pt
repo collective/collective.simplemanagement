@@ -21,11 +21,27 @@
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
         <div id="content-core" class="compassview row"
+             tal:define="settings view/settings"
              tal:attributes="data-roles view/roles;
                              data-people view/employees;
-                             data-urls view/urls;
-                             data-translations view/translations">
-          <div class="cell position-0 width-3">
+                             data-base-url view/base_url;
+                             data-translations view/translations;
+                             data-plan-weeks settings/default_plan_length">
+          <div>
+            <div>
+              <label for="weekn" i18n:translate="">Plan for</label>
+              <span data-bind="text: plan_weeks_human">2</span>
+              <input name="weekn"
+                     type="range"
+                     data-bind="value: plan_weeks"
+                     step="1"
+                     tal:attributes="min settings/minimum_plan_length;
+                                     max settings/maximum_plan_length" />
+            </div>
+            <a href="#" i18n:translate="">Go back to saved version</a>
+            <button i18n:translate="">Save</button>
+          </div>
+          <div class="cell position-0 width-4">
             <h2 i18n:translate="">People</h2>
             <input type="text"
                    name="filter-people"
@@ -37,74 +53,43 @@
             <div class="container" data-bind="foreach: shown_people">
               <div class="thumbnail user" data-bind="attr: { 'data-id': id }">
                 <img data-bind="attr: { src: avatar }"
-                     width="80" />
+                     width="100" />
                 <span class="title" data-bind="text: name"></span>
               </div>
             </div>
           </div>
-          <div class="cell position-3 width-10">
+          <div class="cell position-3 width-12">
             <h2 i18n:translate="">Active projects</h2>
             <div class="container" data-bind="foreach: active_projects">
               <div class="project" data-bind="attr: { 'data-id': id }">
+                <div data-bind="css: css_class">
+                  <a href="#">X</a>
+                </div>
                 <div>
-                  <div data-bind="css: css_class">&nbsp;</div>
+                  <div><h3 data-bind="text: name"></h3></div>
+                  <div><input type="text" data-bind="value: notes" /></div>
                   <div>
-                    <a href="#" class="arrow"
-                       title="title"
-                       data-bind="click: toggle"
-                       i18n:attributes="title"
-                       i18n:translate="">Open</a>
-                    <h3 data-bind="text: name"></h3>
-                  </div>
-                  <div data-bind="visible: !(open())">
-                    <span data-bind="text: formattedEffort"></span>
-                  </div>
-                  <div class="people float-right"
-                       data-bind="visible: !(open()), foreach: people">
-                    <div class="thumbnail-small user"
-                         data-bind="attr: { 'data-id': id }">
-                      <img data-bind="attr: { src: avatar }"
-                           width="50" />
-                      <span class="title" data-bind="text: role"></span>
-                    </div>
+                    <input type="text" data-bind="value: effort" />
+                    <b i18n:translate="">man days</b>
+                    <span i18n:translate="">to be done before</span>
+                    <span data-bind="text: $root.plan_end"></span>
                   </div>
                 </div>
-                <div data-bind="visible: open">
-                  <p class="spinner"
-                     data-bind="if: stage() < 2">Loading data...</p>
-                  <div data-bind="if: stage() >= 2">
-                    <div class="iterations" data-bind="foreach: iterations">
-                      <div class="iteration">
-                        <input type="text" width="2"
-                               data-bind="value: effort"/>
-                        <span i18n:translate="">man days</span>
-                        <span i18n:translate="">from</span>
-                        <span i18n:translate="">to</span>
-                        <select
-                        <a href="#"
-                           title="Delete"
-                           i18n:attributes="title"
-                           i18n:translate="">Delete</a>
-                      </div>
-                    </div>
-                    <div class="people float-right">
-                      <!-- ko foreach: people -->
-                      <div class="thumbnail-small user"
-                           data-bind="attr: { 'data-id': id }">
-                        <img data-bind="attr: { src: avatar }"
-                             width="50" />
-                        <span class="title" data-bind="text: role"></span>
-                      </div>
-                      <!-- /ko -->
-                      <div class="thumbnail-small user placeholder"></div>
-                    </div>
+                <div>
+                  <!-- ko foreach: people -->
+                  <div class="thumbnail-small user"
+                       data-bind="attr: { 'data-id': id }">
+                    <img data-bind="attr: { src: avatar }"
+                         width="50" />
+                    <span class="title" data-bind="text: role"></span>
+                  </div>
+                  <!-- /ko -->
+                  <div class="thumbnail-small user placeholder">
+                    &nbsp;
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="cell position-13 width-3">
-            <h2 i18n:translate="">Inactive projects</h2>
           </div>
         </div>
         <div tal:replace="structure provider:plone.belowcontentbody" />

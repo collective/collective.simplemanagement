@@ -38,6 +38,14 @@
       cookable="True"
       enabled="True"
       expression=""
+      id="++resource++simplemanagement/json2.js"
+      inline="False" />
+  <javascript
+      cacheable="True"
+      compression="none"
+      cookable="True"
+      enabled="True"
+      expression=""
       id="++resource++simplemanagement/knockout-2.2.1.js"
       inline="False" />
   <javascript

@@ -909,3 +909,36 @@ table#tickets-listing {
 }
 
 /* Compass */
+.user .title {
+    display: block;
+    text-align: center;
+}
+.thumbnail {
+    float: left;
+    margin: 4px;
+    padding: 3px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+}
+input[name="filter-people"] {
+    width: 220px;
+    margin-left: 3px;
+}
+.project {
+    height: 100px;
+    clear: both;
+}
+.project > div {
+    float: left;
+}
+.project > .status-indicator {
+    width: 1.3em;
+    background-color: #777;
+    height: 100%;
+    text-align: center;
+}
+.project > .status-indicator a {
+    color: white !important;
+    font-weight: bold;
+    text-decoration: none !important;
+}

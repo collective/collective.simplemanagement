@@ -16,6 +16,7 @@
     var f = compass.format;
 
     compass.Project = function(app, data) {
+        var i, l, item;
         this.app = app;
         this.id = ko.observable(data.id);
         this.name = ko.observable(data.name);
@@ -23,114 +24,79 @@
         this.active = ko.observable(data.active);
         this.customer = ko.observable(data.customer);
         this.priority = ko.observable(data.priority);
-        this._people = ko.observable(null);
-        this.effort = ko.observable(null);
-        this.end = ko.observable(null);
-        this.iterations = ko.observableArray([]);
-        this.stage = ko.observable(0);
-        this.open = ko.observable(false);
-        if(this.active()) {
-            this._people(data.people);
-            if((typeof data.effort) !== "undefined")
-                this.effort(data.effort);
-            if((typeof data.end) !== "undefined")
-                this.end(new Date(data.end));
-            this.stage(1);
+        this.effort = ko.observable(parseFloat(data.effort));
+        this.notes = ko.observable(data.notes);
+        this._people = ko.observableArray([]);
+        for(i=0, l=data.people.length; i<l; i++) {
+            item = data.people[i];
+            item.effort = parseFloat(item.effort);
+            this._people.push(item);
         }
         this.people = ko.computed(this.getPeople, this);
-        this.formattedEffort = ko.computed(this.getFormattedEffort, this);
         this.css_class = ko.computed(function() {
             return 'status-indicator state-' + this.status();
         }, this);
     };
 
     compass.Project.prototype = {
-        toggle: function() {
-            var open = this.open(), stage = this.stage();
-            if(!open && stage < 2)
-                this.load();
-            if(open) this.open(false);
-            else this.open(true);
-        },
-        getFormattedEffort: function() {
-            var effort = this.effort(),
-                end = this.end(),
-                now = new Date(),
-                n_weeks, weeks, days;
-            if(effort === null)
-                return this.app.translate("no_effort");
-            if(effort === 1)
-                days = f(this.app.translate("day"), { day: effort });
-            else
-                days = f(this.app.translate("days"), { day: effort });
-            n_weeks = parseInt(
-                (end.getTime()-now.getTime())/(1000*60*60*24*7),
-                10);
-            if(n_weeks <= 0) n_weeks = 1;
-            if(n_weeks === 1)
-                weeks = f(this.app.translate("week"), { week: n_weeks });
-            else
-                weeks = f(this.app.translate("weeks"), { week: n_weeks });
-            return f(
-                this.app.translate("effort"),
-                { days: days, weeks: weeks });
-        },
         getPeople: function() {
             var i, l, role, user_id, user_data;
-            var people_map = this._people();
+            var raw_people = this._people();
             var people = [];
-            for(role in people_map) {
-                for(i=0, l=people_map[role].length; i<l; i++) {
-                    user_id = people_map[role][i];
-                    if((typeof this.app._people[user_id] !== "undefined")) {
-                        user_data = this.app._people[user_id];
-                        people.push({
-                            'id': user_id,
-                            'avatar': user_data['avatar'],
-                            'role_id': role,
-                            'role': this.app.roles[role]['shortname']
-                        });
-                    }
+            for(i=0, l=raw_people.length; i<l; i++) {
+                user_id = raw_people[i]['id'];
+                role = raw_people[i]['role'];
+                if((typeof this.app._people[user_id] !== "undefined")) {
+                    user_data = this.app._people[user_id];
+                    people.push({
+                        'id': user_id,
+                        'avatar': user_data['avatar'],
+                        'role_id': role,
+                        'role': this.app.roles[role]['shortname'],
+                        'effort': raw_people[i]['effort']
+                    });
                 }
             }
             return people;
-        },
-        load: function() {
-            var self = this;
-            $.ajax({
-                dataType: "json",
-                url: this.app.urls.project.get,
-                data: { id: this.id },
-                success: function(data, status, request) {
-                    var i, l;
-                    self._people(data.people);
-                    if((typeof data.end) !== "undefined")
-                        self.end(new Date(data.end));
-                    for(i=0, l=data.iterations.length; i<l; i++) {
-                        self.iterations.push(data.iterations[i]);
-                    }
-                    self.stage(2);
-                }
-            });
         }
     };
 
-    compass.Main = function(roles, people, urls, translations) {
+    compass.Main = function(roles, people, base_url, plan_weeks,
+                            translations) {
         this.roles = roles;
         this._people = people;
-        this.urls = urls;
+        this.base_url = base_url;
+        this.plan_weeks = ko.observable(plan_weeks);
         this.translations = translations;
         this.people_filter = ko.observable('');
+        this.plan_weeks_human = ko.computed(this.getFormattedWeeks, this);
+        this.plan_end = ko.computed(this.getPlanEnd, this);
         this.shown_people = ko.computed(this.getShownPeople, this);
         this.active_projects = ko.observableArray([]);
-        this.inactive_projects = ko.observableArray([]);
         this.loaded = ko.observable(false);
         this.messages = ko.observableArray([]);
     };
 
     compass.Main.prototype = {
+        url: function(method) {
+            return this.base_url + method;
+        },
         translate: function(id) {
             return this.translations[id];
+        },
+        getPlanEnd: function() {
+            var weeks = this.plan_weeks();
+            var today = new Date();
+            var end = new Date(today.getTime() + (weeks*7*24*60*60*1000));
+            // TODO: maybe we can format this better
+            return end.toLocaleDateString();
+        },
+        getFormattedWeeks: function() {
+            var weeks = this.plan_weeks();
+            return compass.format(
+                this.translate(weeks > 1 ? 'weeks' : 'week'),
+                { 'week': weeks }
+            );
         },
         getShownPeople: function() {
             var f_id, f_name;
@@ -155,17 +121,13 @@
             var self = this;
             $.ajax({
                 dataType: "json",
-                url: this.urls.projects.get,
+                url: this.url('get_projects'),
                 success: function(data, status, request) {
                     var i, l, project;
                     for(i=0, l=data.length; i<l; i++) {
                         project = data[i];
-                        if(project.active)
-                            self.active_projects.push(
-                                new compass.Project(self, project));
-                        else
-                            self.inactive_projects.push(
-                                new compass.Project(self, project));
+                        self.active_projects.push(
+                            new compass.Project(self, project));
                     }
                     self.loaded(true);
                 }
@@ -181,7 +143,8 @@
             var app = new compass.Main(
                 $.parseJSON(element.attr('data-roles')),
                 $.parseJSON(element.attr('data-people')),
-                $.parseJSON(element.attr('data-urls')),
+                element.attr('data-base-url'),
+                $.parseJSON(element.attr('data-plan-weeks')),
                 $.parseJSON(element.attr('data-translations')));
             app.load();
             compass.apps.push(app);

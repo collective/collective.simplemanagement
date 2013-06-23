@@ -5,8 +5,10 @@ from zope.interface import implements
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
 from zope.publisher.interfaces import IPublishTraverse, NotFound
+from plone.registry.interfaces import IRegistry
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
+from ..interfaces.compass import ICompassSettings
 from ..utils import get_employee_ids, get_user_details, jsonmethod, shorten
 from ..structures import Resource
 from .. import messageFactory as _
@@ -22,13 +24,13 @@ class Compass(BrowserView):
 
     def translations(self):
         return json.dumps({
-            "week": _("week"),
-            "weeks": _("{week} weeks"),
-            "day": _("{day} day"),
-            "days": _("{day} days"),
-            "no_effort": _(u"No effort planned"),
-            "effort": _(u"{days} in the next {weeks}")
+            "week": _("{week} week"),
+            "weeks": _("{week} weeks")
         })
+
+    def settings(self):
+        registry = getUtility(IRegistry)
+        return registry.forInterface(ICompassSettings)
 
     def roles(self):
         roles_factory = getUtility(
@@ -60,13 +62,8 @@ class Compass(BrowserView):
             }
         return json.dumps(users)
 
-    def urls(self):
-        base = self.context.absolute_url() + '/@@compass/'
-        urls = {}
-        for method_ in ['set_project_data', 'get_projects',
-                        'get_all_projects']:
-            urls[method_] = base + method_
-        return json.dumps(urls)
+    def base_url(self):
+        return self.context.absolute_url() + '/@@compass/'
 
     @jsonmethod()
     def do_get_all_projects(self):
@@ -97,11 +94,15 @@ class Compass(BrowserView):
                 return True
         return False
 
+    def _get_project_by_id(self, project_id, portal=None):
+        if portal is None:
+            pu = getToolByName(self.context, 'portal_url')
+            portal = pu.getPortalObject()
+        return portal.restrictedTraverse(project_id)
+
     @jsonmethod()
     def do_set_project_data(self):
-        pu = getToolByName(self.context, 'portal_url')
-        portal = pu.getPortalObject()
-        project = portal.restrictedTraverse(self.request.form['project'])
+        project = self._get_project_by_id(self.request.form['project'])
         data = json.loads(self.request.form['data'])
         if 'notes' in data:
             project.compass_notes = data['notes']
@@ -123,10 +124,55 @@ class Compass(BrowserView):
                     )
             if len(operatives) > 0:
                 project.operatives = operatives
+        project.reindexObject()
+        return self._get_project_info(project)
+
+    def _get_project_info(self, project, brain=None):
+        info = {}
+        if brain is not None:
+            info.update({
+                'id': brain.getPath(),
+                'name': brain.Title,
+                'status': brain.review_state,
+                'customer': brain.customer,
+                'priority': brain.priority
+            })
+        else:
+            pw = getToolByName(self.context, "portal_workflow")
+            status = pw.getStatusOf("plone_workflow", project)
+            info.update({
+                'id': '/'.join(project.getPhysicalPath()),
+                'name': project.title_or_id(),
+                'status': status['review_state'],
+                'customer': project.customer,
+                'priority': project.priority
+            })
+        info.update({
+            'people': self._get_operatives(project),
+            'effort': str(project.compass_effort),
+            'notes': project.compass_notes
+        })
+        return info
+
+    @jsonmethod()
+    def do_deactivate_project(self):
+        project = self._get_project_by_id(self.request.form['project'])
+        project.active = False
+        project.reindexObject('active')
+        return { 'id': '/'.join(project.getPhysicalPath()), 'active': False }
 
     @jsonmethod()
     def do_set_priority(self):
-        pass
+        pu = getToolByName(self.context, 'portal_url')
+        portal = pu.getPortalObject()
+        projects = self.request.form['projects_ids']
+        return_value = []
+        for index, project_id in enumerate(projects):
+            project = self._get_project_by_id(project_id, portal=portal)
+            project.priority = index + 1
+            project.reindexObject('priority')
+            return_value.append({ 'id': project_id, 'priority': index + 1 })
+        return return_value
 
     @staticmethod
     def _get_operatives(project):
@@ -149,17 +195,7 @@ class Compass(BrowserView):
                                       active=True,
                                       sort_on='priority'):
             project = brain.getObject()
-            info = {
-                'id': brain.getPath(),
-                'name': brain.Title,
-                'status': brain.review_state,
-                'customer': brain.customer,
-                'priority': brain.priority,
-                'people': self._get_operatives(project),
-                'effort': str(project.compass_effort),
-                'notes': project.compass_notes
-            }
-            projects.append(info)
+            projects.append(self._get_project_info(project, brain))
         return projects
 
     def publishTraverse(self, request, name):
