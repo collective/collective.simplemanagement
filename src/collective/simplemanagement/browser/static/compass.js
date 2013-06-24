@@ -15,6 +15,46 @@
 
     var f = compass.format;
 
+    ko.bindingHandlers.jqueryDrawer = {
+        init: function(element, accessor) {
+            var value = accessor();
+            var content = $(value.content).removeAttr('style').detach();
+            $(element).drawer({
+                group: value.group ? value.group : null,
+                content: function(callback) {
+                    callback(content);
+                },
+                position: value.position ? value.position : "bottom",
+                css_class: value.css_class ? value.css_class : "tooltip",
+                remove: false
+            });
+        }
+    };
+
+    compass.Person = function(project, data) {
+        this.project = project;
+        this.id = data.id;
+        this.role = ko.observable(data.role);
+        this.effort = ko.observable(data.effort);
+        this.dom_id = ko.computed(this.domId, this);
+        this.display_role = ko.computed(this.getDisplayRole, this);
+        this.avatar = ko.computed(this.getAvatar, this);
+        this.effort.subscribe(function(v) { console.log(v); });
+        this.role.subscribe(function(v) { console.log(v); });
+    };
+
+    compass.Person.prototype = {
+        domId: function() {
+            return this.project.id().replace(/\//g, '-') + '-' + this.id;
+        },
+        getAvatar: function() {
+            return this.project.app._people[this.id].avatar;
+        },
+        getDisplayRole: function() {
+            return this.project.app.roles[this.role()].shortname;
+        }
+    };
+
     compass.Project = function(app, data) {
         var i, l, item;
         this.app = app;
@@ -26,39 +66,15 @@
         this.priority = ko.observable(data.priority);
         this.effort = ko.observable(parseFloat(data.effort));
         this.notes = ko.observable(data.notes);
-        this._people = ko.observableArray([]);
+        this.people = ko.observableArray([]);
         for(i=0, l=data.people.length; i<l; i++) {
             item = data.people[i];
             item.effort = parseFloat(item.effort);
-            this._people.push(item);
+            this.people.push(new compass.Person(this, item));
         }
-        this.people = ko.computed(this.getPeople, this);
         this.css_class = ko.computed(function() {
             return 'status-indicator state-' + this.status();
         }, this);
-    };
-
-    compass.Project.prototype = {
-        getPeople: function() {
-            var i, l, role, user_id, user_data;
-            var raw_people = this._people();
-            var people = [];
-            for(i=0, l=raw_people.length; i<l; i++) {
-                user_id = raw_people[i]['id'];
-                role = raw_people[i]['role'];
-                if((typeof this.app._people[user_id] !== "undefined")) {
-                    user_data = this.app._people[user_id];
-                    people.push({
-                        'id': user_id,
-                        'avatar': user_data['avatar'],
-                        'role_id': role,
-                        'role': this.app.roles[role]['shortname'],
-                        'effort': raw_people[i]['effort']
-                    });
-                }
-            }
-            return people;
-        }
     };
 
     compass.Main = function(roles, people, base_url, plan_weeks,
@@ -72,6 +88,7 @@
         this.plan_weeks_human = ko.computed(this.getFormattedWeeks, this);
         this.plan_end = ko.computed(this.getPlanEnd, this);
         this.shown_people = ko.computed(this.getShownPeople, this);
+        this.roles_list = ko.computed(this.getRolesAsList, this);
         this.active_projects = ko.observableArray([]);
         this.loaded = ko.observable(false);
         this.messages = ko.observableArray([]);
@@ -83,6 +100,16 @@
         },
         translate: function(id) {
             return this.translations[id];
+        },
+        getRolesAsList: function() {
+            var roles_list = [], role_id;
+            for(role_id in this.roles) {
+                roles_list.push({
+                    'value': role_id,
+                    'label': this.roles[role_id].name
+                });
+            }
+            return roles_list;
         },
         getPlanEnd: function() {
             var weeks = this.plan_weeks();

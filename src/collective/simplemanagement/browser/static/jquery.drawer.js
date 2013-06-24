@@ -8,7 +8,8 @@
             css_class: "drawer",
             open: false,
             position: "bottom",
-            offset: [0, 0]
+            offset: [0, 0],
+            remove: true
         };
         this.trigger = $(element);
         for(var option in this.options) {
@@ -22,7 +23,7 @@
         var self = this;
         this.trigger.bind(this.options.action, function(e) {
             e.preventDefault();
-            if(self.isShown())
+            if(self.isShown(true))
                 self.hide();
             else {
                 if(self.options.group)
@@ -36,13 +37,14 @@
     Drawer.prototype = {
         isShown: function(fully) {
             if(this.drawer !== null) {
-                if(!fully) return true;
-                if(this.drawer.is(':visible')) return true;
+                if(!fully)
+                    return true;
+                if(this.drawer.is(':visible'))
+                    return true;
             }
             return false;
         },
         position: function() {
-            this.drawer.appendTo($('body'));
             var trigger = {
                 offset: this.trigger.offset(),
                 height: this.trigger.outerHeight(),
@@ -127,25 +129,36 @@
         show: function() {
             var self = this;
             if(this.isShown()) this.hide();
-            var callback = function(content) {
-                var drawer = $(self.options.structure).
-                    addClass(self.options.css_class).
-                    css('display', 'none');
-                drawer.append(content);
-                self.drawer = drawer;
-                self.position();
-            };
-            if((typeof this.options.content === "string")) {
-                callback($(this.options.content).clone());
+            if(!this.options.remove && this.drawer !== null) {
+                this.position();
             }
             else {
-                this.options.content(callback, this);
+                var callback = function(content) {
+                    var drawer = $(self.options.structure).
+                        addClass(self.options.css_class).
+                        css('display', 'none');
+                    drawer.append(content);
+                    self.drawer = drawer;
+                    self.drawer.appendTo($('body'));
+                    self.position();
+                };
+                if((typeof this.options.content === "string")) {
+                    callback($(this.options.content).clone());
+                }
+                else {
+                    this.options.content(callback, this);
+                }
             }
         },
         hide: function() {
             if(this.drawer !== null) {
-                this.drawer.remove();
-                this.drawer = null;
+                if(this.options.remove) {
+                    this.drawer.remove();
+                    this.drawer = null;
+                }
+                else {
+                    this.drawer.hide();
+                }
             }
         }
     };

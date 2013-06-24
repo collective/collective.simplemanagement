@@ -27,8 +27,8 @@
                              data-base-url view/base_url;
                              data-translations view/translations;
                              data-plan-weeks settings/default_plan_length">
-          <div>
-            <div>
+          <div class="control">
+            <div class="plan-length">
               <label for="weekn" i18n:translate="">Plan for</label>
               <span data-bind="text: plan_weeks_human">2</span>
               <input name="weekn"
@@ -41,7 +41,7 @@
             <a href="#" i18n:translate="">Go back to saved version</a>
             <button i18n:translate="">Save</button>
           </div>
-          <div class="cell position-0 width-4">
+          <div class="cell position-0 width-3">
             <h2 i18n:translate="">People</h2>
             <input type="text"
                    name="filter-people"
@@ -51,40 +51,66 @@
                    data-bind="value: people_filter, valueUpdate: 'afterkeydown'"
                    i18n:attributes="placeholder" />
             <div class="container" data-bind="foreach: shown_people">
-              <div class="thumbnail user" data-bind="attr: { 'data-id': id }">
-                <img data-bind="attr: { src: avatar }"
-                     width="100" />
+              <div class="thumbnail user"
+                   data-bind="attr: { 'data-id': id },
+                              style: { backgroundImage: 'url('+avatar+')' }">
                 <span class="title" data-bind="text: name"></span>
               </div>
             </div>
           </div>
-          <div class="cell position-3 width-12">
+          <div class="cell position-3 width-13">
             <h2 i18n:translate="">Active projects</h2>
             <div class="container" data-bind="foreach: active_projects">
               <div class="project" data-bind="attr: { 'data-id': id }">
                 <div data-bind="css: css_class">
                   <a href="#">X</a>
                 </div>
-                <div>
-                  <div><h3 data-bind="text: name"></h3></div>
-                  <div><input type="text" data-bind="value: notes" /></div>
-                  <div>
-                    <input type="text" data-bind="value: effort" />
+                <div class="info">
+                  <div><h3 class="title" data-bind="text: name"></h3></div>
+                  <div><textarea class="notes"
+                                 data-bind="value: notes"></textarea></div>
+                  <div class="effort">
+                    <input type="text"
+                           class="effort"
+                           data-bind="value: effort" />
                     <b i18n:translate="">man days</b>
                     <span i18n:translate="">to be done before</span>
-                    <span data-bind="text: $root.plan_end"></span>
+                    <span class="date" data-bind="text: $root.plan_end"></span>
                   </div>
                 </div>
-                <div>
+                <div class="people">
                   <!-- ko foreach: people -->
-                  <div class="thumbnail-small user"
-                       data-bind="attr: { 'data-id': id }">
-                    <img data-bind="attr: { src: avatar }"
-                         width="50" />
-                    <span class="title" data-bind="text: role"></span>
+                  <div class="wrapper"
+                       style="display: none;"
+                       data-bind="attr: { id: dom_id }">
+                    <b class="notch notch"></b>
+                    <div>
+                      <input type="text" class="effort"
+                             data-bind="value: effort" />
+                      <b i18n:translate="">man days</b>
+                    </div>
+                    <div>
+                      <span i18n:translate="">as</span>
+                      <select data-bind="options: $root.roles_list,
+                                         optionsText: 'label',
+                                         optionsValue: 'value',
+                                         value: role"></select>
+                    </div>
+                  </div>
+                  <div class="thumbnail thumbnail-small user"
+                       data-bind="attr: { 'data-id': id },
+                                  style: {
+                                      backgroundImage: 'url('+avatar()+')' },
+                                  jqueryDrawer: {
+                                      group: '.thumbnail-small.user',
+                                      css_class: 'tooltip tooltip-people',
+                                      content: '#'+dom_id(),
+                                      position: 'bottom-left' }">
+                    <span class="effort" data-bind="text: effort"></span>
+                    <span class="title" data-bind="text: display_role"></span>
                   </div>
                   <!-- /ko -->
-                  <div class="thumbnail-small user placeholder">
+                  <div class="thumbnail thumbnail-small user placeholder">
                     &nbsp;
                   </div>
                 </div>

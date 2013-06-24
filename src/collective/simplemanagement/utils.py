@@ -348,7 +348,7 @@ def get_wf_state_info(brain, context=None):
 
 def get_employee_ids(context=None):
     settings = Settings()
-    resources = []
+    resources = ['admin'] # BBB: this needs to be extracted someway!
     if not context:
         context = getSite()
     gtool = getToolByName(context, 'portal_groups')
@@ -356,7 +356,7 @@ def get_employee_ids(context=None):
         settings.employees_group
     )
     if group is not None:
-        resources = group.getMemberIds()
+        resources.extend(group.getMemberIds())
     return resources
 
 

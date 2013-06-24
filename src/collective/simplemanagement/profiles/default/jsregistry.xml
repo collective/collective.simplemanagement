@@ -50,6 +50,14 @@
       inline="False" />
   <javascript
       cacheable="True"
+      compression="none"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/knockout-sortable.js"
+      inline="False" />
+  <javascript
+      cacheable="True"
       compression="safe"
       cookable="True"
       enabled="True"
