@@ -31,6 +31,31 @@
         }
     };
 
+    // http://stackoverflow.com/a/15812995/967274
+    // The responder is the creator of knockout-sortable.
+    ko.bindingHandlers.droppable = {
+        init: function(element, valueAccessor) {
+            var value = valueAccessor() || {};
+            var action = value.action || value;
+
+            var options = {
+                drop: function(event, ui) {
+                    var item = ko.utils.domData.get(
+                        ui.draggable[0],
+                        "ko_dragItem");
+
+                    if (item) {
+                        item = item.clone ? item.clone() : item;
+                        action.call(this, item, event, ui);
+                    }
+                }
+            };
+            $.extend(options, value.options || {});
+
+            $(element).droppable(options);
+        }
+    };
+
     compass.Person = function(project, data) {
         this.project = project;
         this.id = data.id;
@@ -39,8 +64,6 @@
         this.dom_id = ko.computed(this.domId, this);
         this.display_role = ko.computed(this.getDisplayRole, this);
         this.avatar = ko.computed(this.getAvatar, this);
-        this.effort.subscribe(function(v) { console.log(v); });
-        this.role.subscribe(function(v) { console.log(v); });
     };
 
     compass.Person.prototype = {
@@ -75,10 +98,41 @@
         this.css_class = ko.computed(function() {
             return 'status-indicator state-' + this.status();
         }, this);
+
+        var self = this;
+        this.addPerson = function(person, event, ui) {
+            // TODO: default role should be taken by config
+            self.people.push(new compass.Person(
+                self,
+                { id: person.id, role: 'developer', effort: 0.0 }
+            ));
+            self.app.addMessage({
+                type: 'info',
+                message: compass.format(
+                    self.app.translate('person-added'),
+                    {
+                        person: person.name,
+                        project: self.name()
+                    }
+                )
+            });
+        };
+        this.delPerson = function(person) {
+            var i, l, found = -1, people = self.people();
+            for(i=0, l=people.length; i<l; i++) {
+                if(people[i].id === person.id) {
+                    found = i;
+                    break;
+                }
+            }
+            if(found > -1) self.people.splice(found, 1);
+        };
     };
 
     compass.Main = function(roles, people, base_url, plan_weeks,
                             translations) {
+        // TODO: make this timeout configurable in Plone
+        this.message_timeout = 6;
         this.roles = roles;
         this._people = people;
         this.base_url = base_url;
@@ -95,6 +149,18 @@
     };
 
     compass.Main.prototype = {
+        addMessage: function(message) {
+            var self = this;
+            this.messages.push(message);
+            window.setTimeout(
+                function() {
+                    self.messages.pop();
+                },
+                this.message_timeout * 1000);
+        },
+        delPerson: function(item, event, ui) {
+            item.project.delPerson(item);
+        },
         url: function(method) {
             return this.base_url + method;
         },

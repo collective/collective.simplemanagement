@@ -25,7 +25,8 @@ class Compass(BrowserView):
     def translations(self):
         return json.dumps({
             "week": _("{week} week"),
-            "weeks": _("{week} weeks")
+            "weeks": _("{week} weeks"),
+            "person-added": _("{person} has been added to {project}")
         })
 
     def settings(self):

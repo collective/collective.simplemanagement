@@ -935,6 +935,9 @@ table#tickets-listing {
 .thumbnail.placeholder {
     outline: 1px dashed #333;
 }
+.thumbnail.placeholder.dropok {
+    outline: 1px dashed #5fb221;
+}
 .thumbnail.thumbnail-small {
     width: 60px;
     height: 60px;
@@ -993,7 +996,7 @@ input[name="filter-people"] {
 .project > .people .thumbnail {
     cursor: pointer;
 }
-.project > .people .thumbnail.user span.effort {
+.project > .people .thumbnail.person span.effort {
     position: absolute;
     display: block;
     height: 1.5em;
@@ -1032,6 +1035,29 @@ input[name="filter-people"] {
     display: block;
     width: 10em;
 }
+#content .compassview .ui-draggable-dragging {
+    z-index: 1000;
+}
+
+#content .compassview .messages {
+    display: fixed;
+    top: 0;
+    left: 50%;
+    width: 40em;
+}
+
+#content .compassview .messages .message {
+    padding: 0.5em;
+    border-radius: 0.3em;
+    background-style: solid;
+    opacity: 0.7;
+}
+
+#content .compassview .messages .message.info {
+    background-color: #336bca;
+    color: #fff;
+}
+
 /* project states */
 .compassview .state-development {
     background-color: #448cca;
