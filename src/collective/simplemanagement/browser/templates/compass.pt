@@ -27,8 +27,13 @@
                              data-base-url view/base_url;
                              data-translations view/translations;
                              data-plan-weeks settings/default_plan_length">
-          <div class="messages" data-bind="visible: messages, foreach: messages">
+          <div class="messages" data-bind="visible: has_messages">
+            <!-- ko foreach: permanent_messages -->
             <div class="message" data-bind="css: type, html: message"></div>
+            <!-- /ko -->
+            <!-- ko foreach: transient_messages -->
+            <div class="message" data-bind="css: type, html: message"></div>
+            <!-- /ko -->
           </div>
           <div class="control">
             <div class="plan-length">

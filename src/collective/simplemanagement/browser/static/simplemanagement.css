@@ -1040,17 +1040,18 @@ input[name="filter-people"] {
 }
 
 #content .compassview .messages {
-    display: fixed;
-    top: 0;
-    left: 50%;
-    width: 40em;
+    position: fixed;
+    top: 0.5em;
+    right: 0.5em;
+    z-index: 1000;
 }
 
 #content .compassview .messages .message {
     padding: 0.5em;
-    border-radius: 0.3em;
+    border-radius: 0.5em;
     background-style: solid;
-    opacity: 0.7;
+    padding: 0.3em 1em 0.3em 1em;
+    margin-bottom: 0.5em;
 }
 
 #content .compassview .messages .message.info {

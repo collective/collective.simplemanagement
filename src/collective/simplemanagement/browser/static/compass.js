@@ -64,6 +64,39 @@
         this.dom_id = ko.computed(this.domId, this);
         this.display_role = ko.computed(this.getDisplayRole, this);
         this.avatar = ko.computed(this.getAvatar, this);
+        var self = this;
+        this.role.subscribe(function(value) {
+            self.project.save(
+                { people: [ self.toJSON() ] },
+                {
+                    type: 'info',
+                    message: compass.format(
+                        self.project.app.translate('new-role'),
+                        {
+                            name: self.project.app._people[self.id].name,
+                            project: self.project.name(),
+                            role: self.project.app.roles[value].name
+                        }
+                    )
+                }
+            );
+        });
+        this.effort.subscribe(function(value) {
+            self.project.save(
+                { people: [ self.toJSON() ] },
+                {
+                    type: 'info',
+                    message: compass.format(
+                        self.project.app.translate('new-effort'),
+                        {
+                            name: self.project.app._people[self.id].name,
+                            project: self.project.name(),
+                            effort: value.toString()
+                        }
+                    )
+                }
+            );
+        });
     };
 
     compass.Person.prototype = {
@@ -75,6 +108,15 @@
         },
         getDisplayRole: function() {
             return this.project.app.roles[this.role()].shortname;
+        },
+        toJSON: function(remove) {
+            var data = {
+                id: this.id,
+                role: this.role(),
+                effort: this.effort().toString()
+            };
+            if(remove) data['remove'] = true;
+            return data;
         }
     };
 
@@ -98,24 +140,74 @@
         this.css_class = ko.computed(function() {
             return 'status-indicator state-' + this.status();
         }, this);
-
         var self = this;
+        this.effort.subscribe(function(value) {
+            self.save(
+                { effort: value.toString() },
+                {
+                    type: 'info',
+                    message: compass.format(
+                        self.app.translate('new-project-effort'),
+                        {
+                            project: self.name(),
+                            effort: value.toString()
+                        }
+                    )
+                }
+            );
+        });
+        this.notes.subscribe(function(value) {
+            self.save(
+                { notes: value },
+                {
+                    type: 'info',
+                    message: self.app.translate('changes-saved')
+                }
+            );
+        });
+        this.save = function(value, message) {
+            $.ajax({
+                type: 'POST',
+                url: self.app.url('set_project_data'),
+                data: {
+                    project: self.id,
+                    data: window.JSON.stringify(value)
+                },
+                traditional: true,
+                dataType: 'json',
+                success: function(data, status, request) {
+                    self.app.addMessage(message);
+                },
+                error: function(request, status, error) {
+                    self.app.addMessage({
+                        type: 'error',
+                        message: compass.format(
+                            self.app.translate('error-please-reload'),
+                            { url: window.location.toString() }
+                        )
+                    }, true);
+                }
+            });
+        };
         this.addPerson = function(person, event, ui) {
-            // TODO: default role should be taken by config
-            self.people.push(new compass.Person(
+            var operative = new compass.Person(
                 self,
                 { id: person.id, role: 'developer', effort: 0.0 }
-            ));
-            self.app.addMessage({
-                type: 'info',
-                message: compass.format(
-                    self.app.translate('person-added'),
-                    {
-                        person: person.name,
-                        project: self.name()
-                    }
-                )
-            });
+            );
+            // TODO: default role should be taken by config
+            self.people.push(operative);
+            self.save(
+                { people: [ operative.toJSON(false) ] },
+                {
+                    type: 'info',
+                    message: compass.format(
+                        self.app.translate('person-added'),
+                        {
+                            person: person.name,
+                            project: self.name()
+                        }
+                    )
+                });
         };
         this.delPerson = function(person) {
             var i, l, found = -1, people = self.people();
@@ -125,7 +217,22 @@
                     break;
                 }
             }
-            if(found > -1) self.people.splice(found, 1);
+            if(found > -1) {
+                self.people.splice(found, 1);
+                self.save(
+                    { people: [ person.toJSON(true) ] },
+                    {
+                        type: 'info',
+                        message: compass.format(
+                            self.app.translate('person-removed'),
+                            {
+                                person: self.app._people[person.id].name,
+                                project: self.name()
+                            }
+                        )
+                    }
+                );
+            }
         };
     };
 
@@ -145,18 +252,32 @@
         this.roles_list = ko.computed(this.getRolesAsList, this);
         this.active_projects = ko.observableArray([]);
         this.loaded = ko.observable(false);
-        this.messages = ko.observableArray([]);
+        this.transient_messages = ko.observableArray([]);
+        this.permanent_messages = ko.observableArray([]);
+        this.has_messages = ko.computed(this.hasMessages, this);
+
+        var self = this;
+        
     };
 
     compass.Main.prototype = {
-        addMessage: function(message) {
+        hasMessages: function() {
+            return (this.transient_messages().length > 0 ||
+                    this.permanent_messages().length > 0);
+        },
+        addMessage: function(message, permanent) {
             var self = this;
-            this.messages.push(message);
-            window.setTimeout(
-                function() {
-                    self.messages.pop();
-                },
-                this.message_timeout * 1000);
+            if(permanent) {
+                this.permanent_messages.push(message);
+            }
+            else {
+                this.transient_messages.push(message);
+                window.setTimeout(
+                    function() {
+                        self.transient_messages.shift();
+                    },
+                    this.message_timeout * 1000);
+            }
         },
         delPerson: function(item, event, ui) {
             item.project.delPerson(item);

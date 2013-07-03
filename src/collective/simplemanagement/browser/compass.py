@@ -24,9 +24,21 @@ class Compass(BrowserView):
 
     def translations(self):
         return json.dumps({
-            "week": _("{week} week"),
-            "weeks": _("{week} weeks"),
-            "person-added": _("{person} has been added to {project}")
+            "week": _(u"{week} week"),
+            "weeks": _(u"{week} weeks"),
+            "person-added": _(u"{person} has been added to {project}"),
+            "person-removed": _(u"{person} has been removed from {project}"),
+            "error-please-reload": _(
+                u'An error has occurred, '
+                u'please <a href="{url}">reload the page clicking here</a>'
+            ),
+            "new-role": _(u"{name} is now a {role} in {project}"),
+            "new-effort": _(u"{name} should put {effort} man days"
+                            u" in {project}"),
+            "new-project-effort": _(
+                u"{project} will now require {effort} man days"
+            ),
+            "changes-saved": _(u"Modifiche salvate")
         })
 
     def settings(self):
@@ -140,7 +152,7 @@ class Compass(BrowserView):
             })
         else:
             pw = getToolByName(self.context, "portal_workflow")
-            status = pw.getStatusOf("plone_workflow", project)
+            status = pw.getStatusOf("project_workflow", project)
             info.update({
                 'id': '/'.join(project.getPhysicalPath()),
                 'name': project.title_or_id(),
