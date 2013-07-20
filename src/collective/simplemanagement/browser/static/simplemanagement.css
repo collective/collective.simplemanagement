@@ -915,6 +915,12 @@ table#tickets-listing {
     margin-left: 36px;
 }
 
-#project-actions {
+.project-actions {
     margin-bottom: 1em;
+}
+
+#project-documents ul,
+#project-dates ul,
+#project-last-activities ul {
+    list-style-type: none;
 }
