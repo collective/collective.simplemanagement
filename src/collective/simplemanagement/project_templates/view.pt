@@ -41,8 +41,7 @@
           class="portalMessage info">
           <dt i18n:translate="">info</dt>
           <dd class="discreet" i18n:translate="no_current_iteration"
-           >There are no current iterations.<br/
-           >To list all iterations <a href="alliterations">click here</a></dd>
+           >There are no current iterations.<br/>To list all iterations <a href="alliterations">click here</a></dd>
       </dl>
 
       <div class="visualClear"><!-- clear floats--></div>

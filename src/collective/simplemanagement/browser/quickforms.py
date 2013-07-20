@@ -5,13 +5,11 @@ from z3c.form import form, field, button
 from plone.z3cform.layout import wrap_form
 
 from Products.CMFCore.utils import getToolByName
-# from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
 from ..interfaces import IStory
 from ..interfaces import IQuickForm
-
 from .. import messageFactory as _
 
 
@@ -45,8 +43,9 @@ class BaseQuickeEdit(form.EditForm):
 
     def redirect(self):
         self.request.response.redirect(
-            location='%s/quickedit?ajax_load=1&ajax_include_head=1' % \
+            location='%s/quickedit?ajax_load=1&ajax_include_head=1' % (
                 self.context.absolute_url()
+            )
         )
 
     @button.buttonAndHandler(_(u'Save'), name='save')
@@ -81,9 +80,4 @@ class StoryQuickeditForm(BaseQuickeEdit):
     fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
 
 
-StoryQuickedit = wrap_form(
-    StoryQuickeditForm,
-    # it raises an error:
-    # LocationError: (<Products.Five.metaclass.MyFormWrapper object at 0xb98cd90>, 'status')
-    # index=ViewPageTemplateFile('templates/quick_form.pt')
-)
+StoryQuickedit = wrap_form(StoryQuickeditForm)
