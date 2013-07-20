@@ -416,8 +416,6 @@
             data: $(this).serialize(),
             success: function(result) {
                 var $form = $('#booking_form');
-                // flush title
-                $('#form-widgets-title', $form).val('');
                 // flush errors
                 $form.siblings('.errors').remove();
                 if(result.success && !result.error){
@@ -434,8 +432,6 @@
                     /  since it has a lot of inline JS */
                     // reload_booking_form($('#booking_form'));
                     // debugger;
-                    // clean up fields manually
-                    // TODO...
                     return false;
                 }else if (result.success && result.error) {
                     // show errors
@@ -508,7 +504,7 @@
                         if(resp.result && resp.result.created) {
                             var $created = $('<div class="created" />');
                             $created.append('<span class="label">' + resp.result.created.msg + '</span>');
-                            var url = '<a class="created-url"'; 
+                            var url = '<a class="created-url"';
                             url += 'href="' + resp.result.created.url  +'">';
                             url += resp.result.created.title + '</a>';
                             $created.append(url);

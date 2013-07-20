@@ -41,7 +41,7 @@ def create_booking(context, data, reindex=True):
 
 
 class BookingForm(form.AddForm):
-    template = ViewPageTemplateFile("browser/templates/titleless_form.pt")
+    template = ViewPageTemplateFile("browser/templates/quick_form.pt")
 
     @property
     def fields(self):
@@ -61,6 +61,10 @@ class BookingForm(form.AddForm):
 
     def nextURL(self):
         return self.context.absolute_url()
+
+    def updateActions(self):
+        super(BookingForm, self).updateActions()
+        self.actions['add'].addClass("allowMultiSubmit")
 
 
 class Booking(dexterity.Item):
