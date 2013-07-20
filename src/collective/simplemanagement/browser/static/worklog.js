@@ -33,7 +33,7 @@
         bind: function() {
             var self = this;
             var resources = this.root.find(
-                'form.resources input[type="checkbox"]');
+                'form.resources input[type="radio"]');
             resources.change(function() {
                 self.load(self.current);
             });

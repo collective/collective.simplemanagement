@@ -32,11 +32,10 @@
                 <li tal:repeat="resource view/resources">
                   <label for=""
                          tal:attributes="for string:worklog-resources-${resource/user_id}">
-                    <input type="checkbox"
+                    <input type="radio"
                            name="resources"
                            id=""
                            value=""
-                           checked="checked"
                            tal:attributes="id string:worklog-resources-${resource/user_id};
                                            value resource/user_id"/>
                     <img tal:condition="resource/portrait"
