@@ -13,7 +13,7 @@
 
   <div id="project-view">
 
-    <div id="project-actions" >
+    <div class="project-actions" >
       <a class="btn" href="@@dashboard" i18n:translate="">Dashboard</a>
       <a class="btn" href="@@alliterations" i18n:translate="">Iterations</a>
       <a class="btn" href="@@backlog" i18n:translate="">Backlog</a>
