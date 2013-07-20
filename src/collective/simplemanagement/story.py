@@ -164,6 +164,10 @@ class StoryQuickForm(form.AddForm):
         self.widgets['estimate'].hour_free_input = 1
         self.widgets['estimate'].show_min = 0
 
+    def updateActions(self):
+        super(StoryQuickForm, self).updateActions()
+        self.actions['add'].addClass("allowMultiSubmit")
+
 
 class ProjectStoryQuickForm(StoryQuickForm):
 
