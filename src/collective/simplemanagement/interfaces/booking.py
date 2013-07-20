@@ -17,8 +17,7 @@ class IBooking(form.Schema):
 
     date = schema.Date(
         title=_(u"Date"),
-        default=date.today(),
-        required=True,
+        required=True
     )
 
     form.widget('time', TimeFieldWidget)
@@ -32,6 +31,11 @@ class IBooking(form.Schema):
         source=ObjPathSourceBinder(),
         required=False
     )
+
+
+@form.default_value(field=IBooking['date'])
+def default_date(data):
+    return date.today()
 
 
 @form.validator(field=IBooking['time'])
