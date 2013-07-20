@@ -76,11 +76,12 @@ class IStory(form.Schema):
 
 class IStoriesListing(Interface):
 
-    def stories(project_states=None, project_info=False):
+    def stories(project_states=None, story_states=None, project_info=False):
         """return stories details if project_info is True
         each story contains also information about project and iteration.
 
-        Stories can be filtered also by project review state.
+        Stories can be filtered also by project review state and 
+        story review state.
         """
 
     def totals():
@@ -92,11 +93,12 @@ class IUserStoriesListing(IStoriesListing):
     """This adapter return all stories assigned to a specific user
     """
 
-    def stories(project_states=None, project_info=False, user_id=None):
+    def stories(project_states=None, story_states=None,project_info=False, 
+                user_id=None):
         """return stories details if project_info is True
         each story contains also information about project and iteration
 
         This method returns all stories assigned to the current
         logged in user or filters stories by user_id parameter
-        and project review state
+        and project review state and story review state
         """

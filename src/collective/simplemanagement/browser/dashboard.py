@@ -229,9 +229,11 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         project_states = ['development', 'maintenance']
         if self.request.form.get('planning') == 'on':
             project_states.extend(['offer', 'planning'])
+        story_states = ['in_progress']
         stories = listing.stories(
             user_id=self._get_employee_filter(),
             project_states=project_states,
+            story_states=story_states,
             project_info=True
         )
         for st in stories:

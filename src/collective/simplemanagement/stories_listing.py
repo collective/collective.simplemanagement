@@ -56,17 +56,21 @@ class StoriesListing(object):
             'sort_order': 'ascending'
         }
 
-    def _stories(self):
+    def _stories(self, story_states=None):
         pc = self.portal_catalog
-        stories_brains = pc.searchResults(self._query)
+        query = self._query
+        if story_states:
+            query['review_state'] = story_states
+        stories_brains = pc.searchResults(query)
         return stories_brains
 
     # def comments(self, story):
     #     conversation = IConversation(story)
     #     return [i for i in conversation.getThreads()]
 
-    def stories(self, project_states=None, project_info=False):
-        brains = self._stories()
+    def stories(self, project_states=None, story_states=None, 
+                project_info=False):
+        brains = self._stories(story_states)
         pw = getToolByName(self.context, 'portal_workflow')
         stories = []
         self.totals = {
@@ -151,10 +155,12 @@ class UserStoriesListing(StoriesListing):
             'review_state': ('todo', 'suspended', 'in_progress')
         }
 
-    def stories(self, project_states=None, project_info=False, user_id=None):
+    def stories(self, project_states=None, story_states=None,
+                project_info=False, user_id=None):
         self._user_id = user_id
         stories = super(UserStoriesListing, self).stories(
             project_states=project_states,
+            story_states=story_states,
             project_info=project_info
         )
         return stories
