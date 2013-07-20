@@ -139,25 +139,21 @@ class OverView(View):
 
     def documents(self):
         last_documents = []
-        documents_folder = None
-        if DOCUMENTS_ID in self.context:
-            # documents_folder = self.context[DOCUMENTS_ID]
-            # XXX: tryiing to resolve document folder raises a
-            # unauthorized error when a user doesn't have view
-            # permissions
-            document_folder_path = list(self.context.getPhysicalPath())
-            document_folder_path.append(DOCUMENTS_ID)
+        documents_folder = self.context.restrictedTraverse(DOCUMENTS_ID, None)
+        if documents_folder:
+            folder_path = '/'.join(documents_folder.getPhysicalPath())
 
             pc = self.tools['portal_catalog']
-            folder_path = '/'.join(document_folder_path)
             last_stuff = pc.searchResults({
                 'path': folder_path,
                 'sort_on': 'modified',
                 'sort_order': 'descending'
             })
+
             for item in last_stuff[:self.MAX_ELEMENTS + 1]:
                 if item.getPath() != folder_path:
                     last_documents.append(item)
+
         return {
             'last': last_documents,
             'folder': documents_folder
