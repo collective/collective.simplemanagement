@@ -6,21 +6,13 @@
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="collective.simplemanagement">
 <body>
+<metal:title fill-slot="content-title" />
 
 <metal:content-core fill-slot="content-core">
   <metal:block define-macro="content-core"
     tal:define="portal_state nocall:context/@@plone_portal_state">
 
   <div id="project-view">
-
-    <div id="project-actions" >
-      <a class="btn" href="@@dashboard" i18n:translate="">Dashboard</a>
-      <a class="btn" href="@@alliterations" i18n:translate="">Iterations</a>
-      <a class="btn" href="@@backlog" i18n:translate="">Backlog</a>
-      <a class="btn" href="@@worklog" i18n:translate="">Worklog</a>
-      <a class="btn" href="@@planning" i18n:translate="">Pianificazione</a>
-      <a class="btn" href="@@report" i18n:translate="">Rendicontazione</a>
-    </div>
 
     <div id="iterations"
          tal:define="iterations view/iterations"

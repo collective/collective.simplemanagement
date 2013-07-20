@@ -7,6 +7,7 @@
 
   <include package="z3c.form" />
   <include package=".widgets" />
+  <include package=".viewlets" />
 
   <include package="z3c.jbot" file="meta.zcml" />
 

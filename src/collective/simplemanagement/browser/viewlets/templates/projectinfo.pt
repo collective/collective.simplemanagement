@@ -1,0 +1,39 @@
+<tal:projectinfo omit-tag="" condition="view/available"
+  tal:define="info view/info">
+
+<div class="project-info-viewlet">
+  <h1 tal:condition="info/is_project"
+      tal:content="info/project_title"
+      class="documentFirstHeading">Project title</h1>
+
+  <div class="project-name"
+    tal:condition="not:info/is_project"
+    tal:content="info/project_title">Project Title</div>
+
+  <div id="project-actions" >
+    <a class="btn"
+      tal:attributes="href string:${info/project_url}"
+      i18n:translate="">Go to Project</a>
+    <a class="btn"
+      tal:attributes="href string:${info/project_url}/@@dashboard"
+      i18n:translate="">Dashboard</a>
+    <a class="btn"
+      tal:attributes="href string:${info/project_url}/@@alliterations"
+      i18n:translate="">Iterations</a>
+    <a class="btn"
+      tal:attributes="href string:${info/project_url}/@@backlog"
+      i18n:translate="">Backlog</a>
+    <a class="btn"
+      tal:attributes="href string:${info/project_url}/@@worklog"
+      i18n:translate="">Worklog</a>
+    <a class="btn"
+      tal:attributes="href string:${info/project_url}/@@planning"
+      i18n:translate="">Pianificazione</a>
+    <a class="btn"
+      tal:attributes="href string:${info/project_url}/@@report"
+      i18n:translate="">Rendicontazione</a>
+  </div>
+
+</div>
+
+</tal:projectinfo>

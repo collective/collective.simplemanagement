@@ -2,6 +2,13 @@
     margin-top: 1em
 }
 
+.project-info-viewlet .project-name {
+    font-size: 150%;
+    font-weight: bold;
+    line-height: 1.5em;
+    color: #000000;
+}
+
 #project-iterations h2 {
     padding: .1em 0 .1em 1em;
     font-size: 120%;

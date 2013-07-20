@@ -80,6 +80,10 @@ AddBooking = wrap_form(BookingForm)
 class DashboardMixin(BrowserView):
 
     @property
+    def is_project(self):
+        return IProject.providedBy(self.context)
+
+    @property
     @instance_memoize
     def tools(self):
         return AttrDict({
@@ -216,6 +220,11 @@ class TicketsMixIn(object):
 
 
 class DashboardView(DashboardMixin, TicketsMixIn):
+
+    def __init__(self, context, request):
+        super(DashboardMixin, self).__init__(context, request)
+        if not self.is_project:
+            request.set('disable_border', 1)
 
     def add_booking_form(self):
         z2.switch_on(self, request_layer=IFormLayer)

@@ -50,22 +50,4 @@
     visible="True" i18n:attributes="title">
   <permission value="Modify portal content"/>
  </action>
- <action title="Backlog" action_id="view_backlog" category="object"
-         condition_expr=""
-         icon_expr="" link_target="" url_expr="string:${object_url}/@@backlog"
-         visible="True" i18n:attributes="title">
-  <permission value="Simplemanagement: Manage project"/>
- </action>
- <action title="Planning" action_id="planning" category="object"
-         condition_expr=""
-         icon_expr="" link_target="" url_expr="string:${object_url}/@@planning"
-         visible="True" i18n:attributes="title">
-  <permission value="Simplemanagement: Manage project"/>
- </action>
- <action title="Worklog" action_id="worklog" category="object"
-         condition_expr=""
-         icon_expr="" link_target="" url_expr="string:${object_url}/@@worklog"
-         visible="True" i18n:attributes="title">
-  <permission value="Simplemanagement: Manage project"/>
- </action>
 </object>
