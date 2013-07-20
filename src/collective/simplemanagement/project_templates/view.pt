@@ -13,8 +13,6 @@
 
   <div id="project-view">
 
-    <metal:storyform
-      use-macro="context/simpemanagement-macros/addstory-form" />
 
 
     <div id="iterations"
