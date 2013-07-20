@@ -907,3 +907,7 @@ table#tickets-listing {
 .report-view .results .week .total {
     margin-left: 36px;
 }
+
+#project-actions {
+    margin-bottom: 1em;
+}
