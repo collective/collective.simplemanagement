@@ -121,11 +121,14 @@
 
                 <div id="projects"
                   tal:condition="projects">
+                   <span class="label"
+                    i18n:translate="">
+                    This is a complete list of active stories in active projects.</span>
                   <div class="project" tal:repeat="project projects">
                     <h2>
                       <span>
-                        <a tal:attributes="href project/url">
-                          <span tal:content="project/priority"></span>
+                        <a tal:attributes="href project/url;
+                           title string:priority: ${project/priority}">
                         <span tal:replace="project/title">Project #1</span>
                         </a>
                     </h2>
