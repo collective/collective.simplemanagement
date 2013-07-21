@@ -313,7 +313,7 @@
                     var widget_id = /([a-z\-]+)-picker/.exec(
                         div.attr('id'))[1];
                     div.datepicker({
-                        altField: $('#'+widget_id),
+                        altField: '#' + widget_id,
                         altFormat: div.attr('data-format'),
                         dateFormat: div.attr('data-format')
                     });

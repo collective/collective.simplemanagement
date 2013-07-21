@@ -44,10 +44,10 @@ from .widgets.time_widget import TimeFieldWidget
 
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("templates/booking_form.pt")
-    fields = field.Fields(IQuickForm).select('title') + field.Fields(IBooking)
+    fields = field.Fields(IQuickForm).select('title') + \
+        field.Fields(IBooking).omit('related')
     fields['date'].widgetFactory = BookingDateFieldWidget
     fields['time'].widgetFactory = TimeFieldWidget
-    fields['related'].widgetFactory = text.TextFieldWidget
 
     def create(self, data):
         return create_booking(self.context, data, reindex=0)
