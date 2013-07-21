@@ -36,6 +36,15 @@ class ProjectInfo(base.ViewletBase):
         info = self.info
         buttons = [
             {
+                'url': '/'.join((info['project_url'], DOCUMENTS_ID)),
+                'title': _(u"Documentation")
+
+            },
+            {
+                'url': '/'.join((info['project_url'], TRACKER_ID)),
+                'title': _(u"Tracker")
+            },
+            {
                 'url': "%s/@@dashboard" % info['project_url'],
                 'title': _(u'Dashboard')
             },
@@ -59,18 +68,9 @@ class ProjectInfo(base.ViewletBase):
                 'url': "%s/@@report" % info['project_url'],
                 'title': _(u'Report')
             },
-            {
-                'url': '/'.join((info['project_url'], DOCUMENTS_ID)),
-                'title': _(u"Documentation")
-
-            },
-            {
-                'url': '/'.join((info['project_url'], TRACKER_ID)),
-                'title': _(u"Tracker")
-            }
         ]
 
-        if info['is_project']:
+        if not info['is_project']:
             buttons.insert(0, {
                 'url': info['project_url'],
                 'title': _(u'Go to Project')
