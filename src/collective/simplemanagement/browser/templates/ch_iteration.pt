@@ -7,31 +7,43 @@
       tal:omit-tag="">
 
 <div class="wrapper">
-  <div class="ch_iteration">
-    <tal:iterations repeat="item view/iterations">
-      <span tal:condition="not:item/available"
-        tal:attributes="title item/description;
-          class string:disable ${item/id}">
-        <span
-          tal:content="item/title"/>
-      </span>
-      <a href=""
-         tal:condition="item/available"
-         tal:attributes="title item/description;
-              href string:${context/absolute_url}/change_iteration?destination=${item/uid};
-              class item/id">
-            <span
-            tal:content="item/title" />
-      </a><br/>
-    </tal:iterations>
-    <a class="close"
-       href="#"
-       title="Close tooltip"
-       i18n:attributes="title"
-       onclick="return false">
-      <span>&nbsp;</span>
-    </a>
+  <div class="ch_iteration"
+      tal:define="iterations view/iterations;
+          n_iterations python:len(iterations)">
+    <table>
+      <tbody>
+        <tr tal:repeat="item iterations">
+          <td>
+            <span tal:condition="not:item/available"
+              tal:attributes="title item/description;
+                class string:disable ${item/id}">
+              <span
+                tal:content="item/title"/>
+            </span>
+            <a href=""
+               tal:condition="item/available"
+               tal:attributes="title item/description;
+                    href string:${context/absolute_url}/change_iteration?destination=${item/uid};
+                    class item/id">
+                  <span
+                  tal:content="item/title" />
+            </a>
+          </td>
+          <td tal:condition="repeat/item/start">
+            <a class="close"
+               href="#"
+               title="Close tooltip"
+               i18n:attributes="title"
+               onclick="return false">
+              <span>&nbsp;</span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+
   </div>
-  <b class="notch-bottom"></b>
+  <b class="notch-bottomleft"></b>
 </div>
 </html>

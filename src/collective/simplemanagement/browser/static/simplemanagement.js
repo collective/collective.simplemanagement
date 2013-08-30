@@ -242,9 +242,9 @@
 
         $('.status').drawer({
             group: '.status',
-            position: "top-left",
+            position: "top-right",
             css_class: "tooltip",
-            offset: [-10, 15],
+            offset: [-10, -15],
             content: function(callback, drawer) {
                 var handle_span = drawer.trigger.parent().
                     siblings('.handle');
@@ -275,9 +275,9 @@
 
         $('.iteration').drawer({
             group: '.iteration',
-            position: "top-left",
+            position: "top-right",
             css_class: "tooltip",
-            offset: [-10, 15],
+            offset: [-10, -15],
             content: function(callback, drawer) {
                 var handle_span = drawer.trigger.parent().
                     siblings('.handle');

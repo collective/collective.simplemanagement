@@ -493,6 +493,21 @@ ul.stories .actions {
     height: 0;
 }
 
+
+.tooltip .wrapper .notch-bottomleft {
+    position: absolute;
+    bottom: -1.1em;
+    left: 1em;
+    margin: 0;
+    border-top: 0.5em solid white;
+    border-left: 0.5em solid transparent;
+    border-right: 0.5em solid transparent;
+    border-bottom: 0.5em solid transparent;
+    padding: 0;
+    width: 0;
+    height: 0;
+}
+
 .tooltip .wrapper .notch-right {
     position: absolute;
     right: -2.5em;
@@ -519,6 +534,14 @@ ul.stories .actions {
 .tooltip a.close{
     padding: 8px;
     background: url('close-16x16.png') no-repeat center center;
+}
+
+.tooltip .ch_iteration {
+    white-space: nowrap;
+}
+.tooltip .ch_iteration a.close {
+    float: right;
+    padding: 0 8px;
 }
 
 #dashboard ul.details {

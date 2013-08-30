@@ -11,7 +11,7 @@
             offset: [0, 0]
         };
         this.trigger = $(element);
-        for(var option in this.options) {
+        for (var option in this.options) {
             var value = this.trigger.attr('data-'+option);
             if(value) this.options[option] = value;
         }
@@ -31,6 +31,12 @@
             }
         });
         if(this.options.open) this.show();
+
+        // close tooltip by click on window
+        $(window).bind('click', function (){
+            if(self.isShown())
+                self.hide();
+        });
     };
 
     Drawer.prototype = {
