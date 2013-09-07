@@ -4,6 +4,9 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Improve project view
+  [miziodel]
+
 - Improve ajaxforms
   [simahawk]
 

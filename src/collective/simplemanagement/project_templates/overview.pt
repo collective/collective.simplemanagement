@@ -9,15 +9,137 @@
     tal:define="portal_state context/@@plone_portal_state;
                 portal_url portal_state/portal_url;">
     <ul class="tabs">
-      <li><a href="#planning" i18n:translate="">Planning</a></li>
-      <li><a href="#details" i18n:translate="">Details</a></li>
       <li><a href="#documentation" i18n:translate="">Documentation</a></li>
+      <li><a href="#tracking" i18n:translate="">Tracking</a></li>
+      <li><a href="#details" i18n:translate="">Project Info</a></li>
       <li><a href="#notes" i18n:translate="">Notes</a></li>
     </ul>
 
     <div class="panes">
+
       <div class="pane">
+        <div class="project-details"
+             tal:define="documents view/documents">
+          <h3 i18n:translate="">Documents</h3>
+          <p class="discreet"
+             tal:condition="python: documents['folder_url'] and not documents['last']"
+             i18n:translate="">
+              This project doesn't contain any documents
+            </p>
+            <div class="project-actions">
+              <a href=""
+                 class="btn"
+                 title="Documents folder"
+                 tal:condition="documents/folder_url"
+                 tal:attributes="href documents/folder_url"
+                 i18n:translate=""
+                 i18n:attributes="title">
+                Go to the documents folder
+              </a>
+            </div>
+            <p class="discreet"
+               tal:condition="not:documents/folder_url"
+               i18n:translate="">
+              There are no documents in this project
+              because the designated area is missing.
+              We suggest to create it.
+            </p>
+          
+          <div id="project-documents"
+               tal:define="items documents/last">
+            <p class="label" i18n:translate="">Last documents</p>
+            <ul tal:condition="items">
+              <li tal:repeat="item items">
+                <a href=""
+                   title=""
+                   tal:attributes="href item/url;
+                                   title item/title;
+                                   class item/class"
+                    tal:content="item/title" />
+                <p class="discreet">
+                  <span tal:replace="item/description">description</span>
+                  <br tal:condition="item/description">
+                  <span i18n:translate="">modified:</span>
+                  <span tal:replace="item/date">date</span>
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
         <div class="project-details">
+          <h3 i18n:translate="">Environments</h3>
+            <ul>
+              <li tal:repeat="env context/environments">
+                <a href=""
+                   title=""
+                   tal:attributes="href env/url;
+                                   title env/name">
+                  <span tal:content="env/name"></span>
+                  (<em  i18n:translate=""
+                    tal:content="python:view.get_env_type(env.env_type)"></em>)
+                </a>
+              </li>
+            </ul>
+          <h3 i18n:translate="">Repositories</h3>
+            <ul>
+              <li tal:repeat="repository context/repositories">
+                <a href=""
+                   tal:attributes="href repository"
+                   tal:content="repository"></a>
+              </li>
+            </ul>
+        </div>
+      </div>
+
+      <div class="pane">
+        <div class="project-details"
+             tal:define="tracker_url view/tracker_url">
+          <h3 i18n:translate="">Tracking</h3>
+            <div class="project-actions">
+              <a href=""
+                 class="btn"
+                 title="Project tracker"
+                 tal:condition="tracker_url"
+                 tal:attributes="href tracker_url"
+                 i18n:translate=""
+                 i18n:attributes="title">
+                Go to the project tracker
+              </a>
+            </div>
+            <p class="discreet"
+               tal:condition="not:tracker_url"
+               i18n:translate="">
+              There is no tracker in this project:
+              we suggest to create it.
+            </p>
+          
+          <div id="project-last-activities"
+               tal:define="items view/last_activities">
+            <p class="label" i18n:translate="">Last modified</p>
+            <ul tal:condition="items">
+              <li tal:repeat="item items">
+                <a href=""
+                   title=""
+                   tal:attributes="href item/url;
+                                   title item/title;
+                                   class item/class"
+                    tal:content="item/title" />
+                <p class="discreet">
+                  <span tal:replace="item/description">description</span>
+                  <br tal:condition="item/description">
+                  <span i18n:translate="">modified:</span>
+                  <span tal:replace="item/date">date</span>
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="pane">
+        <div id="project-dates" class="project-details">
           <ul>
             <li>
               <span class="label" i18n:translate="">Start date:</span>
@@ -51,21 +173,6 @@
             </li>
           </ul>
         </div>
-
-        <div class="project-details">
-          <!-- milestones -->
-          <h3 i18n:translate="">Milestones</h3>
-          <ul>
-            <li tal:repeat="milestone context/milestones">
-              <span tal:content="milestone/name"></span>
-              (<em i18n:translate=""
-                tal:content="python:view.get_milestone_status(milestone.status)"></em>)
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="pane">
         <div class="project-details">
           <dl>
             <dt i18n:translate="">Customer</dt>
@@ -86,6 +193,17 @@
           </dl>
         </div>
         <div class="project-details">
+          <!-- milestones -->
+          <h3 i18n:translate="">Milestones</h3>
+          <ul>
+            <li tal:repeat="milestone context/milestones">
+              <span tal:content="milestone/name"></span>
+              (<em i18n:translate=""
+                tal:content="python:view.get_milestone_status(milestone.status)"></em>)
+            </li>
+          </ul>
+        </div>
+        <div class="project-details">
           <dl>
             <dt i18n:translate="">Project classifiers</dt>
             <dd>
@@ -99,76 +217,6 @@
           <dl>
         </div>
       </div>
-
-      <div class="pane">
-        <div class="project-details">
-          <h3 i18n:translate="">Repositories</h3>
-          <div>
-            <ul>
-              <li tal:repeat="repository context/repositories">
-                <a href=""
-                   tal:attributes="href repository"
-                   tal:content="repository"></a>
-              </li>
-            </ul>
-          </div>
-          <h3 i18n:translate="">Environments</h3>
-          <div>
-            <ul>
-              <li tal:repeat="env context/environments">
-                <a href=""
-                   title=""
-                   tal:attributes="href env/url;
-                                   title env/name">
-                  <span tal:content="env/name"></span>
-                  (<em  i18n:translate=""
-                    tal:content="python:view.get_env_type(env.env_type)"></em>)
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="project-details">
-          <h3 i18n:translate="">Last documents</h3>
-          <div id="project-documents"
-               tal:define="documents view/documents">
-            <ul tal:condition="documents/last">
-              <li tal:repeat="document documents/last">
-                <a href=""
-                   title=""
-                   tal:attributes="href document/getURL;
-                                   title document/Title;
-                                   class python:'contenttype-%s' % document.portal_type.lower()"
-                    tal:content="document/Title" />
-                <p class="discreet"
-                  tal:content="document/Description">
-                </p>
-              </li>
-            </ul>
-            <p class="discreet"
-               tal:condition="python: documents['folder'] and not documents['last']"
-               i18n:translate="">
-              This project doesn't contain any documents
-            </p>
-            <a href=""
-               title="Documents folder"
-               tal:condition="documents/folder"
-               tal:attributes="href documents/folder/absolute_url"
-               i18n:translate=""
-               i18n:attributes="title">
-              Go to the documents folder
-            </a>
-            <p class="discreet"
-               tal:condition="not:documents/folder"
-               i18n:translate="">
-              There are no documents in this project
-              because the designated area is missing.
-              We suggest to create it.
-            </p>
-          </div>
-        </div>
-      </div>
-
 
       <div id="project-notes" class="pane">
         <div tal:content="structure context/get_notes"></div>

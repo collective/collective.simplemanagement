@@ -7,6 +7,11 @@
       i18n:domain="collective.simplemanagement">
 <body>
 
+<metal:title fill-slot="content-title">
+  <h1 class="documentFirstHeading"
+      i18n:translate="">All Iterations</h1>
+</metal:title>
+
 <metal:content-core fill-slot="content-core">
   <metal:block define-macro="content-core"
     tal:define="portal_state nocall:context/@@plone_portal_state;

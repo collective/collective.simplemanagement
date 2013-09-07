@@ -153,4 +153,5 @@ class ReportView(DashboardMixin):
                 'total': month_total,
                 'weeks': weeks,
             })
+        res.sort(key=lambda x: x['number'])
         return res

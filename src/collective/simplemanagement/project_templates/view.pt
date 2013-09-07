@@ -6,16 +6,13 @@
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="collective.simplemanagement">
 <body>
+<metal:title fill-slot="content-title" />
 
 <metal:content-core fill-slot="content-core">
   <metal:block define-macro="content-core"
     tal:define="portal_state nocall:context/@@plone_portal_state">
 
   <div id="project-view">
-
-    <metal:storyform
-      use-macro="context/simpemanagement-macros/addstory-form" />
-
 
     <div id="iterations"
          tal:define="iterations view/iterations"
@@ -31,10 +28,13 @@
           </metal:iteration>
         </div>
       </div>
-      <p class="discreet" tal:condition="not:iterations/current"
-         i18n:translate="">
-        There are no current iterations
-      </p>
+
+      <dl tal:condition="not:iterations/current"
+          class="portalMessage info">
+          <dt i18n:translate="">info</dt>
+          <dd class="discreet" i18n:translate="no_current_iteration"
+           >There are no current iterations.<br/>To list all iterations <a href="alliterations">click here</a></dd>
+      </dl>
 
       <div class="visualClear"><!-- clear floats--></div>
 

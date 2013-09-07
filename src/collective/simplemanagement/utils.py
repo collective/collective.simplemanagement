@@ -4,11 +4,12 @@ from datetime import date, time, datetime
 
 from zope.component import getUtility
 from zope.component.hooks import getSite
-from zope.location.interfaces import ILocation
+
 
 from z3c.relationfield.relation import RelationValue
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import IPloneSiteRoot
 
 from collective.prettydate.interfaces import IPrettyDate
 
@@ -40,7 +41,8 @@ def get_ancestor(iface, context, default=None):
     while current is not None:
         if iface.providedBy(current):
             return current
-        if not ILocation.providedBy(current):
+        # stop when Plone site is found
+        if IPloneSiteRoot.providedBy(current):
             return default
         current = current.__parent__
     return default

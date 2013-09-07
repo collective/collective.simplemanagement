@@ -20,11 +20,7 @@
 
         <h1 class="documentFirstHeading"
             i18n:translate="">
-          Project report: <span i18n:name="projname"
-                         class="projname"
-                         tal:content="view/project/Title"
-                         />
-        </h1>
+          Project report</h1>
         <tal:block condition="not: view/is_project">
           <h3 class="documentFirstHeading"
               i18n:translate="">
@@ -107,7 +103,7 @@
                     </dl>
                   </tal:month>
                 </div>
-                
+
               </div>
               <div id="booking-wrapper" class="pane">
                 <div class="filters">

@@ -43,8 +43,9 @@
   <metal:story-assignees define-macro="story-assignees">
     <ul class="assignees" tal:condition="story/assignees|nothing">
       <li tal:repeat="assignee story/assignees">
-        <a tal:attributes="href string:${assignee/href}&planning=on"
-           tal:content="assignee/fullname" />
+        <a tal:attributes="href string:${assignee/href}&planning=on;
+                          title assignee/fullname"
+           tal:content="assignee/user_id" />
       </li>
     </ul>
     <em tal:condition="not:story/assignees|nothing"

@@ -242,9 +242,9 @@
 
         $('.status').drawer({
             group: '.status',
-            position: "top-left",
+            position: "top-right",
             css_class: "tooltip",
-            offset: [-10, 15],
+            offset: [-10, -15],
             content: function(callback, drawer) {
                 var handle_span = drawer.trigger.parent().
                     siblings('.handle');
@@ -275,9 +275,9 @@
 
         $('.iteration').drawer({
             group: '.iteration',
-            position: "top-left",
+            position: "top-right",
             css_class: "tooltip",
-            offset: [-10, 15],
+            offset: [-10, -15],
             content: function(callback, drawer) {
                 var handle_span = drawer.trigger.parent().
                     siblings('.handle');
@@ -313,7 +313,7 @@
                     var widget_id = /([a-z\-]+)-picker/.exec(
                         div.attr('id'))[1];
                     div.datepicker({
-                        altField: $('#'+widget_id),
+                        altField: '#' + widget_id,
                         altFormat: div.attr('data-format'),
                         dateFormat: div.attr('data-format')
                     });
@@ -416,8 +416,6 @@
             data: $(this).serialize(),
             success: function(result) {
                 var $form = $('#booking_form');
-                // flush title
-                $('#form-widgets-title', $form).val('');
                 // flush errors
                 $form.siblings('.errors').remove();
                 if(result.success && !result.error){
@@ -434,8 +432,6 @@
                     /  since it has a lot of inline JS */
                     // reload_booking_form($('#booking_form'));
                     // debugger;
-                    // clean up fields manually
-                    // TODO...
                     return false;
                 }else if (result.success && result.error) {
                     // show errors
@@ -508,7 +504,7 @@
                         if(resp.result && resp.result.created) {
                             var $created = $('<div class="created" />');
                             $created.append('<span class="label">' + resp.result.created.msg + '</span>');
-                            var url = '<a class="created-url"'; 
+                            var url = '<a class="created-url"';
                             url += 'href="' + resp.result.created.url  +'">';
                             url += resp.result.created.title + '</a>';
                             $created.append(url);

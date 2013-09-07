@@ -44,10 +44,10 @@ from .widgets.time_widget import TimeFieldWidget
 
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("templates/booking_form.pt")
-    fields = field.Fields(IQuickForm).select('title') + field.Fields(IBooking)
+    fields = field.Fields(IQuickForm).select('title') + \
+        field.Fields(IBooking).omit('related')
     fields['date'].widgetFactory = BookingDateFieldWidget
     fields['time'].widgetFactory = TimeFieldWidget
-    fields['related'].widgetFactory = text.TextFieldWidget
 
     def create(self, data):
         return create_booking(self.context, data, reindex=0)
@@ -78,6 +78,10 @@ AddBooking = wrap_form(BookingForm)
 
 
 class DashboardMixin(BrowserView):
+
+    @property
+    def is_project(self):
+        return IProject.providedBy(self.context)
 
     @property
     @instance_memoize
@@ -217,6 +221,11 @@ class TicketsMixIn(object):
 
 class DashboardView(DashboardMixin, TicketsMixIn):
 
+    def __init__(self, context, request):
+        super(DashboardMixin, self).__init__(context, request)
+        if not self.is_project:
+            request.set('disable_border', 1)
+
     def add_booking_form(self):
         z2.switch_on(self, request_layer=IFormLayer)
         addform = BookingForm(aq_inner(self.context), self.request)
@@ -229,9 +238,11 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         project_states = ['development', 'maintenance']
         if self.request.form.get('planning') == 'on':
             project_states.extend(['offer', 'planning'])
+        story_states = ['in_progress']
         stories = listing.stories(
             user_id=self._get_employee_filter(),
             project_states=project_states,
+            story_states=story_states,
             project_info=True
         )
         for st in stories:
