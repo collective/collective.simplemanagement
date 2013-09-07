@@ -113,6 +113,10 @@
                 <div class="filters">
                   <form tal:attributes="action view/__name__">
                     <select name="month">
+                      <option
+                        value="all"
+                        i18n:translate="">All
+                      </option>
                       <tal:opt repeat="month view/months">
                         <option
                           tal:attributes="value month/value;
