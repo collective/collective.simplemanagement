@@ -448,7 +448,7 @@
                     });
                     return false;
                 }else{
-                    alert(data['error']);
+                    alert(result['error']);
                 }
             }
         });

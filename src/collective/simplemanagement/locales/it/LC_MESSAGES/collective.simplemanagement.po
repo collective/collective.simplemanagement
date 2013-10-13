@@ -474,7 +474,7 @@ msgstr "Numero di settimane prima dell'inizio del mese corrente"
 
 #: ./../browser/worklog.py:32
 msgid "October"
-msgstr "Otobre"
+msgstr "Ottobre"
 
 #: ./../interfaces/project.py:124
 #: ./../project_templates/overview.pt:73

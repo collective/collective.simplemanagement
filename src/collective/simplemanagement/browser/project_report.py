@@ -20,10 +20,14 @@ class ReportView(DashboardMixin):
         today = datetime.date.today()
         for i, month in enumerate(MONTHS):
             num = i + 1
+            req_val = self.request.get('month', today.month)
+            selected = None
+            if req_val != 'all':
+                selected = int(req_val) == num
             yield {
                 'value': num,
                 'label': month,
-                'selected': int(self.request.get('month', today.month)) == num
+                'selected': selected
             }
 
     @property
@@ -73,11 +77,17 @@ class ReportView(DashboardMixin):
     @property
     def _date_range(self):
         today = datetime.date.today()
-        month = int(self.request.get('month', today.month))
         year = int(self.request.get('year', today.year))
-        daylast = calendar.monthrange(year, month)[1]
-        from_date = datetime.datetime(year, month, 1, 0, 0)
-        to_date = datetime.datetime(year, month, daylast, 23, 59)
+        month = self.request.get('month', today.month)
+        if month != 'all':
+            month = int(month)
+            start_month = stop_month = month
+        else:
+            start_month = 1
+            stop_month = 12
+        daylast = calendar.monthrange(year, stop_month)[1]
+        from_date = datetime.datetime(year, start_month, 1, 0, 0)
+        to_date = datetime.datetime(year, stop_month, daylast, 23, 59)
         return (from_date, to_date)
 
     def get_bookings(self, date_range=None, ignore_userid=False):
