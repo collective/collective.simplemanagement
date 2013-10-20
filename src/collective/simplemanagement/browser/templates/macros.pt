@@ -335,10 +335,12 @@
                    title="show more"
                    i18n:attributes="title">[+]</a>
                 <div class="description">
-                  <tal:desc repeat="line booking/description">
-                    <div class="desc-item discreet"
-                         tal:content="line" />
-                  </tal:desc>
+                  <div class="wrapper">
+                    <b class="notch-bottom"></b>
+                    <tal:desc repeat="line booking/description">
+                      <p tal:content="line" />
+                    </tal:desc>
+                  </div>
                 </div>
               </tal:more>
             </td>
