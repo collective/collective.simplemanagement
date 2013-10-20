@@ -590,8 +590,13 @@ function booking_tooltip() {
         css_class: "tooltip",
         offset: [-10, 15],
         content: function(callback, drawer) {
-            var selector = drawer.trigger.data('content');
-            callback($(drawer.trigger).siblings(selector).html());
+            var selector = drawer.trigger.data('content'),
+                content = $(drawer.trigger).siblings(selector).clone();
+            $('a.close', content).bind('click', function (evt) {
+                drawer.hide();
+                evt.preventDefault();
+            });
+            callback(content);
         }
     });
 }

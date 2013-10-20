@@ -534,16 +534,21 @@ ul.stories .actions {
 .tooltip a.close{
     padding: 8px;
     background: url('close-16x16.png') no-repeat center center;
+    display: block;
+    float: right;
+    height: 16px;
+    padding: 0;
+    padding: 4px;
+    width: 16px;
 }
 
 .tooltip .ch_iteration {
     white-space: nowrap;
 }
-.tooltip .ch_iteration a.close {
+/*.tooltip .ch_iteration a.close {
     float: right;
-    padding: 0 8px;
 }
-
+*/
 #dashboard ul.details {
     font-size: 85%;
     list-style-type: none;
@@ -595,7 +600,7 @@ table.stories tbody tr td.actions {
     width: 100px;
 }
 
-table.stories tbody tr td.quick-booking {
+.dashboard-actions {
     width: 80px;
 }
 

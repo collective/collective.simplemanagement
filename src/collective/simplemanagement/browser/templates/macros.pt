@@ -332,11 +332,17 @@
               <tal:more condition="booking/description">
                 <a href="#" class="show-more"
                    data-content=".description"
-                   title="show more"
+                   title="Show more"
                    i18n:attributes="title">[+]</a>
                 <div class="description">
                   <div class="wrapper">
                     <b class="notch-bottom"></b>
+                    <a class="close"
+                       href="#"
+                       title="Close tooltip"
+                       i18n:attributes="title">
+                      <span>&nbsp;</span>
+                    </a>
                     <tal:desc repeat="line booking/description">
                       <p tal:content="line" />
                     </tal:desc>

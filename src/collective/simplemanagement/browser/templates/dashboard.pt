@@ -139,6 +139,7 @@
                           <th i18n:translate="">Estimate</th>
                           <th i18n:translate="">Done</th>
                           <th i18n:translate=""
+                            class="dashboard-actions"
                             tal:condition="not: employee_details">Actions</th>
                         </tr>
                       </thead>
@@ -153,8 +154,7 @@
                               fill-slot="extra-info" />
 
                             <metal:after-columns fill-slot="after-columns">
-                              <td class="quick-booking"
-                                tal:condition="not: employee_details">
+                              <td tal:condition="not: employee_details">
                                 <a i18n:translate=""
                                    class="bookform btn"
                                    title="Add Booking"

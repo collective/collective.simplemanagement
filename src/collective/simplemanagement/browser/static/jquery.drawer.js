@@ -33,10 +33,10 @@
         if(this.options.open) this.show();
 
         // close tooltip by click on window
-        $(window).bind('click', function (){
-            if(self.isShown())
-                self.hide();
-        });
+        // $(window).bind('click', function (){
+        //     if(self.isShown())
+        //         self.hide();
+        // });
     };
 
     Drawer.prototype = {
