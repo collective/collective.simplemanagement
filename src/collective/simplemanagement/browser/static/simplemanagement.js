@@ -157,7 +157,6 @@
 
         $('#overview ul.tabs').tabs("#overview div.panes > div");
 
-
         $('#project-iterations').tabs(
             "#project-iterations div.pane",
             {tabs: 'h2', effect: 'slide', initialIndex: 1}
@@ -178,18 +177,26 @@
             subtype: 'ajax',
             filter: common_content_filter,
             formselector: 'form#booking_form',
+            width:'80%',
             config: {
                 onClose: function(el){
                     window.location.reload();
+                },
+                onLoad: function(){
+                    booking_tooltip();
                 }
-            },
-            width:'80%'
+            }
         });
 
         $('.story-quickview').prepOverlay({
             subtype: 'ajax',
             filter: common_content_filter,
-            width:'80%'
+            width:'80%',
+            config: {
+                onLoad: function(){
+                    booking_tooltip();
+                }
+            }
         });
 
         $('.quickview').prepOverlay({
@@ -394,16 +401,7 @@
            );
         });
 
-        $('.listing .show-more').drawer({
-            group: '.show-more',
-            position: "top-left",
-            css_class: "tooltip",
-            offset: [-10, 15],
-            content: function(callback, drawer) {
-                var selector = drawer.trigger.data('content');
-                callback($(drawer.trigger).siblings(selector).html());
-            }
-        });
+        booking_tooltip();
 
         // ajax submit
 
@@ -583,4 +581,17 @@ function reload_booking_form(sel) {
     if (content) {
         $(sel).html(content).html();
     }
+}
+
+function booking_tooltip() {
+    $('.listing .show-more').drawer({
+        group: '.show-more',
+        position: "top-left",
+        css_class: "tooltip",
+        offset: [-10, 15],
+        content: function(callback, drawer) {
+            var selector = drawer.trigger.data('content');
+            callback($(drawer.trigger).siblings(selector).html());
+        }
+    });
 }
