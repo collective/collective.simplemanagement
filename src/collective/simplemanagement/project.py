@@ -1,5 +1,6 @@
 from Acquisition import aq_inner
 from datetime import date
+from zope.interface import implementer
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
 from zope.security import checkPermission
@@ -25,8 +26,8 @@ from .story import ProjectStoryQuickForm
 from . import messageFactory as _
 
 
+@implementer(IProject)
 class Project(Container):
-    grok.implements(IProject)
 
     def get_notes(self):
         notes = self.notes
@@ -182,7 +183,7 @@ class OverView(View):
             last_documents = [get_info(el) for el in
                                last_stuff[:self.MAX_ELEMENTS + 1]
                                if el.getPath != folder_path]
-            
+
         return {'last': last_documents,
                 'folder_url': documents_folder_url
                 }
@@ -271,8 +272,8 @@ class Stories(grok.View):
         return adpt.stories()
 
 
+@implementer(IBacklogView)
 class Backlog(grok.View, IterationViewMixin):
-    grok.implements(IBacklogView)
     grok.context(IProject)
     grok.require('cmf.ModifyPortalContent')
     grok.name('backlog')

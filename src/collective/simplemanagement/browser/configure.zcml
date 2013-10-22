@@ -9,6 +9,8 @@
   <include package=".widgets" />
   <include package=".viewlets" />
 
+  <include file="content.zcml" />
+
   <include package="z3c.jbot" file="meta.zcml" />
 
   <browser:jbot

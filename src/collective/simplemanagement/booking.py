@@ -1,6 +1,5 @@
 from datetime import date
-
-from five import grok
+from zope.interface import implementer
 from z3c.form import form, field
 from z3c.relationfield.relation import create_relation
 
@@ -67,8 +66,8 @@ class BookingForm(form.AddForm):
         self.actions['add'].addClass("allowMultiSubmit")
 
 
+@implementer(IBooking)
 class Booking(dexterity.Item):
-    grok.implements(IBooking)
 
     def get_related(self):
         related = self.related
@@ -79,8 +78,3 @@ class Booking(dexterity.Item):
                 'href': related.absolute_url(),
                 'description': related.Description(),
             }
-
-
-class View(grok.View):
-    grok.context(IBooking)
-    grok.require('zope2.View')
