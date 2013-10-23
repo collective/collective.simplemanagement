@@ -87,7 +87,12 @@ class MacroRenderer(object):
             output)()
 
         # update buflist to avoid Unicodedecode Error
-        output.buflist = [i.decode('utf-8') for i in output.buflist]
+        buflist = []
+        for i in output.buflist:
+            if not isinstance(i, unicode):
+                i = i.decode('utf-8')
+            buflist.append(i)
+        output.buflist = buflist
 
         # self._unpatch()
         return output.getvalue()
