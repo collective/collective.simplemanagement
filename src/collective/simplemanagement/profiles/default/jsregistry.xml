@@ -1,27 +1,67 @@
 <?xml version="1.0"?>
 <object name="portal_javascripts">
   <javascript
-    cacheable="True"
-    compression="safe"
-    cookable="True"
-    enabled="True"
-    expression=""
-    id="++resource++simplemanagement/jquery.drawer.js"
-    inline="False" />
+      cacheable="True"
+      compression="safe"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/jquery.drawer.js"
+      inline="False" />
   <javascript
-    cacheable="True"
-    compression="safe"
-    cookable="True"
-    enabled="True"
-    expression=""
-    id="++resource++simplemanagement/simplemanagement.js"
-    inline="False" />
+      cacheable="True"
+      compression="safe"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/simplemanagement.js"
+      inline="False" />
   <javascript
-    cacheable="True"
-    compression="safe"
-    cookable="True"
-    enabled="True"
-    expression=""
-    id="++resource++simplemanagement/worklog.js"
-    inline="False" />
+      cacheable="True"
+      compression="safe"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/worklog.js"
+      inline="False" />
+  <javascript
+      cacheable="True"
+      compression="safe"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/ICanHaz.js"
+      inline="False" />
+  <javascript
+      cacheable="True"
+      compression="none"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/json2.js"
+      inline="False" />
+  <javascript
+      cacheable="True"
+      compression="none"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/knockout-2.2.1.js"
+      inline="False" />
+  <javascript
+      cacheable="True"
+      compression="none"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/knockout-sortable.js"
+      inline="False" />
+  <javascript
+      cacheable="True"
+      compression="safe"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/compass.js"
+      inline="False" />
 </object>

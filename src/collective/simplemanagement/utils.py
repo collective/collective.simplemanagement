@@ -1,6 +1,9 @@
+import json
 from copy import copy
 from decimal import Decimal
 from datetime import date, time, datetime
+
+from DateTime import DateTime
 
 from zope.component import getUtility
 from zope.component.hooks import getSite
@@ -347,7 +350,7 @@ def get_wf_state_info(brain, context=None):
 
 def get_employee_ids(context=None):
     settings = Settings()
-    resources = []
+    resources = ['admin'] # BBB: this needs to be extracted someway!
     if not context:
         context = getSite()
     gtool = getToolByName(context, 'portal_groups')
@@ -355,5 +358,59 @@ def get_employee_ids(context=None):
         settings.employees_group
     )
     if group is not None:
-        resources = group.getMemberIds()
+        resources.extend(group.getMemberIds())
     return resources
+
+
+class ExtendedJSONEncoder(json.JSONEncoder):
+
+    DATE_RFC822_FORMAT = '%a, %d %b %Y'
+    TIME_RFC822_FORMAT = '%H:%M:%S'
+
+    def default(self, obj): # pylint: disable=E0202
+        if isinstance(obj, DateTime):
+            return obj.rfc822()
+        elif isinstance(obj, date):
+            return obj.strftime(self.DATE_RFC822_FORMAT)
+        elif isinstance(obj, time):
+            return obj.strftime(self.TIME_RFC822_FORMAT)
+        elif isinstance(obj, datetime):
+            return obj.strftime(
+                self.DATE_RFC822_FORMAT+' '+self.TIME_RFC822_FORMAT+' %z'
+            )
+        return json.JSONEncoder.default(self, obj)
+
+
+def jsonmethod(encoder=ExtendedJSONEncoder):
+    def decorator(meth):
+        def wrapper(self, *args, **kwargs):
+            result = meth(self, *args, **kwargs)
+            self.request.response.setHeader("Content-type", "application/json")
+            return json.dumps(result, cls=encoder)
+        return wrapper
+    return decorator
+
+
+def shorten(value, length):
+    """Shortens a string (generally a title) into a recognizable length-wide
+    identifier.
+
+    Example:
+
+        >>> shorten(u'Account', 3)
+        u'Acc'
+        >>> shorten(u'Project Manager', 3)
+        u'PM'
+        >>> shorten(u'Developer', 3)
+        u'Dev'
+        >>> shorten(u'Designer', 3)
+        u'Des'
+        >>> shorten(u'Sysadmin', 3)
+        u'Sys'
+
+    """
+    value = value.split(u' ')
+    if len(value) == 1:
+        return value[0][:length]
+    else:
+        return u''.join(c[0].upper() for c in value[:length])

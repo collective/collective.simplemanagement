@@ -25,6 +25,10 @@ class IResource(Interface):
         title=_(u"Active"),
         default=True
     )
+    compass_effort = schema.Decimal(
+        title=_(u"Effort (in man days)"),
+        default=Decimal('0.00')
+    )
 
 
 class IEnvironment(Interface):
@@ -120,6 +124,8 @@ class IProject(form.Schema):
                                  schema=IMilestone),
         required=False
     )
+    # TODO: Maybe it's better to omit operatives from forms,
+    # as they are handled in toto by the compass
     operatives = schema.List(
         title=_(u"Operatives"),
         description=_(
@@ -139,7 +145,7 @@ class IProject(form.Schema):
         required=False
     )
 
-    form.omitted('priority', 'active')
+    form.omitted('priority', 'active', 'compass_effort', 'compass_notes')
     priority = schema.Int(
         title=_(u"Priority"),
         default=100,
@@ -149,6 +155,15 @@ class IProject(form.Schema):
         title=_(u"Active"),
         default=True
     )
+    compass_effort = schema.Decimal(
+        title=_(u"Effort (in man days)"),
+        default=Decimal('0.00')
+    )
+    compass_notes = schema.Text(
+        title=_(u"Notes"),
+        required=False
+    )
+
 
 
 class IProjectNavigation(Interface):
