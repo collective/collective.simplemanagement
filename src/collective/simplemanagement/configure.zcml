@@ -69,6 +69,8 @@
 
   <include file="genericsetup.zcml" />
 
+  <include file="upgrades.zcml" />
+
   <!-- sharing -->
   <utility name="Employee" factory=".sharing.EmployeeRole"/>
   <utility name="Customer" factory=".sharing.CustomerRole"/>

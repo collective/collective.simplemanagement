@@ -1,6 +1,7 @@
 from Acquisition import aq_inner
 from five import grok
 
+from zope.interface import implementer
 from zope.security import checkPermission
 from zope.lifecycleevent.interfaces import IObjectMovedEvent
 from z3c.form.interfaces import IFormLayer
@@ -22,8 +23,9 @@ from .timeline import timeline
 from .timeline import snapshot
 
 
+@implementer(IIteration)
 class Iteration(Container):
-    grok.implements(IIteration)
+    """Iteration content type"""
 
 
 # XXX: move somewhere else

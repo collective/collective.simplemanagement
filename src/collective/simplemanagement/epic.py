@@ -1,3 +1,4 @@
+from zope.interface import implementer
 from zope.component import getUtility
 from zope.app.intid.interfaces import IIntIds
 from zc.relation.interfaces import ICatalog
@@ -14,8 +15,8 @@ from .utils import get_difference_class
 from .utils import get_text
 
 
+@implementer(IEpic)
 class Epic(Container):
-    grok.implements(IEpic)
 
     def get_text(self):
         text = self.text

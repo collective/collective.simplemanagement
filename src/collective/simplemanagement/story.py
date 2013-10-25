@@ -1,5 +1,7 @@
 from Acquisition import aq_inner
 from five import grok
+
+from zope.interface import implementer
 from zope.security import checkPermission
 
 from z3c.form.interfaces import IFormLayer
@@ -48,8 +50,8 @@ def create_story(context, data, reindex=True):
     return item
 
 
+@implementer(IStory)
 class Story(Container):
-    grok.implements(IStory)
 
     def get_milestone(self):
         if self.milestone:

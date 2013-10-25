@@ -13,13 +13,21 @@
     <index name="order_number" meta_type="FieldIndex">
         <indexed_attr value="order_number" />
     </index>
+    <index name="priority" meta_type="FieldIndex">
+      <indexed_attr value="priority"/>
+    </index>
+    <index name="active" meta_type="FieldIndex">
+      <indexed_attr value="active"/>
+    </index>
 
     <!-- metadata -->
     <column value="assigned_to"/>
     <column value="time"/>
     <column value="estimate"/>
     <column value="date"/>
-    <column value="active"/>
     <column value="order_number" />
+    <column value="priority"/>
+    <column value="customer"/>
 
- </object>
+</object>
+

@@ -1,0 +1,158 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.simplemanagement">
+  <head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1);
+
+                             disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
+  </head>
+  <body metal:use-macro="content">
+
+    <metal:bodytext fill-slot="main">
+      <metal:main define-macro="main"
+                  tal:define="helpers context/@@sm_helpers;">
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+        <h1 class="documentFirstHeading" i18n:translate="">Compass</h1>
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+        <div id="content-core" class="compassview"
+             tal:define="settings view/settings"
+             tal:attributes="data-roles view/roles;
+                             data-people view/employees;
+                             data-base-url view/base_url;
+                             data-translations view/translations;
+                             data-plan-weeks settings/default_plan_length">
+          <div class="messages" data-bind="visible: has_messages">
+            <!-- ko foreach: permanent_messages -->
+            <div class="message" data-bind="css: type, html: message"></div>
+            <!-- /ko -->
+            <!-- ko foreach: transient_messages -->
+            <div class="message" data-bind="css: type, html: message"></div>
+            <!-- /ko -->
+          </div>
+          <div class="control">
+            <div class="plan-length">
+              <label for="weekn" i18n:translate="">Plan for</label>
+              <span data-bind="text: plan_weeks_human">2</span>
+              <input name="weekn"
+                     type="range"
+                     data-bind="value: plan_weeks"
+                     step="1"
+                     tal:attributes="min settings/minimum_plan_length;
+                                     max settings/maximum_plan_length" />
+            </div>
+            <a href="#" i18n:translate="">Go back to saved version</a>
+            <button i18n:translate="">Save</button>
+          </div>
+          <div class="row">
+            <div class="cell position-0 width-3">
+              <h2 i18n:translate="">People</h2>
+              <input type="text"
+                     name="filter-people"
+                     value=""
+                     class="filter-data"
+                     placeholder="Filter by name..."
+                     data-bind="value: people_filter, valueUpdate: 'afterkeydown'"
+                     i18n:attributes="placeholder" />
+              <div class="container">
+                <!-- ko foreach: shown_people -->
+                <div class="thumbnail employee"
+                     data-bind="draggable: {
+                                data: $data,
+                                connectClass: 'thumbnail-small',
+                                options: {
+                                scope: 'people' } },
+                                style: { backgroundImage: 'url('+avatar+')' }">
+                  <span class="title" data-bind="text: $parent.name"></span>
+                </div>
+                <!-- /ko -->
+                <div class="thumbnail placeholder"
+                     data-bind="droppable: {
+                                action: $root.delPerson,
+                                options: {
+                                scope: 'operatives' } }">
+                  &nbsp;
+                </div>
+              </div>
+            </div>
+            <div class="cell position-3 width-13">
+              <h2 i18n:translate="">Active projects</h2>
+              <div class="container"
+                   data-bind="sortable: { data: active_projects,
+                              options: {
+                              handle: '.status-indicator' } }">
+                <div class="project">
+                  <div data-bind="css: css_class">
+                    <a href="#">X</a>
+                  </div>
+                  <div class="info">
+                    <div><h3 class="title" data-bind="text: name"></h3></div>
+                    <div><textarea class="notes"
+                                   data-bind="value: notes"></textarea></div>
+                    <div class="effort">
+                      <input type="text"
+                             class="effort"
+                             data-bind="value: effort" />
+                      <b i18n:translate="">man days</b>
+                      <span i18n:translate="">to be done before</span>
+                      <span class="date" data-bind="text: $root.plan_end"></span>
+                    </div>
+                  </div>
+                  <div class="people">
+                    <!-- ko foreach: people -->
+                    <div class="wrapper"
+                         style="display: none;"
+                         data-bind="attr: { id: dom_id }">
+                      <b class="notch notch"></b>
+                      <div>
+                        <input type="text" class="effort"
+                               data-bind="value: effort" />
+                        <b i18n:translate="">man days</b>
+                      </div>
+                      <div>
+                        <span i18n:translate="">as</span>
+                        <select data-bind="options: $root.roles_list,
+                                           optionsText: 'label',
+                                           optionsValue: 'value',
+                                           value: role"></select>
+                      </div>
+                    </div>
+                    <div class="thumbnail thumbnail-small person"
+                         data-bind="draggable: {
+                                    data: $data,
+                                    connectClass: 'thumbnail',
+                                    options: {
+                                    scope: 'operatives' } },
+                                    style: {
+                                    backgroundImage: 'url('+avatar()+')' },
+                                    jqueryDrawer: {
+                                    group: '.thumbnail-small.person',
+                                    css_class: 'tooltip tooltip-people',
+                                    content: '#'+dom_id(),
+                                    position: 'bottom-left' }">
+                      <span class="effort" data-bind="text: effort"></span>
+                      <span class="title" data-bind="text: display_role"></span>
+                    </div>
+                    <!-- /ko -->
+                    <div class="thumbnail thumbnail-small placeholder"
+                         data-bind="droppable: { action: addPerson,
+                                    options: {
+                                    scope: 'people' } }">
+                      &nbsp;
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+      </metal:main>
+    </metal:bodytext>
+  </body>
+</html>

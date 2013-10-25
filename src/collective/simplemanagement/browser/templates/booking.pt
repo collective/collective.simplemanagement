@@ -9,7 +9,6 @@
 
 <metal:content-core fill-slot="content-core">
     <metal:block define-macro="content-core">
-
     <dl>
       <dt i18n:translate="">Date</dt>
       <dd tal:content="python:context.toLocalizedTime(context.date.isoformat())"></dd>
@@ -18,14 +17,14 @@
       <tal:block
         define="related view/context/get_related"
         condition="related">
-      <dt i18n:translate="">Related</dt>
-      <dd>
-        <a href=""
-           title=""
-           tal:content="related/title"
-           tal:attributes="href related/href;
-                           title related/description"></a>
-      </dd>
+        <dt i18n:translate="">Related</dt>
+        <dd>
+          <a href=""
+             title=""
+             tal:content="related/title"
+             tal:attributes="href related/href;
+                             title related/description"></a>
+        </dd>
       </tal:block>
     </dl>
 

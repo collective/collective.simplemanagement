@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<tool-setup>
+    <required
+        tool_id="portal_compass"
+        class="collective.simplemanagement.compass.CompassTool"
+        />
+</tool-setup>
