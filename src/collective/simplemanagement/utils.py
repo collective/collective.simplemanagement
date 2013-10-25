@@ -350,7 +350,7 @@ def get_wf_state_info(brain, context=None):
 
 def get_employee_ids(context=None):
     settings = Settings()
-    resources = ['admin'] # BBB: this needs to be extracted someway!
+    resources = ['admin']  # BBB: this needs to be extracted someway!
     if not context:
         context = getSite()
     gtool = getToolByName(context, 'portal_groups')
@@ -367,7 +367,7 @@ class ExtendedJSONEncoder(json.JSONEncoder):
     DATE_RFC822_FORMAT = '%a, %d %b %Y'
     TIME_RFC822_FORMAT = '%H:%M:%S'
 
-    def default(self, obj): # pylint: disable=E0202
+    def default(self, obj):  # pylint: disable=E0202
         if isinstance(obj, DateTime):
             return obj.rfc822()
         elif isinstance(obj, date):
@@ -376,7 +376,7 @@ class ExtendedJSONEncoder(json.JSONEncoder):
             return obj.strftime(self.TIME_RFC822_FORMAT)
         elif isinstance(obj, datetime):
             return obj.strftime(
-                self.DATE_RFC822_FORMAT+' '+self.TIME_RFC822_FORMAT+' %z'
+                self.DATE_RFC822_FORMAT + ' ' + self.TIME_RFC822_FORMAT + ' %z'
             )
         return json.JSONEncoder.default(self, obj)
 
