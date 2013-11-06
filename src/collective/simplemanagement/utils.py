@@ -1,4 +1,5 @@
 import json
+from Acquisition import aq_parent
 from copy import copy
 from decimal import Decimal
 from datetime import date, time, datetime
@@ -47,7 +48,7 @@ def get_ancestor(iface, context, default=None):
         # stop when Plone site is found
         if IPloneSiteRoot.providedBy(current):
             return default
-        current = current.__parent__
+        current = aq_parent(current)
     return default
 
 

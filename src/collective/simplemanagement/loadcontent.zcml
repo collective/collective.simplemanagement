@@ -18,12 +18,11 @@
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
-
     <genericsetup:importStep
         name="loadcontent"
         title="Setup extra develop steps"
         description=""
-        handler=".loadcontent.load_content">
+        handler=".loadcontent.loadcontent.load_content">
       <depends name="plone-final"/>
     </genericsetup:importStep>
 
@@ -32,15 +31,9 @@
         name="create_users"
         title="Setup users for testing"
         description=""
-        handler=".loadcontent.create_users">
+        handler=".loadcontent.loadcontent.create_users">
       <depends name="plone-final"/>
     </genericsetup:importStep>
 
-
-    <transmogrifier:registerConfig
-         name="loadcontent"
-         title="Load content"
-         configuration="loadcontent.cfg"
-         />
-
+    <include package=".loadcontent" />
 </configure>
