@@ -51,7 +51,8 @@ setup(
     extras_require={
         'test': [
             'mock',
-            'plone.app.testing'
+            'plone.app.testing',
+            'plone.app.robotframework'
         ],
         'loadcontent': [
             'plone.app.transmogrifier',
