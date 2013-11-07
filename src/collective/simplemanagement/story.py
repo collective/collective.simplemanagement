@@ -80,52 +80,6 @@ class Story(Container):
         return len(actions) > 0
 
 
-class View(grok.View):
-    grok.context(IStory)
-    grok.require('zope2.View')
-
-    def user_can_booking(self):
-        if self.request.get('nobook'):
-            return False
-        return checkPermission('simplemanagement.AddBooking', self.context)
-
-    def get_epic(self):
-        return get_epic_by_story(self.context)
-
-    def timing(self):
-        return get_timings(self.context)
-
-    def get_assignees(self):
-        return get_assignees_details(self.context)
-
-    def booking_format(self, brain):
-        obj = brain.getObject()
-        description = brain.Description
-        description = description and description.splitlines()
-        user_details = get_user_details(self.context, brain.Creator)
-        booking = {
-            # we force to unicode since the macro rendering engine needs unicode
-            'title': safe_unicode(brain.Title),
-            'description': safe_unicode(description),
-            'time': brain.time,
-            'href': safe_unicode(brain.getURL()),
-            'date': self.context.toLocalizedTime(brain.date.isoformat()),
-            'related': obj.get_related(),
-            'creator': safe_unicode(user_details)
-        }
-        return booking
-
-    def get_booking(self):
-        return [self.booking_format(el)
-                for el in get_bookings(project=self.context)]
-
-    def form_contents(self):
-        z2.switch_on(self, request_layer=IFormLayer)
-        addform = BookingForm(aq_inner(self.context), self.request)
-        addform.update()
-        return addform.render()
-
-
 class StoryQuickForm(form.AddForm):
     template = ViewPageTemplateFile("browser/templates/quick_form.pt")
     container = None

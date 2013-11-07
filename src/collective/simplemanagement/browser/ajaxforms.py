@@ -1,5 +1,4 @@
 #-*- coding: utf-8 -*-
-
 import datetime
 import json
 from decimal import Decimal
@@ -10,7 +9,7 @@ from Products.Five.browser import BrowserView
 
 from .. import logger
 from ..bookingholes import create_hole
-from ..story import View as StoryView
+from .story import View as StoryView
 from ..story import StoryQuickForm
 from ..configure import Settings
 from ..booking import BookingForm

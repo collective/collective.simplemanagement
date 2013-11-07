@@ -31,4 +31,13 @@
     template="templates/epic.pt"
   />
 
+  <browser:page
+    for="..interfaces.IStory"
+    name="view"
+    layer="..interfaces.IBrowserLayer"
+    class=".story.View"
+    permission="zope2.View"
+    template="templates/story.pt"
+  />
+
 </configure>
