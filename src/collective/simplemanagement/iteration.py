@@ -1,5 +1,3 @@
-from five import grok
-
 from zope.interface import implementer
 from plone.dexterity.content import Container
 

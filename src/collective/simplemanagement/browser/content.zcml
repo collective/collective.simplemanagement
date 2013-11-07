@@ -22,4 +22,13 @@
     template="templates/iteration.pt"
   />
 
+  <browser:page
+    for="..interfaces.IEpic"
+    name="view"
+    layer="..interfaces.IBrowserLayer"
+    class=".epic.View"
+    permission="zope2.View"
+    template="templates/epic.pt"
+  />
+
 </configure>
