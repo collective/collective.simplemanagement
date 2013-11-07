@@ -52,7 +52,9 @@ setup(
         'test': [
             'mock',
             'plone.app.testing',
-            'plone.app.robotframework'
+            'plone.app.robotframework',
+            'plone.app.transmogrifier',
+            'transmogrify.dexterity'
         ],
         'loadcontent': [
             'plone.app.transmogrifier',

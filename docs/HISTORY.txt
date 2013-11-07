@@ -4,6 +4,12 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Add Robotframework test boilerplate
+  [gborelli]
+
+- Moved loadcontents scripts in specific module
+  [gborelli]
+
 - Improve project view
   [miziodel]
 

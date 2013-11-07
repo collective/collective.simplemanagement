@@ -17,7 +17,6 @@ class BaseLayer(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):  # pylint: disable=W0613
-        # Load ZCML
         import collective.simplemanagement
         self.loadZCML(package=collective.simplemanagement, name='testing.zcml')
         z2.installProduct(app, 'Products.Poi')
@@ -54,13 +53,10 @@ BASE_FUNCTIONAL_TESTING = FunctionalTesting(
 
 
 class BaseRobot(BaseLayer):
-    defaultBases = (BASE, )
+    defaultBases = (PLONE_FIXTURE, )
 
     def setUpPloneSite(self, portal):
-        # Install into Plone site using portal_setup
-        self.applyProfile(portal, 'collective.simplemanagement:default')
-
-        # Set initial data
+        # Install simplemanagement and set initial data
         self.applyProfile(portal, 'collective.simplemanagement:loadcontent')
 
 
