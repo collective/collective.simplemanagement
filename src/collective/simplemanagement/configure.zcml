@@ -20,6 +20,7 @@
   <include file="upgrades.zcml" />
 
   <include package=".browser" />
+  <include package=".viewlets" />
   <include package=".portlets" />
 
   <!--
