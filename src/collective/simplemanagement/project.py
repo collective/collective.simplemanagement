@@ -21,7 +21,7 @@ from .configure import DOCUMENTS_ID, TRACKER_ID
 from .utils import get_user_details
 from .utils import get_text
 from .utils import AttrDict
-from .iteration import IterationViewMixin
+from .browser.iteration import IterationViewMixin
 from .story import ProjectStoryQuickForm
 from . import messageFactory as _
 

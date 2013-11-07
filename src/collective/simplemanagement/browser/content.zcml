@@ -13,4 +13,13 @@
     template="templates/booking.pt"
   />
 
+  <browser:page
+    for="..interfaces.IIteration"
+    name="view"
+    layer="..interfaces.IBrowserLayer"
+    class=".iteration.View"
+    permission="zope2.View"
+    template="templates/iteration.pt"
+  />
+
 </configure>
