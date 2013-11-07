@@ -8,8 +8,15 @@
   <i18n:registerTranslations directory="locales" />
 
   <grok:grok package="." />
+
   <include file="permission.zcml" />
   <include file="indexers.zcml" />
+  <include file="genericsetup.zcml" />
+  <include file="adapters.zcml" />
+  <include file="vocabularies.zcml" />
+  <include file="timelines.zcml" />
+  <include file="subscribers.zcml" />
+  <include file="sharing.zcml" />
   <include file="upgrades.zcml" />
 
   <include package=".browser" />
@@ -28,53 +35,6 @@
   <configure zcml:condition="installed collective.transmogrifier">
     <include file="loadcontent.zcml" />
   </configure>
-
-
-  <subscriber for=".interfaces.IProject
-                   zope.lifecycleevent.interfaces.IObjectAddedEvent"
-              handler=".events.create_project_collaterals" />
-
-  <subscriber for=".interfaces.IProject
-                   zope.lifecycleevent.interfaces.IObjectModifiedEvent"
-              handler=".events.update_tracker_managers" />
-
-  <adapter
-    for=".interfaces.IIteration"
-    provides=".interfaces.IStoriesListing"
-    factory=".stories_listing.StoriesListing"
-  />
-
-  <adapter
-    for=".interfaces.IProject"
-    provides=".interfaces.IStoriesListing"
-    factory=".stories_listing.StoriesListing"
-  />
-
-
-  <adapter
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    provides=".interfaces.IUserStoriesListing"
-    factory=".stories_listing.UserStoriesListing"
-  />
-
-  <adapter
-    for=".interfaces.IProject"
-    provides=".interfaces.IUserStoriesListing"
-    factory=".stories_listing.UserStoriesListing"
-  />
-
-  <include file="vocabularies.zcml" />
-
-  <include file="timelines.zcml" />
-
-  <include file="genericsetup.zcml" />
-
-  <include file="upgrades.zcml" />
-
-  <!-- sharing -->
-  <utility name="Employee" factory=".sharing.EmployeeRole"/>
-  <utility name="Customer" factory=".sharing.CustomerRole"/>
-  <utility name="PM" factory=".sharing.PMRole"/>
 
   <!-- enable reporting view -->
 

@@ -1,0 +1,10 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           i18n_domain="collective.simplemanagement">
+
+  <!-- sharing -->
+  <utility name="Employee" factory=".sharing.EmployeeRole"/>
+  <utility name="Customer" factory=".sharing.CustomerRole"/>
+  <utility name="PM" factory=".sharing.PMRole"/>
+
+</configure>

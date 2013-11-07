@@ -1,0 +1,13 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           i18n_domain="collective.simplemanagement">
+
+  <subscriber for=".interfaces.IProject
+                   zope.lifecycleevent.interfaces.IObjectAddedEvent"
+              handler=".subscribers.create_project_collaterals" />
+
+  <subscriber for=".interfaces.IProject
+                   zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+              handler=".subscribers.update_tracker_managers" />
+
+</configure>
