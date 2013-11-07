@@ -53,7 +53,7 @@ BASE_FUNCTIONAL_TESTING = FunctionalTesting(
 
 
 class BaseRobot(BaseLayer):
-    defaultBases = (PLONE_FIXTURE, )
+    defaultBases = (BASE, )
 
     def setUpPloneSite(self, portal):
         # Install simplemanagement and set initial data
