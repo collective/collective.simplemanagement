@@ -7,7 +7,6 @@
 
   <include package="z3c.form" />
   <include package=".widgets" />
-  <include package=".viewlets" />
 
   <include file="content.zcml" />
 
@@ -261,7 +260,7 @@
   <adapter
       for="*"
       provides="..interfaces.IQuickForm"
-      factory=".quickforms.BaseqQuickFormAdapter"
+      factory=".quickforms.BaseQuickFormAdapter"
   />
 
 </configure>

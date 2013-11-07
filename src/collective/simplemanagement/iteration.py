@@ -4,7 +4,7 @@ from plone.dexterity.content import Container
 from .configure import Settings
 from .interfaces import IIteration
 from .utils import quantize
-from .utils import get_timings
+from . import api
 from .timeline import BaseTimeline
 from .timeline import timeline
 
@@ -32,7 +32,7 @@ class IterationTimeline(BaseTimeline):
                 context.estimate * settings.man_day_hours
             )
         if 'todo' in indexes or 'done' in indexes:
-            timings = get_timings(context)
+            timings = api.booking.get_timings(context)
             if 'todo' in indexes:
                 values['todo'] = timings['estimate']
             if 'done' in indexes:

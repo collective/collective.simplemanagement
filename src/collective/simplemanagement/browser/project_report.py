@@ -4,9 +4,7 @@ from decimal import Decimal
 
 from plone.memoize.view import memoize as view_memoize
 
-from ..utils import get_user_details
-from ..utils import get_bookings
-from ..utils import get_project
+from .. import api
 from ..interfaces import IProject
 
 from dashboard import DashboardMixin
@@ -43,7 +41,7 @@ class ReportView(DashboardMixin):
     @property
     @view_memoize
     def project(self):
-        return get_project(self.context)
+        return api.content.get_project(self.context)
 
     @property
     def is_project(self):
@@ -67,9 +65,10 @@ class ReportView(DashboardMixin):
         res = []
         # resources now contains user ids
         for userid in set(resources):
-            details = get_user_details(self.context,
-                                       userid,
-                                       **self.tools)
+            details = api.users.get_user_details(
+                self.context,
+                userid,
+                **self.tools)
             details['selected'] = self.request.get('employee') == userid
             res.append(details)
         return res
@@ -101,7 +100,7 @@ class ReportView(DashboardMixin):
         userid = self.request.get('employee', 'all')
         if userid != 'all' and not ignore_userid:
             data['userid'] = userid
-        bookings = get_bookings(**data)
+        bookings = api.booking.get_bookings(**data)
         return bookings
 
     def details_report(self):
@@ -113,9 +112,10 @@ class ReportView(DashboardMixin):
                 'time': booking.time,
                 'url': booking.getURL(),
                 'title': booking.Title,
-                'user': get_user_details(self.context,
-                                         booking.Creator,
-                                         **self.tools)
+                'user': api.users.get_user_details(
+                    self.context,
+                    booking.Creator,
+                    **self.tools)
             })
             total += booking.time
         return {

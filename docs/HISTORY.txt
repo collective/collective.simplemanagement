@@ -4,6 +4,9 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Add api module
+  [gborelli]
+
 - Add Robotframework test boilerplate
   [gborelli]
 

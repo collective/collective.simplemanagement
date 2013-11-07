@@ -26,15 +26,8 @@ from ..interfaces import IUserStoriesListing
 from ..interfaces import IProject
 from ..interfaces import IQuickForm
 from ..interfaces import IBooking
-from ..utils import timeago
 from ..utils import AttrDict
-from ..utils import get_bookings
-from ..utils import get_booking_holes
-from ..utils import get_wf_state_info
-from ..utils import get_employee_ids
-from ..utils import get_user_details
-from ..utils import get_project
-from ..booking import create_booking
+from .. import api
 from .widgets.date_widget import BookingDateFieldWidget
 from .widgets.time_widget import TimeFieldWidget
 
@@ -50,7 +43,7 @@ class BookingForm(form.AddForm):
     fields['time'].widgetFactory = TimeFieldWidget
 
     def create(self, data):
-        return create_booking(self.context, data, reindex=0)
+        return api.booking.create_booking(self.context, data, reindex=0)
 
     def add(self, obj):
         obj.reindexObject()
@@ -159,16 +152,18 @@ class TicketsMixIn(object):
         if not employee:
             return False
         else:
-            return get_user_details(self.context, employee, **self.tools)
+            return api.users.get_user_details(
+                self.context, employee, **self.tools)
 
     def employees(self):
         if IProject.providedBy(self.context):
             # TODO: filter user by context
             pass
-        resources = get_employee_ids(self.context)
+        resources = api.users.get_employee_ids(self.context)
         for resource in resources:
             if resource != self.user.getId():
-                yield get_user_details(self.context, resource, **self.tools)
+                yield api.users.get_user_details(
+                    self.context, resource, **self.tools)
 
     def _get_tickets(self):
         pc = self.tools['portal_catalog']
@@ -197,7 +192,7 @@ class TicketsMixIn(object):
             'id': item.getId,
             'modified': item.modified,
             'severity': item.getSeverity,
-            'review_state': get_wf_state_info(item, self.context),
+            'review_state': api.content.get_wf_state_info(item, self.context),
             'project': self.get_project_details(item)
         }
 
@@ -216,7 +211,7 @@ class TicketsMixIn(object):
         return projects
 
     def timeago(self, timestamp):
-        return timeago(timestamp.utcdatetime())
+        return api.date.timeago(timestamp.utcdatetime())
 
 
 class DashboardView(DashboardMixin, TicketsMixIn):
@@ -278,7 +273,7 @@ class DashboardView(DashboardMixin, TicketsMixIn):
     # @view_memoize
     def _bookings(self, userid, from_date, to_date):
         cat = self.tools.portal_catalog
-        bookings = get_bookings(
+        bookings = api.booking.get_bookings(
             userid=userid,
             portal_catalog=cat,
             from_date=from_date,
@@ -294,7 +289,7 @@ class DashboardView(DashboardMixin, TicketsMixIn):
             project = self.context
 
         from_date = datetime.date.today() - datetime.timedelta(days=30)
-        _bookings = get_bookings(
+        _bookings = api.booking.get_bookings(
             user_id,
             project=project,
             from_date=from_date
@@ -303,11 +298,11 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         for booking in _bookings:
             story = booking.getObject().__parent__
             if not is_project_context:
-                project = get_project(story)
+                project = api.content.get_project(story)
 
             results.append({
                 'date': self.context.toLocalizedTime(booking.date.isoformat()),
-                'date2': timeago(booking.date),
+                'date2': api.date.timeago(booking.date),
                 'time': booking.time,
                 'url': booking.getURL(),
                 'title': booking.Title,
@@ -332,8 +327,10 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         from_date = hole_settings.from_date
         to_date = hole_settings.to_date
         bookings = self._bookings(userid, from_date, to_date)
-        holes = get_booking_holes(userid, bookings,
-                                  expected_working_time=expected_working_time,
-                                  man_day_hours=man_day_hours,
-                                  from_date=from_date, to_date=to_date)
+        holes = api.booking.get_booking_holes(
+            userid, bookings,
+            expected_working_time=expected_working_time,
+            man_day_hours=man_day_hours,
+            from_date=from_date, to_date=to_date
+        )
         return holes

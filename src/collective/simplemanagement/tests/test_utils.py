@@ -2,7 +2,7 @@ import datetime
 import unittest2 as unittest
 
 from ..testing import BASE_INTEGRATION_TESTING
-from .. import utils
+from .. import api
 
 
 class TestBaseUtils(unittest.TestCase):
@@ -19,14 +19,14 @@ class TestBaseUtils(unittest.TestCase):
     def test_datetimerange(self):
         start = datetime.date(2013, 6, 1)
         stop = datetime.date(2013, 6, 11)
-        _range = utils.datetimerange(start, stop)
+        _range = api.date.datetimerange(start, stop)
         dates = [x[0] for x in _range]
         assert len(dates) == 10, 'expected 10 dates, got %s' % len(dates)
         for i in xrange(1, 11):
             adate = datetime.date(2013, 6, i)
             assert adate in dates, 'date %s not in range' % adate.strftime('%Y%m%d')
 
-        _range = utils.datetimerange(start, stop, exclude_weekend=True)
+        _range = api.date.datetimerange(start, stop, exclude_weekend=True)
         dates = [x[0] for x in _range]
         excluded = (
             datetime.date(2013, 6, 1),  # saturday

@@ -6,13 +6,13 @@ from Products.Five.browser import BrowserView
 
 from plone.memoize.view import memoize_contextless
 
-from ..utils import timeago
+from .. import api
 
 
 class Helpers(BrowserView):
 
     def timeago(self, timestamp):
-        return timeago(timestamp)
+        return api.date.timeago(timestamp)
 
     @memoize_contextless
     def _actions(self):

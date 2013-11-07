@@ -5,7 +5,7 @@ from zope.interface import implements
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.app.portlets.portlets import base
-from ..utils import get_project
+from .. import api
 from .. import messageFactory as _
 
 
@@ -34,7 +34,7 @@ class Renderer(base.Renderer):
 
     @property
     def _project(self):
-        return get_project(aq_inner(self.context))
+        return api.content.get_project(aq_inner(self.context))
 
     def actions(self):
         return self.helpers.sm_actions(project=self._project)

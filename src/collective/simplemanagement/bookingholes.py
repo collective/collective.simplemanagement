@@ -4,14 +4,8 @@ from zope import component
 from persistent import Persistent
 from BTrees.OOBTree import OOBTree
 
-from .interfaces import IBookingHole, IBookingHoles
-
-
-def create_hole(day, hours, user_id, reason=""):
-    hole = BookingHole(day, hours, user_id, reason)
-    util = component.getUtility(IBookingHoles)
-    util.add(hole)
-    return hole
+from .interfaces import IBookingHole
+from .interfaces import IBookingHoles
 
 
 class BookingHole(Persistent):

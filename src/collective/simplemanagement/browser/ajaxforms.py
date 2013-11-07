@@ -8,7 +8,7 @@ from zope.pagetemplate.pagetemplatefile import PageTemplateFile
 from Products.Five.browser import BrowserView
 
 from .. import logger
-from ..bookingholes import create_hole
+from .. import api
 from .story import View as StoryView
 from ..story import StoryQuickForm
 from ..configure import Settings
@@ -106,7 +106,7 @@ class CreateHole(Mixin):
         missing_time = Decimal(missing_time)
         member = self.portal_state.member()
         # create hole
-        create_hole(date,
+        api.booking.create_hole(date,
                     missing_time,
                     member.getId(),
                     reason=reason)

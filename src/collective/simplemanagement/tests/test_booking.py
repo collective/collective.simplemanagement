@@ -9,11 +9,9 @@ from plone.app.testing import (TEST_USER_ID, TEST_USER_NAME, login, setRoles)
 from plone.dexterity.utils import createContentInContainer
 
 from ..testing import BASE_INTEGRATION_TESTING
-from ..utils import get_bookings
-from ..utils import get_booking_holes
+from .. import api
 from ..interfaces import IBookingHoles
 from ..bookingholes import BookingHole
-from ..booking import create_booking
 
 
 class TestBookingCheck(unittest.TestCase):
@@ -56,7 +54,7 @@ class TestBookingCheck(unittest.TestCase):
         if not hasattr(self, 'bookings'):
             self.bookings = []
         for i, (dt, tm) in enumerate(self.booking_data):
-            bkng = create_booking(
+            bkng = api.booking.create_booking(
                 story,
                 {
                     'title': 'Booking %s %s' % (userid, i),
@@ -76,16 +74,16 @@ class TestBookingCheck(unittest.TestCase):
         self.setup_bookings(userid='johndoe')
         pc = self.portal.portal_catalog
         # every user should have 6 bookings
-        bookings = get_bookings(userid=TEST_USER_ID,
+        bookings = api.booking.get_bookings(userid=TEST_USER_ID,
                                 portal_catalog=pc,
                                 sort=False)
         assert len(bookings) == 8
-        bookings = get_bookings(userid='johndoe',
+        bookings = api.booking.get_bookings(userid='johndoe',
                                 portal_catalog=pc,
                                 sort=False)
         assert len(bookings) == 8
         # if no user passed we shold get all the bookings
-        bookings = get_bookings(portal_catalog=pc,
+        bookings = api.booking.get_bookings(portal_catalog=pc,
                                 sort=False)
         assert len(bookings) == 16
         # TODO: test get bookings limited to projects
@@ -99,17 +97,19 @@ class TestBookingCheck(unittest.TestCase):
         from_date = today - timedelta(3)
         to_date = today - timedelta(1)
 
-        bookings = get_bookings(userid=userid,
+        bookings = api.booking.get_bookings(userid=userid,
                                 portal_catalog=pc,
                                 sort=False)
         # filtering catalog search using from/to date does not work in tests
         bookings = [x.getObject() for x in bookings
                     if from_date <= x.getObject().date <= to_date]
-        holes = get_booking_holes(userid, bookings,
-                                  expected_working_time=expected_working_time,
-                                  man_day_hours=man_day_hours,
-                                  from_date=from_date,
-                                  to_date=to_date)
+        holes = api.booking.get_booking_holes(
+            userid, bookings,
+            expected_working_time=expected_working_time,
+            man_day_hours=man_day_hours,
+            from_date=from_date,
+            to_date=to_date
+        )
         expected = 3  # we expect also entire missing day
         assert len(holes) == expected, \
                 'found %s holes instead of %s' % (len(holes), expected)
@@ -125,11 +125,12 @@ class TestBookingCheck(unittest.TestCase):
         )
         utility.add(hole)
         # now we expect to have 1 missing booking less
-        holes = get_booking_holes(userid, bookings,
-                                  expected_working_time=expected_working_time,
-                                  man_day_hours=man_day_hours,
-                                  from_date=from_date,
-                                  to_date=to_date)
+        holes = api.booking.get_booking_holes(
+            userid, bookings,
+            expected_working_time=expected_working_time,
+            man_day_hours=man_day_hours,
+            from_date=from_date,
+            to_date=to_date)
         expected = 2
         assert len(holes) == expected, \
                 'found %s holes instead of %s' % (len(holes), expected)

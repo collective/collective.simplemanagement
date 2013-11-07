@@ -8,12 +8,8 @@ from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IStoriesListing
 from .interfaces import IUserStoriesListing
-from .utils import get_timings
-from .utils import get_assignees_details
-from .utils import get_epic_by_story
-from .utils import get_difference_class
-from .utils import get_iteration
-from .utils import get_project
+
+from . import api
 
 
 class StoriesListing(object):
@@ -68,7 +64,7 @@ class StoriesListing(object):
     #     conversation = IConversation(story)
     #     return [i for i in conversation.getThreads()]
 
-    def stories(self, project_states=None, story_states=None, 
+    def stories(self, project_states=None, story_states=None,
                 project_info=False):
         brains = self._stories(story_states)
         pw = getToolByName(self.context, 'portal_workflow')
@@ -81,13 +77,14 @@ class StoriesListing(object):
 
         for brain in brains:
             story = brain.getObject()
-            project = get_project(story)
+            project = api.content.get_project(story)
             if project_states:
                 _state = pw.getInfoFor(project, 'review_state')
                 if _state not in project_states:
                     continue
 
-            timings = get_timings(story, portal_catalog=self.portal_catalog)
+            timings = api.booking.get_timings(
+                story, portal_catalog=self.portal_catalog)
 
             self.totals['estimate'] += timings['estimate']
             self.totals['hours'] += timings['resource_time']
@@ -105,15 +102,15 @@ class StoriesListing(object):
                 'resource_time': timings['resource_time'],
                 'difference': timings['difference'],
                 'time_status': timings['time_status'],
-                'epic': get_epic_by_story(story),
-                'assignees': get_assignees_details(story),
+                'epic': api.content.get_epic_by_story(story),
+                'assignees': api.users.get_assignees_details(story),
                 'can_edit': story.user_can_edit(),
                 'can_review': story.user_can_review(),
                 'milestone': story.get_milestone()
             }
 
             if project_info:
-                iteration = get_iteration(story)
+                iteration = api.content.get_iteration(story)
                 data.update({
                     'project': {
                         'title': project.Title(),
@@ -134,7 +131,7 @@ class StoriesListing(object):
                     })
             stories.append(data)
 
-        self.totals['time_status'] = get_difference_class(
+        self.totals['time_status'] = api.booking.get_difference_class(
             self.totals['estimate'],
             self.totals['hours']
         )

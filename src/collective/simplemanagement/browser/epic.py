@@ -9,9 +9,7 @@ from plone.memoize.instance import memoize
 
 from ..interfaces import IEpic, IStory
 from ..configure import Settings
-from ..utils import get_timings
-from ..utils import get_difference_class
-from ..utils import get_text
+from .. import api
 
 
 class View(BrowserView):
@@ -67,7 +65,7 @@ class View(BrowserView):
         stories_estimate = 0
         time_spent = 0
         for story in self.stories(all=True):
-            timings = get_timings(story)
+            timings = api.booking.get_timings(story)
             stories_estimate += timings['estimate']
             time_spent += timings['resource_time']
         contained = self.contained()
@@ -82,12 +80,14 @@ class View(BrowserView):
             'contained': False
         }
         classes = {
-            'stories':  get_difference_class(estimates['epic'],
-                                             estimates['stories'],
-                                             settings),
-            'spent': get_difference_class(estimates['epic'],
-                                          time_spent,
-                                          settings),
+            'stories':  api.booking.get_difference_class(
+                estimates['epic'],
+                estimates['stories'],
+                settings),
+            'spent': api.booking.get_difference_class(
+                estimates['epic'],
+                time_spent,
+                settings),
             'contained': False
         }
         if len(contained) > 0:
@@ -95,9 +95,11 @@ class View(BrowserView):
                 [c['estimate'] for c in contained]) * settings.man_day_hours
             differences['contained'] = estimates['contained'] - \
                 estimates['epic']
-            classes['contained'] = get_difference_class(estimates['epic'],
-                                                        estimates['contained'],
-                                                        settings)
+            classes['contained'] = api.booking.get_difference_class(
+                estimates['epic'],
+                estimates['contained'],
+                settings
+            )
         return {
             'estimates': estimates,
             'time_spent': time_spent,

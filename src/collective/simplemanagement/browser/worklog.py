@@ -1,4 +1,5 @@
-import json, calendar
+import json
+import calendar
 from decimal import Decimal
 from datetime import datetime, date, time, timedelta
 
@@ -10,13 +11,12 @@ from zope.publisher.interfaces import IPublishTraverse, NotFound
 from Products.Five.browser import BrowserView
 from plone.memoize.instance import memoize as instance_memoize
 
+from .. import api
 from .. import messageFactory as _
 from ..interfaces import IBookingHoles, IProject
 from ..configure import ONE_DAY, ONE_WEEK, Settings
-from ..utils import (AttrDict, datetimerange, get_user_details,
-                     get_difference_class, quantize, get_project,
-                     get_story, get_employee_ids, get_bookings,
-                     get_booking_holes)
+
+from ..utils import AttrDict, quantize
 
 
 MONTHS = (
@@ -62,9 +62,10 @@ class WorklogBase(BrowserView):
                     if assignee not in resources:
                         resources.append(assignee)
         else:
-            resources = get_employee_ids(self.context)
+            resources = api.users.get_employee_ids(self.context)
         for resource in resources:
-            yield get_user_details(self.context, resource, **self.tools)
+            yield api.users.get_user_details(
+                self.context, resource, **self.tools)
 
 
 class Worklog(WorklogBase):
@@ -139,14 +140,18 @@ class WorklogBackend(WorklogBase):
     def get_bookings_and_holes(self, date_, resource):
         booking_date = DateTime(date_.strftime("%Y-%m-%d"))
 
-        bookings = get_bookings(project=self.context,
-                                userid=resource,
-                                booking_date=booking_date)
+        bookings = api.booking.get_bookings(
+            project=self.context,
+            userid=resource,
+            booking_date=booking_date
+        )
 
-        holes = get_booking_holes(resource,
-                                  bookings,
-                                  from_date=date_,
-                                  to_date=date_ + ONE_DAY)
+        holes = api.booking.get_booking_holes(
+            resource,
+            bookings,
+            from_date=date_,
+            to_date=date_ + ONE_DAY
+        )
         return (bookings, holes)
 
     def monthly_bookings(self):
@@ -160,7 +165,7 @@ class WorklogBackend(WorklogBase):
         (start, end), previous, current, next = self.get_month_data(settings)
         total_hours = []
         _translate = lambda x: self.context.translate(x)
-        for week_start, week_end in datetimerange(start, end, ONE_WEEK):
+        for week_start, week_end in api.date.datetimerange(start, end, ONE_WEEK):
             week_identifier = u'<i>%d %s</i> &mdash; <i>%d %s</i>' % (
                 week_start.day,
                 _translate(MONTHS[week_start.month-1]),
@@ -170,7 +175,7 @@ class WorklogBackend(WorklogBase):
             week_hours = []
             for resource in resources:
                 day_hours = []
-                for date_, __ in datetimerange(week_start, week_end, ONE_DAY):
+                for date_, __ in api.date.datetimerange(week_start, week_end, ONE_DAY):
                     bookings_, holes = self.get_bookings_and_holes(
                         date_,
                         resource,
@@ -191,7 +196,7 @@ class WorklogBackend(WorklogBase):
                         # TODO: the class here should also depend
                         # on whether the day is working day or not,
                         # which includes checking weekends AND holidays
-                        'class': get_difference_class(
+                        'class': api.booking.get_difference_class(
                             settings.man_day_hours,
                             total,
                             settings=settings
@@ -231,8 +236,8 @@ class WorklogBackend(WorklogBase):
             booking = booking.getObject()
             booking_details.append({
                 'type': 'booking',
-                'project': get_project(booking).title,
-                'story': get_story(booking).title,
+                'project': api.content.get_project(booking).title,
+                'story': api.get_story(booking).title,
                 'booking': booking.Title(),
                 'hours': str(quantize(booking.time))
             })

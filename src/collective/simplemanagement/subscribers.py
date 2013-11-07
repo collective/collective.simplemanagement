@@ -6,7 +6,7 @@ from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IIteration
 from .timeline import snapshot
-from .utils import get_iteration
+from . import api
 from .configure import TRACKER_ID, DOCUMENTS_ID
 from . import messageFactory as _
 
@@ -90,9 +90,9 @@ def timeline_update(object_, event):
         if IObjectMovedEvent.providedBy(event):
             for parent in [event.oldParent, event.newParent]:
                 if parent:
-                    iterations.append(get_iteration(parent))
+                    iterations.append(api.content.get_iteration(parent))
         else:
-            iterations.append(get_iteration(object_))
+            iterations.append(api.content.get_iteration(object_))
     else:
         iterations.append(object_)
     for iteration in iterations:

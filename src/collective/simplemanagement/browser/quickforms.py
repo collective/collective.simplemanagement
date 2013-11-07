@@ -13,7 +13,7 @@ from ..interfaces import IQuickForm
 from .. import messageFactory as _
 
 
-class BaseqQuickFormAdapter(object):
+class BaseQuickFormAdapter(object):
     implements(IQuickForm)
 
     def __init__(self, context):

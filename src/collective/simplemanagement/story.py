@@ -23,31 +23,8 @@ from .browser.widgets.time_widget import TimeFieldWidget
 from .booking import BookingForm
 from .interfaces import IStory
 from .interfaces import IQuickForm
-from .utils import get_timings
-from .utils import get_user_details
-from .utils import get_assignees_details
-from .utils import get_epic_by_story
-from .utils import get_text
-from .utils import get_project
-from .utils import get_bookings
+from . import api
 from . import messageFactory as _
-
-
-def create_story(context, data, reindex=True):
-    ## XXX FIXME 2013-06-15:
-    ## subjects are stored into 'subject' attribute
-    ## see https://github.com/plone/plone.app.dexterity/blob/master/plone/app/dexterity/behaviors/metadata.py#L331
-    ## we should use behavior magic to do this
-    if 'subjects' in data:
-        data['subject'] = data.pop('subjects')
-    item = createContentInContainer(
-        context,
-        'Story',
-        **data
-    )
-    if reindex:
-        item.reindexObject()
-    return item
 
 
 @implementer(IStory)
@@ -56,14 +33,14 @@ class Story(Container):
     def get_milestone(self):
         if self.milestone:
             # XXX: This, bluntly put, sucks.
-            project = get_project(self)
+            project = api.content.get_project(self)
             for milestone in project.milestones:
                 if self.milestone.decode('utf-8') == milestone.name:
                     return milestone
         return None
 
     def get_text(self):
-        return get_text(self, self.text)
+        return api.text.get_text(self, self.text)
 
     def user_can_edit(self):
         return checkPermission('cmf.ModifyPortalContent', self)
@@ -103,7 +80,9 @@ class StoryQuickForm(form.AddForm):
         return fields
 
     def create(self, data):
-        self.created = create_story(self.context, data, reindex=False)
+        self.created = api.content.create_story(
+            self.context, data, reindex=False
+        )
         return self.created
 
     def add(self, obj):
@@ -131,6 +110,7 @@ class ProjectStoryQuickForm(StoryQuickForm):
         context = self.context
         if self.container:
             context = self.container
+        # XXX: does it work?
         return self.create_story(context, data)
 
     def nextURL(self):

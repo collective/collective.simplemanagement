@@ -2,9 +2,10 @@ from urllib import unquote
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.layout.viewlets import common as base
 
-from collective.simplemanagement.configure import DOCUMENTS_ID, TRACKER_ID
-from collective.simplemanagement.utils import get_project
-from collective.simplemanagement import _
+from ..configure import DOCUMENTS_ID
+from ..configure import TRACKER_ID
+from .. import api
+from .. import _
 
 
 class ProjectInfo(base.ViewletBase):
@@ -13,7 +14,7 @@ class ProjectInfo(base.ViewletBase):
 
     def update(self):
         base.ViewletBase.update(self)
-        self.project = get_project(self.context)
+        self.project = api.content.get_project(self.context)
 
     def available(self):
         return self.project is not None

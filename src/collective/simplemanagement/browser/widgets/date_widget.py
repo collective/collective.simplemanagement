@@ -6,7 +6,7 @@ from z3c.form.converter import DateDataConverter
 from z3c.form.widget import Widget, FieldWidget
 from z3c.form.browser.widget import HTMLTextInputWidget
 
-from ...utils import timeago
+from ... import api
 from .interfaces import IBookingDateWidget
 
 
@@ -29,7 +29,7 @@ class BookingDateWidget(HTMLTextInputWidget, Widget):
     def formatted_value(self):
         if not self.value:
             return ''
-        return timeago(self.value)
+        return api.date.timeago(self.value)
 
 
 @adapter(IField, IFormLayer)

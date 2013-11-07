@@ -18,8 +18,7 @@ from plone.app.uuid.utils import uuidToObject
 
 from .interfaces import IProject, IStoriesListing, IBacklogView
 from .configure import DOCUMENTS_ID, TRACKER_ID
-from .utils import get_user_details
-from .utils import get_text
+from . import api
 from .utils import AttrDict
 from .browser.iteration import IterationViewMixin
 from .story import ProjectStoryQuickForm
@@ -196,7 +195,7 @@ class OverView(View):
         for i in operatives:
             yield  {
                 'role': self.get_role(i.role),
-                'user': get_user_details(self.context, i.user_id)
+                'user': api.users.get_user_details(self.context, i.user_id)
             }
 
 

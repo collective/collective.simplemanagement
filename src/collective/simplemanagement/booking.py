@@ -7,36 +7,10 @@ from plone.directives import dexterity
 from plone.dexterity.utils import createContentInContainer
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from . import api
 from .interfaces import IBooking
 from .interfaces import IQuickForm
 from .browser.widgets.time_widget import TimeFieldWidget
-
-
-convert_funcs = {
-    'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
-}
-
-
-def create_booking(context, data, reindex=True):
-    """ create booking in given `context`.
-        `data` must contains booking params.
-        `reindex` switches on/off new item reindexing.
-    """
-    assert 'title' in data.keys()
-    item = createContentInContainer(
-        context,
-        'Booking',
-        title=data.pop('title')
-    )
-    if not 'date' in data.keys():
-        data['date'] = date.today()
-    for k, v in data.items():
-        if v and k in convert_funcs:
-            v = convert_funcs[k](v)
-        setattr(item, k, v)
-    if reindex:
-        item.reindexObject()
-    return item
 
 
 class BookingForm(form.AddForm):
@@ -53,7 +27,7 @@ class BookingForm(form.AddForm):
     name = 'booking_form'
 
     def create(self, data):
-        return create_booking(self.context, data, reindex=False)
+        return api.booking.create_booking(self.context, data, reindex=False)
 
     def add(self, obj):
         obj.reindexObject()

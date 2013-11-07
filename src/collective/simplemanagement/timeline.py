@@ -8,7 +8,7 @@ from zope.lifecycleevent.interfaces import IObjectMovedEvent
 
 from .interfaces import ITimeline
 from .configure import TIMELINE_ANNOTATIONS_KEY
-from .utils import datetimerange
+from . import api
 
 
 def timeline(*ifaces):
@@ -17,8 +17,9 @@ def timeline(*ifaces):
     along with calling the whole annotation factory thingamajig.
     """
     def _wrapper(cls):
-        adapter_ = factory(adapter(*ifaces)(cls),
-                          key=TIMELINE_ANNOTATIONS_KEY)
+        adapter_ = factory(
+            adapter(*ifaces)(cls),
+            key=TIMELINE_ANNOTATIONS_KEY)
         provideAdapter(adapter_)
         return cls
     return _wrapper
@@ -85,7 +86,7 @@ class BaseTimeline(Persistent):
     def slice(self, from_, to, resolution, indexes=None):
         if indexes is None:
             indexes = self.indexes
-        for current, next in datetimerange(from_, to, resolution):
+        for current, next in api.date.datetimerange(from_, to, resolution):
             result = {}
             for index in indexes:
                 try:

@@ -9,7 +9,8 @@ from plone.registry.interfaces import IRegistry
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 from ..interfaces.compass import ICompassSettings
-from ..utils import get_employee_ids, get_user_details, jsonmethod, shorten
+
+from .. import api
 from ..structures import Resource
 from .. import messageFactory as _
 
@@ -54,7 +55,7 @@ class Compass(BrowserView):
         for term in roles_factory(self.context):
             roles[term.token] = {
                 'name': term.title,
-                'shortname': shorten(term.title, 3)
+                'shortname': api.text.shorten(term.title, 3)
             }
         return json.dumps(roles)
 
@@ -62,8 +63,8 @@ class Compass(BrowserView):
         pu = getToolByName(self.context, 'portal_url')
         pm = getToolByName(self.context, 'portal_membership')
         users = {}
-        for user_id in get_employee_ids(self.context):
-            user_details = get_user_details(
+        for user_id in api.users.get_employee_ids(self.context):
+            user_details = api.users.get_user_details(
                 self.context,
                 user_id,
                 portal_url=pu,
@@ -78,7 +79,7 @@ class Compass(BrowserView):
     def base_url(self):
         return self.context.absolute_url() + '/@@compass/'
 
-    @jsonmethod()
+    @api.jsonutils.jsonmethod()
     def do_get_all_projects(self):
         return []
 
@@ -113,7 +114,7 @@ class Compass(BrowserView):
             portal = pu.getPortalObject()
         return portal.restrictedTraverse(project_id)
 
-    @jsonmethod()
+    @api.jsonutils.jsonmethod()
     def do_set_project_data(self):
         project = self._get_project_by_id(self.request.form['project'])
         data = json.loads(self.request.form['data'])
@@ -167,14 +168,14 @@ class Compass(BrowserView):
         })
         return info
 
-    @jsonmethod()
+    @api.jsonutils.jsonmethod()
     def do_deactivate_project(self):
         project = self._get_project_by_id(self.request.form['project'])
         project.active = False
         project.reindexObject('active')
         return { 'id': '/'.join(project.getPhysicalPath()), 'active': False }
 
-    @jsonmethod()
+    @api.jsonutils.jsonmethod()
     def do_set_priority(self):
         pu = getToolByName(self.context, 'portal_url')
         portal = pu.getPortalObject()
@@ -200,7 +201,7 @@ class Compass(BrowserView):
                     })
         return people
 
-    @jsonmethod()
+    @api.jsonutils.jsonmethod()
     def do_get_projects(self):
         projects = []
         pc = getToolByName(self.context, 'portal_catalog')

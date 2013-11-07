@@ -7,7 +7,7 @@ from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 from plone.app.uuid.utils import uuidToObject
-from ..utils import get_project
+from .. import api
 
 
 class ChangeIteration(BrowserView):
@@ -23,7 +23,7 @@ class ChangeIteration(BrowserView):
         """
         iterations = []
         iteration_context = aq_parent(aq_inner(self.context))
-        project = get_project(self.context)
+        project = api.content.get_project(self.context)
         query = {'path': {'query': '/'.join(project.getPhysicalPath())},
                  'portal_type': 'Iteration',
                  'sort_on': 'start'}

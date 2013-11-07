@@ -5,7 +5,7 @@ from zope.schema.interfaces import IVocabularyFactory
 from Products.CMFCore.utils import getToolByName
 
 from .configure import Settings
-from .utils import get_project
+from . import api
 
 
 class baseVocabulary(object):
@@ -51,7 +51,7 @@ class milestonesVocab(object):
     implements(IVocabularyFactory)
 
     def __call__(self, context):
-        project = get_project(context)
+        project = api.content.get_project(context)
         terms = []
         if project is not None:
             if project.milestones:
@@ -84,7 +84,7 @@ class iterationsVocab(object):
     implements(IVocabularyFactory)
 
     def __call__(self, context):
-        project = get_project(context)
+        project = api.content.get_project(context)
         terms = []
         catalog = getToolByName(context, 'portal_catalog')
         if project is not None:
