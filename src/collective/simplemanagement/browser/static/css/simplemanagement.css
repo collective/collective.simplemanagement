@@ -922,8 +922,8 @@ table#tickets-listing {
 }
 
 .report-view .total { font-weight: bold }
-.report-view .summary {
-    float: right;
+.report-view table.summary {
+    margin-bottom: 30px !important;
 }
 .report-view .results dl.collapsible{
     font-size: 110%;
