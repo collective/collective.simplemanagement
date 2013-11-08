@@ -61,8 +61,15 @@
         domId: function() {
             return this.project.id().replace(/\//g, '-') + '-' + this.id;
         },
+        data: function() {
+            return this.project.app._people[this.id];
+        },
         getAvatar: function() {
-            return this.project.app._people[this.id].avatar;
+            console.log(this.id);
+            if(this.data){
+                return this.data.avatar;
+            }
+            return '';
         },
         getDisplayRole: function() {
             return this.project.app.roles[this.role()].shortname;
