@@ -13,6 +13,11 @@ def test_suite():
         layered(robotsuite.RobotTestSuite(
             os.path.join("robotests", "project.robot")),
             layer=ROBOT_TESTING),
+
+        layered(robotsuite.RobotTestSuite(
+            os.path.join("robotests", "worklog.robot")),
+            layer=ROBOT_TESTING),
+
     ])
 
     return suite
