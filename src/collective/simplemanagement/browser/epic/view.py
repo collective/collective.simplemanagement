@@ -7,9 +7,9 @@ from Products.CMFCore.utils import getToolByName
 
 from plone.memoize.instance import memoize
 
-from ..interfaces import IEpic, IStory
-from ..configure import Settings
-from .. import api
+from ...interfaces import IEpic, IStory
+from ...configure import Settings
+from ... import api
 
 
 class View(BrowserView):

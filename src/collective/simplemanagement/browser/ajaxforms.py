@@ -9,7 +9,7 @@ from Products.Five.browser import BrowserView
 
 from .. import logger
 from .. import api
-from .story import View as StoryView
+from .story.view import View as StoryView
 from ..story import StoryQuickForm
 from ..configure import Settings
 from ..booking import BookingForm

@@ -7,8 +7,11 @@
 
   <include package="z3c.form" />
   <include package=".widgets" />
-
-  <include file="content.zcml" />
+  <include package=".project" />
+  <include package=".iteration" />
+  <include package=".story" />
+  <include package=".booking" />
+  <include package=".epic" />
 
   <include package="z3c.jbot" file="meta.zcml" />
 

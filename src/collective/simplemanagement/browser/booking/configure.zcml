@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="collective.simplemanagement">
+
+  <browser:page
+    for="...interfaces.IBooking"
+    name="view"
+    layer="...interfaces.IBrowserLayer"
+    class=".view.View"
+    permission="zope2.View"
+    template="templates/view.pt"
+  />
+
+</configure>

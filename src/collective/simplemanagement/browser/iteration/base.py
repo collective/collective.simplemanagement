@@ -8,9 +8,8 @@ from plone.memoize.instance import memoize
 
 from Products.Five.browser import BrowserView
 
-from ..story import StoryQuickForm
-from ..interfaces import IStoriesListing
-from ..interfaces import IIteration
+from ...story import StoryQuickForm
+from ...interfaces import IStoriesListing
 
 
 class IterationViewMixin(object):
@@ -41,11 +40,3 @@ class IterationViewMixin(object):
         addform = StoryQuickForm(aq_inner(self.context), self.request)
         addform.update()
         return addform.render()
-
-
-class View(BrowserView, IterationViewMixin):
-
-    def get_dates(self):
-        start = self.context.toLocalizedTime(self.context.start.isoformat())
-        end = self.context.toLocalizedTime(self.context.end.isoformat())
-        return dict(start=start, end=end)

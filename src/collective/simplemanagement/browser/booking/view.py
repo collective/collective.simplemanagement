@@ -1,5 +1,5 @@
 from Products.Five.browser import BrowserView
-from ..interfaces import IBooking
+from ...interfaces import IBooking
 
 
 class View(BrowserView):

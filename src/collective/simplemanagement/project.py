@@ -20,7 +20,7 @@ from .interfaces import IProject, IStoriesListing, IBacklogView
 from .configure import DOCUMENTS_ID, TRACKER_ID
 from . import api
 from .utils import AttrDict
-from .browser.iteration import IterationViewMixin
+from .browser.iteration.base import IterationViewMixin
 from .story import ProjectStoryQuickForm
 from . import messageFactory as _
 

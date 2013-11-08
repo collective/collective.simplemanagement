@@ -42,6 +42,7 @@ setup(
         'plone.namedfile [blobs]',
         'plone.app.blocks',
         'plone.app.tiles',
+        'plone.api>=1.1.0',
         'Products.Poi',
         'abstract.z3cform.usertokeninput',
         'collective.js.jqueryui > 1.8.16.9',

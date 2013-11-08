@@ -7,9 +7,9 @@ from Products.Five.browser import BrowserView
 from plone.z3cform import z2
 from z3c.form.interfaces import IFormLayer
 
-from ..interfaces import IStory
-from ..booking import BookingForm
-from .. import api
+from ...interfaces import IStory
+from ...booking import BookingForm
+from ... import api
 
 
 class View(BrowserView):
