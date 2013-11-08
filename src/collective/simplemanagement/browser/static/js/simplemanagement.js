@@ -543,13 +543,10 @@
                     if (resp.success && !resp.error) {
                         // TODO reload story listing
                         // empty fields
-                        $(':input', $title).val('');
-                        $other_fields.each(function() {
-                            // $(this).toggle('slow');
-                            $(':input', $(this)).val('');
-                        });
-                        // remove token input elements
-                        $('.token-input-token-facebook', $form).remove();
+                        $(':input', $form).not(':submit').val('');
+                        // reset token input elements
+                        $('#form-widgets-assigned_to').tokenInput('clear');
+                        $('#form-widgets-subjects').tokenInput('clear');
 
                         // $('.formControls', $form).toggle('slow');
                         if (resp.result && resp.result.created) {

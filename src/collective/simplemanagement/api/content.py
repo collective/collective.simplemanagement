@@ -19,6 +19,8 @@ def create_story(context, data, reindex=True):
     ## we should use behavior magic to do this
     if 'subjects' in data:
         data['subject'] = data.pop('subjects')
+    # make sure we don't get duplicates for assignees
+    data['assigned_to'] = list(set(data['assigned_to']))
     item = createContentInContainer(
         context,
         'Story',
