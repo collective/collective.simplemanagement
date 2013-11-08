@@ -162,6 +162,19 @@
                  rel="#newProjectPopup"
                  i18n:translate="">Activate project</a>
             </div>
+            <div class="critical">
+              <div class="totals">
+                <h4 i18n:translate="">Total compass</h4>
+                <p class="huge-number"></p>
+                <p i18n:translate="" class="postfix">man days</p>
+              </div>
+              <div class="critical">
+                <h4 i18n:translate="">Critical resources</h4>
+                <div class="critical-resources">
+                  
+                </div>
+              </div>
+            </div>
           </div>
           <div id="newProjectPopup" class="overlay">
             <div class="close">
