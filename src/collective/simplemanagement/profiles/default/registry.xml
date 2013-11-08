@@ -43,5 +43,6 @@
     <value key="default_plan_length">2</value>
     <value key="minimum_plan_length">1</value>
     <value key="maximum_plan_length">4</value>
+    <value key="projects_folder">/projects</value>
   </records>
 </registry>

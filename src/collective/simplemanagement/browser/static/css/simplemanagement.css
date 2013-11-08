@@ -1136,24 +1136,20 @@ input[name="filter-people"] {
     padding: 0px;
     width: 38em;
     float: left;
-    height: 100%;
+    height: 90%;
 }
 
 #newProjectPopup .pane-container .pane.right {
-    margin-right: 1em;
+    margin-right: 0.5em;
+    border-right: 1px solid #ccc;
+    box-sizing: content-box;
 }
 
-#newProjectPopup .formControls {
-    text-align: right;
+#newProjectPopup .pane-container .pane.left {
+    margin-left: 0.5em;
 }
 
-#newProjectPopup .formControls a {
-    display: inline;
-    font-size: 130%;
-}
-
-#newProjectPopup .projects > a,
-#newProjectPopup .projects > span {
+#newProjectPopup .projects > div {
     padding: 4px;
     margin-top: 4px;
     margin-right: 4px;
@@ -1162,50 +1158,46 @@ input[name="filter-people"] {
     background-color: #fff;
 }
 
-#newProjectPopup .projects > a {
+#newProjectPopup .projects {
+    font-size: 130%;
+}
+
+#newProjectPopup .projects > div {
     color: #333;
 }
 
-#newProjectPopup .projects > span {
+#newProjectPopup .projects.disabled > div {
     color: #999;
 }
 
-#newProjectPopup .projects > a:hover {
-    color: #333 !important;
-    text-decoration: none;
-    background-color: #ccc;
-}
-
-#newProjectPopup .projects > a:visited {
-    color: #333;
-}
-
-#newProjectPopup .projects > a span.status,
-#newProjectPopup .projects > span span.status {
+#newProjectPopup .projects > div span.status {
     float: left;
     display: block;
     width: 12px;
-    height: 35px;
+    height: 42px;
     margin-right: 4px;
     border-radius: 2px;
 }
 
-#newProjectPopup .projects > span span.status {
+#newProjectPopup .projects.disabled > div span.status {
     background-color: #ddd;
 }
 
-#newProjectPopup .projects > a h5,
-#newProjectPopup .projects > span h5 {
+#newProjectPopup .projects > div h5 {
     font-size: 120%;
 }
 
-#newProjectPopup .projects > span h5 {
+#newProjectPopup .projects.disabled > div h5 {
     color: #999;
 }
 
-#newProjectPopup .projects > a *:last-child,
-#newProjectPopup .projects > span *:last-child {
+#newProjectPopup .projects > div p {
     margin-bottom: 0px;
+}
+
+#newProjectPopup .projects > div button {
+    float: right;
+    margin-top: -35px;
 }
 
 .infinite-scroll-wrapper {
@@ -1213,41 +1205,84 @@ input[name="filter-people"] {
     height: 100%;
 }
 
-.horizontal-form .field-group {
+#newProjectPopup .infinite-scroll-wrapper {
+    height: 89%;
+}
+
+#newProjectPopup .filter-data {
+    width: 95%;
     margin-bottom: 5px;
+}
+
+.horizontal-form {
+    position: relative;
+}
+
+.horizontal-form .field-group {
+    padding: 5px;
+}
+
+.horizontal-form .field-group > .field-element {
     width: 100%;
     clear: both;
     overflow: hidden;
 }
 
-.horizontal-form .field-group > * {
+.horizontal-form .field-group > .field-element > * {
     display: block;
     float: left;
 }
 
-.horizontal-form .field-group label {
+.horizontal-form .field-group > .field-element label {
     width: 20%;
     padding-right: 5px;
 }
 
-.horizontal-form .field-group input {
+.horizontal-form .field-group > .field-element input {
     width: 20%;
 }
 
-.horizontal-form .field-group input:last-child {
+.horizontal-form .field-group > .field-element input:last-child {
     width: 75%;
 }
 
-.horizontal-form .field-group span.postfix {
+.horizontal-form .field-group > .field-element span.postfix {
     width: 55%;
     padding-left: 5px;
 }
 
-#newProjectPopup .horizontal-form {
-    margin-top: 5px;
+.horizontal-form .field-group.has-errors > .field-element label,
+.horizontal-form .field-group.has-errors > .field-element span.postfix {
+    color: #f55;
 }
 
-#newProjectPopup .horizontal-form.disabled .field-group > * {
+.horizontal-form .field-group.has-errors .field-validation {
+    width: 100%;
+    background-color: #f55;
+    text-indent: 6px;
+    color: #fff;
+    margin-top: 5px;
+    border-radius: 4px;
+}
+
+.horizontal-form .formControls {
+    text-align: right;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+#newProjectPopup .horizontal-form .formControls a {
+    display: inline;
+}
+
+#newProjectPopup .horizontal-form {
+    margin-top: 5px;
+    font-size: 130%;
+    height: 100%
+}
+
+#newProjectPopup .horizontal-form.disabled .field-group > .field-element > * {
     color: #ccc;
 }
 
@@ -1267,7 +1302,33 @@ input[name="filter-people"] {
 }
 
 /* project states */
+#plone-contentmenu-workflow .state-planning,
+.compassview .state-planning,
+#newProjectPopup .state-planning {
+    background-color: #444;
+}
+#plone-contentmenu-workflow .state-offer,
+.compassview .state-offer,
+#newProjectPopup .state-offer {
+    background-color: #8dc73e;
+}
+#plone-contentmenu-workflow .state-development,
 .compassview .state-development,
 #newProjectPopup .state-development {
+    background-color: #5ab71e;
+}
+#plone-contentmenu-workflow .state-maintenance,
+.compassview .state-maintenance,
+#newProjectPopup .state-maintenance {
     background-color: #448cca;
+}
+#plone-contentmenu-workflow .state-closed,
+.compassview .state-closed,
+#newProjectPopup .state-closed {
+    background-color: #eb9b12;
+}
+#plone-contentmenu-workflow .state-dead,
+.compassview .state-dead,
+#newProjectPopup .state-dead {
+    background-color: #540054;
 }

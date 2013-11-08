@@ -85,7 +85,7 @@
 
     // Knockout binding for infinite scrolling
     //
-    // Usage:
+    // Usage (on the scrollable list wrapper):
     //
     //     data-bind="scrollBottom: function() { do_something(); }"
     //

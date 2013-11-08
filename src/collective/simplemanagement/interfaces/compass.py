@@ -1,5 +1,6 @@
 from zope.interface import Interface
 from zope.schema import Int
+from zope.schema import TextLine
 from .. import _
 
 
@@ -24,4 +25,10 @@ class ICompassSettings(Interface):
         description=_(u"The maximum number of weeks that the compass plan "
                       u"can span"),
         default=4
+    )
+
+    projects_folder = TextLine(
+        title=_(u"Folder where projects will be creted"),
+        description=_(u"The compass will create projects in the specified path"),
+        default=u"/projects"
     )

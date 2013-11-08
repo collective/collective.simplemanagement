@@ -1,4 +1,6 @@
 import json
+import plone.api
+from datetime import date
 from decimal import Decimal
 from zope.interface import implements
 from zope.component import getUtility
@@ -7,8 +9,8 @@ from zope.publisher.interfaces import IPublishTraverse, NotFound
 from plone.registry.interfaces import IRegistry
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
-from ..interfaces.compass import ICompassSettings
 
+from ..interfaces.compass import ICompassSettings
 from .. import api
 from ..structures import Resource
 from .. import messageFactory as _
@@ -44,9 +46,13 @@ class Compass(BrowserView):
             ),
             "changes-saved": _(u"Changes saved"),
             "priority-updated": _(u"Priority updated"),
+            "invalid-required": _(u"This field is required"),
             "invalid-number-value": _(
                 u"You should insert a number here: e.g. 10.0"
-            )
+            ),
+            "project-activated": _(u"{project} has been activated"),
+            "project-deactivated": _(u"{project} has been deactivated"),
+            "project-created": _(u"{project} has been created")
         })
 
     def settings(self):
@@ -121,6 +127,10 @@ class Compass(BrowserView):
     def do_set_project_data(self):
         project = self._get_project_by_id(self.request.form['project'])
         data = json.loads(self.request.form['data'])
+        if 'active' in data:
+            project.active = data['active']
+        if 'priority' in data:
+            project.priority = data['priority']
         if 'notes' in data:
             project.compass_notes = data['notes']
         if 'effort' in data:
@@ -141,6 +151,7 @@ class Compass(BrowserView):
                     )
             if len(operatives) > 0:
                 project.operatives = operatives
+        # TODO: reindex only necessary index
         project.reindexObject()
         return self._get_project_info(project)
 
@@ -167,28 +178,22 @@ class Compass(BrowserView):
         info.update({
             'people': self._get_operatives(project),
             'effort': str(project.compass_effort),
-            'notes': project.compass_notes
+            'notes': project.compass_notes,
+            'active': project.active
         })
         return info
-
-    @api.jsonutils.jsonmethod()
-    def do_deactivate_project(self):
-        project = self._get_project_by_id(self.request.form['project'])
-        project.active = False
-        project.reindexObject('active')
-        return { 'id': '/'.join(project.getPhysicalPath()), 'active': False }
 
     @api.jsonutils.jsonmethod()
     def do_set_priority(self):
         pu = getToolByName(self.context, 'portal_url')
         portal = pu.getPortalObject()
         projects = self.request.form['projects_ids']
-        return_value = []
+        return_value = {}
         for index, project_id in enumerate(projects):
             project = self._get_project_by_id(project_id, portal=portal)
             project.priority = index + 1
             project.reindexObject('priority')
-            return_value.append({ 'id': project_id, 'priority': index + 1 })
+            return_value[project_id] = project.priority
         return return_value
 
     @staticmethod
@@ -217,16 +222,55 @@ class Compass(BrowserView):
 
     @api.jsonutils.jsonmethod()
     def do_get_all_projects(self):
-        start = int(self.request.form.get('projects_ids', '0'), 10)
+        start = int(self.request.form.get('start', '0'), 10)
+        query = self.request.form.get('query')
         pc = getToolByName(self.context, 'portal_catalog')
-        brains = pc.searchResults(portal_type='Project',
-                                  sort_on='priority')
-        brains = brains[start:self.STEP]
+        kwargs = {
+            'portal_type': 'Project',
+            'active': False,
+            'sort_on': 'priority'
+        }
+        if query:
+            # TODO: I tried to use searchabletext
+            # but we don't seem to index well there
+            kwargs['Title'] = query
+        brains = pc.searchResults(**kwargs)
+        total_count = len(brains)
+        brains = brains[start:start+self.STEP]
         projects = []
         for brain in brains:
             project = brain.getObject()
             projects.append(self._get_project_info(project, brain))
-        return projects
+        return {
+            'items': projects,
+            'count': total_count
+        }
+
+    @api.jsonutils.jsonmethod()
+    def do_create_project(self):
+        settings = self.settings()
+        projects_folder = plone.api.content.get(
+            path=settings.projects_folder.encode('utf-8')
+        )
+        if projects_folder is None:
+            projects_folder = plone.api.portal.get()
+        data = json.loads(self.request.form['data'])
+        priority = int(self.request.form['priority'], 10)
+        initial_estimate = None
+        if 'estimate' in data:
+            initial_estimate = Decimal(data['estimate'])
+        project = plone.api.content.create(
+            container=projects_folder,
+            type='Project',
+            title=data['name'],
+            customer=data['customer'],
+            budget=Decimal(data['budget']),
+            initial_estimate=initial_estimate,
+            prj_start_date=date.today()
+        )
+        project.priority = priority
+        project.reindexObject()
+        return self._get_project_info(project)
 
     def publishTraverse(self, request, name):
         if self.method is None:

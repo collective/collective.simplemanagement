@@ -192,11 +192,15 @@
                 );
             }
         };
+        this.deactivate = function() {
+            self.app.deactivateProject(self);
+        };
     };
 
     compass.Main = function(roles, people, base_url, plan_weeks,
                             translations) {
         // TODO: make this timeout configurable in Plone
+        this.overlay = null;
         this.message_timeout = 6;
         this.roles = roles;
         this._people = people;
@@ -211,33 +215,47 @@
         this.active_projects = ko.observableArray([]);
         this.all_projects = ko.observableArray([]);
         this.all_projects_count = null;
-        this.all_projects_selected = ko.observable(null);
+        this.all_projects_query = ko.throttledObservable(null, 1500);
         this.loaded = ko.observable(false);
         this.transient_messages = ko.observableArray([]);
         this.permanent_messages = ko.observableArray([]);
         this.has_messages = ko.computed(this.hasMessages, this);
         this.active_pane = ko.observable('new');
+        this.project_factory_validate = ko.observable(true);
         this.project_factory = ko.validatedObservable({
-            name: ko.observable().extend({ required: true }),
-            customer: ko.observable().extend({ required: true }),
+            name: ko.observable().extend({
+                required: {
+                    message: this.translate('invalid-required'),
+                    params: true
+                }
+            }),
+            customer: ko.observable().extend({
+                required: {
+                    message: this.translate('invalid-required'),
+                    params: true
+                }
+            }),
             budget: ko.observable().extend({
-                required: true,
-                pattern: {
+                required: {
+                    message: this.translate('invalid-required'),
+                    params: true
+                },
+                number: {
                     message: this.translate('invalid-number-value'),
-                    params: '^[0-9\.]+$'
+                    params: true
                 }
             }),
             estimate: ko.observable().extend({
-                pattern: {
+                number: {
                     message: this.translate('invalid-number-value'),
-                    params: '^[0-9\.]+$'
+                    params: true
                 }
             })
         });
 
         var self = this;
-        this.reprioritize = function(arg) {
-            var i, l, projects_ids = [], projects = arg.sourceParent();
+        this.reprioritize = function() {
+            var i, l, projects_ids = [], projects = self.active_projects();
             for(i=0, l=projects.length; i<l; i++)
                 projects_ids.push(projects[i].id);
             $.ajax({
@@ -253,6 +271,11 @@
                         type: 'info',
                         message: self.translate('priority-updated')
                     });
+                    var i, l, project;
+                    for(i=0, l=projects.length; i<l; i++) {
+                        project=projects[i];
+                        project.priority(data[project.id].priority);
+                    }
                 },
                 error: function(request, status, error) {
                     self.addMessage({
@@ -267,17 +290,119 @@
         };
         this.active_pane.subscribe(function(value) {
             if(value != 'existing')
-                self.all_projects_selected(null);
+                self.all_projects_query(null);
             if(value != 'new') {
-                self.project_factory.name();
-                self.project_factory.customer();
-                self.project_factory.budget();
-                self.project_factory.estimate();
+                self.resetFactory();
             }
         });
+        this.all_projects_query.subscribe(function() {
+            self.load_all(true);
+        });
+        this.load_more = function() {
+            self.load_all();
+        };
     };
 
     compass.Main.prototype = {
+        resetFactory: function() {
+            var factory = this.project_factory();
+            factory.name(undefined);
+            factory.customer(undefined);
+            factory.budget(undefined);
+            factory.estimate(undefined);
+            factory.errors.showAllMessages(false);
+        },
+        createProject: function() {
+            var factory, data, self = this;
+            if(!this.project_factory.isValid()) {
+                this.project_factory.errors.showAllMessages();
+                return false;
+            }
+            factory = this.project_factory();
+            data = {
+                name: factory.name(),
+                customer: factory.customer(),
+                budget: factory.budget(),
+                estimate: factory.estimate()
+            };
+            $.ajax({
+                type: 'POST',
+                url: this.url('create_project'),
+                data: {
+                    data: JSON.stringify(data),
+                    priority: this.active_projects().length
+                },
+                traditional: true,
+                dataType: 'json',
+                success: function(data, status, request) {
+                    self.addMessage({
+                        type: 'info',
+                        message: base.format(
+                            self.translate('project-created'),
+                            { project: data.name }
+                        )
+                    });
+                    self.active_projects.push(
+                        new compass.Project(self, data));
+                },
+                error: function(request, status, error) {
+                    self.addMessage({
+                        type: 'error',
+                        message: base.format(
+                            self.translate('error-please-reload'),
+                            { url: window.location.toString() }
+                        )
+                    }, true);
+                }
+            });
+            if(this.overlay && this.overlay.isOpened())
+                this.overlay.close();
+            this.resetFactory();
+            return true;
+        },
+        activateProject: function(project) {
+            var self = this;
+            this.active_projects.push(project);
+            project.priority(this.active_projects().length);
+            project.active(true);
+            project.save(
+                { active: project.active(),
+                  priority: project.priority() },
+                {
+                    type: 'info',
+                    message: base.format(
+                        self.translate('project-activated'),
+                        { project: project.name() }
+                    )
+                }
+            );
+            if(this.overlay && this.overlay.isOpened())
+                this.overlay.close();
+        },
+        deactivateProject: function(project) {
+            var i, l, index = null, self = this,
+                active_projects = this.active_projects();
+            for(i=0, l=active_projects.length; i<l; i++) {
+                if(project.id == active_projects[i].id) {
+                    index = i;
+                    break;
+                }
+            }
+            if(index !== null) {
+                project = this.active_projects.splice(index, 1)[0];
+                project.active(false);
+                project.save(
+                    { active: project.active() },
+                    {
+                        type: 'info',
+                        message: base.format(
+                            self.translate('project-deactivated'),
+                            { project: project.name() }
+                        )
+                    }
+                );
+            }
+        },
         hasMessages: function() {
             return (this.transient_messages().length > 0 ||
                     this.permanent_messages().length > 0);
@@ -348,29 +473,39 @@
             }
             return people;
         },
-        load_all: function() {
-            var self = this;
-            var start = this.all_projects().length;
+        load_all: function(reset) {
+            var start, query, self = this;
+            if(reset) {
+                this.all_projects_count = null;
+                this.all_projects([]);
+            }
+            else {
+                start = this.all_projects().length;
+            }
             if(this.all_projects_count !== null &&
                     this.all_projects_count <= start)
-                return;
+                return false;
+            query = this.all_projects_query();
             $.ajax({
                 dataType: "json",
-                url: this.url('get_projects'),
+                url: this.url('get_all_projects'),
                 type: "POST",
                 traditional: true,
                 data: {
-                    start: start
+                    start: start,
+                    query: query ? query : ''
                 },
                 success: function(data, status, request) {
-                    var i, l, project;
-                    for(i=0, l=data.length; i<l; i++) {
-                        project = data[i];
+                    var i, l, project, items=data.items;
+                    for(i=0, l=items.length; i<l; i++) {
+                        project = items[i];
                         self.all_projects.push(
                             new compass.Project(self, project));
                     }
+                    self.all_projects_count = data.count;
                 }
             });
+            return true;
         },
         load: function() {
             var self = this;
@@ -385,7 +520,6 @@
                             new compass.Project(self, project));
                     }
                     self.loaded(true);
-                    self.load_all();
                 }
             });
         }
@@ -394,6 +528,7 @@
     compass.apps = [];
 
     $(document).ready(function() {
+        ko.validation.init();
         $('.compassview').each(function() {
             var element = $(this);
             var app = new compass.Main(
@@ -402,7 +537,12 @@
                 element.attr('data-base-url'),
                 $.parseJSON(element.attr('data-plan-weeks')),
                 $.parseJSON(element.attr('data-translations')));
-            element.find('.addProject').overlay();
+            element.find('.addProject').overlay({
+                onBeforeLoad: function(e) {
+                    app.load_all(true);
+                }
+            });
+            app.overlay = element.find('.addProject').data('overlay');
             app.load();
             compass.apps.push(app);
             ko.applyBindings(app, this);

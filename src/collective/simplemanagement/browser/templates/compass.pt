@@ -93,7 +93,8 @@
                                   afterMove: $root.reprioritize }">
                 <div class="project">
                   <div data-bind="css: css_class">
-                    <a href="#">X</a>
+                    <a href="#"
+                       data-bind="click: deactivate">X</a>
                   </div>
                   <div class="info">
                     <div><h3 class="title" data-bind="text: name"></h3></div>
@@ -175,7 +176,8 @@
             <div class="pb-ajax">
               <h2 i18n:translate="">Activate project</h2>
               <div class="pane-container">
-                <div class="pane right">
+                <div class="pane right"
+                     data-bind="validationOptions: { insertMessages: false, decorateElement: true, errorElementClass: 'has-errors', errorsAsTitle: false }">
                   <h3>
                     <label>
                       <input type="radio"
@@ -188,49 +190,70 @@
                   <div class="horizontal-form"
                        data-bind="css: { disabled: $root.active_pane() != 'new' },
                                   with: project_factory">
-                    <div class="field-group">
-                      <label for="compass.activate_project.new.name"
-                             i18n:translate="">Name</label>
-                      <input type="text" value=""
-                             id="compass.activate_project.new.name"
-                             placeholder="World domination"
-                             i18n:attributes="placeholder"
-                             data-bind="enable: $root.active_pane() == 'new',
-                                        value: name" />
+                    <div class="field-group"
+                         data-bind="validationElement: name">
+                      <div class="field-element">
+                        <label for="compass.activate_project.new.name"
+                               i18n:translate="">Name</label>
+                        <input type="text" value=""
+                               id="compass.activate_project.new.name"
+                               placeholder="e.g. 'World domination'"
+                               i18n:attributes="placeholder"
+                               data-bind="enable: $root.active_pane() == 'new',
+                                          value: name" />
+                      </div>
+                      <div class="field-validation" data-bind="validationMessage: name"></div>
                     </div>
-                    <div class="field-group">
-                      <label for="compass.activate_project.new.customer"
-                             i18n:translate="">Customer</label>
-                      <input type="text" value=""
-                             id="compass.activate_project.new.customer"
-                             placeholder="Ourselves"
-                             i18n:attributes="placeholder"
-                             data-bind="enable: $root.active_pane() == 'new',
-                                        value: customer" />
+                    <div class="field-group"
+                         data-bind="validationElement: customer">
+                      <div class="field-element">
+                        <label for="compass.activate_project.new.customer"
+                               i18n:translate="">Customer</label>
+                        <input type="text" value=""
+                               id="compass.activate_project.new.customer"
+                               placeholder="e.g. 'Ourselves'"
+                               i18n:attributes="placeholder"
+                               data-bind="enable: $root.active_pane() == 'new',
+                                          value: customer" />
+                      </div>
+                      <div class="field-validation" data-bind="validationMessage: customer"></div>
                     </div>
-                    <div class="field-group">
-                      <label for="compass.activate_project.new.budget"
-                             i18n:translate="">Budget</label>
-                      <input type="text" value=""
-                             id="compass.activate_project.new.budget"
-                             class="number"
-                             placeholder="42"
-                             i18n:attributes="placeholder"
-                             data-bind="enable: $root.active_pane() == 'new',
-                                        value: budget" />
-                      <span class="postfix">man days</span>
+                    <div class="field-group"
+                         data-bind="validationElement: budget">
+                      <div class="field-element">
+                        <label for="compass.activate_project.new.budget"
+                               i18n:translate="">Budget</label>
+                        <input type="text" value=""
+                               id="compass.activate_project.new.budget"
+                               class="number"
+                               placeholder="e.g. '42.0'"
+                               i18n:attributes="placeholder"
+                               data-bind="enable: $root.active_pane() == 'new',
+                                          value: budget" />
+                        <span class="postfix">man days</span>
+                      </div>
+                      <div class="field-validation" data-bind="validationMessage: budget"></div>
                     </div>
-                    <div class="field-group">
-                      <label for="compass.activate_project.new.estimate"
-                             i18n:translate="">Estimate</label>
-                      <input type="text" value=""
-                             id="compass.activate_project.new.estimate"
-                             class="number"
-                             placeholder="80"
-                             i18n:attributes="placeholder"
-                             data-bind="enable: $root.active_pane() == 'new',
-                                        value: estimate" />
-                      <span class="postfix">man days</span>
+                    <div class="field-group"
+                         data-bind="validationElement: estimate">
+                      <div class="field-element">
+                        <label for="compass.activate_project.new.estimate"
+                               i18n:translate="">Estimate</label>
+                        <input type="text" value=""
+                               id="compass.activate_project.new.estimate"
+                               class="number"
+                               placeholder="e.g. '80'"
+                               i18n:attributes="placeholder"
+                               data-bind="enable: $root.active_pane() == 'new',
+                                          value: estimate" />
+                        <span class="postfix">man days</span>
+                      </div>
+                      <div class="field-validation" data-bind="validationMessage: estimate"></div>
+                    </div>
+                    <div class="formControls">
+                      <button data-bind="enable: $root.active_pane() == 'new',
+                                         click: function() { $root.createProject(); }"
+                              i18n:translate="">Add new project</button>
                     </div>
                   </div>
                 </div>
@@ -244,31 +267,28 @@
                       <tal:u i18n:translate="">Existing project</tal:u>
                     </label>
                   </h3>
-                  <div class="infinite-scroll-wrapper">
+                  <input type="text"
+                     value=""
+                     class="filter-data"
+                     placeholder="Search for a project"
+                     data-bind="value: all_projects_query, valueUpdate: 'afterkeydown', disable: $root.active_pane() != 'existing'"
+                     i18n:attributes="placeholder" />
+                  <div class="infinite-scroll-wrapper"
+                       data-bind="scrollBottom: load_more">
                     <div class="projects"
-                         data-bind="foreach: all_projects">
-                      <!-- ko if: $root.active_pane() == 'existing' -->
-                      <a href="#">
+                         data-bind="foreach: all_projects, css: { disabled: active_pane() != 'existing' }">
+                      <div>
                         <span class="status"
                               data-bind="css: 'state-'+status()"></span>
                         <h5 data-bind="text: name"></h5>
                         <p data-bind="text: customer"></p>
-                      </a>
-                      <!-- /ko -->
-                      <!-- ko if: $root.active_pane() != 'existing' -->
-                      <span>
-                        <span class="status"></span>
-                        <h5 data-bind="text: name"></h5>
-                        <p data-bind="text: customer"></p>
-                      </span>
-                      <!-- /ko -->
+                        <button data-bind="disable: $root.active_pane() != 'existing',
+                                           click: function() { $root.activateProject($data); }"
+                                i18n:translate="">Select</button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="formControls">
-                <a href="#" i18n:translate="">Cancel</a>
-                <button i18n:translate="">Add</button>
               </div>
             </div>
           </div>
