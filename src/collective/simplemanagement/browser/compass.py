@@ -1,6 +1,5 @@
 import json
 from decimal import Decimal
-from DateTime import DateTime
 from zope.interface import implements
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
@@ -14,6 +13,8 @@ from .. import api
 from ..structures import Resource
 from .. import messageFactory as _
 
+# Validate both on the server and client side,
+# using z3c.form on the client side in a less stressful way
 
 class Compass(BrowserView):
 
@@ -39,7 +40,8 @@ class Compass(BrowserView):
             "new-project-effort": _(
                 u"{project} will now require {effort} man days"
             ),
-            "changes-saved": _(u"Modifiche salvate")
+            "changes-saved": _(u"Changes saved"),
+            "priority-updated": _(u"Priority updated")
         })
 
     def settings(self):

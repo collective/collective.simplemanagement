@@ -64,6 +64,9 @@
         this.dom_id = ko.computed(this.domId, this);
         this.display_role = ko.computed(this.getDisplayRole, this);
         this.avatar = ko.computed(this.getAvatar, this);
+
+        // TODO: in this file we are using a mix & match of approaches,
+        // we should standardize
         var self = this;
         this.role.subscribe(function(value) {
             self.project.save(
@@ -257,7 +260,35 @@
         this.has_messages = ko.computed(this.hasMessages, this);
 
         var self = this;
-        
+        this.reprioritize = function(arg) {
+            var i, l, projects_ids = [], projects = arg.sourceParent();
+            for(i=0, l=projects.length; i<l; i++)
+                projects_ids.push(projects[i].id);
+            $.ajax({
+                type: 'POST',
+                url: self.url('set_priority'),
+                data: {
+                    projects_ids: projects_ids
+                },
+                traditional: true,
+                dataType: 'json',
+                success: function(data, status, request) {
+                    self.addMessage({
+                        type: 'info',
+                        message: self.translate('priority-updated')
+                    });
+                },
+                error: function(request, status, error) {
+                    self.addMessage({
+                        type: 'error',
+                        message: compass.format(
+                            self.translate('error-please-reload'),
+                            { url: window.location.toString() }
+                        )
+                    }, true);
+                }
+            });
+        };
     };
 
     compass.Main.prototype = {
@@ -360,6 +391,7 @@
                 element.attr('data-base-url'),
                 $.parseJSON(element.attr('data-plan-weeks')),
                 $.parseJSON(element.attr('data-translations')));
+            element.find('.addProject').overlay();
             app.load();
             compass.apps.push(app);
             ko.applyBindings(app, this);

@@ -6,7 +6,7 @@ from z3c.form.converter import DateDataConverter
 from z3c.form.widget import Widget, FieldWidget
 from z3c.form.browser.widget import HTMLTextInputWidget
 
-from ... import api
+from .. import api
 from .interfaces import IBookingDateWidget
 
 

@@ -1104,6 +1104,56 @@ input[name="filter-people"] {
     color: #fff;
 }
 
+#newProjectPopup {
+    display: none;
+}
+
+#newProjectPopup .pb-ajax {
+    padding: 1em;
+}
+
+#newProjectPopup .pane-container {
+    width: 80em;
+    height: 40em;
+    clear: both;
+}
+
+#newProjectPopup .pane-container .pane {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    width: 38em;
+    float: left;
+}
+
+#newProjectPopup .pane-container .pane.right {
+    margin-right: 1em;
+}
+
+#newProjectPopup .formControls {
+    text-align: right;
+}
+
+#newProjectPopup .formControls a {
+    display: inline;
+    font-size: 130%;
+}
+
+#content .compassview .addProject {
+    display: block;
+    height: 2.5em;
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+    font-size: 130%;
+    padding: 1.2em 2em 0em 2em;
+    border: 1px dashed #333;
+}
+
+#content .compassview .addProject:hover {
+    color: black !important;
+}
+
 /* project states */
 .compassview .state-development {
     background-color: #448cca;
