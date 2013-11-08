@@ -20,6 +20,8 @@ class Compass(BrowserView):
 
     implements(IPublishTraverse)
 
+    STEP = 20 # Used for pagination/infinite scroll
+
     def __init__(self, context, request):
         super(Compass, self).__init__(context, request)
         self.method = None
@@ -41,7 +43,10 @@ class Compass(BrowserView):
                 u"{project} will now require {effort} man days"
             ),
             "changes-saved": _(u"Changes saved"),
-            "priority-updated": _(u"Priority updated")
+            "priority-updated": _(u"Priority updated"),
+            "invalid-number-value": _(
+                u"You should insert a number here: e.g. 10.0"
+            )
         })
 
     def settings(self):
@@ -80,10 +85,6 @@ class Compass(BrowserView):
 
     def base_url(self):
         return self.context.absolute_url() + '/@@compass/'
-
-    @api.jsonutils.jsonmethod()
-    def do_get_all_projects(self):
-        return []
 
     @staticmethod
     def _add_operative(user_id, role, effort, operatives):
@@ -210,6 +211,19 @@ class Compass(BrowserView):
         for brain in pc.searchResults(portal_type='Project',
                                       active=True,
                                       sort_on='priority'):
+            project = brain.getObject()
+            projects.append(self._get_project_info(project, brain))
+        return projects
+
+    @api.jsonutils.jsonmethod()
+    def do_get_all_projects(self):
+        start = int(self.request.form.get('projects_ids', '0'), 10)
+        pc = getToolByName(self.context, 'portal_catalog')
+        brains = pc.searchResults(portal_type='Project',
+                                  sort_on='priority')
+        brains = brains[start:self.STEP]
+        projects = []
+        for brain in brains:
             project = brain.getObject()
             projects.append(self._get_project_info(project, brain))
         return projects

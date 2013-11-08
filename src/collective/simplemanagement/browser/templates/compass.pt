@@ -176,11 +176,94 @@
               <h2 i18n:translate="">Activate project</h2>
               <div class="pane-container">
                 <div class="pane right">
-                  <h3 i18n:translate="">New project</h3>
-                  
+                  <h3>
+                    <label>
+                      <input type="radio"
+                             name="compass.activate_project.type"
+                             value="new"
+                             data-bind="checked: active_pane" />
+                      <tal:u i18n:translate="">New project</tal:u>
+                    </label>
+                  </h3>
+                  <div class="horizontal-form"
+                       data-bind="css: { disabled: $root.active_pane() != 'new' },
+                                  with: project_factory">
+                    <div class="field-group">
+                      <label for="compass.activate_project.new.name"
+                             i18n:translate="">Name</label>
+                      <input type="text" value=""
+                             id="compass.activate_project.new.name"
+                             placeholder="World domination"
+                             i18n:attributes="placeholder"
+                             data-bind="enable: $root.active_pane() == 'new',
+                                        value: name" />
+                    </div>
+                    <div class="field-group">
+                      <label for="compass.activate_project.new.customer"
+                             i18n:translate="">Customer</label>
+                      <input type="text" value=""
+                             id="compass.activate_project.new.customer"
+                             placeholder="Ourselves"
+                             i18n:attributes="placeholder"
+                             data-bind="enable: $root.active_pane() == 'new',
+                                        value: customer" />
+                    </div>
+                    <div class="field-group">
+                      <label for="compass.activate_project.new.budget"
+                             i18n:translate="">Budget</label>
+                      <input type="text" value=""
+                             id="compass.activate_project.new.budget"
+                             class="number"
+                             placeholder="42"
+                             i18n:attributes="placeholder"
+                             data-bind="enable: $root.active_pane() == 'new',
+                                        value: budget" />
+                      <span class="postfix">man days</span>
+                    </div>
+                    <div class="field-group">
+                      <label for="compass.activate_project.new.estimate"
+                             i18n:translate="">Estimate</label>
+                      <input type="text" value=""
+                             id="compass.activate_project.new.estimate"
+                             class="number"
+                             placeholder="80"
+                             i18n:attributes="placeholder"
+                             data-bind="enable: $root.active_pane() == 'new',
+                                        value: estimate" />
+                      <span class="postfix">man days</span>
+                    </div>
+                  </div>
                 </div>
                 <div class="pane left">
-                  <h3 i18n:translate="">Existing project</h3>
+                  <h3>
+                    <label>
+                      <input type="radio"
+                             name="compass.activate_project.type"
+                             value="existing"
+                             data-bind="checked: active_pane" />
+                      <tal:u i18n:translate="">Existing project</tal:u>
+                    </label>
+                  </h3>
+                  <div class="infinite-scroll-wrapper">
+                    <div class="projects"
+                         data-bind="foreach: all_projects">
+                      <!-- ko if: $root.active_pane() == 'existing' -->
+                      <a href="#">
+                        <span class="status"
+                              data-bind="css: 'state-'+status()"></span>
+                        <h5 data-bind="text: name"></h5>
+                        <p data-bind="text: customer"></p>
+                      </a>
+                      <!-- /ko -->
+                      <!-- ko if: $root.active_pane() != 'existing' -->
+                      <span>
+                        <span class="status"></span>
+                        <h5 data-bind="text: name"></h5>
+                        <p data-bind="text: customer"></p>
+                      </span>
+                      <!-- /ko -->
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="formControls">

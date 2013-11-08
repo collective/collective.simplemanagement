@@ -1124,6 +1124,7 @@ input[name="filter-people"] {
     padding: 0px;
     width: 38em;
     float: left;
+    height: 100%;
 }
 
 #newProjectPopup .pane-container .pane.right {
@@ -1137,6 +1138,105 @@ input[name="filter-people"] {
 #newProjectPopup .formControls a {
     display: inline;
     font-size: 130%;
+}
+
+#newProjectPopup .projects > a,
+#newProjectPopup .projects > span {
+    padding: 4px;
+    margin-top: 4px;
+    margin-right: 4px;
+    border: 1px solid #ccc;
+    display: block;
+    background-color: #fff;
+}
+
+#newProjectPopup .projects > a {
+    color: #333;
+}
+
+#newProjectPopup .projects > span {
+    color: #999;
+}
+
+#newProjectPopup .projects > a:hover {
+    color: #333 !important;
+    text-decoration: none;
+    background-color: #ccc;
+}
+
+#newProjectPopup .projects > a:visited {
+    color: #333;
+}
+
+#newProjectPopup .projects > a span.status,
+#newProjectPopup .projects > span span.status {
+    float: left;
+    display: block;
+    width: 12px;
+    height: 35px;
+    margin-right: 4px;
+    border-radius: 2px;
+}
+
+#newProjectPopup .projects > span span.status {
+    background-color: #ddd;
+}
+
+#newProjectPopup .projects > a h5,
+#newProjectPopup .projects > span h5 {
+    font-size: 120%;
+}
+
+#newProjectPopup .projects > span h5 {
+    color: #999;
+}
+
+#newProjectPopup .projects > a *:last-child,
+#newProjectPopup .projects > span *:last-child {
+    margin-bottom: 0px;
+}
+
+.infinite-scroll-wrapper {
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.horizontal-form .field-group {
+    margin-bottom: 5px;
+    width: 100%;
+    clear: both;
+    overflow: hidden;
+}
+
+.horizontal-form .field-group > * {
+    display: block;
+    float: left;
+}
+
+.horizontal-form .field-group label {
+    width: 20%;
+    padding-right: 5px;
+}
+
+.horizontal-form .field-group input {
+    width: 20%;
+}
+
+.horizontal-form .field-group input:last-child {
+    width: 75%;
+}
+
+.horizontal-form .field-group span.postfix {
+    width: 55%;
+    padding-left: 5px;
+}
+
+#newProjectPopup .horizontal-form {
+    margin-top: 5px;
+}
+
+#newProjectPopup .horizontal-form.disabled .field-group > * {
+    color: #ccc;
 }
 
 #content .compassview .addProject {
@@ -1155,6 +1255,7 @@ input[name="filter-people"] {
 }
 
 /* project states */
-.compassview .state-development {
+.compassview .state-development,
+#newProjectPopup .state-development {
     background-color: #448cca;
 }

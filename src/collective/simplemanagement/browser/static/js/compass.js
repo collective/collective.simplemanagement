@@ -3,58 +3,13 @@
         window.simplemanagement = {};
     }
     var sm = window.simplemanagement;
+    var base = sm.base || {};
     if ((typeof sm.compass) === "undefined") {
         sm.compass = {};
     }
     var compass = sm.compass;
 
-    compass.format = function(format, data) {
-        return format.replace(/\{([a-zA-Z_0-9]+)\}/g,
-                              function(a, g1) { return data[g1]; });
-    };
-
-    var f = compass.format;
-
-    ko.bindingHandlers.jqueryDrawer = {
-        init: function(element, accessor) {
-            var value = accessor();
-            var content = $(value.content).removeAttr('style').detach();
-            $(element).drawer({
-                group: value.group ? value.group : null,
-                content: function(callback) {
-                    callback(content);
-                },
-                position: value.position ? value.position : "bottom",
-                css_class: value.css_class ? value.css_class : "tooltip",
-                remove: false
-            });
-        }
-    };
-
-    // http://stackoverflow.com/a/15812995/967274
-    // The responder is the creator of knockout-sortable.
-    ko.bindingHandlers.droppable = {
-        init: function(element, valueAccessor) {
-            var value = valueAccessor() || {};
-            var action = value.action || value;
-
-            var options = {
-                drop: function(event, ui) {
-                    var item = ko.utils.domData.get(
-                        ui.draggable[0],
-                        "ko_dragItem");
-
-                    if (item) {
-                        item = item.clone ? item.clone() : item;
-                        action.call(this, item, event, ui);
-                    }
-                }
-            };
-            $.extend(options, value.options || {});
-
-            $(element).droppable(options);
-        }
-    };
+    var f = base.format;
 
     compass.Person = function(project, data) {
         this.project = project;
@@ -73,7 +28,7 @@
                 { people: [ self.toJSON() ] },
                 {
                     type: 'info',
-                    message: compass.format(
+                    message: base.format(
                         self.project.app.translate('new-role'),
                         {
                             name: self.project.app._people[self.id].name,
@@ -89,7 +44,7 @@
                 { people: [ self.toJSON() ] },
                 {
                     type: 'info',
-                    message: compass.format(
+                    message: base.format(
                         self.project.app.translate('new-effort'),
                         {
                             name: self.project.app._people[self.id].name,
@@ -149,7 +104,7 @@
                 { effort: value.toString() },
                 {
                     type: 'info',
-                    message: compass.format(
+                    message: base.format(
                         self.app.translate('new-project-effort'),
                         {
                             project: self.name(),
@@ -184,7 +139,7 @@
                 error: function(request, status, error) {
                     self.app.addMessage({
                         type: 'error',
-                        message: compass.format(
+                        message: base.format(
                             self.app.translate('error-please-reload'),
                             { url: window.location.toString() }
                         )
@@ -203,7 +158,7 @@
                 { people: [ operative.toJSON(false) ] },
                 {
                     type: 'info',
-                    message: compass.format(
+                    message: base.format(
                         self.app.translate('person-added'),
                         {
                             person: person.name,
@@ -226,7 +181,7 @@
                     { people: [ person.toJSON(true) ] },
                     {
                         type: 'info',
-                        message: compass.format(
+                        message: base.format(
                             self.app.translate('person-removed'),
                             {
                                 person: self.app._people[person.id].name,
@@ -254,10 +209,31 @@
         this.shown_people = ko.computed(this.getShownPeople, this);
         this.roles_list = ko.computed(this.getRolesAsList, this);
         this.active_projects = ko.observableArray([]);
+        this.all_projects = ko.observableArray([]);
+        this.all_projects_count = null;
+        this.all_projects_selected = ko.observable(null);
         this.loaded = ko.observable(false);
         this.transient_messages = ko.observableArray([]);
         this.permanent_messages = ko.observableArray([]);
         this.has_messages = ko.computed(this.hasMessages, this);
+        this.active_pane = ko.observable('new');
+        this.project_factory = ko.validatedObservable({
+            name: ko.observable().extend({ required: true }),
+            customer: ko.observable().extend({ required: true }),
+            budget: ko.observable().extend({
+                required: true,
+                pattern: {
+                    message: this.translate('invalid-number-value'),
+                    params: '^[0-9\.]+$'
+                }
+            }),
+            estimate: ko.observable().extend({
+                pattern: {
+                    message: this.translate('invalid-number-value'),
+                    params: '^[0-9\.]+$'
+                }
+            })
+        });
 
         var self = this;
         this.reprioritize = function(arg) {
@@ -281,7 +257,7 @@
                 error: function(request, status, error) {
                     self.addMessage({
                         type: 'error',
-                        message: compass.format(
+                        message: base.format(
                             self.translate('error-please-reload'),
                             { url: window.location.toString() }
                         )
@@ -289,6 +265,16 @@
                 }
             });
         };
+        this.active_pane.subscribe(function(value) {
+            if(value != 'existing')
+                self.all_projects_selected(null);
+            if(value != 'new') {
+                self.project_factory.name();
+                self.project_factory.customer();
+                self.project_factory.budget();
+                self.project_factory.estimate();
+            }
+        });
     };
 
     compass.Main.prototype = {
@@ -338,7 +324,7 @@
         },
         getFormattedWeeks: function() {
             var weeks = this.plan_weeks();
-            return compass.format(
+            return base.format(
                 this.translate(weeks > 1 ? 'weeks' : 'week'),
                 { 'week': weeks }
             );
@@ -362,6 +348,30 @@
             }
             return people;
         },
+        load_all: function() {
+            var self = this;
+            var start = this.all_projects().length;
+            if(this.all_projects_count !== null &&
+                    this.all_projects_count <= start)
+                return;
+            $.ajax({
+                dataType: "json",
+                url: this.url('get_projects'),
+                type: "POST",
+                traditional: true,
+                data: {
+                    start: start
+                },
+                success: function(data, status, request) {
+                    var i, l, project;
+                    for(i=0, l=data.length; i<l; i++) {
+                        project = data[i];
+                        self.all_projects.push(
+                            new compass.Project(self, project));
+                    }
+                }
+            });
+        },
         load: function() {
             var self = this;
             $.ajax({
@@ -375,6 +385,7 @@
                             new compass.Project(self, project));
                     }
                     self.loaded(true);
+                    self.load_all();
                 }
             });
         }

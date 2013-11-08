@@ -4,7 +4,7 @@
         xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="title" i18n:translate="">Project</property>
  <property name="description" i18n:translate=""></property>
- <property name="icon_expr">string:${portal_url}/++resource++simplemanagement/project.png</property>
+ <property name="icon_expr">string:${portal_url}/++resource++simplemanagement/img/project.png</property>
  <property name="factory">Project</property>
  <property name="add_view_expr">string:${folder_url}/++add++Project</property>
  <property name="link_target"></property>
