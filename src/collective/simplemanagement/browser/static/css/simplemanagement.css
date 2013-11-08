@@ -921,26 +921,38 @@ table#tickets-listing {
     display: block;
 }
 
-.report-view #synoptic > form {
-    margin-left: 16px;
+.report-view .total { font-weight: bold }
+.report-view .summary {
+    float: right;
 }
 .report-view .results dl.collapsible{
     font-size: 110%;
     border: none;
 }
+.report-view .results dl.collapsible dt{
+    margin-left: 0;
+}
 .report-view .results dl.collapsible dt.collapsibleHeader{
     background-color: #EEEEEE;
     font-size: 120%;
     padding: 10px 10px 10px 38px;
-    width: 250px;
+}
+.report-view .results dl.collapsible dt.collapsibleHeader,
+.report-view .results .collapsibleContent {
+    width: 200px;
+}
+.report-view .results .collapsibleContent {
+    margin-left: 24px !important;
 }
 .report-view .results .total {
-    display: inline-block;
-    margin-left: 50px;
-
+    float: right;
+}
+.report-view .results .month .total {
 }
 .report-view .results .week .total {
-    margin-left: 36px;
+}
+.report-view .summary{
+
 }
 
 .project-actions {

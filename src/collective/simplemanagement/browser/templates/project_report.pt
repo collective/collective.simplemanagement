@@ -11,9 +11,10 @@
     <metal:bodytext fill-slot="main">
       <div class="report-view"
            metal:define-macro="main"
-           tal:define="helpers context/@@sm_helpers;
-                       details view/details_report;
-                       monthly view/monthly_report;
+           tal:define="helpers          context/@@sm_helpers;
+                       details          view/details_report;
+                       monthly          view/monthly_report;
+                       total_estimated  view/total_estimated;
                        resources view/resources;">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
@@ -77,14 +78,66 @@
                 </form>
 
                 <div class="results">
-                  <tal:month repeat="month monthly">
+                  <table class="summary listing">
+                    <caption>
+                      <h3 i18n:translate="">Work summary</h3>
+                    </caption>
+                    <tr>
+                      <tal:if condition="total_estimated">
+                        <th class="estimated" i18n:translate="">
+                          Estimated
+                        </th>
+                        <td class="total estimated">
+                          <span i18n:translate="">
+                            <span i18n:name="days"
+                                  tal:replace="python: view.hour_to_days(total_estimated)" /> days
+                          </span>
+                          <span i18n:translate="">
+                            (<span i18n:name="hours" tal:content="total_estimated" /> hours)
+                          </span>
+                        </td>
+                      </tal:if>
+                    </tr>
+                    <tr>
+                      <th class="done" i18n:translate="">
+                        Done
+                      </th>
+                      <td class="total done">
+                        <span i18n:translate="">
+                          <span i18n:name="days"
+                                tal:replace="python: view.hour_to_days(monthly['total'])" /> days
+                        </span>
+                        <span i18n:translate="">
+                          (<span i18n:name="hours" tal:content="monthly/total" /> hours)
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <tal:if condition="total_estimated">
+                        <th class="diff" i18n:translate="">
+                          Diff:
+                        </th>
+                        <td class="total diff"
+                            tal:define="diff python:total_estimated - monthly['total']">
+                          <span i18n:translate="">
+                            <span i18n:name="days"
+                                  tal:replace="python: view.hour_to_days(diff)" /> days
+                          </span>
+                          <span i18n:translate="">
+                            (<span i18n:name="hours" tal:content="diff" /> hours)
+                          </span>
+                        </td>
+                      </tal:if>
+                    </tr>
+                  </table>
+                  <tal:month repeat="month monthly/bymonth">
                     <dl class="month collapsible">
                       <dt class="collapsibleHeader">
                         <span class="label" tal:content="month/label" />
                         <span class="total" i18n:translate="">
                           <span class="digit"
                                 i18n:name="month_total"
-                                tal:content="month/total" /> hours
+                                tal:content="month/total" /> h
                         </span>
                       </dt>
                       <dd class="collapsibleContent">
@@ -93,9 +146,9 @@
                             <span class="label" i18n:translate="">
                               Week <span i18n:name="weekno"
                                               tal:content="repeat/week/number" />:
-                              <span class="total"
-                                    i18n:name="week_total"
-                                    tal:content="python:month['weeks'][week]" /> hours
+                            </span>
+                            <span class="total">
+                              <span tal:replace="python:month['weeks'][week]" /> h
                             </span>
                           </li>
                         </ul>

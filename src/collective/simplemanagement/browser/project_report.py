@@ -138,20 +138,34 @@ class ReportView(DashboardMixin):
         return res
 
     def monthly_report(self):
-        res = []
+        bymonth = []
         today = datetime.date.today()
         year = int(self.request.get('year', today.year))
         from_date = datetime.date(year, 1, 31)
         to_date = datetime.date(year, 12, 31)
         bookings = self.get_bookings(date_range=(from_date, to_date))
         grouped = self._group_by_month(bookings)
+        big_total = 0
         for month, weeks in grouped.iteritems():
             month_total = sum(weeks.values())
-            res.append({
+            big_total += month_total
+            bymonth.append({
                 'number': month,
                 'label': MONTHS[month - 1],
                 'total': month_total,
                 'weeks': weeks,
             })
-        res.sort(key=lambda x: x['number'])
-        return res
+        bymonth.sort(key=lambda x: x['number'])
+        return {
+            'total': big_total,
+            'bymonth': bymonth,
+        }
+
+    def total_estimated(self):
+        return self.project.initial_estimate
+
+    def hour_to_days(self, value):
+        """ return formatted time in days for given hour value
+        """
+        # TODO: handle rounding
+        return value / 8
