@@ -1,15 +1,20 @@
 <?xml version="1.0"?>
 <object name="portal_css">
- <stylesheet
-    title=""
-    cacheable="True"
-    applyPrefix="True"
-    compression="safe"
-    cookable="True"
-    enabled="on"
-    expression=""
-    id="++resource++simplemanagement/simplemanagement.css"
-    media="screen"
-    rel="stylesheet"
-    rendering="link" />
+  <!-- Remove old one -->
+  <stylesheet
+      id="++resource++simplemanagement/simplemanagement.css"
+      enabled="off" />
+
+  <stylesheet
+      title=""
+      cacheable="True"
+      applyPrefix="True"
+      compression="safe"
+      cookable="True"
+      enabled="on"
+      expression=""
+      id="++resource++simplemanagement/css/simplemanagement.css"
+      media="screen"
+      rel="stylesheet"
+      rendering="link" />
 </object>

@@ -352,7 +352,7 @@ ul.stories .actions {
 #content a.quickedit,
 #content a.quick-booking,
 #content a.story-quickview {
-    background: transparent url('pencil.png') no-repeat;
+    background: transparent url('../img/pencil.png') no-repeat;
     border: 0 none !important;
     display: block;
     float: left;
@@ -369,19 +369,19 @@ ul.stories .actions {
 }
 
 #content a.story-quickview {
-    background-image: url('magnifier.png');
+    background-image: url('../img/magnifier.png');
 }
 
 #content a.quick-booking {
-    background-image: url('booking.png');
+    background-image: url('../img/booking.png');
 }
 
 #content a.status {
-    background-image: url('tag_red.png');
+    background-image: url('../img/tag_red.png');
 }
 
 #content a.iteration {
-    background-image: url('iteration.png');
+    background-image: url('../img/iteration.png');
 }
 
 #content a.status span,
@@ -533,7 +533,7 @@ ul.stories .actions {
 
 .tooltip a.close{
     padding: 8px;
-    background: url('close-16x16.png') no-repeat center center;
+    background: url('../img/close-16x16.png') no-repeat center center;
     display: block;
     float: right;
     height: 16px;
@@ -753,11 +753,11 @@ table.stories td.data.warning {
 }
 
 #worklog .calendar a.previous {
-    background: url('./go-previous.png')  2px 4px no-repeat;
+    background: url('../img/go-previous.png')  2px 4px no-repeat;
 }
 
 #worklog .calendar a.next {
-    background: url('./go-next.png') 2px 4px no-repeat;
+    background: url('../img/go-next.png') 2px 4px no-repeat;
 }
 
 #worklog .calendar table {
