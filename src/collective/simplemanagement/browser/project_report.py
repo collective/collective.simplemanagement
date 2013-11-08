@@ -13,6 +13,8 @@ from worklog import MONTHS
 
 
 class ReportView(DashboardMixin):
+    """ a report view for projects and stories
+    """
 
     @property
     def _defaults(self):

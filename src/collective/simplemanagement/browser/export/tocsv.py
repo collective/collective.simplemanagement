@@ -15,6 +15,8 @@ CTYPES = {
 
 
 class Mixin(BrowserView):
+    """ base klass for exports
+    """
 
     filename_prefix = 'export-'
     filename_ext = '.csv'
@@ -48,6 +50,8 @@ class Mixin(BrowserView):
 
 
 class ExportCSV(Mixin):
+    """ base klass for CSV exports
+    """
 
     header = ()
 
@@ -67,5 +71,7 @@ class ExportCSV(Mixin):
         return self.header
 
     def get_lines(self):
+        """ return csv lines as iterator
+        """
         raise NotImplementedError("please, provide a 'process' method!")
 

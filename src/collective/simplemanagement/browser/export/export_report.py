@@ -6,6 +6,8 @@ from ..project_report import ReportView
 
 
 class ExportReportCSV(ExportCSV, ReportView):
+    """  export @@report view results to CSV
+    """
 
     filename_prefix = 'export-report-'
     header = ('data', 'log', 'impiegato', 'ore')
