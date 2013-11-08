@@ -6,6 +6,7 @@ from plone.memoize.view import memoize as view_memoize
 
 from .. import api
 from ..interfaces import IProject
+from ..utils import AttrDict
 
 from dashboard import DashboardMixin
 from worklog import MONTHS
@@ -14,11 +15,26 @@ from worklog import MONTHS
 class ReportView(DashboardMixin):
 
     @property
-    def months(self):
+    def _defaults(self):
         today = datetime.date.today()
+        return {
+            'month': today.month,
+            'year': today.year,
+            'employee': ''
+        }
+
+    @property
+    def selected(self):
+        data = AttrDict()
+        for k in ('month', 'year', 'employee'):
+            data[k] = self.request.get(k) or self._defaults.get(k)
+        return data
+
+    @property
+    def months(self):
         for i, month in enumerate(MONTHS):
             num = i + 1
-            req_val = self.request.get('month', today.month)
+            req_val = self.selected.month
             selected = None
             if req_val != 'all':
                 selected = int(req_val) == num
@@ -35,7 +51,7 @@ class ReportView(DashboardMixin):
             yield {
                 'value': i,
                 'label': i,
-                'selected': int(self.request.get('year', today.year)) == i
+                'selected': int(self.request.get('year', self.selected.year)) == i
             }
 
     @property
@@ -107,7 +123,7 @@ class ReportView(DashboardMixin):
         total = Decimal('0.0')
         _bookings = []
         for booking in self.get_bookings():
-            _bookings.append({
+            _bookings.append(AttrDict({
                 'date': self.context.toLocalizedTime(booking.date.isoformat()),
                 'time': booking.time,
                 'url': booking.getURL(),
@@ -116,7 +132,7 @@ class ReportView(DashboardMixin):
                     self.context,
                     booking.Creator,
                     **self.tools)
-            })
+            }))
             total += booking.time
         return {
             'bookings': _bookings,

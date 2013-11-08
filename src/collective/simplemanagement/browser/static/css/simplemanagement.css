@@ -951,8 +951,8 @@ table#tickets-listing {
 }
 .report-view .results .week .total {
 }
-.report-view .summary{
-
+.report-view form{
+    display: inline;
 }
 
 .project-actions {

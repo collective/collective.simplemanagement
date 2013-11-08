@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    i18n_domain="collective.simplemanagement">
+
+  <browser:page
+    for="*"
+    name="export-report-csv"
+    class=".export_report.ExportReportCSV"
+    layer="...interfaces.IBrowserLayer"
+    permission="simplemanagement.ManageProject"
+    />
+
+</configure>

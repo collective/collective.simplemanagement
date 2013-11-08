@@ -12,6 +12,7 @@
   <include package=".story" />
   <include package=".booking" />
   <include package=".epic" />
+  <include package=".export" />
 
   <include package="z3c.jbot" file="meta.zcml" />
 

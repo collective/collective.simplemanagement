@@ -37,10 +37,16 @@
 
           <div id="overview">
             <ul class="tabs">
-              <li><a href="#synoptic"
-                i18n:translate="">Sinottica</a></li>
+              <li>
+                <a href="#synoptic"
+                   i18n:translate=""
+                   tal:attributes="class python:request.get('tab')=='synoptic' and 'current' or None">
+                   Sinottica</a>
+              </li>
               <li><a href="#details"
-                i18n:translate="">Details</a></li>
+                i18n:translate=""
+                tal:attributes="class python:request.get('tab')=='details' and 'current' or None">
+                Details</a></li>
             </ul>
             <div class="panes">
               <div id="synoptic" class="pane">
@@ -55,6 +61,7 @@
                         />
                     </tal:opt>
                   </select> -->
+                  <input type="hidden" name="tab" value="synoptic" />
                   <select name="year">
                     <tal:opt repeat="year view/years">
                       <option
@@ -161,6 +168,7 @@
               <div id="booking-wrapper" class="pane">
                 <div class="filters">
                   <form tal:attributes="action view/__name__">
+                    <input type="hidden" name="tab" value="details" />
                     <select name="month">
                       <option
                         value="all"
@@ -195,6 +203,27 @@
                     </select>
                     <input type="submit" value="Filter" />
                   </form>
+                  <!-- export form -->
+                  <form name="export-csv" class="export"
+                        tal:attributes="action string:${context/absolute_url}/export-report-csv">
+                    <input
+                      type="hidden"
+                      name="month"
+                      tal:attributes="value view/selected/month;"
+                      />
+                    <input
+                      type="hidden"
+                      name="year"
+                      tal:attributes="value view/selected/year;"
+                      />
+                    <input
+                      type="hidden"
+                      name="employee"
+                      tal:attributes="value view/selected/employee;"
+                      />
+                    <input type="submit" value="Export CSV" />
+                  </form>
+
                 </div>
                 <div tal:condition="not: details/bookings">
                   <span class="label"
