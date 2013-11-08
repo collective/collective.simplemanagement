@@ -1,0 +1,39 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:zcml="http://namespaces.zope.org/zcml"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           i18n_domain="collective.simplemanagement">
+
+  <browser:page
+    for="*"
+    name="json"
+    class=".base.JSONService"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+  />
+
+  <browser:page
+    for="..interfaces.IProject"
+    name="json"
+    class=".project.JSONService"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+  />
+
+  <browser:page
+    for="..interfaces.IIteration"
+    name="json"
+    class=".iteration.JSONService"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+  />
+
+  <browser:page
+    for="..interfaces.IStory"
+    name="json"
+    class=".story.JSONService"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+  />
+
+</configure>
