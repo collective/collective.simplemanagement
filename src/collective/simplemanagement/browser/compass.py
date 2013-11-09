@@ -48,6 +48,7 @@ class History(api.views.Traversable):
         return data
 
     def html_notes(self, data):
+        data = u'' if data is None else data
         portal_transforms = self.tools['portal_transforms']
         data = portal_transforms.convert('markdown_to_html', data)
         return data.getData()
