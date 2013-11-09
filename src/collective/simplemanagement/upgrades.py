@@ -60,6 +60,21 @@ def upgrade_to_1003(context, logger=None):
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'plone.app.registry')
     logger.info("Reloading javascript registry")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'jsregistry')
+    to_remove = (
+        "++resource++simplemanagement/jquery.drawer.js",
+        "++resource++simplemanagement/simplemanagement.js",
+        "++resource++simplemanagement/worklog.js",
+        "++resource++simplemanagement/ICanHaz.js",
+        "++resource++simplemanagement/json2.js",
+        "++resource++simplemanagement/knockout-2.2.1.js",
+        "++resource++simplemanagement/knockout-sortable.js",
+        "++resource++simplemanagement/compass.js",
+    )
+    jstool = getToolByName(context, 'portal_javascripts')
+    for res in to_remove:
+        jstool.unregisterResource(res)
+        logger.info("removed %s" % res)
+    jstool.cookResources()
 
 
 def upgrade_to_1004(context, logger=None):
