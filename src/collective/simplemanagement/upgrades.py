@@ -76,6 +76,16 @@ def upgrade_to_1003(context, logger=None):
         logger.info("removed %s" % res)
     jstool.cookResources()
 
+    logger.info("removing stylesheets")
+    to_remove = (
+        '++resource++simplemanagement/simplemanagement.css',
+    )
+    csstool = getToolByName(context, 'portal_css')
+    for res in to_remove:
+        csstool.unregisterResource(res)
+        logger.info("removed %s" % res)
+    csstool.cookResources()
+
 
 def upgrade_to_1004(context, logger=None):
     logger = getLogger(logger)
