@@ -267,7 +267,7 @@ class Stories(grok.View):
 
     @memoize
     def stories(self):
-        adpt = IStoriesListing(self.iteration())
+        adpt = IStoriesListing(self.iteration())()
         return adpt.stories()
 
 

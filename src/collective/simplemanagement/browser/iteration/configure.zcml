@@ -4,7 +4,6 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="collective.simplemanagement">
 
-
   <browser:page
     for="...interfaces.IIteration"
     name="view"
@@ -12,6 +11,14 @@
     class=".view.View"
     permission="zope2.View"
     template="templates/view.pt"
+  />
+
+  <browser:page
+    for="*"
+    name="iteration_macros"
+    layer="...interfaces.IBrowserLayer"
+    template="templates/macros.pt"
+    permission="zope2.View"
   />
 
 </configure>

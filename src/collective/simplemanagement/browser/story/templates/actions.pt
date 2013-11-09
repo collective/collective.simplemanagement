@@ -18,7 +18,7 @@
       <a href=""
          tal:condition="act/available"
          tal:attributes="title act/description;
-              href string:${context/absolute_url}/change_status?action=${act/id}&destination=${act/destination};
+              href act/href;
               class act/id">
             <span
             tal:content="act/title" />

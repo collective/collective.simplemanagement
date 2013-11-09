@@ -30,7 +30,7 @@
     simplemanagement.booking_tooltip = function() {
         $('.listing .show-more').drawer({
             group: '.show-more',
-            position: "top-left",
+            position: "top-center",
             css_class: "tooltip",
             offset: [-10, 15],
             content: function(callback, drawer) {
@@ -45,33 +45,33 @@
         });
     };
 
-    simplemanagement.updateStoryPosition = function (event, ui) {
-        var position = ui.item.index(),
-            item_id = ui.item.attr('id'),
-            rows = ui.item.parent().children(),
-            iteration_url = ui.item.parents('table').data('iterationurl'),
-            row,
-            i;
+    // simplemanagement.updateStoryPosition = function (event, ui) {
+    //     var position = ui.item.index(),
+    //         item_id = ui.item.attr('id'),
+    //         rows = ui.item.parent().children(),
+    //         iteration_url = ui.item.parents('table').data('iterationurl'),
+    //         row,
+    //         i;
 
-        $.getJSON(
-            iteration_url + '/story_move?story_id=' + item_id + '&new_position=' + position,
-            function(data) {
-                if (data.success === false) {
-                    alert(data.error);
-                }
-                for (i = 0; i < rows.length; i += 1) {
-                    row = $(rows[i]);
-                    row.removeClass("odd even");
-                    if ((i % 2) === 0) {
-                        row.addClass("even");
-                    } else {
-                        row.addClass("odd");
-                    }
-                }
+    //     $.getJSON(
+    //         iteration_url + '/story_move?story_id=' + item_id + '&new_position=' + position,
+    //         function(data) {
+    //             if (data.success === false) {
+    //                 alert(data.error);
+    //             }
+    //             for (i = 0; i < rows.length; i += 1) {
+    //                 row = $(rows[i]);
+    //                 row.removeClass("odd even");
+    //                 if ((i % 2) === 0) {
+    //                     row.addClass("even");
+    //                 } else {
+    //                     row.addClass("odd");
+    //                 }
+    //             }
 
-            }
-        );
-    };
+    //         }
+    //     );
+    // };
 
     simplemanagement.Planner.prototype = {
         init: function(element) {
@@ -218,11 +218,16 @@
 
     $(document).ready(function() {
 
+        // knockout iteration view
+        $(document).ready(function () {
+            $('.iteration-stories').iterationView();
+        });
+
         // taken from kss-bbb.js
-        var spinner = $('<div id="ajax-spinner"><img src="' + portal_url + '/spinner.gif" alt=""/></div>');
-        spinner.appendTo('body').hide();
-        $(document).ajaxStart(function() { spinner.show(); });
-        $(document).ajaxStop(function() { spinner.hide(); });
+        // var spinner = $('<div id="ajax-spinner"><img src="' + portal_url + '/spinner.gif" alt=""/></div>');
+        // spinner.appendTo('body').hide();
+        // $(document).ajaxStart(function() { spinner.show(); });
+        // $(document).ajaxStop(function() { spinner.hide(); });
 
         $('.simplemanagement-planner').each(function() {
             simplemanagement.planners.push(
@@ -237,16 +242,16 @@
             {tabs: 'h2', effect: 'slide', initialIndex: 1}
         );
 
-        $('.quickedit').prepOverlay({
-            subtype: 'iframe',
-            closeselector: '.button-field',
-            config: {
-                onClose: function(el) {
-                    window.location.reload();
-                }
-            },
-            width: '70%'
-        });
+        // $('.quickedit').prepOverlay({
+        //     subtype: 'iframe',
+        //     closeselector: '.button-field',
+        //     config: {
+        //         onClose: function(el) {
+        //             window.location.reload();
+        //         }
+        //     },
+        //     width: '70%'
+        // });
 
         $('.quick-booking').prepOverlay({
             subtype: 'ajax',
@@ -263,31 +268,31 @@
             }
         });
 
-        $('.story-quickview').prepOverlay({
-            subtype: 'ajax',
-            filter: common_content_filter,
-            width: '80%',
-            config: {
-                onLoad: function() {
-                    simplemanagement.booking_tooltip();
-                }
-            }
-        });
+        // $('.story-quickview').prepOverlay({
+        //     subtype: 'ajax',
+        //     filter: common_content_filter,
+        //     width: '80%',
+        //     config: {
+        //         onLoad: function() {
+        //             simplemanagement.booking_tooltip();
+        //         }
+        //     }
+        // });
 
-        $('.quickview').prepOverlay({
-            subtype: 'ajax',
-            filter: common_content_filter,
-            width: '50%'
-        });
+        // $('.quickview').prepOverlay({
+        //     subtype: 'ajax',
+        //     filter: common_content_filter,
+        //     width: '50%'
+        // });
 
-        $("table.sortable tbody").sortable({
-            update: simplemanagement.updateStoryPosition,
-            handle: ".handle",
-            tolerance: 'pointer',
-            distance: 5,
-            opacity: 0.5,
-            revert: true
-        });
+        // $("table.sortable tbody").sortable({
+        //     update: simplemanagement.updateStoryPosition,
+        //     handle: ".handle",
+        //     tolerance: 'pointer',
+        //     distance: 5,
+        //     opacity: 0.5,
+        //     revert: true
+        // });
 
         $('.simple-tooltip[title]').tooltip();
 

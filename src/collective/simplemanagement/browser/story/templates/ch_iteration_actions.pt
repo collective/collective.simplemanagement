@@ -23,10 +23,9 @@
             <a href=""
                tal:condition="item/available"
                tal:attributes="title item/description;
-                    href string:${context/absolute_url}/change_iteration?destination=${item/uid};
+                    href item/href;
                     class item/id">
-                  <span
-                  tal:content="item/title" />
+                  <span tal:content="item/title" />
             </a>
           </td>
           <td tal:condition="repeat/item/start">

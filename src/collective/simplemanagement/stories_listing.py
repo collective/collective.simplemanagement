@@ -64,11 +64,11 @@ class StoriesListing(object):
     #     conversation = IConversation(story)
     #     return [i for i in conversation.getThreads()]
 
-    def stories(self, project_states=None, story_states=None,
-                project_info=False):
+    def __call__(self, project_states=None,
+                 story_states=None, project_info=False):
         brains = self._stories(story_states)
         pw = getToolByName(self.context, 'portal_workflow')
-        stories = []
+        self.stories = []
         self.totals = {
             'hours': 0,
             'difference': 0,
@@ -106,7 +106,8 @@ class StoriesListing(object):
                 'assignees': api.users.get_assignees_details(story),
                 'can_edit': story.user_can_edit(),
                 'can_review': story.user_can_review(),
-                'milestone': story.get_milestone()
+                'milestone': story.get_milestone(),
+                'actions': story.get_actions()
             }
 
             if project_info:
@@ -129,13 +130,13 @@ class StoriesListing(object):
                             'UID': IUUID(iteration)
                         }
                     })
-            stories.append(data)
+            self.stories.append(data)
 
         self.totals['time_status'] = api.booking.get_difference_class(
             self.totals['estimate'],
             self.totals['hours']
         )
-        return stories
+        return self
 
 
 class UserStoriesListing(StoriesListing):
@@ -152,12 +153,11 @@ class UserStoriesListing(StoriesListing):
             'review_state': ('todo', 'suspended', 'in_progress')
         }
 
-    def stories(self, project_states=None, story_states=None,
-                project_info=False, user_id=None):
+    def __call__(self, project_states=None, story_states=None,
+                 project_info=False, user_id=None):
         self._user_id = user_id
-        stories = super(UserStoriesListing, self).stories(
+        return super(UserStoriesListing, self).__call__(
             project_states=project_states,
             story_states=story_states,
             project_info=project_info
         )
-        return stories

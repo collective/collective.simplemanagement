@@ -336,7 +336,6 @@
                    i18n:attributes="title">[+]</a>
                 <div class="description">
                   <div class="wrapper">
-                    <b class="notch-bottom"></b>
                     <a class="close"
                        href="#"
                        title="Close tooltip"

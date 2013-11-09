@@ -72,6 +72,7 @@
       id="++resource++simplemanagement/js/simplemanagement.js"
       inline="False"
       insert-after="++resource++simplemanagement/js/base.js" />
+
   <javascript
       cacheable="True"
       compression="safe"
@@ -81,6 +82,7 @@
       id="++resource++simplemanagement/js/worklog.js"
       inline="False"
       insert-after="++resource++simplemanagement/js/simplemanagement.js" />
+
   <javascript
       cacheable="True"
       compression="safe"
@@ -90,4 +92,25 @@
       id="++resource++simplemanagement/js/compass.js"
       inline="False"
       insert-after="++resource++simplemanagement/js/worklog.js" />
+
+  <javascript
+      cacheable="True"
+      compression="safe"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/js/models.js"
+      inline="False"
+      insert-after="++resource++simplemanagement/js/compass.js" />
+
+  <javascript
+      cacheable="True"
+      compression="safe"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/js/iteration.js"
+      inline="False"
+      insert-after="++resource++simplemanagement/js/models.js" />
+
 </object>

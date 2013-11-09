@@ -1,12 +1,11 @@
+import plone.api
 from zope.interface import implementer
 from zope.publisher.interfaces import NotFound
 from zope.publisher.interfaces import IPublishTraverse
 from Products.Five.browser import BrowserView
+
 from .. import api
 from ..interfaces import IJSONService
-
-
-SERVICES = ('view', 'modify', 'list', 'add', 'delete', 'update')
 
 
 @implementer(IJSONService, IPublishTraverse)
@@ -23,7 +22,7 @@ class JSONService(BrowserView):
         * update
         """
         request['TraversalRequestNameStack'] = []
-        if name not in SERVICES:
+        if name.startswith('_') or not getattr(self, name, None):
             raise NotFound(self, "Not found", self.request)
         self.action = name
         return self
@@ -61,6 +60,25 @@ class JSONService(BrowserView):
     def update(self):
         """Update some object on the context"""
         raise NotImplementedError
+
+    @api.permissions.accessreview()
+    def change_status(self):
+        """Perform a workflow transaction
+        and return current workflow status"""
+        wft = plone.api.portal.get_tool(name='portal_workflow')
+        action = self.request.get('action')
+        destination = self.request.get('destination')
+        error = None
+
+        try:
+            wft.doActionFor(self.context, action)
+        except WorkflowException:
+            error = "An error occurred"
+        return {
+            'status': destination,
+            'action': 'update',
+            'error': error
+        }
 
     @api.jsonutils.jsonmethod()
     def __call__(self):

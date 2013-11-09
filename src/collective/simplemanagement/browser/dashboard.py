@@ -228,19 +228,18 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         return addform.render()
 
     def projects(self):
-        listing = IUserStoriesListing(self.context)
         projects = {}
         project_states = ['development', 'maintenance']
         if self.request.form.get('planning') == 'on':
             project_states.extend(['offer', 'planning'])
         story_states = ['in_progress']
-        stories = listing.stories(
+        listing = IUserStoriesListing(self.context)(
             user_id=self._get_employee_filter(),
             project_states=project_states,
             story_states=story_states,
             project_info=True
         )
-        for st in stories:
+        for st in listing.stories:
             prj = st.pop('project')
             if prj['UID'] not in projects:
                 projects[prj['UID']] = prj

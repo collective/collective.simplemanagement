@@ -1,5 +1,5 @@
+import plone.api
 from Acquisition import aq_inner
-from five import grok
 
 from zope.interface import implementer
 from zope.security import checkPermission
@@ -55,6 +55,71 @@ class Story(Container):
             wf = wf[0]
         actions = wf.listActionInfos(object=self, max=1)
         return len(actions) > 0
+
+    def get_review_state(self):
+        return plone.api.content.get_state(obj=self)
+
+    def get_actions(self):
+        can_edit = self.user_can_edit()
+        can_review = self.user_can_review()
+        url = self.absolute_url()
+
+        actions = [
+            {
+                "name": "quickView",
+                "type": "overlay",
+                "title": "Details",
+                "description": "View details",
+                "href": '{0}?nobook=1'.format(url),
+                "css": "story-quickview",
+            },
+
+            {
+                "name": "quickBooking",
+                "type": "overlay",
+                "description": "Booking",
+                "css": "quick-booking",
+                "href": url,
+                "title": "Booking"
+            },
+        ]
+
+        if can_edit:
+            actions.extend(
+                [
+                    {
+                        "name": "quickEdit",
+                        "type": "overlayform",
+                        "description": "Edit story",
+                        "css": "quickedit",
+                        "href": (
+                            '{0}/quickedit?ajax_load=1&'
+                            'ajax_include_head=1'.format(url)
+                        ),
+                        "title": "Edit"
+                    },
+                    {
+                        "name": "changeIteration",
+                        "type": "tooltip",
+                        "description": "Change iteration",
+                        "css": "iteration",
+                        "href": '{0}/ch_iteration'.format(url),
+                        "title": "Iteration"
+                    },
+                ]
+            )
+
+        if can_review:
+            actions.append({
+                "name": "changeStatus",
+                "type": "tooltip",
+                "description": "Change status",
+                "css": "status",
+                "href": '{0}/wf_actions'.format(url),
+                "title": self.get_review_state()
+            })
+
+        return actions
 
 
 class StoryQuickForm(form.AddForm):

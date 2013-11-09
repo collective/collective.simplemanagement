@@ -31,8 +31,7 @@ def get_user_details(context, user_id, **kwargs):
 
 def get_assignees_details(story):
     assignees = getattr(story, 'assigned_to') or []
-    for user_id in assignees:
-        yield get_user_details(story, user_id)
+    return [get_user_details(story, user_id) for user_id in assignees]
 
 
 def get_employee_ids(context=None):

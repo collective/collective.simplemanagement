@@ -1,0 +1,133 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  lang="en"
+  i18n:domain="collective.simplemanagement"
+  tal:omit-tag="">
+
+
+  <metal:stories define-macro="stories">
+
+    <div type="text/html" id="template-tooltip"
+        style="display:none">
+        <a href="#"
+           data-bind="css: $data.css,
+                    attr{title: $data.description,
+                    href: $data.href},
+                    ajaxDrawer: {model: $data.story, href: $data.href}">
+        <span data-bind="text: $data.title"></span>
+      </a>
+    </div>
+
+    <div type="text/html" id="template-overlay"
+        style="display:none">
+      <a href="#"
+         data-bind="css: $data.css,
+                    attr{title: $data.description,
+                    href: $data.href},
+                    ajaxOverlay: {mcssel: $data.story, href: $data.href}">
+        <span data-bind="text: $data.title"></span>
+      </a>
+    </div>
+
+    <div type="text/html" id="template-overlayform"
+        style="display:none">
+      <a href="#"
+         data-bind="css: $data.css,
+                    attr{title: $data.description,
+                    href: $data.href},
+                    ajaxOverlayForm: {model: $data.story, href: $data.href}">
+        <span data-bind="text: $data.title"></span>
+      </a>
+    </div>
+
+    <!-- ko if: stories().length > 0 -->
+    <div id="stories-wrapper">
+      <table class="listing stories"
+          data-bind="css: is_sortable ? 'sortable' : ''" >
+
+        <thead>
+          <tr>
+            <th i18n:translate=""
+              colspan="2">Actions</th>
+            <th i18n:translate="">Story</th>
+            <th i18n:translate="">Assignees</th>
+            <th i18n:translate="">Estimate</th>
+            <th i18n:translate="">Done</th>
+          </tr>
+        </thead>
+
+        <tbody data-bind="sortable: {data: stories,
+                                     isEnabled: is_sortable,
+                                     afterMove: updateStoryPosition,
+                                     options: sortable_options
+                                    }">
+          <tr class="story"
+              data-bind="css: { odd: $index()%2, even: ! $index()%2 }">
+            <td class="handle"
+                data-bind="css: status">☰</td>
+            <td class="actions"
+                data-bind="template: {name: actionTemplate,
+                                      foreach: actions}">
+            </td>
+
+            <td><a data-bind="text: title,
+                attr: {href: url}">Story Title</a></td>
+            <td>
+              <!-- ko if: assignees().length > 0 -->
+              <ul class="assignees"
+                  data-bind="foreach: assignees">
+                <li>
+                  <a data-bind="text: user_id,
+                                attr: {href: href, title: fullname}"></a>
+                </li>
+              </ul>
+              <!-- /ko -->
+
+              <!-- ko if: assignees().length == 0 -->
+              <em i18n:translate="">Unassigned</em>
+              <!-- /ko -->
+
+            </td>
+            <td class="data numeric-data"
+                data-bind="text: estimate_str,
+                           css: time_status">stima</td>
+            <td class="data numeric-data"
+                data-bind="text: resource_time_str,
+                           css: time_status">done</td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <th i18n:translate=""
+              colspan="3">Totals</th>
+            <th class="info">&nbsp;</th>
+            <td tal:attributes="class string:data numeric-data ${totals/time_status}"
+                tal:content="totals/estimate"
+                data-bind="text: estimate_str"></td>
+            <td tal:attributes="class string:data numeric-data ${totals/time_status}"
+                tal:content="totals/hours"
+                data-bind="text: hours_str"></td>
+          </tr>
+        </tfoot>
+
+      </table>
+
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if: stories().length == 0 -->
+    <div>
+      <p class="discreet"
+          i18n:translate="">
+          No stories found.
+          Add a new one or bring them in via the iteration planner.
+      </p>
+    </div>
+    <!-- /ko -->
+
+  </metal:stories>
+
+</html>

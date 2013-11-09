@@ -1,5 +1,6 @@
 import os.path
 import pkg_resources
+import plone.api
 from OFS.Image import Image
 
 try:
@@ -52,6 +53,10 @@ def create_users(context):
         return
 
     portal = context.getSite()
+    pr = plone.api.portal.get_tool(name='portal_registration')
+    pg = plone.api.portal.get_tool(name='portal_groups')
+    pm = plone.api.portal.get_tool(name='portal_membership')
+    pmd = plone.api.portal.get_tool(name='portal_memberdata')
 
     for user_data in TEST_USERS:
         username, password, group, portrait = (
@@ -62,10 +67,10 @@ def create_users(context):
         )
         if username not in portal.acl_users.getUserIds():
             try:
-                portal.portal_registration.addMember(username, password)
+                pr.addMember(username, password)
                 if group:
-                    portal.portal_groups.addPrincipalToGroup(username, group)
-                user = portal.portal_membership.getMemberById(username)
+                    pg.addPrincipalToGroup(username, group)
+                user = pm.getMemberById(username)
                 user.setMemberProperties(mapping=user_data)
                 if portrait:
                     portrait_file = open(
@@ -76,7 +81,7 @@ def create_users(context):
                         ),
                         'rb'
                     )
-                    portal.portal_memberdata._setPortrait(
+                    pmd._setPortrait(
                         Image(id=username,
                               file=portrait_file,
                               title=user_data['fullname']),

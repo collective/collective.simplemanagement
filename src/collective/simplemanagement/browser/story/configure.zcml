@@ -14,4 +14,19 @@
     template="templates/view.pt"
   />
 
+  <browser:pages
+    for="...interfaces.IStory"
+    class=".actions.Actions"
+    layer="...interfaces.IBrowserLayer"
+    permission="zope2.View">
+      <browser:page
+        attribute="wf_actions"
+        name="wf_actions"
+      />
+      <browser:page
+        attribute="ch_iteration"
+        name="ch_iteration"
+      />
+  </browser:pages>
+
 </configure>

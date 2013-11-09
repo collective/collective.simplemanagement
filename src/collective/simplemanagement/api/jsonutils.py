@@ -1,5 +1,5 @@
 import json
-
+from decimal import Decimal
 from datetime import time
 from datetime import date
 from datetime import datetime
@@ -22,6 +22,8 @@ class ExtendedJSONEncoder(json.JSONEncoder):
             return obj.strftime(
                 self.DATE_RFC822_FORMAT + ' ' + self.TIME_RFC822_FORMAT + ' %z'
             )
+        elif isinstance(obj, Decimal):
+            return float(obj)
         return json.JSONEncoder.default(self, obj)
 
 

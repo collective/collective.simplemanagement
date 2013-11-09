@@ -1,4 +1,6 @@
+/*global window, common_content_filter */
 (function($, ko) {
+    "use strict";
     if ((typeof window.simplemanagement) === "undefined") {
         window.simplemanagement = {};
     }
@@ -18,6 +20,22 @@
     base.format = function(format, data) {
         return format.replace(/\{([a-zA-Z_0-9]+)\}/g,
                               function(a, g1) { return data[g1]; });
+    };
+
+    /* Function to format a decimal number
+       in human readable time (HH:MM).
+       e.g.:
+        0    => 0:00
+        0.25 => 0:15
+        0.50 => 0:30
+        0:75 => 0.45
+    */
+    base.decimal2timestr = function (data) {
+        var decimal = data % 1 * 60;
+        if (decimal === 0) {
+            decimal = "00";
+        }
+        return Math.floor(data) + ":" + decimal;
     };
 
     // Fixed box
@@ -49,6 +67,7 @@
         });
     };
 
+
     // The jqueryDrawer binding for knockout
     //
     // TODO: kill in favour of new drawer
@@ -70,6 +89,87 @@
             });
         }
     };
+
+    ko.bindingHandlers.ajaxDrawer = {
+        init: function(element, accessor) {
+            var value = accessor();
+            $(element).drawer({
+                group: '.status',
+                position: "top-right",
+                css_class: "tooltip",
+                offset: [-10, -15],
+                content: function(callback, drawer) {
+                    $.get(value.href, function(data) {
+                        var content = $(data),
+                            error = null,
+                            action = 'update';
+                        $('a', content).not('.close').bind('click', function(evt) {
+                            evt.preventDefault();
+                            $.getJSON($(this).attr('href'), function(data) {
+                                error = data.error;
+                                action = data.action;
+                                delete data.error;
+                                delete data.action;
+
+                                if (error !== null) {
+                                    alert(error);
+                                } else {
+                                    if (action === 'update') {
+                                        value.model.update(data);
+                                    } else if (action === 'drop') {
+                                        value.model.remove();
+                                    }
+                                    drawer.hide();
+                                }
+                            });
+                        });
+                        $('a.close', content).click(function() {
+                            drawer.hide();
+                        });
+                        callback(content);
+                    });
+                }
+
+            });
+        }
+    };
+
+
+    ko.bindingHandlers.ajaxOverlay = {
+        init: function(element, accessor) {
+            var value = accessor();
+            $(element).prepOverlay({
+                subtype: 'ajax',
+                filter: common_content_filter,
+                width: '80%',
+                config: {
+                    onLoad: function() {
+                        // TODO: set dynamically
+                        sm.booking_tooltip();
+                    }
+                }
+            });
+
+        }
+    };
+
+    ko.bindingHandlers.ajaxOverlayForm = {
+        init: function(element, accessor) {
+            var value = accessor();
+            $(element).prepOverlay({
+                subtype: 'iframe',
+                filter: common_content_filter,
+                width: '80%',
+                closeselector: '.button-field',
+                config: {
+                    onClose: function(el) {
+                        value.model.load();
+                    }
+                },
+            });
+        }
+    };
+
 
     // A knockout binding to set an element as "droppable".
     //
