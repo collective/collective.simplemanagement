@@ -48,3 +48,10 @@ def upgrade_to_1002(context, logger=None):
     logger.info("Creating portal tool")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'toolset')
 
+
+def upgrade_to_1003(context, logger=None):
+    logger = getLogger(logger)
+    logger.info("Fixing registry")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'plone.app.registry')
+    logger.info("Reloading javascript registry")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'jsregistry')

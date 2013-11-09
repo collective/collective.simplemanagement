@@ -24,4 +24,14 @@
       profile="collective.simplemanagement:default"
       />
 
+  <genericsetup:upgradeStep
+      title="Compass view (2)"
+      description="Compass view (2)"
+      source="1002"
+      destination="1003"
+      handler=".upgrades.upgrade_to_1003"
+      sortkey="1"
+      profile="collective.simplemanagement:default"
+      />
+
 </configure>
