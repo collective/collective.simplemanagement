@@ -78,7 +78,6 @@ class IProject(form.Schema):
     )
     prj_start_date = schema.Date(
         title=_(u"Start date"),
-        default=date.today()
     )
     prj_expected_end_date = schema.Date(
         title=_(u"Expected end date"),
@@ -163,6 +162,11 @@ class IProject(form.Schema):
         title=_(u"Notes"),
         required=False
     )
+
+
+@form.default_value(field=IProject['prj_start_date'])
+def default_prj_start_date(data):
+    return date.today()
 
 
 
