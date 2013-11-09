@@ -20,7 +20,10 @@ class IResource(Interface):
         title=_(u"Role"),
         source="collective.simplemanagement.roles"
     )
-    user_id = schema.TextLine(title=_(u"User ID"))
+    user_id = schema.Choice(
+        title=_(u"User ID"),
+        source="collective.simplemanagement.resources"
+    )
     active = schema.Bool(
         title=_(u"Active"),
         default=True

@@ -39,4 +39,10 @@
       name="collective.simplemanagement.projectiterations"
       provides="zope.schema.interfaces.IVocabularyFactory" />
 
+  <utility
+    factory=".vocabularies.UsersFactory"
+    name="collective.simplemanagement.resources"
+    provides="zope.schema.interfaces.IVocabularyFactory" />
+    />
+
 </configure>

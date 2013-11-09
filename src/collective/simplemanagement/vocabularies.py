@@ -2,6 +2,9 @@ from zope.interface import implements
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.interfaces import IVocabularyFactory
 
+from plone.app.vocabularies.users import UsersVocabulary
+import plone.api
+
 from Products.CMFCore.utils import getToolByName
 
 from .configure import Settings
@@ -100,3 +103,19 @@ class iterationsVocab(object):
                         path, path, term.Title)
                 )
         return SimpleVocabulary(terms)
+
+
+class UsersFactory(object):
+    """
+    """
+    implements(IVocabularyFactory)
+
+    def __call__(self, context, query=''):
+        # we get z3c.form.interfaces.NO_VALUE
+        # or Resource istance or dicts into `context`
+        # let's make sure we always get something  that's acquisition aware
+        context = plone.api.portal.get()
+        acl_users = getToolByName(context, "acl_users")
+        users = sorted(acl_users.searchUsers(fullname=query),
+                       key=lambda x: x['title'])
+        return UsersVocabulary.fromItems(users, context)
