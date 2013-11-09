@@ -60,6 +60,9 @@ setup(
         'loadcontent': [
             'plone.app.transmogrifier',
             'transmogrify.dexterity'
+        ],
+        'togetherjs': [
+            'collective.js.togetherjs',
         ]
     },
     entry_points="""

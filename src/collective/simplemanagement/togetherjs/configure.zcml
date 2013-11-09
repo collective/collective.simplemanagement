@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="collective.simplemanagement">
+
+    <browser:page
+      name="togetherjs"
+      for="*"
+      layer="..interfaces.IBrowserLayer"
+      class=".browser.Helpers"
+      permission="zope2.View"
+      />
+
+</configure>

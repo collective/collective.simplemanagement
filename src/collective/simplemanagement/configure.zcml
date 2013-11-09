@@ -37,6 +37,18 @@
   <configure zcml:condition="installed collective.transmogrifier">
     <include file="loadcontent.zcml" />
   </configure>
+  <!--
+    Extra generic setup profile for using Mozilla TogetherJS
+    It depends on:
+      * collective.js.togetherjs
+
+    Use this buildout configuration to enable it:
+    eggs =
+      collective.simplemanagement [togetherjs]
+   -->
+  <configure zcml:condition="installed collective.js.togetherjs">
+    <include file="togetherjs.zcml" />
+  </configure>
 
   <!-- enable reporting view -->
 
