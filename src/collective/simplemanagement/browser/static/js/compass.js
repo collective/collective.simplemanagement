@@ -23,6 +23,14 @@
         // TODO: in this file we are using a mix & match of approaches,
         // we should standardize
         var self = this;
+        this.is_critical = ko.computed(function() {
+            var people_effort = self.project.app.people_effort();
+            var working_total_days = self.project.app.working_total_days();
+            if(people_effort[self.id] &&
+                    people_effort[self.id] > working_total_days)
+                return true;
+            return false;
+        });
         this.role.subscribe(function(value) {
             self.project.save(
                 { people: [ self.toJSON() ] },
@@ -61,13 +69,10 @@
         domId: function() {
             return this.project.id().replace(/\//g, '-') + '-' + this.id;
         },
-        data: function() {
-            return this.project.app._people[this.id];
-        },
         getAvatar: function() {
-            console.log(this.id);
-            if(this.data){
-                return this.data.avatar;
+            var data = this.project.app._people[this.id];
+            if(data){
+                return data.avatar;
             }
             return '';
         },
@@ -106,6 +111,17 @@
             return 'status-indicator state-' + this.status();
         }, this);
         var self = this;
+        this.people_effort = ko.computed(function() {
+            var i, l, person, people = self.people(), effort = {};
+            for(i=0, l=people.length; i<l; i++) {
+                person = people[i];
+                if(effort[person.id] === undefined)
+                    effort[person.id] = parseFloat(person.effort(), 10);
+                else
+                    effort[person.id] += person.effort();
+            }
+            return effort;
+        });
         this.effort.subscribe(function(value) {
             self.save(
                 { effort: value.toString() },
@@ -205,13 +221,14 @@
     };
 
     compass.Main = function(roles, people, base_url, plan_weeks,
-                            translations) {
+                            working_week_days, translations) {
         // TODO: make this timeout configurable in Plone
         this.overlay = null;
         this.message_timeout = 6;
         this.roles = roles;
         this._people = people;
         this.base_url = base_url;
+        this.working_week_days = working_week_days;
         this.plan_weeks = ko.observable(plan_weeks);
         this.translations = translations;
         this.people_filter = ko.observable('');
@@ -261,6 +278,50 @@
         });
 
         var self = this;
+        this.working_total_days = ko.computed(function() {
+            return self.working_week_days * self.plan_weeks();
+        });
+        this.people_effort = ko.computed(function() {
+            var i, l, project, project_effort, person_id,
+                projects = self.active_projects(), effort = {};
+            for(i=0, l=projects.length; i<l; i++) {
+                project = projects[i];
+                project_effort = project.people_effort();
+                for(person_id in project_effort) {
+                    if(effort[person_id] === undefined)
+                        effort[person_id] = project_effort[person_id];
+                    else
+                        effort[person_id] += project_effort[person_id];
+                }
+            }
+            return effort;
+        });
+        this.total_effort = ko.computed(function() {
+            var result = 0, person_id, people_effort = self.people_effort();
+            for(person_id in people_effort) {
+                result += people_effort[person_id];
+            }
+            return result;
+        });
+        this.critical_resources = ko.computed(function() {
+            var person_id, data, people_effort = self.people_effort(),
+                critical = [];
+            for(person_id in people_effort) {
+                if(people_effort[person_id] > self.working_total_days()) {
+                    data = {
+                        name: person_id,
+                        effort: people_effort[person_id],
+                        avatar: ''
+                    };
+                    if(self._people[person_id]) {
+                        data.name = self._people[person_id].name;
+                        data.avatar = self._people[person_id].avatar;
+                    }
+                    critical.push(data);
+                }
+            }
+            return critical;
+        });
         this.reprioritize = function() {
             var i, l, projects_ids = [], projects = self.active_projects();
             for(i=0, l=projects.length; i<l; i++)
@@ -543,6 +604,7 @@
                 $.parseJSON(element.attr('data-people')),
                 element.attr('data-base-url'),
                 $.parseJSON(element.attr('data-plan-weeks')),
+                $.parseJSON(element.attr('data-working-week-days')),
                 $.parseJSON(element.attr('data-translations')));
             element.find('.addProject').overlay({
                 onBeforeLoad: function(e) {

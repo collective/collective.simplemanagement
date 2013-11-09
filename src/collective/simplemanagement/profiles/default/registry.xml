@@ -2,6 +2,7 @@
   <records interface="collective.simplemanagement.interfaces.ISettings">
     <value key="warning_delta_percent">0.3</value>
     <value key="man_day_hours">8.0</value>
+    <value key="working_week_days">5.0</value>
     <value key="booking_check_delta_days_start">7</value>
     <value key="booking_check_delta_days_end">2</value>
     <value key="employees_group">employees</value>

@@ -1053,17 +1053,25 @@ input[name="filter-people"] {
 .project > .people .thumbnail {
     cursor: pointer;
 }
+
+.critical-resources .thumbnail.person span.effort,
 .project > .people .thumbnail.person span.effort {
     position: absolute;
     display: block;
     height: 1.5em;
-    width: 1.5em;
-    top: -0.3em;
-    left: -0.3em;
+    top: -0.7em;
     background: #333;
     color: #fff;
     border-radius: 0.5em;
     text-align: center;
+    min-width: 1.5em;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    left: -0.3em;
+}
+.critical-resources .thumbnail.person span.effort,
+.project > .people .thumbnail.person span.effort.critical {
+    background: #c33;
 }
 .project > .info .effort {
     margin-top: 0.7em;
@@ -1299,6 +1307,40 @@ input[name="filter-people"] {
 
 #content .compassview .addProject:hover {
     color: black !important;
+}
+
+#content .compassview .bottom-pane {
+    clear: both;
+    margin-top: 2em;
+}
+
+#content .compassview .bottom-pane .totals {
+    float: left;
+    margin-right: 1em;
+    width: 15em;
+    margin-top: 0em;
+    clear: both;
+}
+
+#content .compassview .bottom-pane .totals p.huge-number {
+    font-size: 350%;
+    font-weight: bold;
+    color: #444;
+    line-height: 1.3em;
+    margin: 0em;
+    float: left;
+}
+
+#content .compassview .bottom-pane .totals p.postfix {
+    float: left;
+    margin-left: 1em;
+    margin-top: 0.7em;
+    display: block;
+    width: 4em;
+}
+
+#content .compassview .bottom-pane .critical-resources {
+    margin-top: 0.5em;
 }
 
 /* project states */

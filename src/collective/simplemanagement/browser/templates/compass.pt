@@ -26,7 +26,8 @@
                              data-people view/employees;
                              data-base-url view/base_url;
                              data-translations view/translations;
-                             data-plan-weeks settings/default_plan_length">
+                             data-plan-weeks settings/default_plan_length;
+                             data-working-week-days view/working_week_days">
           <div class="messages" data-bind="visible: has_messages">
             <!-- ko foreach: permanent_messages -->
             <div class="message" data-bind="css: type, html: message"></div>
@@ -144,7 +145,8 @@
                                         css_class: 'tooltip tooltip-people',
                                         content: '#'+dom_id(),
                                         position: 'bottom-left' }">
-                      <span class="effort" data-bind="text: effort"></span>
+                      <span class="effort"
+                            data-bind="text: effort, css: { critical: is_critical }"></span>
                       <span class="title" data-bind="text: display_role"></span>
                     </div>
                     <!-- /ko -->
@@ -161,17 +163,25 @@
                  class="addProject"
                  rel="#newProjectPopup"
                  i18n:translate="">Activate project</a>
-            </div>
-            <div class="critical">
-              <div class="totals">
-                <h4 i18n:translate="">Total compass</h4>
-                <p class="huge-number"></p>
-                <p i18n:translate="" class="postfix">man days</p>
-              </div>
-              <div class="critical">
-                <h4 i18n:translate="">Critical resources</h4>
-                <div class="critical-resources">
-                  
+              <div class="bottom-pane">
+                <div class="totals">
+                  <h4 i18n:translate="">Total compass</h4>
+                  <p class="huge-number"
+                     data-bind="text: total_effort"></p>
+                  <p i18n:translate="" class="postfix">man days</p>
+                </div>
+                <div class="critical">
+                  <h4 i18n:translate="">Critical resources</h4>
+                  <div class="critical-resources"
+                       data-bind="foreach: critical_resources">
+                    <div class="thumbnail thumbnail-small person"
+                         data-bind="style: {
+                                        backgroundImage: 'url('+avatar+')'
+                                    },
+                                    attr: { title: name}">
+                      <span class="effort" data-bind="text: effort"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

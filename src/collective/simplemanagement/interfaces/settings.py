@@ -21,6 +21,10 @@ class ISettings(Interface):
         title=_(u"Man day hours"),
         description=_(u"The number of hours a person works in a day")
     )
+    working_week_days = schema.Decimal(
+        title=_(u"Working week days"),
+        description=_(u"The number of days worked in a week")
+    )
     booking_check_delta_days_start = schema.Int(
         title=_(u"Booking check days delta start")
     )

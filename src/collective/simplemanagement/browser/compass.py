@@ -10,6 +10,7 @@ from plone.registry.interfaces import IRegistry
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
+from ..interfaces.settings import ISettings
 from ..interfaces.compass import ICompassSettings
 from .. import api
 from ..structures import Resource
@@ -54,6 +55,14 @@ class Compass(BrowserView):
             "project-deactivated": _(u"{project} has been deactivated"),
             "project-created": _(u"{project} has been created")
         })
+
+    def global_settings(self):
+        registry = getUtility(IRegistry)
+        return registry.forInterface(ISettings)
+
+    def working_week_days(self):
+        global_settings = self.global_settings()
+        return global_settings.working_week_days
 
     def settings(self):
         registry = getUtility(IRegistry)
