@@ -1,9 +1,14 @@
 import logging
-from zope.component import getUtility
-from plone.registry.interfaces import IRegistry
-from Products.CMFCore.utils import getToolByName
-from .interfaces.compass import ICompassSettings
 
+from zope.component import getUtility
+
+from plone.registry.interfaces import IRegistry
+import plone.api
+
+from Products.CMFCore.utils import getToolByName
+
+from .interfaces.compass import ICompassSettings
+from .interfaces.project import IProject
 
 
 # pylint: disable=W0613
@@ -55,3 +60,29 @@ def upgrade_to_1003(context, logger=None):
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'plone.app.registry')
     logger.info("Reloading javascript registry")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'jsregistry')
+
+
+def upgrade_to_1004(context, logger=None):
+    logger = getLogger(logger)
+    logger.info("Fixing bad values in projects operatives")
+    acl_users = plone.api.portal.get_tool(name='acl_users')
+    catalog = plone.api.portal.get_tool(name='portal_catalog')
+    for brain in catalog(object_provides=IProject.__identifier__):
+        obj = brain.getObject()
+        if not obj.operatives:
+            continue
+        for op in obj.operatives:
+            userid = op.user_id
+            if not acl_users.getUserById(userid):
+                # we do not have a valid userid here
+                # and we suppose to have a fullname in it
+                logger.info('fixing operative "%s" for project %s' % (userid,
+                                                                    brain.getPath()))
+                user = acl_users.searchUsers(fullname=userid)
+                if user:
+                    new_userid = user[0]['userid']
+                    logger.info('operative %s => %s' % (userid, new_userid))
+                    op.user_id = new_userid
+                else:
+                    logger.info('replacement for operative "%s" NOT FOUND' % (userid))
+

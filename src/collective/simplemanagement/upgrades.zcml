@@ -34,4 +34,14 @@
       profile="collective.simplemanagement:default"
       />
 
+  <genericsetup:upgradeStep
+      title="Fix project operatives"
+      description="Fix project operatives that contains fullnames instead of userids"
+      source="1003"
+      destination="1004"
+      handler=".upgrades.upgrade_to_1004"
+      sortkey="1"
+      profile="collective.simplemanagement:default"
+      />
+
 </configure>
