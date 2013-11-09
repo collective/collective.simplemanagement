@@ -44,7 +44,7 @@
               because the designated area is missing.
               We suggest to create it.
             </p>
-          
+
           <div id="project-documents"
                tal:define="items documents/last">
             <p class="label" i18n:translate="">Last documents</p>
@@ -113,7 +113,7 @@
               There is no tracker in this project:
               we suggest to create it.
             </p>
-          
+
           <div id="project-last-activities"
                tal:define="items view/last_activities">
             <p class="label" i18n:translate="">Last modified</p>
@@ -135,7 +135,7 @@
             </ul>
           </div>
         </div>
-        
+
       </div>
 
       <div class="pane">

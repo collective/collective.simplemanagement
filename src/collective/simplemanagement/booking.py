@@ -3,7 +3,7 @@ from zope.interface import implementer
 from z3c.form import form, field
 from z3c.relationfield.relation import create_relation
 
-from plone.directives import dexterity
+from plone.dexterity.content import Item
 from plone.dexterity.utils import createContentInContainer
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -41,7 +41,7 @@ class BookingForm(form.AddForm):
 
 
 @implementer(IBooking)
-class Booking(dexterity.Item):
+class Booking(Item):
 
     def get_related(self):
         related = self.related

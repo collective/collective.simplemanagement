@@ -5,4 +5,73 @@
     i18n_domain="collective.simplemanagement">
 
 
+  <browser:page
+    for="*"
+    name="project_macros"
+    layer="...interfaces.IBrowserLayer"
+    template="templates/macros.pt"
+    permission="zope2.View"
+  />
+
+
+  <browser:page
+    for="...interfaces.IProject"
+    name="view"
+    layer="...interfaces.IBrowserLayer"
+    class=".view.View"
+    permission="zope2.View"
+    template="templates/view.pt"
+  />
+
+
+  <browser:page
+    for="...interfaces.IProject"
+    name="overview"
+    layer="...interfaces.IBrowserLayer"
+    class=".overview.Overview"
+    permission="zope2.View"
+    template="templates/overview.pt"
+  />
+
+
+  <browser:page
+    for="...interfaces.IProject"
+    name="alliterations"
+    layer="...interfaces.IBrowserLayer"
+    class=".view.View"
+    permission="zope2.View"
+    template="templates/alliterations.pt"
+  />
+
+
+  <browser:page
+    for="...interfaces.IProject"
+    name="backlog"
+    layer="...interfaces.IBrowserLayer"
+    class=".backlog.Backlog"
+    permission="cmf.ModifyPortalContent"
+    template="templates/backlog.pt"
+  />
+
+
+  <browser:page
+    for="...interfaces.IProject"
+    name="planning"
+    layer="...interfaces.IBrowserLayer"
+    class=".planning.Planning"
+    permission="cmf.ModifyPortalContent"
+    template="templates/planning.pt"
+  />
+
+
+  <browser:page
+    for="...interfaces.IProject"
+    name="stories"
+    layer="...interfaces.IBrowserLayer"
+    class=".planning.Stories"
+    permission="cmf.ModifyPortalContent"
+    template="templates/stories.pt"
+  />
+
+
 </configure>

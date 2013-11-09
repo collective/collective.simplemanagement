@@ -35,7 +35,7 @@ setup(
         'plone.tiles',
         'Products.CMFPlone',
         'plone.app.collection',
-        'plone.app.dexterity [grok,relations]',
+        'plone.app.dexterity [relations]',
         'plone.app.relationfield',
         'plone.autoform >= 1.4',
         'plone.formwidget.contenttree',

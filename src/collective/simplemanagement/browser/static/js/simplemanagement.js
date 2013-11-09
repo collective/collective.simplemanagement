@@ -297,66 +297,66 @@
 
         $('.simple-tooltip[title]').tooltip();
 
-        $('.status').drawer({
-            group: '.status',
-            position: "top-right",
-            css_class: "tooltip",
-            offset: [-10, -15],
-            content: function(callback, drawer) {
-                var handle_span = drawer.trigger.parent().siblings('.handle'),
-                    url = drawer.trigger.attr('href');
-                $.get(url + '/wf_actions', function(data) {
-                    var content = $(data);
-                    $('a', content).not('.close').bind('click', function(evt) {
-                        evt.preventDefault();
-                        $.getJSON($(this).attr('href'), function(data) {
-                            if (data === false) {
-                                alert('An error occurred');
-                            } else {
-                                handle_span.removeClass(
-                                    'done in_progress suspended todo'
-                                );
-                                handle_span.addClass(data);
-                                drawer.hide();
-                            }
-                        });
-                    });
-                    $('a.close', content).click(function() {
-                        drawer.hide();
-                    });
-                    callback(content);
-                });
-            }
-        });
+        // $('.status').drawer({
+        //     group: '.status',
+        //     position: "top-right",
+        //     css_class: "tooltip",
+        //     offset: [-10, -15],
+        //     content: function(callback, drawer) {
+        //         var handle_span = drawer.trigger.parent().siblings('.handle'),
+        //             url = drawer.trigger.attr('href');
+        //         $.get(url + '/wf_actions', function(data) {
+        //             var content = $(data);
+        //             $('a', content).not('.close').bind('click', function(evt) {
+        //                 evt.preventDefault();
+        //                 $.getJSON($(this).attr('href'), function(data) {
+        //                     if (data === false) {
+        //                         alert('An error occurred');
+        //                     } else {
+        //                         handle_span.removeClass(
+        //                             'done in_progress suspended todo'
+        //                         );
+        //                         handle_span.addClass(data);
+        //                         drawer.hide();
+        //                     }
+        //                 });
+        //             });
+        //             $('a.close', content).click(function() {
+        //                 drawer.hide();
+        //             });
+        //             callback(content);
+        //         });
+        //     }
+        // });
 
-        $('.iteration').drawer({
-            group: '.iteration',
-            position: "top-right",
-            css_class: "tooltip",
-            offset: [-10, -15],
-            content: function(callback, drawer) {
-                // var handle_span = drawer.trigger.parent().
-                //     siblings('.handle'),
-                var url = drawer.trigger.attr('href');
-                $.get(url + '/ch_iteration', function(data) {
-                    var content = $(data);
-                    $('a', content).not('.close').bind('click', function(evt) {
-                        evt.preventDefault();
-                        $.getJSON($(this).attr('href'), function(data) {
-                            if (data === false) {
-                                alert('An error occurred');
-                            } else {
-                                window.location.reload();
-                            }
-                        });
-                    });
-                    $('a.close', content).click(function() {
-                        drawer.hide();
-                    });
-                    callback(content);
-                });
-            }
-        });
+        // $('.iteration').drawer({
+        //     group: '.iteration',
+        //     position: "top-right",
+        //     css_class: "tooltip",
+        //     offset: [-10, -15],
+        //     content: function(callback, drawer) {
+        //         // var handle_span = drawer.trigger.parent().
+        //         //     siblings('.handle'),
+        //         var url = drawer.trigger.attr('href');
+        //         $.get(url + '/ch_iteration', function(data) {
+        //             var content = $(data);
+        //             $('a', content).not('.close').bind('click', function(evt) {
+        //                 evt.preventDefault();
+        //                 $.getJSON($(this).attr('href'), function(data) {
+        //                     if (data === false) {
+        //                         alert('An error occurred');
+        //                     } else {
+        //                         window.location.reload();
+        //                     }
+        //                 });
+        //             });
+        //             $('a.close', content).click(function() {
+        //                 drawer.hide();
+        //             });
+        //             callback(content);
+        //         });
+        //     }
+        // });
 
         simplemanagement.booking_form = $('#booking-tooltip-form').detach();
         $(".bookform").each(function () {

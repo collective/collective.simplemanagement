@@ -10,8 +10,3 @@ class View(BrowserView, IterationViewMixin):
         start = self.context.toLocalizedTime(self.context.start.isoformat())
         end = self.context.toLocalizedTime(self.context.end.isoformat())
         return dict(start=start, end=end)
-
-    @memoize
-    def totals(self):
-        adpt = IStoriesListing(self.context)()
-        return adpt.totals

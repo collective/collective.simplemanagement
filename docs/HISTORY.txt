@@ -4,6 +4,9 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Remove grok dependency
+  [gborelli]
+
 - Add api module
   [gborelli]
 
