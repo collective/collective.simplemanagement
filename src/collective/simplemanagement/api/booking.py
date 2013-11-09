@@ -46,7 +46,7 @@ def create_booking(context, data, reindex=True):
 
 def create_hole(day, hours, user_id, reason=""):
     hole = BookingHole(day, hours, user_id, reason)
-    util = component.getUtility(IBookingHoles)
+    util = getUtility(IBookingHoles)
     util.add(hole)
     return hole
 
