@@ -171,6 +171,11 @@
             });
         };
         this.addPerson = function(person, event, ui) {
+            var i, l, all_people = self.people();
+            for(i=0, l=all_people.length; i<l; i++) {
+                if(person.id === all_people[i].id)
+                    return false;
+            }
             var operative = new compass.Person(
                 self,
                 { id: person.id, role: 'developer', effort: 0.0 }
@@ -189,6 +194,7 @@
                         }
                     )
                 });
+            return true;
         };
         this.delPerson = function(person) {
             var i, l, found = -1, people = self.people();
@@ -342,7 +348,7 @@
                     var i, l, project;
                     for(i=0, l=projects.length; i<l; i++) {
                         project=projects[i];
-                        project.priority(data[project.id].priority);
+                        project.priority(data[project.id]);
                     }
                 },
                 error: function(request, status, error) {
