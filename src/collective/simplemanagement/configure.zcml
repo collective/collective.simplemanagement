@@ -47,7 +47,7 @@
       collective.simplemanagement [togetherjs]
    -->
   <configure zcml:condition="installed collective.js.togetherjs">
-    <include file="togetherjs.zcml" />
+    <include package=".togetherjs" />
   </configure>
 
   <!-- enable reporting view -->
