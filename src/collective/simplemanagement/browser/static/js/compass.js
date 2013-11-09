@@ -176,11 +176,11 @@
                 if(person.id === all_people[i].id)
                     return false;
             }
+            // TODO: default role should be taken by config
             var operative = new compass.Person(
                 self,
                 { id: person.id, role: 'developer', effort: 0.0 }
             );
-            // TODO: default role should be taken by config
             self.people.push(operative);
             self.save(
                 { people: [ operative.toJSON(false) ] },
@@ -226,8 +226,33 @@
         };
     };
 
+    compass.Project.prototype = {
+        toJSON: function() {
+            var i, l, people, data = {
+                id: this.id(),
+                name: this.name(),
+                status: this.status(),
+                customer: this.customer(),
+                effort: this.effort(),
+                notes: this.notes(),
+                css_class: this.css_class(),
+                people: []
+            };
+            people = this.people();
+            for(i=0, l=people.length; i<l; i++) {
+                data.people.push({
+                    id: people[i].id,
+                    effort: people[i].effort(),
+                    role: people[i].display_role(),
+                    is_critical: people[i].is_critical()
+                });
+            }
+            return data;
+        }
+    };
+
     compass.Main = function(roles, people, base_url, plan_weeks,
-                            working_week_days, translations) {
+                            working_week_days, last_snapshot, translations) {
         // TODO: make this timeout configurable in Plone
         this.overlay = null;
         this.message_timeout = 6;
@@ -249,6 +274,7 @@
         this.loaded = ko.observable(false);
         this.transient_messages = ko.observableArray([]);
         this.permanent_messages = ko.observableArray([]);
+        this.last_snapshot = ko.observable(last_snapshot);
         this.has_messages = ko.computed(this.hasMessages, this);
         this.active_pane = ko.observable('new');
         this.project_factory_validate = ko.observable(true);
@@ -315,6 +341,7 @@
             for(person_id in people_effort) {
                 if(people_effort[person_id] > self.working_total_days()) {
                     data = {
+                        id: person_id,
                         name: person_id,
                         effort: people_effort[person_id],
                         avatar: ''
@@ -374,6 +401,51 @@
         });
         this.load_more = function() {
             self.load_all();
+        };
+        this.snapshot = function() {
+            var i, l, active_projects, critical_resources, data;
+            data = {
+                projects: [],
+                total: self.total_effort(),
+                critical: [],
+                plan_end: self.plan_end()
+            };
+            active_projects = self.active_projects();
+            for(i=0, l=active_projects.length; i<l; i++) {
+                data.projects.push(active_projects[i].toJSON());
+            }
+            critical_resources = self.critical_resources();
+            for(i=0, l=critical_resources.length; i<l; i++) {
+                data.critical.push({
+                    id: critical_resources[i].id,
+                    effort: critical_resources[i].effort
+                });
+            }
+            $.ajax({
+                type: 'POST',
+                url: self.url('take_snapshot'),
+                data: {
+                    data: JSON.stringify(data)
+                },
+                traditional: true,
+                dataType: 'json',
+                success: function(data, status, request) {
+                    self.addMessage({
+                        type: 'info',
+                        message: self.translate('snapshot-taken')
+                    });
+                    self.last_snapshot(data.url);
+                },
+                error: function(request, status, error) {
+                    self.addMessage({
+                        type: 'error',
+                        message: base.format(
+                            self.translate('error-please-reload'),
+                            { url: window.location.toString() }
+                        )
+                    }, true);
+                }
+            });
         };
     };
 
@@ -518,8 +590,7 @@
             var weeks = this.plan_weeks();
             var today = new Date();
             var end = new Date(today.getTime() + (weeks*7*24*60*60*1000));
-            // TODO: maybe we can format this better
-            return end.toLocaleDateString();
+            return $.datepicker.formatDate('d MM yy', end);
         },
         getFormattedWeeks: function() {
             var weeks = this.plan_weeks();
@@ -599,11 +670,58 @@
         }
     };
 
+    compass.History = function(list_keys_url) {
+        this.list_keys_url = list_keys_url;
+        this.keys = ko.observableArray([]);
+        this.keys_count = null;
+        this.loading = false;
+
+        var self = this;
+        // TODO: this infinite scroller might have bugs,
+        // we should chain calls like we do in eprice
+        this.load = function() {
+            if(self.loading) return false;
+            self.loading = true;
+            var start, query;
+            start = self.keys().length;
+            if(self.keys_count !== null && self.keys_count <= start)
+                return false;
+            $.ajax({
+                dataType: "json",
+                url: self.list_keys_url,
+                type: "POST",
+                traditional: true,
+                data: {
+                    start: start
+                },
+                success: function(data, status, request) {
+                    var i, l, keys=data.items;
+                    for(i=0, l=keys.length; i<l; i++) {
+                        console.log(keys[i]);
+                        self.keys.push({
+                            title: $.datepicker.formatDate(
+                                'd MM yy', new Date(keys[i].value*1000)),
+                            url: keys[i].url,
+                            active: (
+                                keys[i].url.replace(/\/$/, '') ==
+                                    window.location.toString().
+                                        replace(/\/$/, ''))
+                        });
+                    }
+                    self.keys_count = data.count;
+                    self.loading = false;
+                }
+            });
+            return true;
+        };
+        this.load();
+    };
+
     compass.apps = [];
 
     $(document).ready(function() {
         ko.validation.init();
-        $('.compassview').each(function() {
+        $('.compassview.editmode').each(function() {
             var element = $(this);
             var app = new compass.Main(
                 $.parseJSON(element.attr('data-roles')),
@@ -611,6 +729,7 @@
                 element.attr('data-base-url'),
                 $.parseJSON(element.attr('data-plan-weeks')),
                 $.parseJSON(element.attr('data-working-week-days')),
+                element.attr('data-last-snapshot'),
                 $.parseJSON(element.attr('data-translations')));
             element.find('.addProject').overlay({
                 onBeforeLoad: function(e) {
@@ -618,6 +737,15 @@
                 }
             });
             app.overlay = element.find('.addProject').data('overlay');
+            app.load();
+            compass.apps.push(app);
+            ko.applyBindings(app, this);
+        });
+        $('.compassview.historymode').each(function() {
+            var element = $(this);
+            var app = new compass.History(
+                element.attr('data-list-keys-url'));
+            element.find('.delete').overlay();
             app.load();
             compass.apps.push(app);
             ko.applyBindings(app, this);

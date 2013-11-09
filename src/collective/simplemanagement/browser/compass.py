@@ -2,13 +2,11 @@ import json
 import plone.api
 from datetime import date
 from decimal import Decimal
-from zope.interface import implements
+from DateTime import DateTime
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
-from zope.publisher.interfaces import IPublishTraverse, NotFound
 from plone.registry.interfaces import IRegistry
-from Products.Five import BrowserView
-from Products.CMFCore.utils import getToolByName
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from ..interfaces.settings import ISettings
 from ..interfaces.compass import ICompassSettings
@@ -19,15 +17,111 @@ from .. import messageFactory as _
 # Validate both on the server and client side,
 # using z3c.form on the client side in a less stressful way
 
-class Compass(BrowserView):
+class History(api.views.Traversable):
 
-    implements(IPublishTraverse)
+    STEP = 20 # Used for pagination/infinite scroll
+
+    template = ViewPageTemplateFile('templates/compass_history.pt')
+
+    def __init__(self, context, request):
+        super(History, self).__init__(context, request)
+        self.tools = api.portal.LazyTools(context)
+        self.key = None
+        self.data = None
+
+    def augment_user_data(self, data):
+        """Augments the user data
+        """
+        user_id = data.get('id')
+        if user_id:
+            data['name'] = user_id
+            data['avatar'] = ''
+            user_details = api.users.get_user_details(
+                self.context,
+                user_id,
+                portal_url=self.tools['portal_url'],
+                portal_membership=self.tools['portal_membership']
+            )
+            if user_details:
+                data['name'] = user_details['fullname']
+                data['avatar'] = user_details['portrait']
+        return data
+
+    def html_notes(self, data):
+        portal_transforms = self.tools['portal_transforms']
+        data = portal_transforms.convert('markdown_to_html', data)
+        return data.getData()
+
+    def compass_url(self):
+        return self.context.absolute_url() + '/@@compass'
+
+    def base_url(self):
+        return self.context.absolute_url() + '/@@compass/history/'
+
+    def delete_url(self):
+        return self.base_url()+str(self.key)+'/delete'
+
+    def list_keys_url(self):
+        return self.base_url()+str(self.key)+'/list_keys'
+
+    def active_date(self):
+        return api.date.format(DateTime(self.key))
+
+    @api.jsonutils.jsonmethod()
+    def do_list_keys(self):
+        start = int(self.request.form.get('start', '0'), 10)
+        portal_compass = self.tools['portal_compass']
+        items = []
+        for tstamp in portal_compass.keys(start, self.STEP):
+            items.append({
+                'value': tstamp,
+                'url': self.base_url()+str(tstamp)
+            })
+        return {
+            'items': items,
+            'count': len(portal_compass)
+        }
+
+    def do_delete(self):
+        key = self.request.form.get('key')
+        confirmation = self.request.form.get('do_delete')
+        if key and confirmation and long(key) == self.key \
+                and confirmation == 'yes':
+            portal_compass = self.tools['portal_compass']
+            portal_compass.remove(self.key)
+            max_key = portal_compass.max_key()
+            if max_key is not None:
+                self.request.response.redirect(self.base_url()+str(max_key))
+            else:
+                self.request.response.redirect(self.compass_url())
+            plone.api.portal.show_message(
+                message=_(u"Snapshot deleted"),
+                request=self.request
+            )
+        self.request.response.redirect(self.base_url()+str(self.key))
+        plone.api.portal.show_message(
+            message=_(u"Deletion has been cancelled"),
+            request=self.request
+        )
+
+    def publishTraverse(self, request, name):
+        if self.data is None:
+            portal_compass = self.tools['portal_compass']
+            key = long(name, 10)
+            if key in portal_compass:
+                self.key = key
+                self.data = portal_compass[key]
+                return self
+        return super(History, self).publishTraverse(request, name)
+
+
+class Compass(api.views.Traversable):
 
     STEP = 20 # Used for pagination/infinite scroll
 
     def __init__(self, context, request):
         super(Compass, self).__init__(context, request)
-        self.method = None
+        self.tools = api.portal.LazyTools(context)
 
     def translations(self):
         return json.dumps({
@@ -53,7 +147,8 @@ class Compass(BrowserView):
             ),
             "project-activated": _(u"{project} has been activated"),
             "project-deactivated": _(u"{project} has been deactivated"),
-            "project-created": _(u"{project} has been created")
+            "project-created": _(u"{project} has been created"),
+            "snapshot-taken": _(u"The situation has been saved")
         })
 
     def global_settings(self):
@@ -82,15 +177,13 @@ class Compass(BrowserView):
         return json.dumps(roles)
 
     def employees(self):
-        pu = getToolByName(self.context, 'portal_url')
-        pm = getToolByName(self.context, 'portal_membership')
         users = {}
         for user_id in api.users.get_employee_ids(self.context):
             user_details = api.users.get_user_details(
                 self.context,
                 user_id,
-                portal_url=pu,
-                portal_membership=pm
+                portal_url=self.tools['portal_url'],
+                portal_membership=self.tools['portal_membership']
             )
             users[user_id] = {
                 'name': user_details['fullname'],
@@ -100,6 +193,12 @@ class Compass(BrowserView):
 
     def base_url(self):
         return self.context.absolute_url() + '/@@compass/'
+
+    def last_snapshot(self):
+        last = self.tools['portal_compass'].max_key()
+        if last is not None:
+            return '{0}history/{1}'.format(self.base_url(), last)
+        return ''
 
     @staticmethod
     def _add_operative(user_id, role, effort, operatives):
@@ -128,8 +227,7 @@ class Compass(BrowserView):
 
     def _get_project_by_id(self, project_id, portal=None):
         if portal is None:
-            pu = getToolByName(self.context, 'portal_url')
-            portal = pu.getPortalObject()
+            portal = self.tools['portal_url'].getPortalObject()
         return portal.restrictedTraverse(project_id)
 
     @api.jsonutils.jsonmethod()
@@ -175,7 +273,7 @@ class Compass(BrowserView):
                 'priority': brain.priority
             })
         else:
-            pw = getToolByName(self.context, "portal_workflow")
+            pw = self.tools['portal_workflow']
             status = pw.getStatusOf("project_workflow", project)
             info.update({
                 'id': '/'.join(project.getPhysicalPath()),
@@ -194,7 +292,7 @@ class Compass(BrowserView):
 
     @api.jsonutils.jsonmethod()
     def do_set_priority(self):
-        pu = getToolByName(self.context, 'portal_url')
+        pu = self.tools['portal_url']
         portal = pu.getPortalObject()
         projects = self.request.form['projects_ids']
         return_value = {}
@@ -221,7 +319,7 @@ class Compass(BrowserView):
     @api.jsonutils.jsonmethod()
     def do_get_projects(self):
         projects = []
-        pc = getToolByName(self.context, 'portal_catalog')
+        pc = self.tools['portal_catalog']
         for brain in pc.searchResults(portal_type='Project',
                                       active=True,
                                       sort_on='priority'):
@@ -233,7 +331,7 @@ class Compass(BrowserView):
     def do_get_all_projects(self):
         start = int(self.request.form.get('start', '0'), 10)
         query = self.request.form.get('query')
-        pc = getToolByName(self.context, 'portal_catalog')
+        pc = self.tools['portal_catalog']
         kwargs = {
             'portal_type': 'Project',
             'active': False,
@@ -281,18 +379,19 @@ class Compass(BrowserView):
         project.reindexObject()
         return self._get_project_info(project)
 
-    def publishTraverse(self, request, name):
-        if self.method is None:
-            method = getattr(self, 'do_'+name, None)
-            if method is not None and callable(method):
-                self.method = 'do_'+name
-            return self
-        raise NotFound(self, name, request)
+    @api.jsonutils.jsonmethod()
+    def do_take_snapshot(self):
+        data = json.loads(self.request.form['data'])
+        portal_compass = self.tools['portal_compass']
+        key = portal_compass.add(data)
+        return {
+            'url': '{0}history/{1}'.format(
+                self.base_url(),
+                key
+            )
+        }
 
-    def __call__(self):
-        if self.method is None:
-            result = super(Compass, self).__call__()
-        else:
-            result = getattr(self, self.method)()
-        self.method = None
-        return result
+    def publishTraverse(self, request, name):
+        if self.method is None and name == 'history':
+            return History(self.context, self.request)
+        return super(Compass, self).publishTraverse(request, name)

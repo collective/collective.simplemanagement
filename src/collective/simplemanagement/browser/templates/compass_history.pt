@@ -1,0 +1,147 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.simplemanagement">
+  <head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1);
+
+                             disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
+  </head>
+  <body metal:use-macro="content">
+
+    <metal:bodytext fill-slot="main">
+      <metal:main define-macro="main"
+                  tal:define="helpers context/@@sm_helpers;
+                              data view/data">
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+        <h1 class="documentFirstHeading" i18n:translate="">Compass</h1>
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+        <div id="deletePopup" class="overlay">
+          <div class="close">
+            <a href="#"
+               class="hiddenStructure"
+               title="Close this box"
+               i18n:attributes="title"
+               i18n:translate="">
+              Close this box.
+            </a>
+          </div>
+          <div class="pb-ajax">
+            <h2 i18n:translate="">Delete snapshot?</h2>
+            <p i18n:translate="">
+              Are you sure you want to delete this snapshot?
+            </p>
+            <p i18n:translate="">
+              This action cannot be undone.
+              If you wish to proceed, click "Delete", else click "Cancel"
+            </p>
+            <form method="post"
+                  class="formControls"
+                  tal:attributes="action view/delete_url">
+              <input type="hidden" name="key"
+                     tal:attributes="value view/key" />
+              <a href="#"
+                 class="close"
+                 i18n:translate="">Cancel</a>
+              <button type="submit"
+                      name="do_delete"
+                      value="yes"
+                      i18n:translate="">Delete this snapshot</button>
+            </form>
+          </div>
+        </div>
+        <div id="content-core" class="compassview historymode"
+             tal:attributes="data-list-keys-url view/list_keys_url">
+          <div class="control">
+            <a href="#"
+               tal:attributes="href view/compass_url"
+               i18n:translate="">Go to working copy</a>
+            <button
+               class="delete"
+               rel="#deletePopup"
+               i18n:translate="">Delete</button>
+          </div>
+          <div class="row">
+            <div class="cell position-0 width-3">
+              <h2 i18n:translate="">Revisions</h2>
+              <div class="infinite-scroll-wrapper"
+                       data-bind="scrollBottom: load">
+                <ul class="snapshots"
+                    data-bind="foreach: keys">
+                  <li data-bind="css: { active: active }">
+                    <a href="#"
+                       data-bind="attr: { href: url }, text: title"></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="cell position-3 width-13">
+              <h2>
+                <tal:u i18n:translate="">Active projects at</tal:u>
+                <span tal:content="view/active_date"></span>
+              </h2>
+              <div class="container">
+                <div class="project"
+                     tal:repeat="project data/projects">
+                  <div tal:attributes="class project/css_class">
+                    <span tal:content="repeat/project/number">X</span>
+                  </div>
+                  <div class="info">
+                    <div><h3 class="title" tal:content="project/name"></h3></div>
+                    <div><div class="notes"
+                              tal:content="structure python:view.html_notes(project['notes'])"></div></div>
+                    <div class="effort">
+                      <span class="effort"
+                            tal:content="project/effort" />
+                      <b i18n:translate="">man days</b>
+                      <span i18n:translate="">to be done before</span>
+                      <span class="date" tal:content="data/plan_end"></span>
+                    </div>
+                  </div>
+                  <div class="people">
+                    <tal:person repeat="person project/people">
+                    <div class="thumbnail thumbnail-small person"
+                         tal:define="person_data python:view.augment_user_data(person)"
+                         tal:attributes="style string:background-image:url('${person_data/avatar}');;">
+                      <span tal:attributes="class python:'effort critical' if person_data.get('is_critical') else 'effort'"
+                            tal:content="person_data/effort"></span>
+                      <span class="title" tal:content="person_data/role"></span>
+                    </div>
+                    </tal:person>
+                  </div>
+                </div>
+              </div>
+              <div class="bottom-pane">
+                <div class="totals">
+                  <h4 i18n:translate="">Total compass</h4>
+                  <p class="huge-number"
+                     tal:content="data/total"></p>
+                  <p i18n:translate="" class="postfix">man days</p>
+                </div>
+                <div class="critical">
+                  <h4 i18n:translate="">Critical resources</h4>
+                  <div class="critical-resources">
+                    <tal:person repeat="person data/critical">
+                    <div class="thumbnail thumbnail-small person"
+                         tal:define="person_data python:view.augment_user_data(person)"
+                         tal:attributes="title person_data/name;
+                                         style string:background-image:url('${person_data/avatar}');;">
+                      <span class="effort" tal:content="person_data/effort"></span>
+                    </div>
+                    </tal:person>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+      </metal:main>
+    </metal:bodytext>
+  </body>
+</html>

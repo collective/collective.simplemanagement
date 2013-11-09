@@ -20,14 +20,15 @@
         <h1 class="documentFirstHeading" i18n:translate="">Compass</h1>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
-        <div id="content-core" class="compassview"
+        <div id="content-core" class="compassview editmode"
              tal:define="settings view/settings"
              tal:attributes="data-roles view/roles;
                              data-people view/employees;
                              data-base-url view/base_url;
                              data-translations view/translations;
                              data-plan-weeks settings/default_plan_length;
-                             data-working-week-days view/working_week_days">
+                             data-working-week-days view/working_week_days;
+                             data-last-snapshot view/last_snapshot">
           <div class="messages" data-bind="visible: has_messages">
             <!-- ko foreach: permanent_messages -->
             <div class="message" data-bind="css: type, html: message"></div>
@@ -47,8 +48,14 @@
                      tal:attributes="min settings/minimum_plan_length;
                                      max settings/maximum_plan_length" />
             </div>
-            <a href="#" i18n:translate="">Go back to saved version</a>
-            <button i18n:translate="">Save</button>
+            <!-- ko if: last_snapshot -->
+            <a href="#"
+               data-bind="attr: { href: last_snapshot }"
+               i18n:translate="">Go to saved version</a>
+            <!-- /ko -->
+            <button
+               data-bind="click: snapshot"
+               i18n:translate="">Save</button>
           </div>
           <div class="row">
             <div class="cell position-0 width-3">

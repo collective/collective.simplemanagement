@@ -2,9 +2,11 @@ from copy import copy
 from datetime import time
 from datetime import datetime
 from datetime import date
+from DateTime import DateTime
 
 from zope.component import getUtility
 
+from plone import api
 from collective.prettydate.interfaces import IPrettyDate
 
 from ..configure import ONE_DAY
@@ -56,4 +58,15 @@ def timeago(timestamp, short=False):
         return utility.date(timestamp, short=short)
     raise ValueError(
         "'%s' cannot be converted prettily" % type(timestamp).__name__
+    )
+
+
+def format(timestamp, long=False):
+    if isinstance(timestamp, date):
+        timestamp = DateTime(datetime.combine(timestamp, time(0, 0)))
+    elif isinstance(timestamp, datetime):
+        timestamp = DateTime(timestamp)
+    return api.portal.get_localized_time(
+        datetime=timestamp,
+        long_format=long
     )

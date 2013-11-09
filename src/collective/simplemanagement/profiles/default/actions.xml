@@ -15,6 +15,19 @@
       </property>
       <property name="visible">True</property>
     </object>
+    <object name="compass" meta_type="CMF Action" insert-after="worklog"
+            i18n:domain="collective.simplemanagement">
+      <property name="title" i18n:translate="">Compass</property>
+      <property name="description" i18n:translate=""/>
+      <property name="url_expr">string:${portal_url}/@@compass</property>
+      <property name="link_target"/>
+      <property name="icon_expr"/>
+      <property name="available_expr"/>
+      <property name="permissions">
+        <element value="Simplemanagement: Manage project"/>
+      </property>
+      <property name="visible">True</property>
+    </object>
   </object>
   <object name="simplemanagement_actions" meta_type="CMF Action Category">
     <property name="title"></property>

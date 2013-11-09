@@ -1019,10 +1019,13 @@ input[name="filter-people"] {
     height: 100%;
     text-align: center;
 }
-#content .project > .status-indicator a {
+#content .project > .status-indicator a,
+#content .project > .status-indicator span {
     color: #fff;
     border-bottom: none;
     font-weight: bold;
+}
+#content .project > .status-indicator a {
     opacity: 0.5;
 }
 #content  .project > .status-indicator a:hover {
@@ -1037,9 +1040,14 @@ input[name="filter-people"] {
     margin-left: 0.5em;
     height: 100%;
 }
-#content .project > .info .notes {
+#content .project > .info textarea.notes {
     width: 45em;
     height: 4em;
+}
+#content .project > .info div.notes {
+    width: 45em;
+    height: 6em;
+    overflow-y: auto;
 }
 #content .project > .info .effort .date {
     font-style: italic;
@@ -1124,10 +1132,12 @@ input[name="filter-people"] {
     color: #fff;
 }
 
+#deletePopup,
 #newProjectPopup {
     display: none;
 }
 
+#deletePopup .pb-ajax,
 #newProjectPopup .pb-ajax {
     padding: 1em;
 }
@@ -1209,7 +1219,7 @@ input[name="filter-people"] {
 }
 
 .infinite-scroll-wrapper {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
 }
 
@@ -1341,6 +1351,51 @@ input[name="filter-people"] {
 
 #content .compassview .bottom-pane .critical-resources {
     margin-top: 0.5em;
+}
+
+#deletePopup {
+    font-size: 120%;
+}
+
+#deletePopup form.formControls {
+    width: 100%;
+    text-align: right;
+}
+
+#deletePopup form.formControls > * {
+    display: inline-block;
+    margin-left: 1em;
+}
+
+#content .compassview ul.snapshots {
+    list-style-type: none;
+    margin-left: 0px;
+}
+
+#content .compassview ul.snapshots li {
+    padding: 0.4em 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#content .compassview ul.snapshots li a,
+#content .compassview ul.snapshots li a:hover,
+#content .compassview ul.snapshots li a:visited {
+    color: #333 !important;
+    border-bottom: none !important;
+    text-decoration: none;
+}
+
+#content .compassview ul.snapshots li.active {
+    border: none;
+    background-color: #448aca;
+    color: #fff;
+}
+
+#content .compassview ul.snapshots li.active a,
+#content .compassview ul.snapshots li.active a:hover
+#content .compassview ul.snapshots li.active a:visited {
+    color: #fff !important;
 }
 
 /* project states */

@@ -17,20 +17,38 @@ class CompassTool(SimpleItem):
         tstamp = long(tstamp)
         return self.data[tstamp]
 
-    def keys(self, descending=True, min=None, max=None,
-             excludemin=False, excludemax=False, limit=None):
-        raw_keys = self.data.keys(
-            max=max,
-            min=min,
-            excludemin=excludemin,
-            excludemax=excludemax
-        )
+    def __contains__(self, tstamp):
+        return long(tstamp) in self.data
+
+    def __len__(self):
+        return len(self.data.keys())
+
+    def keys(self, start, step, descending=True):
+        # WARNING: I'm totally relying on the output of keys() to be sorted,
+        # which is the case, but I couldn't find any formal guarantee
+        raw_keys = self.data.keys()
+        slice_ = []
         if descending:
-            iter_ = xrange(-1, -1*(min(limit, len(raw_keys))+1), -1)
+            if start == 0:
+                slice_ = raw_keys[-(start+step):]
+            else:
+                slice_ = raw_keys[-(start+step):-(start)]
         else:
-            iter_ = xrange(0, min(limit, len(raw_keys)))
-        return [ raw_keys[i] for i in iter_ ]
+            slice_ = raw_keys[start:start+step]
+        return [ k for k in slice_ ]
+
+    def max_key(self):
+        try:
+            return self.data.maxKey()
+        except ValueError:
+            return None
 
     def add(self, data):
         now = long(time.time())
         self.data[now] = data
+        return now
+
+    def remove(self, tstamp):
+        tstamp = long(tstamp)
+        if tstamp in self.data:
+            del self.data[tstamp]
