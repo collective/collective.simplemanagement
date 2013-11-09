@@ -170,6 +170,26 @@
         }
     };
 
+    ko.bindingHandlers.ajaxOverlayBookigForm = {
+        init: function(element, accessor) {
+            var value = accessor();
+            $(element).prepOverlay({
+                subtype: 'ajax',
+                filter: common_content_filter,
+                formselector: 'form#booking_form',
+                width: '80%',
+                config: {
+                    onClose: function(el) {
+                        value.model.load();
+                    },
+                    onLoad: function() {
+                        sm.booking_tooltip();
+                    }
+                }
+            });
+        }
+    };
+
 
     // A knockout binding to set an element as "droppable".
     //

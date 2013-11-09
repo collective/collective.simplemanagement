@@ -9,38 +9,63 @@
 
   <metal:stories define-macro="stories">
 
-    <div type="text/html" id="template-tooltip"
+    <div id="template-tooltip"
         style="display:none">
         <a href="#"
            data-bind="css: $data.css,
                     attr{title: $data.description,
                     href: $data.href},
-                    ajaxDrawer: {model: $data.story, href: $data.href}">
+                    ajaxDrawer: {
+                      model: $data.story,
+                      href: $data.href
+                    }">
         <span data-bind="text: $data.title"></span>
       </a>
     </div>
 
-    <div type="text/html" id="template-overlay"
+    <div id="template-overlay"
         style="display:none">
       <a href="#"
          data-bind="css: $data.css,
                     attr{title: $data.description,
                     href: $data.href},
-                    ajaxOverlay: {mcssel: $data.story, href: $data.href}">
+                    ajaxOverlay: {
+                      model: $data.story,
+                      href: $data.href
+                    }">
         <span data-bind="text: $data.title"></span>
       </a>
     </div>
 
-    <div type="text/html" id="template-overlayform"
+    <div id="template-overlayform"
         style="display:none">
       <a href="#"
          data-bind="css: $data.css,
                     attr{title: $data.description,
                     href: $data.href},
-                    ajaxOverlayForm: {model: $data.story, href: $data.href}">
+                    ajaxOverlayForm: {
+                      model: $data.story,
+                      href: $data.href
+                    }">
         <span data-bind="text: $data.title"></span>
       </a>
     </div>
+
+    <div id="template-overlaybookingform"
+        style="display:none">
+      <a href="#"
+         data-bind="css: $data.css,
+                    attr{title: $data.description,
+                    href: $data.href},
+                    ajaxOverlayBookigForm: {
+                      model: $data.story,
+                      href: $data.href
+                    }">
+        <span data-bind="text: $data.title"></span>
+      </a>
+    </div>
+
+
 
     <!-- ko if: stories().length > 0 -->
     <div id="stories-wrapper">

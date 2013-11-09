@@ -223,6 +223,7 @@
             $('.iteration-stories').iterationView();
         });
 
+        // XXX: not necessary
         // taken from kss-bbb.js
         // var spinner = $('<div id="ajax-spinner"><img src="' + portal_url + '/spinner.gif" alt=""/></div>');
         // spinner.appendTo('body').hide();
@@ -253,20 +254,20 @@
         //     width: '70%'
         // });
 
-        $('.quick-booking').prepOverlay({
-            subtype: 'ajax',
-            filter: common_content_filter,
-            formselector: 'form#booking_form',
-            width: '80%',
-            config: {
-                onClose: function(el) {
-                    window.location.reload();
-                },
-                onLoad: function() {
-                    simplemanagement.booking_tooltip();
-                }
-            }
-        });
+        // $('.quick-booking').prepOverlay({
+        //     subtype: 'ajax',
+        //     filter: common_content_filter,
+        //     formselector: 'form#booking_form',
+        //     width: '80%',
+        //     config: {
+        //         onClose: function(el) {
+        //             window.location.reload();
+        //         },
+        //         onLoad: function() {
+        //             simplemanagement.booking_tooltip();
+        //         }
+        //     }
+        // });
 
         // $('.story-quickview').prepOverlay({
         //     subtype: 'ajax',
@@ -588,41 +589,3 @@
     });
 
 }(jQuery));
-
-
-// XXX: not used!!
-// function reload_stories(sel) {
-//     $.getJSON(
-//         './reload-stories',
-//         function(data){
-//             if(data['success']===true) {
-//                 $(sel).html(data['stories_html']);
-//             }else{
-//                 alert(data['error']);
-//             }
-//         }
-//     );
-// }
-
-// XXX: not used!!
-// function get_booking_form(){
-//     $.getJSON(
-//         './reload-booking-form',
-//         function(data){
-//             if(data['success']===true) {
-//                 return data['html'];
-//             }else{
-//                 return false;
-//             }
-//         }
-//     );
-// }
-
-// XXX: not used!!
-// function reload_booking_form(sel) {
-//     var content = get_booking_form();
-//     if (content) {
-//         $(sel).html(content).html();
-//     }
-// }
-

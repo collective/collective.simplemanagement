@@ -76,7 +76,7 @@ class Story(Container):
 
             {
                 "name": "quickBooking",
-                "type": "overlay",
+                "type": "overlaybookingform",
                 "description": "Booking",
                 "css": "quick-booking",
                 "href": url,
