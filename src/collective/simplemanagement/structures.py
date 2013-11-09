@@ -21,6 +21,11 @@ class Resource(SimpleItem):
     def getId(self):
         return self.__name__ or ''
 
+    def __repr__(self):
+        return '<%s (%s as %s)>' % (self.__class__.__name__,
+                                    self.user_id,
+                                    self.role)
+
 
 registerFactoryAdapter(IResource, Resource)
 
