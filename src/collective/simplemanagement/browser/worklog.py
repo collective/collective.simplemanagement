@@ -237,7 +237,7 @@ class WorklogBackend(WorklogBase):
             booking_details.append({
                 'type': 'booking',
                 'project': api.content.get_project(booking).title,
-                'story': api.get_story(booking).title,
+                'story': api.content.get_story(booking).title,
                 'booking': booking.Title(),
                 'hours': str(quantize(booking.time))
             })
