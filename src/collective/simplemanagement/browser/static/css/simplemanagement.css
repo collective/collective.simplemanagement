@@ -998,7 +998,7 @@ table#tickets-listing {
 .thumbnail.thumbnail-small {
     width: 60px;
     height: 60px;
-    margin: 2px;
+    margin: 6px 3px;
 }
 input[name="filter-people"] {
     width: 210px;
