@@ -27,15 +27,17 @@
         init: function(element, accessor) {
             var value = accessor();
             var content = $(value.content).removeAttr('style').detach();
-            $(element).drawer({
-                group: value.group ? value.group : null,
-                content: function(callback) {
-                    callback(content);
-                },
-                position: value.position ? value.position : "bottom",
-                css_class: value.css_class ? value.css_class : "tooltip",
-                remove: false
-            });
+            (function(content) {
+                $(element).drawer({
+                    group: value.group ? value.group : null,
+                    content: function(callback) {
+                        callback(content);
+                    },
+                    position: value.position ? value.position : "bottom",
+                    css_class: value.css_class ? value.css_class : "tooltip",
+                    remove: false
+                });
+            })(content);
         }
     };
 
