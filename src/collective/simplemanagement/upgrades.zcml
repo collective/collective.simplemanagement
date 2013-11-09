@@ -44,4 +44,14 @@
       profile="collective.simplemanagement:default"
       />
 
+    <genericsetup:upgradeStep
+      title="Add compass (final)"
+      description="Finally addsthe full-blown compass view"
+      source="1004"
+      destination="1005"
+      handler=".upgrades.upgrade_to_1005"
+      sortkey="1"
+      profile="collective.simplemanagement:default"
+      />
+
 </configure>

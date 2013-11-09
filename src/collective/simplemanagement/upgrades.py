@@ -111,3 +111,8 @@ def upgrade_to_1004(context, logger=None):
                 else:
                     logger.info('replacement for operative "%s" NOT FOUND' % (userid))
 
+
+def upgrade_to_1005(context, logger=None):
+    logger = getLogger(logger)
+    logger.info("Adding actions")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'actions')
