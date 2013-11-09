@@ -749,6 +749,25 @@
             app.load();
             compass.apps.push(app);
             ko.applyBindings(app, this);
+            var tools = $('#peopleToolbox');
+            var tools_offset = tools.offset();
+            var tools_width = tools.outerWidth();
+            $(window).scroll(function() {
+                var scroll = $(window).scrollTop();
+                if(scroll > tools_offset.top) {
+                    if(!tools.attr('style'))
+                        tools.css({
+                            position: 'fixed',
+                            left: tools_offset.left+'px',
+                            top: '2px',
+                            width: tools_width+'px'
+                        });
+                }
+                else {
+                    if(tools.attr('style'))
+                        tools.removeAttr('style');
+                }
+            });
         });
         $('.compassview.historymode').each(function() {
             var element = $(this);

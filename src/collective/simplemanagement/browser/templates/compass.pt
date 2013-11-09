@@ -59,34 +59,39 @@
           </div>
           <div class="row">
             <div class="cell position-0 width-3">
-              <h2 i18n:translate="">People</h2>
-              <input type="text"
-                     name="filter-people"
-                     value=""
-                     class="filter-data"
-                     placeholder="Filter by name..."
-                     data-bind="value: people_filter, valueUpdate: 'afterkeydown'"
-                     i18n:attributes="placeholder" />
-              <div class="container">
-                <!-- ko foreach: shown_people -->
-                <div class="thumbnail employee"
-                     data-bind="draggable: {
-                                    data: $data,
-                                    connectClass: 'thumbnail-small',
-                                    options: {
-                                        scope: 'people'
-                                    }
-                                },
-                                style: { backgroundImage: 'url('+avatar+')' }">
-                  <span class="title" data-bind="text: $parent.name"></span>
-                </div>
-                <!-- /ko -->
-                <div class="thumbnail placeholder"
-                     data-bind="droppable: {
-                                    action: $root.delPerson,
-                                    options: {
-                                        scope: 'operatives' } }">
-                  &nbsp;
+              <div id="peopleToolbox">
+                <h2 i18n:translate="">People</h2>
+                <input type="text"
+                       name="filter-people"
+                       value=""
+                       class="filter-data"
+                       placeholder="Filter by name..."
+                       data-bind="value: people_filter, valueUpdate: 'afterkeydown'"
+                       i18n:attributes="placeholder" />
+                <div class="container">
+                  <!-- ko foreach: shown_people -->
+                  <div class="thumbnail employee"
+                       data-bind="draggable: {
+                                      data: $data,
+                                      connectClass: 'thumbnail-small',
+                                      options: {
+                                          scope: 'people'
+                                      }
+                                  },
+                                  attr: {
+                                      title: name
+                                  },
+                                  style: { backgroundImage: 'url('+avatar+')' }">
+                    <span class="title" data-bind="text: $parent.name"></span>
+                  </div>
+                  <!-- /ko -->
+                  <div class="thumbnail placeholder"
+                       data-bind="droppable: {
+                                      action: $root.delPerson,
+                                      options: {
+                                          scope: 'operatives' } }">
+                    &nbsp;
+                  </div>
                 </div>
               </div>
             </div>
@@ -123,7 +128,6 @@
                          style="display: none;"
                          data-bind="attr: { id: dom_id }">
                       <b class="notch notch"></b>
-                      <div data-bind="text: name"></div>
                       <div>
                         <input type="text" class="effort"
                                data-bind="value: effort" />
@@ -146,6 +150,9 @@
                                         options: {
                                             scope: 'operatives'
                                         }
+                                    },
+                                    attr: {
+                                        title: name
                                     },
                                     style: {
                                         backgroundImage: 'url('+avatar()+')'

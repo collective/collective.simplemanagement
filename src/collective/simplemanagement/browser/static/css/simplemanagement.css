@@ -972,8 +972,8 @@ table#tickets-listing {
 .thumbnail {
     float: left;
     margin: 3px;
-    width: 100px;
-    height: 100px;
+    width: 65px;
+    height: 65px;
     position: relative;
     background-size: 100% auto;
 }
@@ -1396,6 +1396,11 @@ input[name="filter-people"] {
 #content .compassview ul.snapshots li.active a:hover
 #content .compassview ul.snapshots li.active a:visited {
     color: #fff !important;
+}
+
+#peopleToolbox {
+    background-color: #fff;
+    z-index: 200;
 }
 
 /* project states */
