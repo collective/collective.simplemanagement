@@ -19,6 +19,7 @@
         this.dom_id = ko.computed(this.domId, this);
         this.display_role = ko.computed(this.getDisplayRole, this);
         this.avatar = ko.computed(this.getAvatar, this);
+        this.name = ko.computed(this.getName, this);
 
         // TODO: in this file we are using a mix & match of approaches,
         // we should standardize
@@ -74,6 +75,13 @@
             var data = this.project.app._people[this.id];
             if(data){
                 return data.avatar;
+            }
+            return '';
+        },
+        getName: function() {
+            var data = this.project.app._people[this.id];
+            if(data){
+                return data.name;
             }
             return '';
         },

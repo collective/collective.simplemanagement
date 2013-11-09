@@ -156,9 +156,9 @@
                 }
             }
         },
-        hide: function() {
+        hide: function(force) {
             if(this.drawer !== null) {
-                if(this.options.remove) {
+                if(this.options.remove || force) {
                     this.drawer.remove();
                     this.drawer = null;
                 }
@@ -180,6 +180,9 @@
                 else
                     drawer = new Drawer(this);
                 element.data('drawer', drawer);
+                element.on("remove", function() {
+                    drawer.hide(true);
+                });
             }
             else {
                 if(args.length > 0)

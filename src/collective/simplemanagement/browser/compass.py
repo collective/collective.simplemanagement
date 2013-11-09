@@ -53,6 +53,13 @@ class History(api.views.Traversable):
         data = portal_transforms.convert('markdown_to_html', data)
         return data.getData()
 
+    def show_saved_by(self):
+        if self.data and 'saved_by' in self.data:
+            data = { 'id': self.data['saved_by'] }
+            self.augment_user_data(data)
+            return data['name']
+        return None
+
     def compass_url(self):
         return self.context.absolute_url() + '/@@compass'
 
@@ -99,11 +106,12 @@ class History(api.views.Traversable):
                 message=_(u"Snapshot deleted"),
                 request=self.request
             )
-        self.request.response.redirect(self.base_url()+str(self.key))
-        plone.api.portal.show_message(
-            message=_(u"Deletion has been cancelled"),
-            request=self.request
-        )
+        else:
+            self.request.response.redirect(self.base_url()+str(self.key))
+            plone.api.portal.show_message(
+                message=_(u"Deletion has been cancelled"),
+                request=self.request
+            )
 
     def publishTraverse(self, request, name):
         if self.data is None:
@@ -383,6 +391,8 @@ class Compass(api.views.Traversable):
     @api.jsonutils.jsonmethod()
     def do_take_snapshot(self):
         data = json.loads(self.request.form['data'])
+        current_user = plone.api.user.get_current()
+        data['saved_by'] = current_user.id
         portal_compass = self.tools['portal_compass']
         key = portal_compass.add(data)
         return {

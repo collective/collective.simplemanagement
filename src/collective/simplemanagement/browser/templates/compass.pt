@@ -123,6 +123,7 @@
                          style="display: none;"
                          data-bind="attr: { id: dom_id }">
                       <b class="notch notch"></b>
+                      <div data-bind="text: name"></div>
                       <div>
                         <input type="text" class="effort"
                                data-bind="value: effort" />
@@ -135,6 +136,8 @@
                                            optionsValue: 'value',
                                            value: role"></select>
                       </div>
+                      <button i18n:translate=""
+                                data-bind="click: function() { $parent.delPerson($data); }">Remove</button>
                     </div>
                     <div class="thumbnail thumbnail-small person"
                          data-bind="draggable: {

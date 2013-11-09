@@ -58,6 +58,8 @@
         <div id="content-core" class="compassview historymode"
              tal:attributes="data-list-keys-url view/list_keys_url">
           <div class="control">
+            <span i18n:translate="">Current revision saved by</span>
+            <span tal:content="view/show_saved_by"></span>
             <a href="#"
                tal:attributes="href view/compass_url"
                i18n:translate="">Go to working copy</a>
