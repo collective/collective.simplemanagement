@@ -6,7 +6,7 @@
   i18n:domain="collective.simplemanagement"
   tal:omit-tag="">
 
-  <metal:story-milestone define-macro="story-milestone">
+<!--   <metal:story-milestone define-macro="story-milestone">
     <tal:exists condition="story/milestone"
                 define="milestone story/milestone">
       <a href="javascript:void(0)"
@@ -26,9 +26,9 @@
     <span class="no-data"
           tal:condition="not:story/milestone"
           i18n:translate="">(None)</span>
-  </metal:story-milestone>
+  </metal:story-milestone> -->
 
-  <metal:story-epic define-macro="story-epic">
+<!--   <metal:story-epic define-macro="story-epic">
     <a href=""
        title=""
        tal:attributes="href story/epic/url;
@@ -39,7 +39,9 @@
           tal:condition="not:story/epic|nothing"
           i18n:translate="">(None)</span>
   </metal:story-epic>
+ -->
 
+  <!-- used in dashboard -->
   <metal:story-assignees define-macro="story-assignees">
     <ul class="assignees" tal:condition="story/assignees|nothing">
       <li tal:repeat="assignee story/assignees">
@@ -93,6 +95,7 @@
          <span tal:content="story/status">Status</span></a>
   </metal:story-actions>
 
+  <!-- used in dashboard -->
   <metal:story-compact
      define-macro="story-compact">
     <tr class="story"
@@ -128,68 +131,7 @@
     </tr>
   </metal:story-compact>
 
-  <metal:iteration-compact define-macro="iteration-compact"
-    tal:define="iteration_view nocall:iteration/@@view;
-                stories iteration_view/stories;
-                totals iteration_view/totals;
-                sortable python:True;
-                can_manage iteration_view/user_can_manage_project">
-
-    <h2>
-      <a href=""
-         title=""
-         tal:attributes="href iteration/absolute_url;
-                         title iteration/Description">
-        <span tal:content="iteration/title" />
-        (<span
-            tal:content="python:context.toLocalizedTime(iteration.start.isoformat())"/>
-        -
-         <span
-            tal:content="python:context.toLocalizedTime(iteration.end.isoformat())" />)
-      </a>
-    </h2>
-    <metal:extra define-slot="extra" />
-    <table class="listing stories"
-        tal:attributes="class python:can_manage and 'listing stories sortable' or 'stories listing';
-        data-iterationurl iteration/absolute_url">
-      <thead>
-        <tr>
-          <th class="actions" colspan="2"
-            i18n:translate="">Actions</th>
-          <th i18n:translate="">Story</th>
-          <th class="info" i18n:translate="">Assignees</th>
-          <th class="data numeric-data" i18n:translate="">Estimate</th>
-          <th class="data numeric-data" i18n:translate="">Done</th>
-        </tr>
-      </thead>
-      <tfoot tal:condition="totals|nothing">
-        <tr>
-          <th i18n:translate=""
-            colspan="3">Totals</th>
-          <th class="info">&nbsp;</th>
-          <td tal:attributes="class string:data numeric-data ${totals/time_status}"
-              tal:content="totals/estimate"></td>
-          <td tal:attributes="class string:data numeric-data ${totals/time_status}"
-              tal:content="totals/hours"></td>
-
-        </tr>
-      </tfoot>
-      <tbody tal:condition="stories">
-        <tal:cycle repeat="story stories">
-          <metal:story-compact use-macro="context/simpemanagement-macros/story-compact" />
-        </tal:cycle>
-      </tbody>
-      <tbody tal:condition="not:stories">
-        <tr>
-          <th colspan="8" i18n:translate="">
-            No stories in this iteration.
-            Add a new one or bring them in via the iteration planner.
-          </th>
-        </tr>
-      </tbody>
-    </table>
-  </metal:iteration-compact>
-
+<!--
   <metal:iteration define-macro="iteration"
     tal:define="iteration_view nocall:iteration/@@view;
                 stories iteration_view/stories;
@@ -211,8 +153,9 @@
       <metal:stories-listing
         use-macro="context/simpemanagement-macros/stories" />
     </metal:stories>
-  </metal:iteration>
+  </metal:iteration> -->
 
+  <!-- used in backlog -->
   <metal:stories define-macro="stories">
     <div tal:condition="stories" id="stories-wrapper">
 
@@ -262,6 +205,7 @@
 
   </metal:stories>
 
+  <!-- used in story view and here -->
   <metal:assignees define-macro="assignees">
     <div class="assignees-container clearfix">
       <span class="label" i18n:translate="">Assignees</span>
@@ -278,6 +222,7 @@
     </div>
   </metal:assignees>
 
+  <!-- used in story view -->
   <metal:epic define-macro="epic">
     <div class="epic-container"
         tal:condition="epic|nothing">
@@ -290,6 +235,7 @@
     </div>
   </metal:epic>
 
+  <!-- used in story view -->
   <metal:storytiming define-macro="story-timing">
     <table class="timing">
       <tr>
@@ -307,6 +253,7 @@
     </table>
   </metal:storytiming>
 
+  <!-- used in story view -->
   <metal:booking define-macro="booking-list">
     <table class="listing"
            tal:condition="booking_list">
@@ -367,7 +314,7 @@
     </table>
   </metal:booking>
 
-  <metal:stories-shortlist define-macro="stories-shortlist">
+<!--   <metal:stories-shortlist define-macro="stories-shortlist">
     <ul tal:condition="stories" class="stories">
       <li tal:repeat="story stories"
         tal:attributes="class string:${story/status} story-container">
@@ -405,9 +352,9 @@
       You have no stories assigned
     </p>
   </metal:stories-shortlist>
+ -->
 
-
-  <metal:tickets-shortlist define-macro="tickets-shortlist">
+<!--   <metal:tickets-shortlist define-macro="tickets-shortlist">
     <ul tal:condition="tickets">
       <li tal:repeat="ticket tickets">
         <a href=""
@@ -424,8 +371,9 @@
        i18n:translate="">
       You have no tickets assigned
     </p>
-  </metal:tickets-shortlist>
+  </metal:tickets-shortlist> -->
 
+  <!-- used in IProject/@@stories for planning view -->
   <metal:stories-planning define-macro="stories-planning"
       tal:define="view_details view_details|nothing">
     <p class="discreet"
@@ -466,6 +414,7 @@
     </ul>
   </metal:stories-planning>
 
+  <!-- used in dashboard -->
   <metal:employee-form define-macro="employee-form">
     <div class="employees-form-wrapper"
          tal:define="selected python:request.get('employee')">

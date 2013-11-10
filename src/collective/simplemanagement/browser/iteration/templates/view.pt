@@ -21,7 +21,7 @@
 
     <metal:content-core fill-slot="content-core">
       <metal:block define-macro="content-core"
-          tal:define="totals view/totals;">
+          tal:define="totals view/totals">
 
         <div class="iteration-stories"
              tal:attributes="data-iterationurl context/absolute_url">

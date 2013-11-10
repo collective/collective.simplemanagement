@@ -8,7 +8,28 @@
 
 
   <metal:stories define-macro="iteration-compact">
+    <tal:iteration
+      define="totals iteration/totals">
+        <h2>
+          <a href=""
+             title=""
+             tal:attributes="href iteration/absolute_url;
+                             title iteration/Description">
+            <span tal:content="iteration/title" />
+            (<span
+                tal:content="python:context.toLocalizedTime(iteration.start.isoformat())"/>
+            -
+             <span
+                tal:content="python:context.toLocalizedTime(iteration.end.isoformat())" />)
+          </a>
+        </h2>
 
+        <div class="iteration-stories"
+             tal:attributes="data-iterationurl iteration/absolute_url">
+          <metal:stories
+            use-macro="context/iteration_macros/stories" />
+        </div>
+    </tal:iteration>
   </metal:stories>
 
 </html>

@@ -74,4 +74,3 @@ class ExportCSV(Mixin):
         """ return csv lines as iterator
         """
         raise NotImplementedError("please, provide a 'process' method!")
-

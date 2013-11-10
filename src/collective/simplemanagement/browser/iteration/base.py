@@ -18,13 +18,11 @@ class IterationViewMixin(object):
 
     @memoize
     def stories(self):
-        adpt = IStoriesListing(self.context)()
-        return adpt.stories
+        return self.context.stories()
 
     @memoize
     def totals(self):
-        adpt = IStoriesListing(self.context)()
-        return adpt.totals
+        return self.context.totals()
 
     @property
     def user_can_manage_project(self):

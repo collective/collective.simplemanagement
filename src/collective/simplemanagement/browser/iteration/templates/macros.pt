@@ -65,8 +65,6 @@
       </a>
     </div>
 
-
-
     <!-- ko if: stories().length > 0 -->
     <div id="stories-wrapper">
       <table class="listing stories"

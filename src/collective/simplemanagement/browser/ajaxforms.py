@@ -10,7 +10,6 @@ from Products.Five.browser import BrowserView
 from .. import logger
 from .. import api
 from .story.view import View as StoryView
-from ..story import StoryQuickForm
 from ..configure import Settings
 from ..booking import BookingForm
 from .. import _
@@ -111,13 +110,6 @@ class CreateHole(Mixin):
                     member.getId(),
                     reason=reason)
         return self.success
-
-
-class AddStory(Mixin):
-
-    FormKlass = StoryQuickForm
-    creation_form = True
-    created_message = _(u'Created story:')
 
 
 class AddBooking(Mixin):

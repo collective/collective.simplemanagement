@@ -1,10 +1,11 @@
 from zope.interface import implementer
 from plone.dexterity.content import Container
 
+from . import api
 from .configure import Settings
 from .interfaces import IIteration
+from .interfaces import IStoriesListing
 from .utils import quantize
-from . import api
 from .timeline import BaseTimeline
 from .timeline import timeline
 
@@ -12,6 +13,15 @@ from .timeline import timeline
 @implementer(IIteration)
 class Iteration(Container):
     """Iteration content type"""
+
+    def _stories_listing(self):
+        return IStoriesListing(self)()
+
+    def stories(self):
+        return self._stories_listing().stories
+
+    def totals(self):
+        return self._stories_listing().totals
 
 
 @timeline(IIteration)

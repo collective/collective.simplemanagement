@@ -22,9 +22,7 @@
       <div tal:condition="iterations/current">
         <div tal:repeat="iteration iterations/current">
           <metal:iteration
-            use-macro="context/simpemanagement-macros/iteration-compact">
-            <metal:extra fill-slot="extra">
-            </metal:extra>
+            use-macro="context/project_macros/iteration-compact">
           </metal:iteration>
         </div>
       </div>

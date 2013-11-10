@@ -29,4 +29,32 @@
       />
   </browser:pages>
 
+
+  <!-- allow comments for story items -->
+  <browser:page
+    name="conversation_view"
+    for="...interfaces.IStory"
+    layer="...interfaces.IBrowserLayer"
+    class=".comments.ConversationView"
+    permission="zope2.View"
+    />
+
+
+  <browser:page
+    for="*"
+    name="add-story"
+    class=".add.AddStory"
+    layer="...interfaces.IBrowserLayer"
+    permission="zope2.View"
+  />
+
+
+  <browser:page
+    for="...interfaces.IStory"
+    name="quickedit"
+    class=".quickedit.Quickedit"
+    layer="...interfaces.IBrowserLayer"
+    permission="zope2.View"
+  />
+
 </configure>

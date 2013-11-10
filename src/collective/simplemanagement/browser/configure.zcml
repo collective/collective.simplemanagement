@@ -6,6 +6,8 @@
     i18n_domain="collective.simplemanagement">
 
   <include package="z3c.form" />
+  <include package="z3c.jbot" file="meta.zcml" />
+
   <include package=".widgets" />
   <include package=".project" />
   <include package=".iteration" />
@@ -14,7 +16,9 @@
   <include package=".epic" />
   <include package=".export" />
 
-  <include package="z3c.jbot" file="meta.zcml" />
+  <include file="worklog.zcml" />
+  <include file="dashboard.zcml" />
+
 
   <browser:jbot
     directory="template_overrides"
@@ -37,14 +41,18 @@
     allowed_attributes="timeago"
     />
 
+
+  <!-- macros -->
   <browser:page
-    for="..interfaces.IStory"
-    name="quickedit"
-    class=".quickforms.StoryQuickedit"
+    for="*"
+    name="simpemanagement-macros"
+    class=".macros.Macros"
     layer="..interfaces.IBrowserLayer"
     permission="zope2.View"
   />
 
+
+  <!-- Story move for planning and iteration view -->
   <browser:page
     for="..interfaces.IIteration"
     name="story_move"
@@ -52,6 +60,7 @@
     layer="..interfaces.IBrowserLayer"
     permission="simplemanagement.ManageProject"
   />
+
 
   <browser:page
     for="..interfaces.IProject"
@@ -61,6 +70,8 @@
     permission="simplemanagement.ManageProject"
   />
 
+
+  <!-- Report view -->
   <browser:page
     for="..interfaces.IReportable"
     name="report"
@@ -70,6 +81,17 @@
     permission="simplemanagement.ManageProject"
   />
 
+
+  <browser:page
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    name="compass"
+    class=".compass.Compass"
+    layer="..interfaces.IBrowserLayer"
+    permission="simplemanagement.ManageProject"
+    template="templates/compass.pt"
+  />
+
+  <!-- Booking and hole management -->
   <browser:page
     for="*"
     name="create-hole"
@@ -77,6 +99,7 @@
     layer="..interfaces.IBrowserLayer"
     permission="zope2.View"
   />
+
 
   <browser:page
     for="*"
@@ -102,13 +125,6 @@
     />
   -->
 
-  <browser:page
-    for="*"
-    name="add-story"
-    class=".ajaxforms.AddStory"
-    layer="..interfaces.IBrowserLayer"
-    permission="zope2.View"
-  />
 
   <browser:page
     for="*"
@@ -118,6 +134,7 @@
     permission="zope2.View"
   />
 
+
   <browser:page
     for="*"
     name="reload-booking-form"
@@ -126,93 +143,6 @@
     permission="zope2.View"
   />
 
-  <!-- macros -->
-  <browser:page
-    for="*"
-    name="simpemanagement-macros"
-    class=".macros.Macros"
-    layer="..interfaces.IBrowserLayer"
-    permission="zope2.View"
-  />
-
-  <browser:page
-    for="*"
-    name="simpemanagement-ticketsmacros"
-    class=".macros.TicketsMacros"
-    layer="..interfaces.IBrowserLayer"
-    permission="zope2.View"
-  />
-
-  <!-- allow comments for story items -->
-  <browser:page
-    name="conversation_view"
-    for="..interfaces.IStory"
-    layer="..interfaces.IBrowserLayer"
-    class=".comments.ConversationView"
-    permission="zope2.View"
-    />
-
-  <!-- dashboard -->
-  <browser:page
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    name="dashboard"
-    layer="..interfaces.IBrowserLayer"
-    permission="plone.app.portlets.ViewDashboard"
-    class=".dashboard.DashboardView"
-    template="templates/dashboard.pt"
-    />
-
-  <browser:page
-    for="..interfaces.IProject"
-    name="dashboard"
-    layer="..interfaces.IBrowserLayer"
-    permission="plone.app.portlets.ViewDashboard"
-    class=".dashboard.DashboardView"
-    template="templates/dashboard.pt"
-    />
-
-  <browser:page
-    for="..interfaces.IProject"
-    name="worklog"
-    class=".worklog.Worklog"
-    layer="..interfaces.IBrowserLayer"
-    permission="simplemanagement.ManageProject"
-    template="templates/worklog.pt"
-  />
-
-  <browser:page
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    name="worklog"
-    class=".worklog.Worklog"
-    layer="..interfaces.IBrowserLayer"
-    permission="simplemanagement.ManageProject"
-    template="templates/worklog.pt"
-  />
-
-  <browser:page
-    for="..interfaces.IProject"
-    name="worklog_backend"
-    class=".worklog.WorklogBackend"
-    layer="..interfaces.IBrowserLayer"
-    permission="simplemanagement.ManageProject"
-  />
-
-  <browser:page
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    name="compass"
-    class=".compass.Compass"
-    layer="..interfaces.IBrowserLayer"
-    permission="simplemanagement.ViewCompass"
-    template="templates/compass.pt"
-  />
-
-  <browser:page
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    name="worklog_backend"
-    class=".worklog.WorklogBackend"
-    layer="..interfaces.IBrowserLayer"
-    permission="simplemanagement.ManageProject"
-  />
 
   <browser:page
      for="..interfaces.IStory"
@@ -222,6 +152,7 @@
      class=".dashboard.AddBooking"
    />
 
+
   <browser:page
      for="..interfaces.IStory"
      name="ajax-create_booking"
@@ -229,6 +160,7 @@
      permission="simplemanagement.AddBooking"
      class=".ajaxforms.AddBooking"
    />
+
 
   <!-- TODO: fix adapter for attribute... -->
   <adapter
