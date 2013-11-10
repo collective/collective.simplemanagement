@@ -63,6 +63,17 @@
       id="++resource++simplemanagement/js/base.js"
       inline="False"
       insert-after="++resource++simplemanagement/js/knockout-validation.js" />
+
+  <javascript
+      cacheable="True"
+      compression="safe"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/js/planner.js"
+      inline="False"
+      insert-after="++resource++simplemanagement/js/base.js" />
+
   <javascript
       cacheable="True"
       compression="safe"
@@ -71,7 +82,8 @@
       expression=""
       id="++resource++simplemanagement/js/simplemanagement.js"
       inline="False"
-      insert-after="++resource++simplemanagement/js/base.js" />
+      insert-after="++resource++simplemanagement/js/planner.js" />
+
 
   <javascript
       cacheable="True"
@@ -112,5 +124,15 @@
       id="++resource++simplemanagement/js/iteration.js"
       inline="False"
       insert-after="++resource++simplemanagement/js/models.js" />
+
+  <javascript
+      cacheable="True"
+      compression="safe"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/js/project.js"
+      inline="False"
+      insert-after="++resource++simplemanagement/js/iteration.js" />
 
 </object>

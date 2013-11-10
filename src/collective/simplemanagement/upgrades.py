@@ -124,3 +124,5 @@ def upgrade_to_1006(context, logger=None):
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'actions')
     logger.info("Refreshing role mappings")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'rolemap')
+    logger.info("Reloading javascript registry")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'jsregistry')

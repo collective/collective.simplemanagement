@@ -7,13 +7,9 @@
         window.simplemanagement = {};
     }
 
-    var simplemanagement = window.simplemanagement;
+    var sm = window.simplemanagement;
 
-    simplemanagement.Planner = function(element) {
-        this.init(element);
-    };
-
-    simplemanagement.reload_booking = function (sel) {
+    sm.reload_booking = function (sel) {
         $.getJSON(
             './reload-booking',
             function(data) {
@@ -27,7 +23,7 @@
         );
     };
 
-    simplemanagement.booking_tooltip = function() {
+    sm.booking_tooltip = function() {
         $('.listing .show-more').drawer({
             group: '.show-more',
             position: "top-center",
@@ -45,7 +41,7 @@
         });
     };
 
-    // simplemanagement.updateStoryPosition = function (event, ui) {
+    // sm.updateStoryPosition = function (event, ui) {
     //     var position = ui.item.index(),
     //         item_id = ui.item.attr('id'),
     //         rows = ui.item.parent().children(),
@@ -73,148 +69,7 @@
     //     );
     // };
 
-    simplemanagement.Planner.prototype = {
-        init: function(element) {
-            var self = this;
-            this.element = $(element);
-            this.element_id = this.element.attr('id');
-            this.left_selector = $('#' + this.element_id + '-left');
-            this.right_selector = $('#' + this.element_id + '-right');
-            this.loadStories(this.left_selector);
-            this.loadStories(this.right_selector);
-            this.left_selector.change(function() {
-                self.loadStories(self.left_selector);
-            });
-            this.right_selector.change(function() {
-                self.loadStories(self.right_selector);
-            });
-        },
 
-        loadStories: function(selector) {
-            var self = this,
-                uuid = $('option:selected', selector).val(),
-                container = $('#' + selector.attr('id') + '-container');
-            container.attr('data-sortable', '');
-            container.empty();
-            container.load(
-                './@@stories',
-                {
-                    iteration: uuid,
-                    widget_id: this.element_id
-                },
-                function(response, status, request) {
-                    self.makeSortable(container);
-                }
-            );
-        },
-
-        makeSortable: function(element) {
-            var self = this;
-            if (element.attr('data-sortable') === 'true') {
-                element.find('ul.sortable').sortable('destroy');
-            }
-            element.find('ul.sortable').sortable({
-                update: function(event, ui) {
-                    self.update(event, ui);
-                },
-                start: function(event, ui) {
-                    if (event.ctrlKey || event.metaKey) {
-                        ui.item.addClass('copy');
-                    }
-                },
-                sort: function(event, ui) {
-                    if (event.ctrlKey || event.metaKey) {
-                        ui.item.addClass('copy');
-                    } else {
-                        ui.item.removeClass('copy');
-                    }
-                },
-                stop: function(event, ui) {
-                    ui.item.removeClass('copy');
-                },
-                receive: function(event, ui) {
-                    var destination = $(event.target),
-                        destination_uuid = destination.attr('data-uuid'),
-                        origin = $(ui.sender),
-                        origin_uuid = origin.attr('data-uuid');
-                    if (origin_uuid === destination_uuid) {
-                        $(ui.sender).sortable('cancel');
-                    }
-                },
-                tolerance: 'pointer',
-                distance: 5,
-                opacity: 0.5,
-                revert: true,
-                connectWith: '.' + this.element_id + '-stories'
-            });
-            element.attr('data-sortable', 'true');
-        },
-
-        update: function(event, ui) {
-            var self = this,
-                destination = $(event.target),
-                destination_uuid = destination.attr('data-uuid'),
-                origin = $(ui.sender),
-                origin_uuid = origin.attr('data-uuid'),
-                story_id = ui.item.attr('data-storyid'),
-                origin_url,
-                destination_discreet,
-                destination_url,
-                copy;
-
-            if (origin_uuid) {
-                if (origin_uuid !== destination_uuid) {
-                    origin_url = origin.attr('data-moveurl');
-                    //console.log(story_id+': '+origin_uuid+' -> '+destination_uuid+' @ '+ui.item.index());
-                    if (origin.children('li').length === 0) {
-                        origin.siblings('p.discreet').show();
-                    }
-                    destination_discreet = destination.siblings('p.discreet');
-                    if (destination_discreet.is(':visible')) {
-                        destination_discreet.hide();
-                    }
-                    copy = 'false';
-                    if (event.ctrlKey || event.metaKey) {
-                        copy = 'true';
-                    }
-                    $.getJSON(
-                        origin_url,
-                        {
-                            story_id: story_id,
-                            new_iteration: destination_uuid,
-                            new_position: ui.item.index(),
-                            do_copy: copy
-                        },
-                        function(data) {
-                            if (data.success === false) {
-                                alert(data.error);
-                            }
-                            if (copy) {
-                                self.loadStories(self.left_selector);
-                                self.loadStories(self.right_selector);
-                            }
-                        }
-                    );
-                }
-            } else {
-                destination_url = destination.attr('data-moveurl');
-                $.getJSON(
-                    destination_url,
-                    {
-                        story_id: story_id,
-                        new_position: ui.item.index()
-                    },
-                    function(data) {
-                        if (data.success === false) {
-                            alert(data.error);
-                        }
-                    }
-                );
-            }
-        }
-    };
-
-    simplemanagement.planners = [];
 
     $(document).ready(function() {
 
@@ -231,8 +86,8 @@
         // $(document).ajaxStop(function() { spinner.hide(); });
 
         $('.simplemanagement-planner').each(function() {
-            simplemanagement.planners.push(
-                new simplemanagement.Planner(this)
+            sm.planners.push(
+                new sm.Planner(this)
             );
         });
 
@@ -264,7 +119,7 @@
         //             window.location.reload();
         //         },
         //         onLoad: function() {
-        //             simplemanagement.booking_tooltip();
+        //             sm.booking_tooltip();
         //         }
         //     }
         // });
@@ -275,7 +130,7 @@
         //     width: '80%',
         //     config: {
         //         onLoad: function() {
-        //             simplemanagement.booking_tooltip();
+        //             sm.booking_tooltip();
         //         }
         //     }
         // });
@@ -287,7 +142,7 @@
         // });
 
         // $("table.sortable tbody").sortable({
-        //     update: simplemanagement.updateStoryPosition,
+        //     update: sm.updateStoryPosition,
         //     handle: ".handle",
         //     tolerance: 'pointer',
         //     distance: 5,
@@ -358,7 +213,7 @@
         //     }
         // });
 
-        simplemanagement.booking_form = $('#booking-tooltip-form').detach();
+        sm.booking_form = $('#booking-tooltip-form').detach();
         $(".bookform").each(function () {
             var trigger = $(this);
             var setupForm = function(form, api) {
@@ -406,7 +261,7 @@
                 position: "left",
                 offset: [0, -10],
                 content: function(callback, drawer) {
-                    var content = $(simplemanagement.booking_form.html()),
+                    var content = $(sm.booking_form.html()),
                         form = content.find('form');
                     setupForm(form, drawer);
                     callback(content);
@@ -451,7 +306,7 @@
             );
         });
 
-        simplemanagement.booking_tooltip();
+        sm.booking_tooltip();
 
         // ajax submit
         // TODO: prevent unload protection!
@@ -476,7 +331,7 @@
                         $target = $('<div class="booking" />');
                         $(this).after($target);
                     }
-                    simplemanagement.reload_booking($target);
+                    sm.reload_booking($target);
                     /* XXX 2013-06-13:
                     /  do not reload the form because the calendar widget
                     /  from plone.formwidget.datetime cannot be rebound

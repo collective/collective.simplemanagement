@@ -55,7 +55,7 @@
       />
 
   <genericsetup:upgradeStep
-      title="Compass permissions"
+      title="Compass permissions and javascript"
       description="Sets a more sane set of permissions for compass"
       source="1005"
       destination="1006"
@@ -63,5 +63,4 @@
       sortkey="1"
       profile="collective.simplemanagement:default"
       />
-
 </configure>
