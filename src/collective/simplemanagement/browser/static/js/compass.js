@@ -257,6 +257,18 @@
                 });
             }
             return data;
+        },
+        validate: function() {
+            var i, l, people, total_effort, person_effort;
+            total_effort = 0;
+            people = this.people();
+            for(i=0, l=people.length; i<l; i++) {
+                person_effort = people[i].effort();
+                if(person_effort === 0) return false;
+                total_effort += people[i].effort();
+            }
+            if(total_effort > this.effort()) return false;
+            return true;
         }
     };
 
@@ -421,6 +433,16 @@
             };
             active_projects = self.active_projects();
             for(i=0, l=active_projects.length; i<l; i++) {
+                if(!active_projects[i].validate()) {
+                    self.addMessage({
+                        type: 'warning',
+                        message: base.format(
+                            self.translate('project-invalid'),
+                            { project: active_projects[i].name() }
+                        )
+                    }, true);
+                    return false;
+                }
                 data.projects.push(active_projects[i].toJSON());
             }
             critical_resources = self.critical_resources();
@@ -455,6 +477,7 @@
                     }, true);
                 }
             });
+            return true;
         };
     };
 
@@ -569,11 +592,21 @@
             }
             else {
                 this.transient_messages.push(message);
-                window.setTimeout(
+                message.timeout_id = window.setTimeout(
                     function() {
                         self.transient_messages.shift();
                     },
                     this.message_timeout * 1000);
+            }
+        },
+        dismissMessage: function(index, permanent) {
+            var message;
+            if(permanent) {
+                this.permanent_messages.splice(index, 1);
+            }
+            else {
+                message = this.transient_messages.push(index, 1);
+                window.clearTimeout(message.timeout_id);
             }
         },
         delPerson: function(item, event, ui) {
@@ -749,25 +782,7 @@
             app.load();
             compass.apps.push(app);
             ko.applyBindings(app, this);
-            var tools = $('#peopleToolbox');
-            var tools_offset = tools.offset();
-            var tools_width = tools.outerWidth();
-            $(window).scroll(function() {
-                var scroll = $(window).scrollTop();
-                if(scroll > tools_offset.top) {
-                    if(!tools.attr('style'))
-                        tools.css({
-                            position: 'fixed',
-                            left: tools_offset.left+'px',
-                            top: '2px',
-                            width: tools_width+'px'
-                        });
-                }
-                else {
-                    if(tools.attr('style'))
-                        tools.removeAttr('style');
-                }
-            });
+            $('#peopleToolbox').fixedbox();
         });
         $('.compassview.historymode').each(function() {
             var element = $(this);

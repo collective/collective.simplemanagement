@@ -56,10 +56,19 @@
           </div>
         </div>
         <div id="content-core" class="compassview historymode"
+             tal:define="saved_by view/current_saved_by"
              tal:attributes="data-list-keys-url view/list_keys_url">
           <div class="control">
             <span i18n:translate="">Current revision saved by</span>
-            <span tal:content="view/show_saved_by"></span>
+            <tal:saved_by condition="saved_by">
+              <img class="saved-by-avatar"
+                   tal:condition="saved_by/avatar"
+                   tal:attributes="src saved_by/avatar" />
+              <span tal:content="saved_by/name"></span>
+            </tal:saved_by>
+            <tal:saved_by condition="not:saved_by">
+              <span class="danger" i18n:translate="">Anonymous user</span>
+            </tal:saved_by>
             <a href="#"
                tal:attributes="href view/compass_url"
                i18n:translate="">Go to working copy</a>

@@ -1,3 +1,26 @@
+input[type="text"], input[type="password"], textarea {
+    padding: 3px;
+}
+
+input::-webkit-input-placeholder {
+    font-style: italic;
+    color: #999;
+}
+input::-moz-placeholder {
+    font-style: italic;
+    color: #999;
+}
+input:-ms-input-placeholder {
+    font-style: italic;
+    color: #999;
+}
+
+a.danger-link,
+a.danger-link:hover,
+a.danger-link:visited {
+    color: #c33;
+}
+
 #project-view {
     margin-top: 1em
 }
@@ -969,6 +992,10 @@ table#tickets-listing {
  * Compass
  */
 
+.dismiss {
+    font-size: 150%;
+}
+
 .thumbnail {
     float: left;
     margin: 3px;
@@ -990,19 +1017,67 @@ table#tickets-listing {
     overflow: hidden;
 }
 .thumbnail.placeholder {
-    outline: 1px dashed #333;
+    outline: 1px dashed #777;
+    transition: outline 0.5s linear, background-color 0.3s linear;
+    -webkit-transition: outline 0.5s linear, background-color 0.3s linear;
+    -moz-transition: outline 0.5s linear, background-color 0.3s linear;
 }
-.thumbnail.placeholder.dropok {
-    outline: 1px dashed #5fb221;
+.thumbnail.placeholder.removePerson:after,
+.thumbnail.placeholder.addPerson:after {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s linear;
+    -webkit-transition: opacity 0.5s linear;
+    -moz-transition: opacity 0.5s linear;
+}
+.thumbnail.placeholder.removePerson.dropok:after,
+.thumbnail.placeholder.addPerson.dropok:after {
+    opacity: 1;
+}
+.thumbnail.placeholder.removePerson:after {
+    font-size: 35px;
+    top: 22px;
+    left: 17px;
+    content: "\2716";
+}
+.thumbnail.placeholder.removePerson.dropok {
+    outline: 2px solid #c55;
+}
+.thumbnail.placeholder.removePerson.dropok:after {
+    color: #c55;
+}
+.thumbnail.placeholder.removePerson.dropok.dropover {
+    background-color: #f88;
+}
+.project > .people .thumbnail.placeholder.addPerson {
+    cursor: default;
+}
+.thumbnail.placeholder.addPerson:after {
+    font-size: 30px;
+    top: 20px;
+    left: 16px;
+    content: "\271a";
+}
+.thumbnail.placeholder.addPerson.dropok {
+    outline: 2px solid #5fb221;
+}
+.thumbnail.placeholder.addPerson.dropok.dropover {
+    background-color: #8fe554;
+}
+.thumbnail.placeholder.addPerson.dropok:after {
+    color: #5fb221;
 }
 .thumbnail.thumbnail-small {
     width: 60px;
     height: 60px;
     margin: 6px 3px;
 }
-input[name="filter-people"] {
-    width: 210px;
+input.filter-data {
     margin-left: 3px;
+    margin-bottom: 3px;
+}
+input[name="filter-people"] {
+    width: 205px;
 }
 .project {
     height: 130px;
@@ -1062,6 +1137,29 @@ input[name="filter-people"] {
     cursor: pointer;
 }
 
+.wrapper.resource-drawer {
+    margin: 0px;
+    padding: 3px 8px 3px 0px;
+}
+
+.wrapper.resource-drawer > div {
+    margin: 2px;
+    width: 100%;
+}
+
+.wrapper.resource-drawer > div > select {
+    width: 100%;
+}
+
+.wrapper.resource-drawer > div > span {
+    margin-left: 2px;
+}
+
+input.effort {
+    text-align: right;
+    width: 2.5em;
+}
+
 .critical-resources .thumbnail.person span.effort,
 .project > .people .thumbnail.person span.effort {
     position: absolute;
@@ -1082,16 +1180,12 @@ input[name="filter-people"] {
     background: #c33;
 }
 .project > .info .effort {
-    margin-top: 0.7em;
+    margin-top: 0.3em;
 }
 .compassview .control {
     text-align: right;
     padding: 0.5em;
     background-color: #ddd;
-}
-.compassview input.effort,
-.tooltip-people input.effort {
-    width: 1.5em;
 }
 .compassview .control > * {
     margin-left: 1em;
@@ -1121,14 +1215,53 @@ input[name="filter-people"] {
 
 #content .compassview .messages .message {
     padding: 0.5em;
-    border-radius: 0.5em;
+    border-radius: 5px;
+    border: 2px solid #fff;
     background-style: solid;
-    padding: 0.3em 1em 0.3em 1em;
+    padding: 0px;
     margin-bottom: 0.5em;
+    font-size: 100%;
+    overflow: hidden;
+    width: 300px;
+}
+
+#content .compassview .messages .message > * {
+    display: block;
+    padding: 5px;
+    float: left;
+}
+
+#content .compassview .messages .message > div.content {
+    width: 265px;
+    border-right: 1px solid #fff;
+}
+
+#content .compassview .messages .message a.dismiss {
+    color: #fff;
+    border-bottom: 0px none;
+    opacity: 0.8;
+    font-size: 150%;
+}
+
+#content .compassview .messages .message a.dismiss:hover,
+#content .compassview .messages .message a.dismiss:visited {
+    color: #fff !important;
+    border-bottom: none !important;
+    opacity: 1;
 }
 
 #content .compassview .messages .message.info {
     background-color: #336bca;
+    color: #fff;
+}
+
+#content .compassview .messages .message.error {
+    background-color: #c33;
+    color: #fff;
+}
+
+#content .compassview .messages .message.warning {
+    background-color: #f70;
     color: #fff;
 }
 
@@ -1265,7 +1398,7 @@ input[name="filter-people"] {
 }
 
 .horizontal-form .field-group > .field-element span.postfix {
-    width: 55%;
+    width: 50%;
     padding-left: 5px;
 }
 
@@ -1308,15 +1441,16 @@ input[name="filter-people"] {
     display: block;
     height: 2.5em;
     text-align: center;
-    color: #333;
+    color: #777;
     font-weight: bold;
     font-size: 130%;
     padding: 1.2em 2em 0em 2em;
-    border: 1px dashed #333;
+    border: 1px dashed #777;
 }
 
 #content .compassview .addProject:hover {
-    color: black !important;
+    color: #333 !important;
+    border: 1px solid #333;
 }
 
 #content .compassview .bottom-pane {
@@ -1401,6 +1535,10 @@ input[name="filter-people"] {
 #peopleToolbox {
     background-color: #fff;
     z-index: 200;
+}
+
+.saved-by-avatar {
+    height: 25px;
 }
 
 /* project states */

@@ -20,6 +20,35 @@
                               function(a, g1) { return data[g1]; });
     };
 
+    // Fixed box
+    // A box that, once the use scrolls past it,
+    // remains fixed at the top of the screen, following the scroll
+    $.fn.fixedbox = function() {
+        var args = Array.prototype.slice.apply(arguments, []);
+        return this.each(function() {
+            var element = $(this);
+            var element_offset = element.offset();
+            var element_width = element.outerWidth();
+            $(window).scroll(function() {
+                var scroll = $(window).scrollTop();
+                if(scroll > element_offset.top) {
+                    if(!element.attr('style'))
+                        element.css({
+                            position: 'fixed',
+                            left: element_offset.left+'px',
+                            top: '2px', // TODO: maybe leave this to CSS
+                                        // via margin
+                            width: element_width+'px'
+                        });
+                }
+                else {
+                    if(element.attr('style'))
+                        element.removeAttr('style');
+                }
+            });
+        });
+    };
+
     // The jqueryDrawer binding for knockout
     //
     // TODO: kill in favour of new drawer

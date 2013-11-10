@@ -31,10 +31,20 @@
                              data-last-snapshot view/last_snapshot">
           <div class="messages" data-bind="visible: has_messages">
             <!-- ko foreach: permanent_messages -->
-            <div class="message" data-bind="css: type, html: message"></div>
+            <div class="message" data-bind="css: type">
+              <div class="content" data-bind="html: message"></div>
+              <a href="#"
+                 class="dismiss"
+                 data-bind="click: function() { $root.dismissMessage($index, true); }">&times;</a>
+            </div>
             <!-- /ko -->
             <!-- ko foreach: transient_messages -->
-            <div class="message" data-bind="css: type, html: message"></div>
+            <div class="message" data-bind="css: type">
+              <div class="content" data-bind="html: message"></div>
+              <a href="#"
+                 class="dismiss"
+                 data-bind="click: function() { $root.dismissMessage($index, false); }">&times;</a>
+            </div>
             <!-- /ko -->
           </div>
           <div class="control">
@@ -85,11 +95,13 @@
                     <span class="title" data-bind="text: $parent.name"></span>
                   </div>
                   <!-- /ko -->
-                  <div class="thumbnail placeholder"
+                  <div class="thumbnail placeholder removePerson"
                        data-bind="droppable: {
                                       action: $root.delPerson,
                                       options: {
-                                          scope: 'operatives' } }">
+                                          scope: 'operatives',
+                                          activeClass: 'dropok',
+                                          hoverClass: 'dropover' } }">
                     &nbsp;
                   </div>
                 </div>
@@ -107,7 +119,8 @@
                 <div class="project">
                   <div data-bind="css: css_class">
                     <a href="#"
-                       data-bind="click: deactivate">X</a>
+                       class="dismiss"
+                       data-bind="click: deactivate">&times;</a>
                   </div>
                   <div class="info">
                     <div><h3 class="title" data-bind="text: name"></h3></div>
@@ -124,24 +137,28 @@
                   </div>
                   <div class="people">
                     <!-- ko foreach: people -->
-                    <div class="wrapper"
+                    <div class="wrapper resource-drawer"
                          style="display: none;"
                          data-bind="attr: { id: dom_id }">
                       <b class="notch notch"></b>
                       <div>
                         <input type="text" class="effort"
                                data-bind="value: effort" />
-                        <b i18n:translate="">man days</b>
+                        <b i18n:translate="">man days as</b>
                       </div>
                       <div>
-                        <span i18n:translate="">as</span>
                         <select data-bind="options: $root.roles_list,
                                            optionsText: 'label',
                                            optionsValue: 'value',
                                            value: role"></select>
                       </div>
-                      <button i18n:translate=""
-                                data-bind="click: function() { $parent.delPerson($data); }">Remove</button>
+                      <div>
+                        <span i18n:translate="">in this project</span>
+                        (<a href="#"
+                            class="danger-link"
+                            data-bind="click: function() { $parent.delPerson($data); }"
+                            i18n:translate="">Remove</a>)
+                      </div>
                     </div>
                     <div class="thumbnail thumbnail-small person"
                          data-bind="draggable: {
@@ -167,10 +184,12 @@
                       <span class="title" data-bind="text: display_role"></span>
                     </div>
                     <!-- /ko -->
-                    <div class="thumbnail thumbnail-small placeholder"
+                    <div class="thumbnail thumbnail-small placeholder addPerson"
                          data-bind="droppable: {
                                         action: addPerson,
-                                        options: { scope: 'people' } }">
+                                        options: { scope: 'people',
+                                                   activeClass: 'dropok',
+                                                   hoverClass: 'dropover' } }">
                       &nbsp;
                     </div>
                   </div>
@@ -308,11 +327,12 @@
                     </label>
                   </h3>
                   <input type="text"
-                     value=""
-                     class="filter-data"
-                     placeholder="Search for a project"
-                     data-bind="value: all_projects_query, valueUpdate: 'afterkeydown', disable: $root.active_pane() != 'existing'"
-                     i18n:attributes="placeholder" />
+                         name="filter-projects"
+                         value=""
+                         class="filter-data"
+                         placeholder="Search for a project..."
+                         data-bind="value: all_projects_query, valueUpdate: 'afterkeydown', disable: $root.active_pane() != 'existing'"
+                         i18n:attributes="placeholder" />
                   <div class="infinite-scroll-wrapper"
                        data-bind="scrollBottom: load_more">
                     <div class="projects"

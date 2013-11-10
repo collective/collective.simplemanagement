@@ -53,11 +53,11 @@ class History(api.views.Traversable):
         data = portal_transforms.convert('markdown_to_html', data)
         return data.getData()
 
-    def show_saved_by(self):
+    def current_saved_by(self):
         if self.data and 'saved_by' in self.data:
             data = { 'id': self.data['saved_by'] }
             self.augment_user_data(data)
-            return data['name']
+            return data
         return None
 
     def compass_url(self):
@@ -157,7 +157,8 @@ class Compass(api.views.Traversable):
             "project-activated": _(u"{project} has been activated"),
             "project-deactivated": _(u"{project} has been deactivated"),
             "project-created": _(u"{project} has been created"),
-            "snapshot-taken": _(u"The situation has been saved")
+            "snapshot-taken": _(u"The situation has been saved"),
+            "project-invalid": _(u"{project} is not valid")
         })
 
     def global_settings(self):
