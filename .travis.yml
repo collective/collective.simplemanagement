@@ -1,11 +1,34 @@
-language: python
-python: 2.7
-env:
-  - PLONE_VERSION=4.2
-  - PLONE_VERSION=4.3
+---
 install:
-  - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
-  - mkdir -p buildout-cache/downloads
-  - python bootstrap.py -c travis.cfg
-  - bin/buildout -c travis.cfg -N -q -t 3
+- mkdir -p buildout-cache/eggs
+- mkdir -p buildout-cache/downloads
+- python bootstrap.py -c travis.cfg
+- bin/buildout -N -t 3 -c travis.cfg
+- curl -O http://saucelabs.com/downloads/Sauce-Connect-latest.zip
+- unzip Sauce-Connect-latest.zip
+- java -jar Sauce-Connect.jar $SAUCE_USERNAME $SAUCE_ACCESS_KEY -i $TRAVIS_JOB_ID -f CONNECTED &
+- JAVA_PID=$!
+python: "2.7"
+after_script:
+- kill $JAVA_PID
+env:
+  matrix:
+  - ROBOT_BROWSER=firefox
+  - ROBOT_BROWSER=chrome
+  - ROBOT_BROWSER=ie
+  global:
+  - ROBOT_BUILD_NUMBER=travis-$TRAVIS_BUILD_NUMBER
+  - ROBOT_REMOTE_URL=http://$SAUCE_USERNAME:$SAUCE_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub
+  - ROBOT_DESIRED_CAPABILITIES=tunnel-identifier:$TRAVIS_JOB_ID
+  - secure: |-
+      H7XF/iYUtywdbjc08E5yCYWCvzZHpmeoz8O3KpHCEhlR79dL77Ny7PHf49DT
+      7FZFgJTswE9rdsYbo4QBeMKHtEsPe/Es291Rf77qng7uWJad5IPfPmBsJAaa
+      q2PyguzGMZImQ88Ep5uxp2o0PthjRBu5MKPSIBZyzuUrODPdEiE=
+  - secure: |-
+      U6rulyxiiAsv634nw+Vd4LXAw7z3H7Q5dCY0XuN1y6cTALsZRCSAvit8GBy2
+      bNG3OVKtR1EghLx2UFZ9rwvpqHVyAtiqjGrgRS/59BulecqZ4ry+yXVimPqg
+      4qVs4KXjtJTNMQogxgnZLOgYlFtNd3Oe7bL+Kdt3KI7KCEYJl0Y=
+before_script:
+- bash -c "while [ ! -f CONNECTED ]; do sleep 2; done"
+language: python
 script: bin/test
