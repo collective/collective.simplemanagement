@@ -9,7 +9,7 @@ class JSONService(base.JSONService):
 
     def _get_stories(self):
         adpt = IStoriesListing(self.context)()
-        return adpt.stories, adpt.totals
+        return adpt.stories
 
     @property
     def user_can_manage_project(self):
@@ -24,12 +24,8 @@ class JSONService(base.JSONService):
             "title",
             "description",
             "is_sortable",
-            "totals": {
-                "hours",
-                "estimate",
-                "difference",
-                "time_status"
-            },
+            "start",
+            "end",
             "stories": [
                 {
                     "id",
@@ -56,14 +52,22 @@ class JSONService(base.JSONService):
             ]
         }
         """
-        stories, totals = self._get_stories()
+
+        start = None
+        if self.context.start:
+            start = self.context.start.isoformat()
+
+        end = None
+        if self.context.end:
+            end = self.context.end.isoformat()
 
         return {
-            'title': self.context.title,
-            'is_sortable': self.user_can_manage_project,
-            'description': self.context.description,
-            'stories': stories,
-            'totals': totals
+            "title": self.context.title,
+            "is_sortable": self.user_can_manage_project,
+            "description": self.context.description,
+            "stories": self._get_stories(),
+            "start": start,
+            "end": end
         }
 
     @api.permissions.accesscontrol("Modify Portal Content")

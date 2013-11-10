@@ -15,18 +15,75 @@
 
     models = sm.models;
 
-    models.Project = function(data) {
-        var self = this;
-        self.data = data;
+    models.Project = function(trigger, settings, data) {
+        var self = this,
+            estimate = 0,
+            hours = 0,
+            i;
+
+        $.extend(this, settings);
+        self.trigger = $(trigger);
+        self.url = self.trigger.data('projecturl');
+
+        self.iterations = ko.observableArray();
+        self.title = ko.observable();
+        self.description = ko.observable();
+
+        self.estimate = ko.computed(function() {
+            estimate = 0;
+            for (i = 0; i < self.iterations().length; i += 1) {
+                estimate += self.iterations()[i].estimate();
+            }
+            return estimate;
+        });
+
+        self.estimate_str = ko.computed(function () {
+            return base.decimal2timestr(self.estimate());
+        });
+
+        self.hours = ko.computed(function() {
+            hours = 0;
+            for (i = 0; i < self.iterations().length; i += 1) {
+                hours += self.iterations()[i].hours();
+            }
+            return hours;
+        });
+
+        self.hours_str = ko.computed(function () {
+            return base.decimal2timestr(self.hours());
+        });
+
+        if (data !== undefined) {
+            self.url(data.url);
+            self.title(data.title);
+        } else {
+            self.load(self.url);
+        }
+
     };
 
     models.Project.prototype = {
-        save: function (data) {
-            alert("save" + data);
-        },
 
         load: function () {
-            alert("load");
+            var self = this,
+                key;
+            $.getJSON(self.url + '/json/view', function(data) {
+                self.iterations(self.load_iterations(data.iterations));
+                self.title(data.title);
+            });
+        },
+
+        load_iterations: function (data) {
+            return $.map(
+                data,
+                function(item) {
+                    return new models.Iteration(null, {}, item);
+                }
+            );
+        },
+
+        save: function (data) {
+            alert("save" + data);
         },
 
         update: function () {
@@ -36,17 +93,24 @@
 
     models.Iteration = function(trigger, settings, data) {
         var self = this,
+            today = new Date(),
             estimate = 0,
             hours = 0,
             i;
 
+        self.url = null;
         $.extend(this, settings);
-        self.trigger = $(trigger);
-        self.url = self.trigger.data('iterationurl');
+        if ((typeof trigger) !== 'undefined') {
+            self.trigger = $(trigger);
+            self.url = self.trigger.data('iterationurl');
+        }
 
         self.stories = ko.observableArray();
         self.status = ko.observable();
         self.title = ko.observable();
+        self.description = ko.observable();
+        self.start = ko.observable();
+        self.end = ko.observable();
 
         self.details = ko.observable(false);
         self.css_class = ko.observable('open');
@@ -84,6 +148,37 @@
             return base.decimal2timestr(self.hours());
         });
 
+        self.is_current = ko.computed(function() {
+
+            if ((typeof self.start()) === "undefined" ||
+                    (typeof self.end()) === "undefined") {
+                return false;
+            } else {
+                // iteration.end >= today and iteration.start <= today
+                if (new Date(self.end()) >= today &&
+                        new Date(self.start()) <= today) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        self.is_current = ko.computed(function() {
+
+            if ((typeof self.start()) === "undefined" ||
+                    (typeof self.end()) === "undefined") {
+                return false;
+            } else {
+                // iteration.end >= today and iteration.start <= today
+                if (new Date(self.end()) >= today &&
+                        new Date(self.start()) <= today) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
         self.toggleDetails = function () {
             if (self.details() === true) {
                 self.details(false);
@@ -96,10 +191,17 @@
         };
 
         if (data !== undefined) {
-            // self.stories(self.stories_map(data.stories));
+            self.url = data.url;
             self.status(data.status);
-            self.url(data.url);
             self.title(data.title);
+            self.end(data.end);
+            self.start(data.start);
+            self.is_sortable(data.is_sortable);
+
+            if ((typeof data.stories) !== 'undefined') {
+                self.stories(self.load_stories(data.stories));
+            }
+
         } else {
             self.load(self.url);
         }
@@ -112,6 +214,10 @@
             alert("save" + data);
         },
 
+        update: function () {
+            alert("update");
+        },
+
         load: function (url) {
             var self = this;
             $.getJSON(url + '/json/view', function(data) {
@@ -121,8 +227,14 @@
             });
         },
 
-        update: function () {
-            alert("update");
+        load_stories: function (data) {
+            var iteration = this;
+            return $.map(
+                data,
+                function(item) {
+                    return new models.Story(iteration, item);
+                }
+            );
         },
 
         updateStoryPosition: function (event) {
@@ -143,16 +255,6 @@
 
         removeStory: function (story) {
             this.stories.remove(story);
-        },
-
-        load_stories: function (data) {
-            var iteration = this;
-            return $.map(
-                data,
-                function(item) {
-                    return new models.Story(iteration, item);
-                }
-            );
         }
 
     };
@@ -202,6 +304,18 @@
 
     models.Story.prototype = {
 
+        load: function () {
+            var self = this,
+                key;
+            $.getJSON(self.url() + '/json/view', function(data) {
+                for (key in data) {
+                    if (self.hasOwnProperty(key)) {
+                        self[key](data[key]);
+                    }
+                }
+            });
+        },
+
         load_actions: function (data) {
             var story = this;
 
@@ -215,19 +329,6 @@
 
         save: function (data) {
             alert("save" + data);
-        },
-
-        load: function () {
-            var self = this,
-                key;
-            $.getJSON(self.url() + '/json/view', function(data) {
-                for (key in data) {
-                    if (self.hasOwnProperty(key)) {
-                        self[key](data[key]);
-                    }
-                }
-            });
-
         },
 
         update: function (data) {

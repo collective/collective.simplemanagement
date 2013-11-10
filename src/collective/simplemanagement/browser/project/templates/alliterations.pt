@@ -29,11 +29,11 @@
       <metal:storyform
         use-macro="context/simpemanagement-macros/addstory-form" />
       <!-- iterations -->
-      <div id="overview"
+      <div id="iterations-overview"
         tal:define="future iterations/future;
                     current iterations/current;
                     past iterations/past">
-        <ul class="tabs">
+<!--         <ul class="tabs">
           <li><a href="alliterations#past"
             i18n:translate="">Past iterations (<span
                 i18n:name="n_iterations"
@@ -50,7 +50,7 @@
                 tal:replace="python:len(future)" />)</a>
           </li>
         </ul>
-
+ -->
         <div class="panes">
           <!-- Past iterations -->
           <div class="pane">

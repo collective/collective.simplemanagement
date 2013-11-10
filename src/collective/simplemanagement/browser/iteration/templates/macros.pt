@@ -127,11 +127,9 @@
             <th i18n:translate=""
               colspan="3">Totals</th>
             <th class="info">&nbsp;</th>
-            <td tal:attributes="class string:data numeric-data ${totals/time_status}"
-                tal:content="totals/estimate"
+            <td class="data numeric-data"
                 data-bind="text: estimate_str"></td>
-            <td tal:attributes="class string:data numeric-data ${totals/time_status}"
-                tal:content="totals/hours"
+            <td class="data numeric-data"
                 data-bind="text: hours_str"></td>
           </tr>
         </tfoot>

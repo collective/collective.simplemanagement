@@ -14,28 +14,61 @@
 
   <div id="project-view">
 
-    <div id="iterations"
-         tal:define="iterations view/iterations"
-         tal:condition="iterations">
+    <div class="project-iterations"
+        tal:attributes="data-projecturl context/absolute_url">
+      <div id="project-totals">
+        <table class="grid">
+          <tr>
+            <th i18n:translate="">Estimate</th>
+            <td class="data numeric-data"
+                data-bind="text: estimate_str"></td>
 
-      <!-- iterations -->
-      <div tal:condition="iterations/current">
-        <div tal:repeat="iteration iterations/current">
-          <metal:iteration
-            use-macro="context/project_macros/iteration-compact">
-          </metal:iteration>
-        </div>
+          </tr>
+          <tr>
+            <th i18n:translate="">Done</th>
+            <td class="data numeric-data"
+                data-bind="text: hours_str"></td>
+          </tr>
+        </table>
       </div>
 
-      <dl tal:condition="not:iterations/current"
-          class="portalMessage info">
-          <dt i18n:translate="">info</dt>
-          <dd class="discreet" i18n:translate="no_current_iteration"
-           >There are no current iterations.<br/>To list all iterations <a href="alliterations">click here</a></dd>
-      </dl>
+      <!-- ko if: iterations().length > 0 -->
+      <div class="iterations"
+           data-bind="foreach: iterations">
+        <!-- ko if: is_current -->
+        <h2>
+          <a data-bind="attr {href: url},
+                        title: description">
+            <span data-bind="text: title">Iteration</span>
+            (<span data-bind="text: start"
+              ></span>&nbsp;-&nbsp;<span
+              data-bind="text: end"></span>)
+          </a>
+        </h2>
+
+        <metal:stories
+            use-macro="context/iteration_macros/stories" />
+        <!-- /ko -->
+
+      </div>
+      <!-- /ko -->
+
+      <!-- ko if: iterations().length == 0 -->
+      <div>
+        <div class="portalMessage">
+          <div i18n:translate="no_current_iteration">
+            There are no current iterations.<br/>To list all iterations
+            <a href="alliterations">click here</a>
+          </div>
+          <div i18n:translate="add_iteration">
+            To add a new iteration <a href="++add++Iteration"
+              >click here</a>
+          </div>
+        </div>
+      </div>
+      <!-- /ko -->
 
       <div class="visualClear"><!-- clear floats--></div>
-
     </div>
 
     <tal:content

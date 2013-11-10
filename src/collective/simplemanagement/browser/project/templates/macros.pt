@@ -24,8 +24,7 @@
           </a>
         </h2>
 
-        <div class="iteration-stories"
-             tal:attributes="data-iterationurl iteration/absolute_url">
+        <div tal:attributes="data-iterationurl iteration/absolute_url">
           <metal:stories
             use-macro="context/iteration_macros/stories" />
         </div>
