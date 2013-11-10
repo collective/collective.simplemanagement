@@ -179,6 +179,25 @@
         });
 
 
+        self.is_past = ko.computed(function() {
+            if ((typeof self.start()) === "undefined") {
+                return false;
+            } else {
+                // iteration.end >= today and iteration.start <= today
+                if (new Date(self.end()) <= today ) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        self.is_future = ko.computed(function() {
+            // iteration.end >= today and iteration.start <= today
+            if (! (self.is_past() || self.is_current()) ) {
+                    return true;
+            }
+            return false;
+        });
         self.toggleDetails = function () {
             if (self.details() === true) {
                 self.details(false);
