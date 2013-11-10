@@ -23,6 +23,10 @@
       <metal:block define-macro="content-core"
           tal:define="totals view/totals">
 
+        <metal:storyform
+          use-macro="context/simpemanagement-macros/addstory-form" />
+
+
         <div class="iteration-stories"
              tal:attributes="data-iterationurl context/absolute_url">
           <metal:stories
