@@ -17,17 +17,11 @@ env:
   - ROBOT_BROWSER=chrome
   - ROBOT_BROWSER=ie
   global:
+  - secure: ! 'H7XF/iYUtywdbjc08E5yCYWCvzZHpmeoz8O3KpHCEhlR79dL77Ny7PHf49DT7FZFgJTswE9rdsYbo4QBeMKHtEsPe/Es291Rf77qng7uWJad5IPfPmBsJAaaq2PyguzGMZImQ88Ep5uxp2o0PthjRBu5MKPSIBZyzuUrODPdEiE='
+  - secure: ! 'U6rulyxiiAsv634nw+Vd4LXAw7z3H7Q5dCY0XuN1y6cTALsZRCSAvit8GBy2bNG3OVKtR1EghLx2UFZ9rwvpqHVyAtiqjGrgRS/59BulecqZ4ry+yXVimPqg4qVs4KXjtJTNMQogxgnZLOgYlFtNd3Oe7bL+Kdt3KI7KCEYJl0Y=
   - ROBOT_BUILD_NUMBER=travis-$TRAVIS_BUILD_NUMBER
   - ROBOT_REMOTE_URL=http://$SAUCE_USERNAME:$SAUCE_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub
   - ROBOT_DESIRED_CAPABILITIES=tunnel-identifier:$TRAVIS_JOB_ID
-  - secure: |-
-      H7XF/iYUtywdbjc08E5yCYWCvzZHpmeoz8O3KpHCEhlR79dL77Ny7PHf49DT
-      7FZFgJTswE9rdsYbo4QBeMKHtEsPe/Es291Rf77qng7uWJad5IPfPmBsJAaa
-      q2PyguzGMZImQ88Ep5uxp2o0PthjRBu5MKPSIBZyzuUrODPdEiE=
-  - secure: |-
-      U6rulyxiiAsv634nw+Vd4LXAw7z3H7Q5dCY0XuN1y6cTALsZRCSAvit8GBy2
-      bNG3OVKtR1EghLx2UFZ9rwvpqHVyAtiqjGrgRS/59BulecqZ4ry+yXVimPqg
-      4qVs4KXjtJTNMQogxgnZLOgYlFtNd3Oe7bL+Kdt3KI7KCEYJl0Y=
 before_script:
 - bash -c "while [ ! -f CONNECTED ]; do sleep 2; done"
 language: python
