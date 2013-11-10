@@ -20,7 +20,7 @@ def create_story(context, data, reindex=True):
     if 'subjects' in data:
         data['subject'] = data.pop('subjects')
     # make sure we don't get duplicates for assignees
-    data['assigned_to'] = list(set(data['assigned_to']))
+    data['assigned_to'] = list(set(data['assigned_to'] or []))
     item = createContentInContainer(
         context,
         'Story',
