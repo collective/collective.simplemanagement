@@ -16,22 +16,27 @@
 
     <div class="project-iterations"
         tal:attributes="data-projecturl context/absolute_url">
-      <div id="project-totals">
-        <table class="grid">
-          <tr>
-            <th i18n:translate="">Estimate</th>
-            <td class="data numeric-data"
-                data-bind="text: estimate_str,
-                           css: time_status"></td>
 
-          </tr>
-          <tr>
-            <th i18n:translate="">Done</th>
-            <td class="data numeric-data"
-                data-bind="text: hours_str,
-                           css: time_status"></td>
-          </tr>
+      <div id="project-totals">
+        <table class="timing">
+          <tbody>
+            <tr>
+              <th class="nosort column" i18n:translate="">Estimate</th>
+              <th class="nosort column" i18n:translate="">Actual hours</th>
+              <th class="nosort column" i18n:translate="">Difference</th>
+            </tr>
+            <tr>
+              <td class="estimate data numeric-data"
+                  data-bind="text: estimate_str"></td>
+              <td class="actual_hours data numeric-data"
+                  data-bind="text: hours_str">8.00</td>
+              <td class="difference"
+                  data-bind="text: difference_str,
+                             css: time_status">72.00</td>
+            </tr>
+          </tbody>
         </table>
+        <div class="visualClear"><!-- clear floats --></div>
       </div>
 
       <!-- ko if: iterations().length > 0 -->

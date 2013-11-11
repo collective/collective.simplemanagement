@@ -54,6 +54,14 @@
             return base.decimal2timestr(self.hours());
         });
 
+        self.difference = ko.computed(function () {
+            return self.estimate() - self.hours();
+        });
+
+        self.difference_str = ko.computed(function () {
+            return base.decimal2timestr(self.difference());
+        });
+
         self.time_status = ko.computed(self.get_time_status, self);
 
         if (data !== undefined) {

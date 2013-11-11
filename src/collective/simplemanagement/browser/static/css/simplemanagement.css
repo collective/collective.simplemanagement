@@ -274,8 +274,6 @@ ul.stories .suspended {
 .timing {
     border: 1px solid #C8CACA;
     float: right;
-    margin-right: -4px;
-    margin-top: -4px;
     margin-left: 1em;
     vertical-align: middle;
 }
