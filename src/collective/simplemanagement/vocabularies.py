@@ -119,4 +119,3 @@ class UsersFactory(object):
         users = sorted(acl_users.searchUsers(fullname=query),
                        key=lambda x: x['title'])
         return UsersVocabulary(users, context)
-
