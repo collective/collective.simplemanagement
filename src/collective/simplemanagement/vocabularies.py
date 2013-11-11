@@ -118,4 +118,5 @@ class UsersFactory(object):
         acl_users = getToolByName(context, "acl_users")
         users = sorted(acl_users.searchUsers(fullname=query),
                        key=lambda x: x['title'])
-        return UsersVocabulary.fromItems(users, context)
+        return UsersVocabulary(users, context)
+
