@@ -1,16 +1,31 @@
 # pylint: disable=W0613
-from zope.interface import implements
+from zope.interface import implementer
 
 from z3c.form import form, button
-
 from Products.CMFCore.utils import getToolByName
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from ..interfaces import IQuickForm
-from .. import messageFactory as _
+from ...interfaces import IQuickForm
+from ... import _
 
 
+class AddQuickForm(form.Form):
+    template = ViewPageTemplateFile("templates/quickform.pt")
+    ignoreContext = True
+
+    # a string to represent a knockoutjs actions
+    # to use in data-bind="{knockout_action}"
+    knockout_action = None
+    @button.buttonAndHandler(_('Add'), name='add')
+    def handleAdd(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+
+
+@implementer(IQuickForm)
 class BaseQuickFormAdapter(object):
-    implements(IQuickForm)
 
     def __init__(self, context):
         self.context = context
@@ -32,16 +47,16 @@ class BaseQuickFormAdapter(object):
     description = property(get_description, set_description)
 
 
-class BaseQuickeEdit(form.EditForm):
-    name = "quickedit_form"
+class EditQuickForm(form.EditForm):
+    template = ViewPageTemplateFile("templates/quickform.pt")
+    name = 'edit-quickform'
+
     noChangesMessage = _(u"No changes were applied.")
     successMessage = _(u'Data successfully updated.')
 
     def redirect(self):
         self.request.response.redirect(
-            location='%s/quickedit?ajax_load=1&ajax_include_head=1' % (
-                self.context.absolute_url()
-            )
+            location=self.context.absolute_url()
         )
 
     @button.buttonAndHandler(_(u'Save'), name='save')
@@ -50,6 +65,7 @@ class BaseQuickeEdit(form.EditForm):
         if errors:
             self.status = self.formErrorsMessage
             return
+
         changes = self.applyChanges(data)
         if changes:
             self.status = self.successMessage

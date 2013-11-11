@@ -9,9 +9,10 @@
     name="view"
     layer="...interfaces.IBrowserLayer"
     class=".view.View"
-    permission="zope2.View"
     template="templates/view.pt"
+    permission="zope2.View"
   />
+
 
   <browser:page
     for="*"
@@ -20,5 +21,15 @@
     template="templates/macros.pt"
     permission="zope2.View"
   />
+
+
+  <browser:page
+    for="...interfaces.IIteration"
+    name="add-story"
+    layer="...interfaces.IBrowserLayer"
+    class=".addstory.AddStoryAction"
+    permission="simplemanagement.AddStory"
+  />
+
 
 </configure>

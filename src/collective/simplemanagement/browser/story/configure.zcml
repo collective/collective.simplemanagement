@@ -41,18 +41,9 @@
 
 
   <browser:page
-    for="*"
-    name="add-story"
-    class=".add.AddStory"
-    layer="...interfaces.IBrowserLayer"
-    permission="zope2.View"
-  />
-
-
-  <browser:page
     for="...interfaces.IStory"
     name="quickedit"
-    class=".quickedit.Quickedit"
+    class=".form.Quickedit"
     layer="...interfaces.IBrowserLayer"
     permission="zope2.View"
   />

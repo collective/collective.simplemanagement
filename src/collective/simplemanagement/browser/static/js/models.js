@@ -105,6 +105,7 @@
             self.url = self.trigger.data('iterationurl');
         }
 
+        self.messages = ko.observable();
         self.stories = ko.observableArray();
         self.status = ko.observable();
         self.title = ko.observable();
@@ -184,7 +185,7 @@
                 return false;
             } else {
                 // iteration.end >= today and iteration.start <= today
-                if (new Date(self.end()) <= today ) {
+                if (new Date(self.end()) <= today) {
                     return true;
                 }
                 return false;
@@ -193,11 +194,12 @@
 
         self.is_future = ko.computed(function() {
             // iteration.end >= today and iteration.start <= today
-            if (! (self.is_past() || self.is_current()) ) {
-                    return true;
+            if (!(self.is_past() || self.is_current())) {
+                return true;
             }
             return false;
         });
+
         self.toggleDetails = function () {
             if (self.details() === true) {
                 self.details(false);
@@ -252,6 +254,25 @@
                 data,
                 function(item) {
                     return new models.Story(iteration, item);
+                }
+            );
+        },
+
+        addStory: function (form_element) {
+            var self = this,
+                form = $(form_element);
+
+            self.messages('');
+            $.post(
+                form.attr('action'),
+                form.serialize(),
+                function(data) {
+                    if ((typeof data.error) !== 'undefined' &&
+                            data.error !== false) {
+                        self.messages(data.messages);
+                    } else {
+                        self.stories.push(new models.Story(self, data));
+                    }
                 }
             );
         },
@@ -328,7 +349,8 @@
                 key;
             $.getJSON(self.url() + '/json/view', function(data) {
                 for (key in data) {
-                    if (self.hasOwnProperty(key)) {
+                    // don't update actions
+                    if (self.hasOwnProperty(key) && key !== 'actions') {
                         self[key](data[key]);
                     }
                 }

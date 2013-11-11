@@ -849,16 +849,42 @@ table#tickets-listing {
     padding: 10px;
 }
 
-#addstory-container div.formControls{
-    float: right;
-    margin-top: -40px;
+#edit-quickform .textarea-widget,
+#addstory-form .textarea-widget {
+    height: 170px
+}
+
+#addstory-form #formfield-form-widgets-text {
+    float: left;
+    width: 45%;
+    clear: none;
+}
+
+#addstory-form #formfield-form-widgets-subjects,
+#addstory-form #formfield-form-widgets-assigned_to {
+    float: left;
+    padding-left: 2em;
+    width: 45%;
+    clear: none;
+}
+
+#addstory-form .formControls {
+    clear: both;
+}
+
+ul.token-input-list-facebook {
+    width: 100%;
+}
+
+div.token-input-dropdown-facebook {
+    z-index: 10000;
 }
 
 .clearfix.simplemanagement-addstory {
     border: 1px solid #CCCCCC;
     border-radius: 5px 5px 5px 5px;
     margin-bottom: 10px;
-    width: 70%;
+    /*width: 70%;*/
 }
 
 #addstory-form {
@@ -866,24 +892,6 @@ table#tickets-listing {
     margin: 0 0 1em 0;
 }
 
-#addstory-form p.discreet,
-.portaltype-project #plone-document-byline{ display: none !important }
-
-#addstory-form .created {
-    background-color: green;
-    border-radius: 5px;
-    color: white;
-    margin-bottom: 10px;
-    margin-top: 25px;
-    padding: 5px;
-}
-#addstory-form .created a{
-    color: white !important;
-    margin-left: 10px;
-    display: inline-block;
-}
-
-/*#project-view #addstory-form { display: none }*/
 
 #content a.btn {
     display: inline-block;

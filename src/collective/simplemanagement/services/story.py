@@ -61,7 +61,7 @@ class JSONService(base.JSONService):
 
             "assignees": api.users.get_assignees_details(self.context),
             "milestone": self.context.get_milestone(),
-            # "actions": self.context.get_actions()
+            "actions": self.context.get_actions()
         }
         return story
 

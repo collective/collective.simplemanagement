@@ -15,6 +15,7 @@
   <include package=".booking" />
   <include package=".epic" />
   <include package=".export" />
+  <include package=".forms" />
 
   <include file="worklog.zcml" />
   <include file="dashboard.zcml" />
@@ -161,12 +162,5 @@
      class=".ajaxforms.AddBooking"
    />
 
-
-  <!-- TODO: fix adapter for attribute... -->
-  <adapter
-      for="*"
-      provides="..interfaces.IQuickForm"
-      factory=".quickforms.BaseQuickFormAdapter"
-  />
 
 </configure>

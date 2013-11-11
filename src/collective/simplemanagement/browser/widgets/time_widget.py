@@ -83,6 +83,12 @@ class TimeConverter(DecimalDataConverter):
 
     def toFieldValue(self, value):
         hour, minute = value.split('|')
+
+        # minute o hour could be empty string
+        if not hour:
+            hour = 0
+        if not minute:
+            minute = 0
         # min are in 1/60 we need to transform it to 1/100
         _minute = Decimal(minute) / Decimal('60')
         res = Decimal(hour) + _minute

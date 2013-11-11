@@ -117,23 +117,6 @@ class AddBooking(Mixin):
     FormKlass = BookingForm
 
 
-class ReloadStories(Mixin):
-    # XXX: TODO!
-
-    def process(self):
-        # view = self.context.restrictedTraverse('view')
-        # template = PageTemplateFile("templates/macros.pt")
-
-        # stories = view.get_stories()
-        # renderer = MacroRenderer(template, 'stories-list', context=self.context)
-        # stories_html = renderer(**dict(stories_list=stories))
-
-        # self.success.update({
-        #     'stories_html': stories_html,
-        # })
-        return self.success
-
-
 class ReloadBooking(Mixin):
 
     def process(self):

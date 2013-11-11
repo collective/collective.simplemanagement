@@ -70,28 +70,10 @@ class JSONService(base.JSONService):
             "end": end
         }
 
-    @api.permissions.accesscontrol("Modify Portal Content")
-    def modify(self):
-        """Change some properties of the context
-        """
-        raise NotImplementedError
-
-    @api.permissions.accesscontrol("View")
-    def list(self):
-        """Return a list of objects, depends on the context"""
-        raise NotImplementedError
-
     @api.permissions.accesscontrol("Manage Portal")
-    def add(self):
-        """Add one o more elements to the context"""
-        raise NotImplementedError
-
-    @api.permissions.accesscontrol("Delete")
-    def delete(self):
-        """Delete some objects from the context"""
-        raise NotImplementedError
-
-    @api.permissions.accesscontrol("Add portal content")
-    def update(self):
-        """Update some object on the context"""
-        raise NotImplementedError
+    def add(self, stories):
+        """Add one o more stories to the context"""
+        for data in stories:
+            api.content.create_story(
+                self.context, data, reindex=False
+            )

@@ -134,7 +134,6 @@
         }
     };
 
-
     ko.bindingHandlers.ajaxOverlay = {
         init: function(element, accessor) {
             var value = accessor();
@@ -157,15 +156,36 @@
         init: function(element, accessor) {
             var value = accessor();
             $(element).prepOverlay({
-                subtype: 'iframe',
+                subtype: 'ajax',
                 filter: common_content_filter,
                 width: '80%',
-                closeselector: '.button-field',
-                config: {
-                    onClose: function(el) {
-                        value.model.load();
-                    }
+                formselector: 'form#edit-quickform',
+                closeselector: '#form-buttons-cancel',
+                noform: function () {
+                    // TODO: initialize z3c.form widgets...
+                    value.model.load();
+                    return 'close';
                 },
+                config: {
+                    onLoad: function () {
+                        var self = this,
+                            textarea = null;
+                        self.getOverlay().find('.token-userinput-widget').each(function () {
+                            // TODO: move to abstract.z3cform.usertokeninput
+                            // XXX: USE select2 ;)
+                            textarea = $(this);
+                            textarea.tokenInput(
+                                portal_url + "/users_search",
+                                {
+                                    theme: "facebook",
+                                    preventDuplicates: true,
+                                    prePopulate: textarea.data('tokeninputvalue'),
+                                    tokenDelimiter: "\n"
+                                }
+                            );
+                        });
+                    }
+                }
             });
         }
     };

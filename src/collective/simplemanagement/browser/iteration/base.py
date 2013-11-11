@@ -8,7 +8,7 @@ from plone.memoize.instance import memoize
 
 from Products.Five.browser import BrowserView
 
-from ...story import StoryQuickForm
+from ..story.form import AddStoryQuickForm
 from ...interfaces import IStoriesListing
 
 
@@ -38,6 +38,6 @@ class IterationViewMixin(object):
 
     def add_story_form(self):
         z2.switch_on(self, request_layer=IFormLayer)
-        addform = StoryQuickForm(aq_inner(self.context), self.request)
+        addform = AddStoryQuickForm(aq_inner(self.context), self.request)
         addform.update()
         return addform.render()

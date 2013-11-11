@@ -1,0 +1,66 @@
+<tal:status define="status view/status" condition="status">
+    <dl class="portalMessage error" tal:condition="view/widgets/errors">
+        <dt i18n:translate="">
+            Error
+        </dt>
+        <dd tal:content="status" />
+    </dl>
+    <dl class="portalMessage info" tal:condition="not: view/widgets/errors">
+        <dt i18n:translate="">
+            Info
+        </dt>
+        <dd tal:content="status" />
+    </dl>
+</tal:status>
+
+<tal:errors define="errors view/widgets/errors" condition="errors">
+    <tal:error repeat="error errors">
+        <div class="field error"
+             tal:condition="not:nocall:error/widget"
+             tal:content="structure error/render">
+             Error
+        </div>
+    </tal:error>
+</tal:errors>
+
+<p  class="discreet"
+    tal:define="description view/description | nothing"
+    tal:condition="description"
+    tal:content="structure description">
+        Description
+</p>
+
+<form class="rowlike" action="." method="post"
+      tal:define="groups view/groups | nothing;
+                  form_name view/form_name | nothing;
+                  form_class view/css_class | string:;
+                  default_fieldset_label view/default_fieldset_label | form_name;
+                  enable_form_tabbing view/enable_form_tabbing | python:True;
+                  has_groups python:bool(groups);
+                  form_tabbing python:(has_groups and enable_form_tabbing) and 'enableFormTabbing' or '';
+                  show_default_label python:has_groups and default_fieldset_label and len(view.widgets);
+                  "
+      tal:attributes="action view/action|request/getURL;
+                      enctype view/enctype;
+                      class python:'rowlike %s %s' % (form_tabbing, form_class);
+                      id view/id;
+                      method view/method|string:'post';
+                      data-bind view/knockout_action|nothing;
+                      ">
+
+    <input type="hidden"
+        name="fieldset"
+        tal:define="current_fieldset request/fieldset | string:#fieldsetlegend-default"
+        tal:condition="python:has_groups and enable_form_tabbing"
+        tal:attributes="value current_fieldset"
+        />
+
+    <!-- Default fieldset -->
+    <metal:block use-macro="context/@@ploneform-macros/fields" />
+
+    <metal:block use-macro="context/@@ploneform-macros/actions" />
+
+    <tal:block tal:condition="view/enableCSRFProtection|nothing"
+      tal:replace="structure context/@@authenticator/authenticator" />
+
+</form>
