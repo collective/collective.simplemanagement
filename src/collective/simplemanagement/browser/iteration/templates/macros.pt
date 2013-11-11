@@ -68,7 +68,7 @@
     <!-- ko if: stories().length > 0 -->
     <div id="stories-wrapper">
       <table class="listing stories"
-          data-bind="css: is_sortable ? 'sortable' : ''" >
+          data-bind="css: {sortable: is_sortable}" >
 
         <thead>
           <tr>
