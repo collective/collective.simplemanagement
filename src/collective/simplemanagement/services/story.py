@@ -57,11 +57,11 @@ class JSONService(base.JSONService):
             "estimate": timings['estimate'],
             "resource_time": timings['resource_time'],
             "difference": timings['difference'],
-            "time_status": timings['time_status'],
 
             "assignees": api.users.get_assignees_details(self.context),
             "milestone": self.context.get_milestone(),
-            "actions": self.context.get_actions()
+            "actions": self.context.get_actions(),
+            'warning_delta_percent': self._settings.warning_delta_percent
         }
         return story
 

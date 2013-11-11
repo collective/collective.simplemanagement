@@ -28,6 +28,7 @@
         self.iterations = ko.observableArray();
         self.title = ko.observable();
         self.description = ko.observable();
+        self.warning_delta_percent = ko.observable(0);
 
         self.estimate = ko.computed(function() {
             estimate = 0;
@@ -53,6 +54,8 @@
             return base.decimal2timestr(self.hours());
         });
 
+        self.time_status = ko.computed(self.get_time_status, self);
+
         if (data !== undefined) {
             self.url(data.url);
             self.title(data.title);
@@ -63,6 +66,16 @@
     };
 
     models.Project.prototype = {
+
+        get_time_status: function () {
+            // return a string representing a time status
+            // of this story
+            return base.get_difference_class(
+                this.estimate(),
+                this.hours(),
+                this.warning_delta_percent()
+            )
+        },
 
         load: function () {
             var self = this,
@@ -115,6 +128,8 @@
 
         self.details = ko.observable(false);
         self.css_class = ko.observable('open');
+        self.warning_delta_percent = ko.observable(0);
+
         self.is_sortable = ko.observable(false);
 
         self.sortable_options = {
@@ -148,6 +163,8 @@
         self.hours_str = ko.computed(function () {
             return base.decimal2timestr(self.hours());
         });
+
+        self.time_status = ko.computed(self.get_time_status, self);
 
         self.is_current = ko.computed(function() {
 
@@ -218,6 +235,7 @@
             self.end(data.end);
             self.start(data.start);
             self.is_sortable(data.is_sortable);
+            self.warning_delta_percent(data.warning_delta_percent);
 
             if ((typeof data.stories) !== 'undefined') {
                 self.stories(self.load_stories(data.stories));
@@ -230,6 +248,16 @@
     };
 
     models.Iteration.prototype = {
+
+        get_time_status: function () {
+            // return a string representing a time status
+            // of this story
+            return base.get_difference_class(
+                this.estimate(),
+                this.hours(),
+                this.warning_delta_percent()
+            )
+        },
 
         save: function (data) {
             alert("save" + data);
@@ -328,7 +356,8 @@
         self.assignees = ko.observableArray(data.assignees);
         self.estimate = ko.observable(data.estimate);
         self.resource_time = ko.observable(data.resource_time);
-        self.time_status = ko.observable(data.time_status);
+
+        self.time_status = ko.computed(self.get_time_status, self);
 
         self.estimate_str = ko.computed(function() {
             return base.decimal2timestr(self.estimate());
@@ -343,6 +372,15 @@
     };
 
     models.Story.prototype = {
+        get_time_status: function () {
+            // return a string representing a time status
+            // of this story
+            return base.get_difference_class(
+                this.estimate(),
+                this.resource_time(),
+                this.iteration.warning_delta_percent()
+            )
+        },
 
         load: function () {
             var self = this,

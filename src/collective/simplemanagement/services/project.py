@@ -44,7 +44,8 @@ class JSONService(base.JSONService):
             "stories": self._get_stories(item),
             "is_sortable": self.user_can_manage_project(item),
             "start": start,
-            "end": end
+            "end": end,
+            "warning_delta_percent": self._settings.warning_delta_percent
         }
 
     @api.permissions.accesscontrol("View")

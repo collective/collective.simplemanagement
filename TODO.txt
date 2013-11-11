@@ -1,14 +1,12 @@
 1. check permission on services and forms
   - in story form 'employee' user can't edit all fields
-2. remove 'sortable' class when user cannot sort stories
-3. dynamically change style on story totals
-4. include bookinform (like dashboard) in iteration and project views
-5. improve project timing table
+2. include bookingform (like dashboard) in iteration and project views
+3. improve project timing table
 
 -----
-6. All iterations view refactoring
-7. Dashboard view refactoring
-8. Planning view refactoring
+4. All iterations view refactoring
+5. Dashboard view refactoring
+6. Planning view refactoring
 -----
 
 0. fix and update abstract.z3cform.usertoken... USE select2

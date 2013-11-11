@@ -68,6 +68,22 @@
     };
 
 
+    base.get_difference_class = function (estimate, resource_time, warning_delta) {
+        var difference = estimate - resource_time,
+            time_status = 'success';
+
+            if (estimate > 0 || resource_time < 0) {
+                if ((Math.abs(difference) / estimate) > warning_delta){
+                    if (difference < 0) {
+                        time_status = 'danger';
+                    } else {
+                        time_status = 'warning';
+                    }
+                }
+            }
+            return time_status;
+    };
+
     // The jqueryDrawer binding for knockout
     //
     // TODO: kill in favour of new drawer

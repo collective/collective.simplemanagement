@@ -5,12 +5,17 @@ from zope.publisher.interfaces import IPublishTraverse
 from Products.Five.browser import BrowserView
 
 from .. import api
+from ..configure import Settings
 from ..interfaces import IJSONService
 
 
 @implementer(IJSONService, IPublishTraverse)
 class JSONService(BrowserView):
     action = ''
+
+    @property
+    def _settings(self):
+        return Settings()
 
     def publishTraverse(self, request, name):
         """Set the action of this view:

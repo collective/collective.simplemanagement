@@ -128,9 +128,11 @@
               colspan="3">Totals</th>
             <th class="info">&nbsp;</th>
             <td class="data numeric-data"
-                data-bind="text: estimate_str"></td>
+                data-bind="text: estimate_str,
+                           css: time_status"></td>
             <td class="data numeric-data"
-                data-bind="text: hours_str"></td>
+                data-bind="text: hours_str,
+                           css: time_status"></td>
           </tr>
         </tfoot>
 

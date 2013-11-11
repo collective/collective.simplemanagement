@@ -21,13 +21,15 @@
           <tr>
             <th i18n:translate="">Estimate</th>
             <td class="data numeric-data"
-                data-bind="text: estimate_str"></td>
+                data-bind="text: estimate_str,
+                           css: time_status"></td>
 
           </tr>
           <tr>
             <th i18n:translate="">Done</th>
             <td class="data numeric-data"
-                data-bind="text: hours_str"></td>
+                data-bind="text: hours_str,
+                           css: time_status"></td>
           </tr>
         </table>
       </div>

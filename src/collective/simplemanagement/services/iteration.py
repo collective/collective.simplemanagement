@@ -26,6 +26,7 @@ class JSONService(base.JSONService):
             "is_sortable",
             "start",
             "end",
+            "warning_delta_percent",
             "stories": [
                 {
                     "id",
@@ -67,7 +68,8 @@ class JSONService(base.JSONService):
             "description": self.context.description,
             "stories": self._get_stories(),
             "start": start,
-            "end": end
+            "end": end,
+            "warning_delta_percent": self._settings.warning_delta_percent
         }
 
     @api.permissions.accesscontrol("Manage Portal")

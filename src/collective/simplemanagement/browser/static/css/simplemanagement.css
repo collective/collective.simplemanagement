@@ -673,21 +673,21 @@ table.stories.sortable tbody tr.story td.handle.suspended {
     color: #FFFFFF;
 }
 
-table.stories td.data.danger,
-table.stories td.data.success,
-table.stories td.data.warning {
+td.data.danger,
+td.data.success,
+td.data.warning {
     font-weight: bold;
 }
 
-table.stories td.data.danger {
+td.data.danger {
     color: #ff4420;
 }
 
-table.stories td.data.success {
+td.data.success {
     color: #75AD0A;
 }
 
-table.stories td.data.warning {
+td.data.warning {
     color: #f17e03;
 }
 
