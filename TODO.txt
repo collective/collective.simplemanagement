@@ -1,7 +1,7 @@
 1. check permission on services and forms
   - in story form 'employee' user can't edit all fields
 2. include bookingform (like dashboard) in iteration and project views
-3. improve project timing table
+3. improve project timing table style
 
 -----
 4. All iterations view refactoring
