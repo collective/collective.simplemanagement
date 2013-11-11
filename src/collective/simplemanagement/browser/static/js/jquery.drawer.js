@@ -1,5 +1,9 @@
 (function($) {
+    var drawer_id = 0;
+
     var Drawer = function(element, options) {
+        this.id = drawer_id;
+        drawer_id++;
         this.options = {
             action: "click",
             group: null,
@@ -33,11 +37,30 @@
         });
         if(this.options.open) this.show();
 
-        // close tooltip by click on window
-        // $(window).bind('click', function (){
-        //     if(self.isShown())
-        //         self.hide();
-        // });
+        // Close tooltip by click "somewhere off the drawer".
+        // This is executed only once
+        $('body').on('click.jqueryDrawer-'+this.id, function(event) {
+            if(self.drawer) {
+                var $target = $(event.target);
+                var is_child = false;
+                var trigger = self.trigger.get(0);
+                var drawer = self.drawer.get(0);
+                if($target.is(drawer) || $target.is(trigger))
+                    is_child = true;
+                else {
+                    $target.parents().each(function() {
+                        var $parent = $(this);
+                        if($parent.is(drawer) || $parent.is(trigger))
+                            is_child = true;
+                    });
+                }
+                if(!is_child) self.hide();
+            }
+        });
+        this.trigger.on("remove", function() {
+            self.hide(true);
+            $(body).off('click.jqueryDrawer-'+self.id);
+        });
     };
 
     Drawer.prototype = {
@@ -180,9 +203,6 @@
                 else
                     drawer = new Drawer(this);
                 element.data('drawer', drawer);
-                element.on("remove", function() {
-                    drawer.hide(true);
-                });
             }
             else {
                 if(args.length > 0)
