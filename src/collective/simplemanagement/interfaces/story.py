@@ -56,6 +56,10 @@ class IStory(form.Schema):
         description=_(u"The user IDs of the people "
                       u"that are responsible to act on this story"),
         value_type=schema.TextLine(),
+        # value_type=schema.Choice(
+        #     title=_(u"User ID"),
+        #     source="collective.simplemanagement.resources"
+        # ),
         required=False
     )
     form.widget(assigned_to=UserTokenInputFieldWidget)
@@ -80,7 +84,7 @@ class IStoriesListing(Interface):
         """return stories details if project_info is True
         each story contains also information about project and iteration.
 
-        Stories can be filtered also by project review state and 
+        Stories can be filtered also by project review state and
         story review state.
         """
 
@@ -93,7 +97,7 @@ class IUserStoriesListing(IStoriesListing):
     """This adapter return all stories assigned to a specific user
     """
 
-    def stories(project_states=None, story_states=None,project_info=False, 
+    def stories(project_states=None, story_states=None,project_info=False,
                 user_id=None):
         """return stories details if project_info is True
         each story contains also information about project and iteration

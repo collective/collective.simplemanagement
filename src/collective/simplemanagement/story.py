@@ -1,26 +1,13 @@
 import plone.api
-from Acquisition import aq_inner
 
 from zope.interface import implementer
 from zope.security import checkPermission
 
-from z3c.form.interfaces import IFormLayer
-from z3c.form import form, field
-
-from plone.z3cform import z2
 from plone.dexterity.content import Container
-from plone.dexterity.utils import createContentInContainer
-from plone.app.dexterity.behaviors.metadata import ICategorization
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import safe_unicode
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from collective.z3cform.widgets.token_input_widget import TokenInputFieldWidget
-from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
-from .browser.widgets.time_widget import TimeFieldWidget
-from .booking import BookingForm
 from .interfaces import IStory
 from .interfaces import IQuickForm
 from . import api

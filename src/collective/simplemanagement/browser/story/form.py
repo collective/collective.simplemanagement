@@ -57,7 +57,7 @@ class StoryEditQuickForm(EditQuickForm):
         'estimate',
         'assigned_to'
     )
-    fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
+    # fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
 
 
 Quickedit = wrap_form(StoryEditQuickForm)
