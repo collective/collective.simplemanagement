@@ -1448,6 +1448,12 @@ input.effort {
     border: 1px dashed #777;
 }
 
+#content .compassview .addProject:before {
+    content: "\271a";
+    font-size: 100%;
+    margin-right: 5px;
+}
+
 #content .compassview .addProject:hover {
     color: #333 !important;
     border: 1px solid #333;

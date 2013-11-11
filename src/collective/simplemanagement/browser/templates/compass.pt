@@ -198,7 +198,7 @@
               <a href="#"
                  class="addProject"
                  rel="#newProjectPopup"
-                 i18n:translate="">Activate project</a>
+                 i18n:translate="">Create or activate a project</a>
               <div class="bottom-pane">
                 <div class="totals">
                   <h4 i18n:translate="">Total compass</h4>
@@ -233,7 +233,7 @@
               </a>
             </div>
             <div class="pb-ajax">
-              <h2 i18n:translate="">Activate project</h2>
+              <h2 i18n:translate="">Create or activate a project</h2>
               <div class="pane-container">
                 <div class="pane right"
                      data-bind="validationOptions: { insertMessages: false, decorateElement: true, errorElementClass: 'has-errors', errorsAsTitle: false }">
