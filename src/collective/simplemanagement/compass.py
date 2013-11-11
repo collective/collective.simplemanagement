@@ -33,6 +33,8 @@ class CompassTool(SimpleItem):
                 slice_ = raw_keys[-(start+step):]
             else:
                 slice_ = raw_keys[-(start+step):-(start)]
+            slice_ = [ i for i in slice_ ]
+            slice_.reverse()
         else:
             slice_ = raw_keys[start:start+step]
         return [ k for k in slice_ ]

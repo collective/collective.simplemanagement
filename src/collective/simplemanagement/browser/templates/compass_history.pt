@@ -122,7 +122,8 @@
                     <tal:person repeat="person project/people">
                     <div class="thumbnail thumbnail-small person"
                          tal:define="person_data python:view.augment_user_data(person)"
-                         tal:attributes="style string:background-image:url('${person_data/avatar}');;">
+                         tal:attributes="title person_data/name;
+                                         style string:background-image:url('${person_data/avatar}');;">
                       <span tal:attributes="class python:'effort critical' if person_data.get('is_critical') else 'effort'"
                             tal:content="person_data/effort"></span>
                       <span class="title" tal:content="person_data/role"></span>
