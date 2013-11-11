@@ -1,0 +1,19 @@
+1. check permission on services and forms
+  - limitare la modifica di alcuni campi storia agli employee
+1a. togliere class 'sortable' alle iterazioni se non si può riordinare
+2. fix and update abstract.z3cform.usertoken... USE select2
+3. dynamically change style on story totals
+4. include bookinform (like dashboard) in iteration and project views
+6. improve project timing table
+-----
+7. All iterations view
+8. Dashboard refactoring
+9. Planning refactoring
+-----
+
+
+XXX: portare tutto in staging
+-----------------------------
+   -> ritardiamo la messa in prod ma non separiamo lo sviluppo
+ * in staging lunedì
+ * messa in produzione sett. prox

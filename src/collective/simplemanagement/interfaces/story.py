@@ -9,7 +9,7 @@ from plone.directives import form
 from plone.formwidget.contenttree import ObjPathSourceBinder
 from plone.app.textfield import RichText
 
-from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
+# from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
 
 from ..browser.widgets.time_widget import TimeFieldWidget
 from .. import _
@@ -55,14 +55,14 @@ class IStory(form.Schema):
         title=_(u"Assignees"),
         description=_(u"The user IDs of the people "
                       u"that are responsible to act on this story"),
-        value_type=schema.TextLine(),
-        # value_type=schema.Choice(
-        #     title=_(u"User ID"),
-        #     source="collective.simplemanagement.resources"
-        # ),
+        # value_type=schema.TextLine(),
+        value_type=schema.Choice(
+            title=_(u"User ID"),
+            source="collective.simplemanagement.resources"
+        ),
         required=False
     )
-    form.widget(assigned_to=UserTokenInputFieldWidget)
+    # form.widget(assigned_to=UserTokenInputFieldWidget)
 
     epic = RelationChoice(
         title=_(u"Epic"),
