@@ -7,30 +7,25 @@
       tal:omit-tag="">
 
 <div class="wrapper">
-  <div class="wf_actions">
-    <tal:actions repeat="act view/actions">
-      <span tal:condition="not:act/available"
-        tal:attributes="title act/description;
-          class string:disable ${act/id}">
-        <span
-          tal:content="act/title"/>
-      </span>
-      <a href=""
-         tal:condition="act/available"
-         tal:attributes="title act/description;
-              href act/href;
-              class act/id">
-            <span
-            tal:content="act/title" />
-      </a>
-    </tal:actions>
-    <a class="close"
-       href="#"
-       title="Close tooltip"
-       i18n:attributes="title"
-       onclick="return false">
-      <span>&nbsp;</span>
-    </a>
+  <div tal:attributes="class view/klass">
+    <ul>
+      <li tal:repeat="act view/actions">
+        <span tal:condition="not:act/available"
+          tal:attributes="title act/description;
+            class string:disable ${act/id}">
+          <span
+            tal:content="act/title"/>
+        </span>
+        <a href=""
+           tal:condition="act/available"
+           tal:attributes="title act/description;
+                href act/href;
+                class act/id">
+              <span
+              tal:content="act/title" />
+        </a>
+      </li>
+    </ul>
   </div>
   <b class="notch-bottomleft"></b>
 </div>

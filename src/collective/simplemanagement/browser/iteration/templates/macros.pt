@@ -95,7 +95,7 @@
                                       foreach: actions}">
             </td>
 
-            <td><a data-bind="text: title,
+            <td class="story-title"><a data-bind="text: title,
                 attr: {href: url}">Story Title</a></td>
             <td>
               <!-- ko if: assignees().length > 0 -->

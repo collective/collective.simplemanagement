@@ -333,13 +333,17 @@ ul.stories .suspended {
     vertical-align: bottom
 }
 
-.assignees-container .assignees {
+.assignees {
     display: inline
 }
 
-.assignees-container .assignees li {
+.assignees li {
     display:inline !important;
     margin-right: .5em;
+}
+
+td.story-title {
+    width: 50%;
 }
 
 
@@ -477,7 +481,7 @@ ul.stories .actions {
     display: none;
     background: white;
     border: 1px solid #bbb;
-    padding: 0.2em 0.2em 0.2em 0.5em;
+    padding: 0.2em 0.5em;
     box-shadow: 0.1em 0.1em 0.3em #777;
     font-size: 80%;
     z-index: 10000;

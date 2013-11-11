@@ -10,10 +10,10 @@ from ... import api
 
 class Actions(BrowserView):
 
-    actions_template = ViewPageTemplateFile('templates/actions.pt')
-    iterations_template = ViewPageTemplateFile(
-        'templates/ch_iteration_actions.pt'
-    )
+    template = ViewPageTemplateFile('templates/actions.pt')
+    # iterations_template = ViewPageTemplateFile(
+    #     'templates/ch_iteration_actions.pt'
+    # )
 
     def wf_actions(self):
         """return a list of transition available for the context
@@ -44,8 +44,9 @@ class Actions(BrowserView):
             if i['available'] and i['allowed']:
                 actions[i['id']]['available'] = True
 
+        self.klass = "wf_actions"
         self.actions = [actions[i] for i in ordered_actions]
-        return self.actions_template()
+        return self.template()
 
     def ch_iteration(self):
         """return a list of iterations available for the context
@@ -71,5 +72,6 @@ class Actions(BrowserView):
                 )
             })
 
-        self.iterations = iterations
-        return self.iterations_template()
+        self.actions = iterations
+        self.klass = "ch_iteration"
+        return self.template()
