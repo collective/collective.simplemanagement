@@ -22,4 +22,12 @@
       id="simplemanagement.AddStory"
       title="Simplemanagement: Add story" />
 
+  <permission
+      id="simplemanagement.ViewCompass"
+      title="Simplemanagement: View compass" />
+
+  <permission
+      id="simplemanagement.EditCompass"
+      title="Simplemanagement: Edit compass" />
+
 </configure>

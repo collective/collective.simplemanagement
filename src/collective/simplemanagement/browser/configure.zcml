@@ -232,7 +232,7 @@
     name="compass"
     class=".compass.Compass"
     layer="..interfaces.IBrowserLayer"
-    permission="simplemanagement.ManageProject"
+    permission="simplemanagement.ViewCompass"
     template="templates/compass.pt"
   />
 

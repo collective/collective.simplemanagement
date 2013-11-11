@@ -21,10 +21,14 @@ class Traversable(BrowserView):
 
     def __call__(self):
         if self.method is None:
-            try:
+            if hasattr(super(Traversable, self), '__call__'):
                 result = super(Traversable, self).__call__()
-            except AttributeError:
+            elif hasattr(self, 'index'):
+                result = self.index()
+            elif hasattr(self, 'template'):
                 result = self.template()
+            else:
+                raise RuntimeError("No callable found")
         else:
             result = getattr(self, self.method)()
         self.method = None

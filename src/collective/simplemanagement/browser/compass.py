@@ -3,7 +3,9 @@ import plone.api
 from datetime import date
 from decimal import Decimal
 from DateTime import DateTime
+from AccessControl import Unauthorized
 from zope.component import getUtility
+from zope.security import checkPermission
 from zope.schema.interfaces import IVocabularyFactory
 from plone.registry.interfaces import IRegistry
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -90,6 +92,10 @@ class History(api.views.Traversable):
             'count': len(portal_compass)
         }
 
+    def can_edit(self):
+        return checkPermission('simplemanagement.EditCompass', self.context)
+
+    @api.permissions.accesscontrol('simplemanagement.EditCompass')
     def do_delete(self):
         key = self.request.form.get('key')
         confirmation = self.request.form.get('do_delete')
@@ -122,6 +128,15 @@ class History(api.views.Traversable):
                 self.data = portal_compass[key]
                 return self
         return super(History, self).publishTraverse(request, name)
+
+    def __call__(self):
+        if self.data is None:
+            portal_compass = self.tools['portal_compass']
+            max_key = portal_compass.max_key()
+            if max_key is not None:
+                self.request.response.redirect(self.base_url()+str(max_key))
+                return u''
+        return super(History, self).__call__()
 
 
 class Compass(api.views.Traversable):
@@ -407,3 +422,11 @@ class Compass(api.views.Traversable):
         if self.method is None and name == 'history':
             return History(self.context, self.request)
         return super(Compass, self).publishTraverse(request, name)
+
+    def __call__(self):
+        if checkPermission('simplemanagement.EditCompass', self.context):
+            return super(Compass, self).__call__()
+        elif checkPermission('simplemanagement.ViewCompass', self.context):
+            self.request.response.redirect('{0}history'.format(self.base_url()))
+            return u''
+        raise Unauthorized

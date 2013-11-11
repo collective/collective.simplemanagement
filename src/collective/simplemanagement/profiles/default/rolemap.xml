@@ -38,6 +38,18 @@
       <role name="Site Administrator"/>
     </permission>
 
+    <permission name="Simplemanagement: Edit compass" acquire="False">
+      <role name="Manager"/>
+      <role name="PM"/>
+      <role name="Site Administrator"/>
+    </permission>
+
+    <permission name="Simplemanagement: View compass" acquire="False">
+      <role name="Manager"/>
+      <role name="PM"/>
+      <role name="Employee"/>
+      <role name="Site Administrator"/>
+    </permission>
 
     <!-- poi related permissions -->
     <permission name="Poi: Add Tracker" acquire="True">

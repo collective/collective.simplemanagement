@@ -116,3 +116,11 @@ def upgrade_to_1005(context, logger=None):
     logger = getLogger(logger)
     logger.info("Adding actions")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'actions')
+
+
+def upgrade_to_1006(context, logger=None):
+    logger = getLogger(logger)
+    logger.info("Refreshing actions")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'actions')
+    logger.info("Refreshing role mappings")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'rolemap')

@@ -21,7 +21,9 @@
         <h1 class="documentFirstHeading" i18n:translate="">Compass</h1>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
-        <div id="deletePopup" class="overlay">
+        <tal:data condition="view/data">
+        <div id="deletePopup" class="overlay"
+             tal:condition="view/can_edit">
           <div class="close">
             <a href="#"
                class="hiddenStructure"
@@ -70,9 +72,11 @@
               <span class="danger" i18n:translate="">Anonymous user</span>
             </tal:saved_by>
             <a href="#"
+               tal:condition="view/can_edit"
                tal:attributes="href view/compass_url"
                i18n:translate="">Go to working copy</a>
             <button
+               tal:condition="view/can_edit"
                class="delete"
                rel="#deletePopup"
                i18n:translate="">Delete</button>
@@ -151,6 +155,12 @@
             </div>
           </div>
         </div>
+        </tal:data>
+        <tal:nodata condition="not:view/data">
+          <div id="content-core">
+            <p i18n:translate="">There are no saved compass plans.</p>
+          </div>
+        </tal:nodata>
         <div tal:replace="structure provider:plone.belowcontentbody" />
       </metal:main>
     </metal:bodytext>
