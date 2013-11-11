@@ -1,11 +1,7 @@
 1. check permission on services and forms
   - in story form 'employee' user can't edit all fields
-2. include bookingform (like dashboard) in iteration and project views
-
------
-3. All iterations view refactoring
-4. Dashboard view refactoring
-5. Planning view refactoring
------
+2. All iterations view refactoring
+3. Dashboard view refactoring
+4. Planning view refactoring
 
 0. fix and update abstract.z3cform.usertoken... USE select2
