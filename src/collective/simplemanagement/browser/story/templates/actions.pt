@@ -12,17 +12,15 @@
       <li tal:repeat="act view/actions">
         <span tal:condition="not:act/available"
           tal:attributes="title act/description;
-            class string:disable ${act/id}">
-          <span
-            tal:content="act/title"/>
+            class string:disable ${act/id}"
+          tal:content="act/title">
         </span>
         <a href=""
            tal:condition="act/available"
            tal:attributes="title act/description;
                 href act/href;
-                class act/id">
-              <span
-              tal:content="act/title" />
+                class act/id"
+           tal:content="act/title">
         </a>
       </li>
     </ul>

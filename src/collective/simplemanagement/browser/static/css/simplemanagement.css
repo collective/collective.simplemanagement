@@ -549,6 +549,7 @@ ul.stories .actions {
     height: 0;
 }
 
+.tooltip span,
 .tooltip a {
     padding: 0 .2em;
     line-height: 25px;
