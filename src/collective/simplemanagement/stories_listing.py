@@ -101,6 +101,7 @@ class StoriesListing(object):
                 'estimate': timings['estimate'],
                 'resource_time': timings['resource_time'],
                 'difference': timings['difference'],
+                'time_status': timings['time_status'],
                 'epic': api.content.get_epic_by_story(story),
                 'assignees': api.users.get_assignees_details(story),
                 'can_edit': story.user_can_edit(),

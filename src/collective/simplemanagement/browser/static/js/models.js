@@ -74,12 +74,11 @@
                 this.estimate(),
                 this.hours(),
                 this.warning_delta_percent()
-            )
+            );
         },
 
         load: function () {
-            var self = this,
-                key;
+            var self = this;
             $.getJSON(self.url + '/json/view', function(data) {
                 self.iterations(self.load_iterations(data.iterations));
                 self.title(data.title);
@@ -256,7 +255,7 @@
                 this.estimate(),
                 this.hours(),
                 this.warning_delta_percent()
-            )
+            );
         },
 
         save: function (data) {
@@ -346,6 +345,8 @@
     models.Story = function(iteration, data) {
         var self = this;
 
+        self.omit_keys = ["actions", "time_status"];
+
         self.iteration = iteration;
         self.id = ko.observable(data.id);
         self.title = ko.observable(data.title);
@@ -379,16 +380,17 @@
                 this.estimate(),
                 this.resource_time(),
                 this.iteration.warning_delta_percent()
-            )
+            );
         },
 
         load: function () {
             var self = this,
                 key;
+
             $.getJSON(self.url() + '/json/view', function(data) {
                 for (key in data) {
                     // don't update actions
-                    if (self.hasOwnProperty(key) && key !== 'actions') {
+                    if (self.hasOwnProperty(key) && self.omit_keys.indexOf(key) === -1) {
                         self[key](data[key]);
                     }
                 }
@@ -414,7 +416,9 @@
             var self = this,
                 key;
             for (key in data) {
-                self[key](data[key]);
+                if (self.hasOwnProperty(key) && self.omit_keys.indexOf(key) === -1) {
+                    self[key](data[key]);
+                }
             }
         },
 
