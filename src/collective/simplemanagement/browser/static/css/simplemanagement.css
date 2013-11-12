@@ -1103,6 +1103,7 @@ input[name="filter-people"] {
 #content .compassview .project > .status-indicator a {
     opacity: 0.5;
 }
+
 #content .compassview .project > .status-indicator a:hover {
     color: #fff !important;
     opacity: 1.0;
@@ -1577,4 +1578,36 @@ input.effort {
 .compassview .state-dead,
 #newProjectPopup .state-dead {
     background-color: #540054;
+}
+
+#plone-contentmenu-workflow .state-planning,
+#plone-contentmenu-workflow .state-offer,
+#plone-contentmenu-workflow .state-development,
+#plone-contentmenu-workflow .state-maintenance,
+#plone-contentmenu-workflow .state-closed,
+#plone-contentmenu-workflow .state-dead {
+    padding: 0px 0.5em;
+    border-width: 0.1em;
+    border-style: solid;
+    color: #fff !important;
+    border-radius: 0.5em;
+}
+
+#plone-contentmenu-workflow .state-planning {
+    border-color: #444;
+}
+#plone-contentmenu-workflow .state-offer {
+    border-color: #8dc73e;
+}
+#plone-contentmenu-workflow .state-development {
+    border-color: #5ab71e;
+}
+#plone-contentmenu-workflow .state-maintenance {
+    border-color: #448cca;
+}
+#plone-contentmenu-workflow .state-closed {
+    border-color: #eb9b12;
+}
+#plone-contentmenu-workflow .state-dead {
+    border-color: #540054;
 }
