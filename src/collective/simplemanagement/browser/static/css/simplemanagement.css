@@ -1049,7 +1049,7 @@ table#tickets-listing {
 .thumbnail.placeholder.removePerson.dropok.dropover {
     background-color: #f88;
 }
-.compass .project > .people .thumbnail.placeholder.addPerson {
+.compassview .project > .people .thumbnail.placeholder.addPerson {
     cursor: default;
 }
 .thumbnail.placeholder.addPerson:after {
@@ -1079,61 +1079,61 @@ input.filter-data {
 input[name="filter-people"] {
     width: 205px;
 }
-.compass .project {
+.compassview .project {
     height: 130px;
     width: 100%;
     clear: both;
     margin-bottom: 1em;
 }
-.compass .project > div {
+.compassview .project > div {
     float: left;
 }
-.compass .project > .status-indicator {
+.compassview .project > .status-indicator {
     width: 1.3em;
     background-color: #777;
     height: 100%;
     text-align: center;
 }
-#content .compass .project > .status-indicator a,
-#content .compass .project > .status-indicator span {
+#content .compassview .project > .status-indicator a,
+#content .compassview .project > .status-indicator span {
     color: #fff;
     border-bottom: none;
     font-weight: bold;
 }
-#content .compass .project > .status-indicator a {
+#content .compassview .project > .status-indicator a {
     opacity: 0.5;
 }
-#content .compass .project > .status-indicator a:hover {
+#content .compassview .project > .status-indicator a:hover {
     color: #fff !important;
     opacity: 1.0;
 }
-#content .compass .project > .status-indicator a:visited {
+#content .compassview .project > .status-indicator a:visited {
     color: #ccc;
 }
-.compass .project > .info,
-.compass .project > .people {
+.compassview .project > .info,
+.compassview .project > .people {
     margin-left: 0.5em;
     height: 100%;
 }
-#content .compass .project > .info textarea.notes {
+#content .compassview .project > .info textarea.notes {
     width: 45em;
     height: 4em;
 }
-#content .compass .project > .info div.notes {
+#content .compassview .project > .info div.notes {
     width: 45em;
     height: 6em;
     overflow-y: auto;
 }
-#content .compass .project > .info .effort .date {
+#content .compassview .project > .info .effort .date {
     font-style: italic;
     border: none;
     font-size: 1em;
     padding: 0em;
 }
-.compass .project > .people {
+.compassview .project > .people {
     width: 420px;
 }
-.compass .project > .people .thumbnail {
+.compassview .project > .people .thumbnail {
     cursor: pointer;
 }
 
@@ -1161,7 +1161,7 @@ input.effort {
 }
 
 .critical-resources .thumbnail.person span.effort,
-.compass .project > .people .thumbnail.person span.effort {
+.compassview .project > .people .thumbnail.person span.effort {
     position: absolute;
     display: block;
     height: 1.5em;
@@ -1176,10 +1176,10 @@ input.effort {
     left: -0.3em;
 }
 .critical-resources .thumbnail.person span.effort,
-.compass .project > .people .thumbnail.person span.effort.critical {
+.compassview .project > .people .thumbnail.person span.effort.critical {
     background: #c33;
 }
-.compass .project > .info .effort {
+.compassview .project > .info .effort {
     margin-top: 0.3em;
 }
 .compassview .control {
