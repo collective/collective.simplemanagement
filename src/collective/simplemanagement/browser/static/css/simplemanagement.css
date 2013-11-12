@@ -1550,32 +1550,32 @@ input.effort {
 
 /* project states */
 #plone-contentmenu-workflow .state-planning,
-.compassview .state-planning,
+#content .compassview .project > .status-indicator.state-planning,
 #newProjectPopup .state-planning {
     background-color: #444;
 }
 #plone-contentmenu-workflow .state-offer,
-.compassview .state-offer,
+#content .compassview .project > .status-indicator.state-offer,
 #newProjectPopup .state-offer {
     background-color: #8dc73e;
 }
 #plone-contentmenu-workflow .state-development,
-.compassview .state-development,
+#content .compassview .project > .status-indicator.state-development,
 #newProjectPopup .state-development {
     background-color: #5ab71e;
 }
 #plone-contentmenu-workflow .state-maintenance,
-.compassview .state-maintenance,
+#content .compassview .project > .status-indicator.state-maintenance,
 #newProjectPopup .state-maintenance {
     background-color: #448cca;
 }
 #plone-contentmenu-workflow .state-closed,
-.compassview .state-closed,
+#content .compassview .project > .status-indicator.state-closed,
 #newProjectPopup .state-closed {
     background-color: #eb9b12;
 }
 #plone-contentmenu-workflow .state-dead,
-.compassview .state-dead,
+#content .compassview .project > .status-indicator.state-dead,
 #newProjectPopup .state-dead {
     background-color: #540054;
 }
