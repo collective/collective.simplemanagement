@@ -55,7 +55,7 @@
       />
 
   <genericsetup:upgradeStep
-      title="Compass permissions and javascript"
+      title="Compass permissions"
       description="Sets a more sane set of permissions for compass"
       source="1005"
       destination="1006"
@@ -63,4 +63,16 @@
       sortkey="1"
       profile="collective.simplemanagement:default"
       />
+
+
+  <genericsetup:upgradeStep
+      title="Update javascript registry"
+      description=""
+      source="1006"
+      destination="1007"
+      handler=".upgrades.upgrade_to_1007"
+      sortkey="1"
+      profile="collective.simplemanagement:default"
+      />
+
 </configure>
