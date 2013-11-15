@@ -52,8 +52,13 @@ class History(api.views.Traversable):
     def html_notes(self, data):
         data = u'' if data is None else data
         portal_transforms = self.tools['portal_transforms']
+        if isinstance(data, unicode):
+            data = data.encode('utf-8')
         data = portal_transforms.convert('markdown_to_html', data)
-        return data.getData()
+        result = data.getData()
+        if isinstance(result, str):
+            result = result.decode('utf-8')
+        return result
 
     def current_saved_by(self):
         if self.data and 'saved_by' in self.data:
