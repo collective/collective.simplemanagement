@@ -29,24 +29,6 @@
                              data-plan-weeks settings/default_plan_length;
                              data-working-week-days view/working_week_days;
                              data-last-snapshot view/last_snapshot">
-          <div class="messages" data-bind="visible: has_messages">
-            <!-- ko foreach: permanent_messages -->
-            <div class="message" data-bind="css: type">
-              <div class="content" data-bind="html: message"></div>
-              <a href="#"
-                 class="dismiss"
-                 data-bind="click: function() { $root.dismissMessage($index, true); }">&times;</a>
-            </div>
-            <!-- /ko -->
-            <!-- ko foreach: transient_messages -->
-            <div class="message" data-bind="css: type">
-              <div class="content" data-bind="html: message"></div>
-              <a href="#"
-                 class="dismiss"
-                 data-bind="click: function() { $root.dismissMessage($index, false); }">&times;</a>
-            </div>
-            <!-- /ko -->
-          </div>
           <div class="control">
             <div class="plan-length">
               <label for="weekn" i18n:translate="">Plan for</label>

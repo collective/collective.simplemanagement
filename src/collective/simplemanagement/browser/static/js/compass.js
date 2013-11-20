@@ -166,10 +166,10 @@
                 traditional: true,
                 dataType: 'json',
                 success: function(data, status, request) {
-                    self.app.addMessage(message);
+                    simplemanagement.messages.addMessage(message);
                 },
                 error: function(request, status, error) {
-                    self.app.addMessage({
+                    simplemanagement.messages.addMessage({
                         type: 'error',
                         message: base.format(
                             self.app.translate('error-please-reload'),
@@ -276,7 +276,6 @@
                             working_week_days, last_snapshot, translations) {
         // TODO: make this timeout configurable in Plone
         this.overlay = null;
-        this.message_timeout = 6;
         this.roles = roles;
         this._people = people;
         this.base_url = base_url;
@@ -293,10 +292,7 @@
         this.all_projects_count = null;
         this.all_projects_query = ko.throttledObservable(null, 1500);
         this.loaded = ko.observable(false);
-        this.transient_messages = ko.observableArray([]);
-        this.permanent_messages = ko.observableArray([]);
         this.last_snapshot = ko.observable(last_snapshot);
-        this.has_messages = ko.computed(this.hasMessages, this);
         this.active_pane = ko.observable('new');
         this.project_factory_validate = ko.observable(true);
         this.project_factory = ko.validatedObservable({
@@ -389,7 +385,7 @@
                 traditional: true,
                 dataType: 'json',
                 success: function(data, status, request) {
-                    self.addMessage({
+                    simplemanagement.messages.addMessage({
                         type: 'info',
                         message: self.translate('priority-updated')
                     });
@@ -400,7 +396,7 @@
                     }
                 },
                 error: function(request, status, error) {
-                    self.addMessage({
+                    simplemanagement.messages.addMessage({
                         type: 'error',
                         message: base.format(
                             self.translate('error-please-reload'),
@@ -434,7 +430,7 @@
             active_projects = self.active_projects();
             for(i=0, l=active_projects.length; i<l; i++) {
                 if(!active_projects[i].validate()) {
-                    self.addMessage({
+                    simplemanagement.messages.addMessage({
                         type: 'warning',
                         message: base.format(
                             self.translate('project-invalid'),
@@ -461,14 +457,14 @@
                 traditional: true,
                 dataType: 'json',
                 success: function(data, status, request) {
-                    self.addMessage({
+                    simplemanagement.messages.addMessage({
                         type: 'info',
                         message: self.translate('snapshot-taken')
                     });
                     self.last_snapshot(data.url);
                 },
                 error: function(request, status, error) {
-                    self.addMessage({
+                    simplemanagement.messages.addMessage({
                         type: 'error',
                         message: base.format(
                             self.translate('error-please-reload'),
@@ -513,7 +509,7 @@
                 traditional: true,
                 dataType: 'json',
                 success: function(data, status, request) {
-                    self.addMessage({
+                    simplemanagement.messages.addMessage({
                         type: 'info',
                         message: base.format(
                             self.translate('project-created'),
@@ -524,7 +520,7 @@
                         new compass.Project(self, data));
                 },
                 error: function(request, status, error) {
-                    self.addMessage({
+                    simplemanagement.messages.addMessage({
                         type: 'error',
                         message: base.format(
                             self.translate('error-please-reload'),
@@ -579,34 +575,6 @@
                         )
                     }
                 );
-            }
-        },
-        hasMessages: function() {
-            return (this.transient_messages().length > 0 ||
-                    this.permanent_messages().length > 0);
-        },
-        addMessage: function(message, permanent) {
-            var self = this;
-            if(permanent) {
-                this.permanent_messages.push(message);
-            }
-            else {
-                this.transient_messages.push(message);
-                message.timeout_id = window.setTimeout(
-                    function() {
-                        self.transient_messages.shift();
-                    },
-                    this.message_timeout * 1000);
-            }
-        },
-        dismissMessage: function(index, permanent) {
-            var message;
-            if(permanent) {
-                this.permanent_messages.splice(index, 1);
-            }
-            else {
-                message = this.transient_messages.push(index, 1);
-                window.clearTimeout(message.timeout_id);
             }
         },
         delPerson: function(item, event, ui) {

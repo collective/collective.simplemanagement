@@ -162,5 +162,13 @@
      class=".ajaxforms.AddBooking"
    />
 
+  <!-- Messages -->
+  <browser:page
+      for="*"
+      name="messages_helper"
+      class=".messages.Helper"
+      allowed_attributes="json_messages"
+      permission="zope2.View" />
+
 
 </configure>

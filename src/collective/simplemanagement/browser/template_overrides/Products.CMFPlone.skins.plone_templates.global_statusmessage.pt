@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+
+<body>
+
+<tal:block i18n:domain="plone"
+           metal:define-macro="portal_message"
+           tal:define="messages_helper nocall:context/@@messages_helper">
+  <div id="portal-ko-messages"
+       data-timeout="6"
+       tal:attributes="data-messages messages_helper/json_messages">
+    <div class="messages"
+         data-bind="visible: has_messages">
+      <!-- ko foreach: permanent_messages -->
+      <div class="message" data-bind="css: type">
+        <div class="content" data-bind="html: message"></div>
+        <a href="#"
+           class="dismiss"
+           data-bind="click: function() { $root.dismissMessage($index, true); }">&times;</a>
+      </div>
+      <!-- /ko -->
+      <!-- ko foreach: transient_messages -->
+      <div class="message" data-bind="css: type">
+        <div class="content" data-bind="html: message"></div>
+        <a href="#"
+           class="dismiss"
+           data-bind="click: function() { $root.dismissMessage($index, false); }">&times;</a>
+      </div>
+      <!-- /ko -->
+    </div>
+  </div>
+
+</tal:block>
+
+</body>
+</html>
