@@ -5,7 +5,9 @@ from zope.interface import Interface
 
 from z3c.relationfield.schema import RelationChoice
 
-from plone.directives import form
+from plone.supermodel import model
+from plone.autoform import directives as form
+
 from plone.formwidget.contenttree import ObjPathSourceBinder
 from plone.app.textfield import RichText
 
@@ -15,7 +17,7 @@ from ..browser.widgets.time_widget import TimeFieldWidget
 from .. import _
 
 
-class IIteration(form.Schema):
+class IIteration(model.Schema):
 
     start = schema.Date(title=_(u"Start"))
     end = schema.Date(title=_(u"End"))
@@ -26,7 +28,7 @@ class IIteration(form.Schema):
     )
 
 
-class IEpic(form.Schema):
+class IEpic(model.Schema):
 
     text = RichText(title=_(u"Text"))
     estimate = schema.Decimal(
@@ -35,7 +37,7 @@ class IEpic(form.Schema):
     )
 
 
-class IStory(form.Schema):
+class IStory(model.Schema):
 
     text = schema.Text(
         title=_(u"Text"),
@@ -97,8 +99,8 @@ class IUserStoriesListing(IStoriesListing):
     """This adapter return all stories assigned to a specific user
     """
 
-    def stories(project_states=None, story_states=None,project_info=False,
-                user_id=None):
+    def stories(project_states=None, story_states=None,
+                project_info=False, user_id=None):
         """return stories details if project_info is True
         each story contains also information about project and iteration
 

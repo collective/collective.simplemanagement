@@ -3,13 +3,17 @@ from datetime import date
 
 from zope import schema
 from zope.interface import Interface
+from zope.component import provideAdapter
 
-from plone.directives import form
+from z3c.form import widget
+
+from plone.supermodel import model
+from plone.autoform import directives as form
 from plone.app.textfield import RichText
 
-from collective.z3cform.widgets.enhancedtextlines import (
-    EnhancedTextLinesFieldWidget,
-)
+# from collective.z3cform.widgets.enhancedtextlines import (
+#     EnhancedTextLinesFieldWidget,
+# )
 
 from .. import _
 
@@ -57,7 +61,7 @@ class IMilestone(Interface):
     )
 
 
-class IProject(form.Schema):
+class IProject(model.Schema):
 
     customer = schema.TextLine(
         title=_(u"Customer")
@@ -99,7 +103,7 @@ class IProject(form.Schema):
         value_type=schema.TextLine(),
         required=False
     )
-    form.widget(classifiers=EnhancedTextLinesFieldWidget)
+    # form.widget(classifiers=EnhancedTextLinesFieldWidget)
 
     repositories = schema.List(
         title=_(u"Repositories"),
@@ -167,10 +171,16 @@ class IProject(form.Schema):
     )
 
 
-@form.default_value(field=IProject['prj_start_date'])
-def default_prj_start_date(data):
+def default_date(data):
     return date.today()
 
+provideAdapter(
+    widget.ComputedWidgetAttribute(
+        default_date,
+        field=IProject['prj_start_date']
+    ),
+    name='default'
+)
 
 
 class IProjectNavigation(Interface):

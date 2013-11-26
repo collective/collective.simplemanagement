@@ -6,7 +6,7 @@ from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 # from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
-from collective.z3cform.widgets.token_input_widget import TokenInputFieldWidget
+# from collective.z3cform.widgets.token_input_widget import TokenInputFieldWidget
 
 from ..widgets.time_widget import TimeFieldWidget
 from ..forms.quickform import AddQuickForm
@@ -35,7 +35,7 @@ class AddStoryQuickForm(AddQuickForm):
         )
         fields += field.Fields(ICategorization).select('subjects')
         fields['estimate'].widgetFactory = TimeFieldWidget
-        fields['subjects'].widgetFactory = TokenInputFieldWidget
+        # fields['subjects'].widgetFactory = TokenInputFieldWidget
         # fields['assigned_to'].widgetFactory = UserTokenInputFieldWidget
         return fields
 

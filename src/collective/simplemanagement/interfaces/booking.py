@@ -1,11 +1,18 @@
 from datetime import date
 
-from zope.interface import Interface
+
 from zope import schema
+from zope.interface import Interface
+from zope.component import provideAdapter
+from zope.interface import Invalid
+
+from z3c.form import validator
+from z3c.form import widget
 
 from z3c.relationfield.schema import RelationChoice
 
-from plone.directives import form
+from plone.supermodel import model
+from plone.autoform import directives as form
 from plone.formwidget.contenttree import ObjPathSourceBinder
 
 from ..browser.widgets.time_widget import TimeFieldWidget
@@ -13,11 +20,11 @@ from ..browser.widgets.time_widget import TimeFieldWidget
 from .. import _
 
 
-class IBooking(form.Schema):
+class IBooking(model.Schema):
 
     date = schema.Date(
         title=_(u"Date"),
-        required=True
+        required=True,
     )
 
     form.widget('time', TimeFieldWidget)
@@ -33,20 +40,28 @@ class IBooking(form.Schema):
     )
 
 
-@form.default_value(field=IBooking['date'])
 def default_date(data):
     return date.today()
 
+provideAdapter(
+    widget.ComputedWidgetAttribute(
+        default_date,
+        field=IBooking['date']
+    ),
+    name='default'
+)
 
-@form.validator(field=IBooking['time'])
-def validate_time(value):
-    if not value:
-        raise schema.ValidationError(_(u"You must provide a time!"))
 
+class testValidator(validator.SimpleFieldValidator):
+    def validate(self, value):
+        raise Invalid(
+            _(u"Please, provide a valid time"))
 
-@form.error_message(field=IBooking['time'], error=schema.ValidationError)
-def validate_time_error(value):
-    return _("You must provide a value for time!")
+validator.WidgetValidatorDiscriminators(
+    testValidator, field=IBooking['time']
+)
+
+provideAdapter(testValidator)
 
 
 class IBookingHole(Interface):
