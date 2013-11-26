@@ -132,6 +132,11 @@
                                 } else {
                                     if (action === 'update') {
                                         value.model.update(data);
+                                        // TODO: complete!!
+                                        sm.messages.addMessage({
+                                            type: 'info',
+                                            message: 'model updated'
+                                        }, false);
                                     } else if (action === 'drop') {
                                         value.model.remove();
                                     }
@@ -182,8 +187,11 @@
                     return 'close';
                 },
                 // XXX: removed usertoken widget
-                // config: {
-                //     onLoad: function () {
+                config: {
+                    onLoad: function () {
+                        $('.usertokeninput-widget').userTokenInput();
+                    }
+                }
                 //         var self = this,
                 //             textarea = null;
                 //         self.getOverlay().find('.token-userinput-widget').each(function () {

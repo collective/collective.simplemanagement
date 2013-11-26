@@ -29,7 +29,7 @@
                 if (!data) {
                     // Activates knockout.js
                     iteration = new models.Iteration(this, settings);
-                    ko.applyBindings(iteration);
+                    ko.applyBindings(iteration, this);
 
                     $(this).data('iteration', {
                         target: $this,

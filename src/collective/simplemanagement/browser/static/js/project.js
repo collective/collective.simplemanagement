@@ -29,7 +29,7 @@
                 if (!data) {
                     // Activates knockout.js
                     project = new models.Project(this, settings);
-                    ko.applyBindings(project);
+                    ko.applyBindings(project, this);
 
                     $(this).data('project', {
                         target: $this,
