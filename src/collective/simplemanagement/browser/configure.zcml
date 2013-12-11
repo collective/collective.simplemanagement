@@ -170,5 +170,13 @@
       allowed_attributes="json_messages"
       permission="zope2.View" />
 
+  <!-- classifiers search view for Select2Widget -->
+  <browser:page
+    for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
+    name="select2-classifier-search"
+    class=".classifiersearch.ClassifierSearchView"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+  />
 
 </configure>

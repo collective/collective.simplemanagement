@@ -11,9 +11,8 @@ from plone.supermodel import model
 from plone.autoform import directives as form
 from plone.app.textfield import RichText
 
-# from collective.z3cform.widgets.enhancedtextlines import (
-#     EnhancedTextLinesFieldWidget,
-# )
+from collective.select2.field import Select2MultiField
+from collective.select2.field import Select2Field
 
 from .. import _
 
@@ -24,10 +23,14 @@ class IResource(Interface):
         title=_(u"Role"),
         source="collective.simplemanagement.roles"
     )
-    user_id = schema.Choice(
+
+    user_id = Select2Field(
         title=_(u"User ID"),
-        source="collective.simplemanagement.resources"
+        source="collective.simplemanagement.resources",
+        search_view=lambda x: '{}/select2-users-search'.format(x),
+        required=True
     )
+
     active = schema.Bool(
         title=_(u"Active"),
         default=True
@@ -94,16 +97,16 @@ class IProject(model.Schema):
         title=_(u"End date"),
         required=False
     )
-    classifiers = schema.List(
+    classifiers = Select2MultiField(
         title=_(u"Project classifiers"),
         description=_(
             u"Some keywords that describe the project "
             u"and used technologies"
         ),
         value_type=schema.TextLine(),
+        search_view=lambda x: '{}/select2-classifier-search'.format(x),
         required=False
     )
-    # form.widget(classifiers=EnhancedTextLinesFieldWidget)
 
     repositories = schema.List(
         title=_(u"Repositories"),
@@ -130,28 +133,19 @@ class IProject(model.Schema):
                                  schema=IMilestone),
         required=False
     )
-    # TODO: Maybe it's better to omit operatives from forms,
-    # as they are handled in toto by the compass
-    operatives = schema.List(
-        title=_(u"Operatives"),
-        description=_(
-            u"The user IDs of those that have operative roles in this project "
-            u"(coders, designers, project managers, accounts etc.). "
-            u"Customers should not be included in this list."
-            u"Adding someone here will add them automatically "
-            u"as managers to the default tracker."
-        ),
-        value_type=schema.Object(title=_(u"Resource"),
-                                 schema=IResource),
-        required=False
-    )
 
     notes = RichText(
         title=_(u"Notes"),
         required=False
     )
 
-    form.omitted('priority', 'active', 'compass_effort', 'compass_notes')
+    form.omitted(
+        'priority',
+        'active',
+        'compass_effort',
+        'compass_notes',
+        'operatives'
+    )
     priority = schema.Int(
         title=_(u"Priority"),
         default=100,
@@ -167,6 +161,20 @@ class IProject(model.Schema):
     )
     compass_notes = schema.Text(
         title=_(u"Notes"),
+        required=False
+    )
+
+    operatives = schema.List(
+        title=_(u"Operatives"),
+        description=_(
+            u"The user IDs of those that have operative roles in this project "
+            u"(coders, designers, project managers, accounts etc.). "
+            u"Customers should not be included in this list."
+            u"Adding someone here will add them automatically "
+            u"as managers to the default tracker."
+        ),
+        value_type=schema.Object(title=_(u"Resource"),
+                                 schema=IResource),
         required=False
     )
 

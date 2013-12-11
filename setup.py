@@ -44,7 +44,7 @@ setup(
         'plone.app.tiles',
         'plone.api>=1.1.0',
         'Products.Poi',
-        'abstract.z3cform.usertokeninput',
+        'collective.select2',
         'collective.js.jqueryui > 1.8.16.9',
         'collective.prettydate',
         'z3c.jbot',

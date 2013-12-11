@@ -41,9 +41,18 @@
         });
     };
 
-
+    /* init widget for popup forms */
+    sm.init_widgets = function() {
+        sm.booking_tooltip();
+        $('.select2-multi-widget').select2Widget({multiple: true});
+        $('.select2-widget').select2Widget();
+    };
 
     $(document).ready(function() {
+
+        // select2 init
+        $("select#language").select2();
+        $(".select-widget.choice-field").select2();
 
         // init knockout iteration view
         $('.iteration-stories').iterationView();

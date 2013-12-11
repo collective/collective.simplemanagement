@@ -52,16 +52,16 @@ provideAdapter(
 )
 
 
-class testValidator(validator.SimpleFieldValidator):
+class timeValidator(validator.SimpleFieldValidator):
     def validate(self, value):
-        raise Invalid(
-            _(u"Please, provide a valid time"))
+        if not value:
+            raise Invalid(_(u"Please, provide a valid time"))
 
 validator.WidgetValidatorDiscriminators(
-    testValidator, field=IBooking['time']
+    timeValidator, field=IBooking['time']
 )
 
-provideAdapter(testValidator)
+provideAdapter(timeValidator)
 
 
 class IBookingHole(Interface):

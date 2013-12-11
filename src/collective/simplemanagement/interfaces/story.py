@@ -11,7 +11,7 @@ from plone.autoform import directives as form
 from plone.formwidget.contenttree import ObjPathSourceBinder
 from plone.app.textfield import RichText
 
-# from abstract.z3cform.usertokeninput.widget import UserTokenInputFieldWidget
+from collective.select2.field import Select2MultiField
 
 from ..browser.widgets.time_widget import TimeFieldWidget
 from .. import _
@@ -53,7 +53,7 @@ class IStory(model.Schema):
         default=Decimal('0.00')
     )
 
-    assigned_to = schema.List(
+    assigned_to = Select2MultiField(
         title=_(u"Assignees"),
         description=_(u"The user IDs of the people "
                       u"that are responsible to act on this story"),
@@ -62,9 +62,9 @@ class IStory(model.Schema):
             title=_(u"User ID"),
             source="collective.simplemanagement.resources"
         ),
-        required=False
+        required=False,
+        search_view=lambda x: '{}/select2-users-search'.format(x)
     )
-    # form.widget(assigned_to=UserTokenInputFieldWidget)
 
     epic = RelationChoice(
         title=_(u"Epic"),
