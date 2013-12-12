@@ -8,6 +8,8 @@ from plone.app.uuid.utils import uuidToObject
 from .. import api
 from . import base
 
+from .. import messageFactory as _
+
 
 class JSONService(base.JSONService):
 
@@ -69,20 +71,35 @@ class JSONService(base.JSONService):
     def change_iteration(self):
         """Move the story to the requested iteration
         """
-        destination = self.request.get('destination')
-        error = None
+        destination_uid = self.request.get('destination')
+        destination = uuidToObject(destination_uid)
+
         if not destination:
-            error = "destination doesn't exist"
+            error = True
+            message = _(u"Iteration destination doesn't exist")
+
+        error = False
+        message = _(
+            u"${story} moved to ${iteration}",
+            mapping={
+                "story": self.context.Title(),
+                "iteration": destination.Title()
+            }
+        )
 
         try:
-            destination = uuidToObject(destination)
             destination.manage_pasteObjects(
                 aq_parent(self.context).manage_cutObjects(
                     self.context.getId()))
         except:
-            error = "An error occurred"
+            error = True
+            message = _(u"An error occurred while moving")
 
         return {
             'action': 'drop',
+            'message': {
+                'type': 'info' if not error else 'error',
+                'message': self.context.translate(message),
+            },
             'error': error
         }

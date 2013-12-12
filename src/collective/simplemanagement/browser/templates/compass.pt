@@ -211,7 +211,7 @@
                  title="Close this box"
                  i18n:attributes="title"
                  i18n:translate="">
-                Close this box.
+                Close this box
               </a>
             </div>
             <div class="pb-ajax">

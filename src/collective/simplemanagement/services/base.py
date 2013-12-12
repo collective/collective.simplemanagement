@@ -3,10 +3,12 @@ from zope.interface import implementer
 from zope.publisher.interfaces import NotFound
 from zope.publisher.interfaces import IPublishTraverse
 from Products.Five.browser import BrowserView
+from Products.CMFCore.WorkflowCore import WorkflowException
 
 from .. import api
 from ..configure import Settings
 from ..interfaces import IJSONService
+from .. import messageFactory as _
 
 
 @implementer(IJSONService, IPublishTraverse)
@@ -73,15 +75,22 @@ class JSONService(BrowserView):
         wft = plone.api.portal.get_tool(name='portal_workflow')
         action = self.request.get('action')
         destination = self.request.get('destination')
-        error = None
+        error = False
+        message = _(u"Status changed")
 
         try:
             wft.doActionFor(self.context, action)
         except WorkflowException:
-            error = "An error occurred"
+            error = True
+            message = _(u"An error occurred on change status")
+
         return {
             'status': destination,
             'action': 'update',
+            'message': {
+                'type': 'info' if not error else 'error',
+                'message': self.context.translate(message),
+            },
             'error': error
         }
 

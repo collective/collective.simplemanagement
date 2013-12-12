@@ -321,7 +321,10 @@
                 url + '/story_move?story_id=' + item_id + '&new_position=' + index,
                 function(data) {
                     if (data.success === false) {
-                        alert(data.error);
+                        sm.messages.addMessage({
+                            type: 'error',
+                            message: data.error
+                        }, true);
                     }
                 }
             );

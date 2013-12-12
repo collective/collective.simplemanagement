@@ -124,24 +124,23 @@
                             $.getJSON($(this).attr('href'), function(data) {
                                 error = data.error;
                                 action = data.action;
+                                message = data.message;
                                 delete data.error;
                                 delete data.action;
+                                delete data.message;
 
                                 if (error !== null) {
-                                    alert(error);
+                                    sm.messages.addMessage(message, true);
                                 } else {
                                     if (action === 'update') {
                                         value.model.update(data);
-                                        // TODO: complete!!
-                                        sm.messages.addMessage({
-                                            type: 'info',
-                                            message: 'model updated'
-                                        }, false);
+                                        sm.messages.addMessage(message, false);
                                     } else if (action === 'drop') {
                                         value.model.remove();
                                     }
-                                    drawer.hide();
                                 }
+                                drawer.hide();
+
                             });
                         });
                         $('a.close', content).click(function() {
