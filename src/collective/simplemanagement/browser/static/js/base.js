@@ -118,7 +118,8 @@
                     $.get(value.href, function(data) {
                         var content = $(data),
                             error = null,
-                            action = 'update';
+                            action = 'update',
+                            message = null;
                         $('a', content).not('.close').bind('click', function(evt) {
                             evt.preventDefault();
                             $.getJSON($(this).attr('href'), function(data) {
