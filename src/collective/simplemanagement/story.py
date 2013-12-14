@@ -46,57 +46,65 @@ class Story(Container):
     def get_review_state(self):
         return plone.api.content.get_state(obj=self)
 
-    def get_actions(self):
+    def get_actions(self, actions_filter=[
+            "quickView",
+            "quickBooking",
+            "quickEdit",
+            "changeIteration",
+            "changeStatus"
+    ]):
+
         can_edit = self.user_can_edit()
         can_review = self.user_can_review()
         url = self.absolute_url()
 
-        actions = [
-            {
+        actions = []
+
+        if "quickView" in actions_filter:
+            actions.append({
                 "name": "quickView",
                 "type": "overlay",
                 "title": "Details",
                 "description": "View details",
                 "href": '{0}?nobook=1'.format(url),
                 "css": "story-quickview",
-            },
+            })
 
-            {
+        if "quickBooking" in actions_filter:
+            actions.append({
                 "name": "quickBooking",
                 "type": "overlaybookingform",
                 "description": "Booking",
                 "css": "quick-booking",
                 "href": url,
                 "title": "Booking"
-            },
-        ]
+            })
 
         if can_edit:
-            actions.extend(
-                [
-                    {
-                        "name": "quickEdit",
-                        "type": "overlayform",
-                        "description": "Edit story",
-                        "css": "quickedit",
-                        "href": (
-                            '{0}/quickedit?ajax_load=1&'
-                            'ajax_include_head=1'.format(url)
-                        ),
-                        "title": "Edit"
-                    },
-                    {
-                        "name": "changeIteration",
-                        "type": "tooltip",
-                        "description": "Change iteration",
-                        "css": "iteration",
-                        "href": '{0}/ch_iteration'.format(url),
-                        "title": "Iteration"
-                    },
-                ]
-            )
+            if 'quickEdit' in actions_filter:
+                actions.append({
+                    "name": "quickEdit",
+                    "type": "overlayform",
+                    "description": "Edit story",
+                    "css": "quickedit",
+                    "href": (
+                        '{0}/quickedit?ajax_load=1&'
+                        'ajax_include_head=1'.format(url)
+                    ),
+                    "title": "Edit"
+                })
 
-        if can_review:
+            if "changeIteration" in actions_filter:
+                actions.append({
+                    "name": "changeIteration",
+                    "type": "tooltip",
+                    "description": "Change iteration",
+                    "css": "iteration",
+                    "href": '{0}/ch_iteration'.format(url),
+                    "title": "Iteration"
+                })
+
+        if can_review and "changeStatus" in actions_filter:
             actions.append({
                 "name": "changeStatus",
                 "type": "tooltip",

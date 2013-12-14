@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2013-12-12 10:24+0000\n"
+"POT-Creation-Date: 2013-12-14 11:37+0000\n"
 "PO-Revision-Date: 2013-06-18 11:27+0100\n"
 "Last-Translator: Simone Orsi <simone.orsi@domsense.com>\n"
 "Language-Team: Giorgio Borelli <giorgio@abstract.it>\n"
@@ -536,6 +536,10 @@ msgstr "Ultimi documenti"
 msgid "Last modified"
 msgstr "Ultima modifica"
 
+#: ../browser/project/templates/view.pt:67
+msgid "List all iterations"
+msgstr ""
+
 #: ../browser/templates/project_report.pt:240
 msgid "Log"
 msgstr "Log"
@@ -946,17 +950,29 @@ msgstr "I nomi utente delle persone che parteciperanno a questa storia"
 msgid "The user IDs of those that have operative roles in this project (coders, designers, project managers, accounts etc.). Customers should not be included in this list.Adding someone here will add them automatically as managers to the default tracker."
 msgstr "I nomi utente di chi ha un ruolo operativo in questo progetto (sviluppatori, grafici, project manager, account ecc.). I Clienti non devono essere inclusi in questa lista. Le persone aggiunte in questo elenco saranno assegnate come manager del tracker."
 
-#: ../browser/project/templates/alliterations.pt:75
+#: ../browser/project/templates/alliterations.pt:77
 msgid "There are no current iterations"
 msgstr "Non c'e nessuna iterazione corrente"
+
+#: ../browser/project/templates/view.pt:64
+msgid "There are no current iterations."
+msgstr ""
 
 #: ../browser/project/templates/overview.pt:40
 msgid "There are no documents in this project because the designated area is missing. We suggest to create it."
 msgstr "Non ci sono documenti per questo progetto poiché non esiste l'apposita area. Ti suggerisco di crearla."
 
-#: ../browser/project/templates/alliterations.pt:62
+#: ../browser/project/templates/view.pt:108
+msgid "There are no future iterations."
+msgstr ""
+
+#: ../browser/project/templates/alliterations.pt:64
 msgid "There are no past iterations"
 msgstr "Non ci sono iterazioni passate"
+
+#: ../browser/project/templates/view.pt:143
+msgid "There are no past iterations."
+msgstr ""
 
 #: ../browser/templates/compass_history.pt:162
 msgid "There are no saved compass plans."
@@ -1127,8 +1143,9 @@ msgstr "Devi inserire un numero: es. 10.0"
 msgid "Your dashboard"
 msgstr "La tua dashboard"
 
-#. Default: "To add a new iteration <a href=\"++add++Iteration\">click here</a>"
-#: ../browser/project/templates/view.pt:70
+#. Default: "Add a new iteration"
+#: ../browser/project/templates/view.pt:72
+#, fuzzy
 msgid "add_iteration"
 msgstr "Per aggiungere una nuova iterazione <a href=\"++add++Iteration\">Clicca qui</a>"
 
@@ -1174,11 +1191,6 @@ msgstr ""
 #: ../browser/project/templates/overview.pt:62
 msgid "modified:"
 msgstr "modificato:"
-
-#. Default: "There are no current iterations.<br />To list all iterations <a href=\"alliterations\">click here</a>"
-#: ../browser/project/templates/view.pt:66
-msgid "no_current_iteration"
-msgstr "Non ci sono iterazioni correnti.<br/>Per elencare tutte le iterazioni <a href=\"alliterations\">clicca qui</a>"
 
 #. Default: "There are no iterations.<br /> To add a new iteration <a href=\"++add++Iteration\">click here</a>"
 #: ../browser/project/templates/alliterations.pt:20

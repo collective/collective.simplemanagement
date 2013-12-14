@@ -130,7 +130,7 @@
                                 delete data.action;
                                 delete data.message;
 
-                                if (error !== null) {
+                                if (error !== false) {
                                     sm.messages.addMessage(message, true);
                                 } else {
                                     if (action === 'update') {
@@ -183,6 +183,10 @@
                 formselector: 'form#edit-quickform',
                 closeselector: '#form-buttons-cancel',
                 noform: function () {
+                    sm.messages.addMessage(
+                        {message:"Updated", type: "info"},
+                        false
+                    );
                     value.model.load();
                     return 'close';
                 },

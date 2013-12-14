@@ -40,6 +40,29 @@ a.danger-link:visited {
     background: #eeeeee;
 }
 
+.iterations-container {
+    width: 100%;
+}
+
+#content .iterations-container th a.quickedit {
+    margin: 4px 4px 0 0;
+}
+
+table.listing tbody tr td.stories-container {
+    padding: 0;
+    border: 0;
+}
+
+table.listing tbody tr td.stories-container .actions {
+    width: 82px
+}
+
+
+#content-core td.stories-container table.listing {
+    margin:0;
+    border: 0;
+}
+
 .pane {
     padding: 1em;
 }
@@ -610,12 +633,15 @@ table.stories tfoot td {
     background-color: #DDDDDD;
 }
 
+table.iterations-container th.numeric-data,
 td.numeric-data {
     text-align: right;
 }
 
+
+th.numeric-data,
 table.stories tbody tr td.numeric-data {
-    width: 3em;
+    width: 50px;
 }
 
 table.stories tbody tr td.info {
@@ -682,14 +708,17 @@ td.data.warning {
     font-weight: bold;
 }
 
+th.data.danger,
 td.data.danger {
     color: #ff4420;
 }
 
+th.data.success,
 td.data.success {
     color: #75AD0A;
 }
 
+th.data.warning,
 td.data.warning {
     color: #f17e03;
 }

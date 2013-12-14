@@ -70,16 +70,18 @@
       <table class="listing stories"
           data-bind="css: {sortable: is_sortable}" >
 
-        <thead>
-          <tr>
-            <th i18n:translate=""
-              colspan="2">Actions</th>
-            <th i18n:translate="">Story</th>
-            <th i18n:translate="">Assignees</th>
-            <th i18n:translate="">Estimate</th>
-            <th i18n:translate="">Done</th>
-          </tr>
-        </thead>
+        <tal:head metal:define-slot="head">
+          <thead>
+            <tr>
+              <th i18n:translate=""
+                colspan="2">Actions</th>
+              <th i18n:translate="">Story</th>
+              <th i18n:translate="">Assignees</th>
+              <th i18n:translate="">Estimate</th>
+              <th i18n:translate="">Done</th>
+            </tr>
+          </thead>
+        </tal:head>
 
         <tbody data-bind="sortable: {data: stories,
                                      isEnabled: is_sortable,
@@ -121,21 +123,21 @@
                            css: time_status">done</td>
           </tr>
         </tbody>
-
-        <tfoot>
-          <tr>
-            <th i18n:translate=""
-              colspan="3">Totals</th>
-            <th class="info">&nbsp;</th>
-            <td class="data numeric-data"
-                data-bind="text: estimate_str,
-                           css: time_status"></td>
-            <td class="data numeric-data"
-                data-bind="text: hours_str,
-                           css: time_status"></td>
-          </tr>
-        </tfoot>
-
+        <tal:footer metal:define-slot="footer">
+          <tfoot>
+            <tr>
+              <th i18n:translate=""
+                colspan="3">Totals</th>
+              <th class="info">&nbsp;</th>
+              <td class="data numeric-data"
+                  data-bind="text: estimate_str,
+                             css: time_status"></td>
+              <td class="data numeric-data"
+                  data-bind="text: hours_str,
+                             css: time_status"></td>
+            </tr>
+          </tfoot>
+        </tal:footer>
       </table>
 
     </div>

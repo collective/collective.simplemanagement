@@ -36,16 +36,6 @@
 
   <browser:page
     for="...interfaces.IProject"
-    name="alliterations"
-    layer="...interfaces.IBrowserLayer"
-    class=".view.View"
-    permission="zope2.View"
-    template="templates/alliterations.pt"
-  />
-
-
-  <browser:page
-    for="...interfaces.IProject"
     name="backlog"
     layer="...interfaces.IBrowserLayer"
     class=".backlog.Backlog"

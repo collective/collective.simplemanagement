@@ -1,3 +1,4 @@
+from datetime import date
 import plone.api
 from zope.security import checkPermission
 
@@ -10,8 +11,13 @@ from . import base
 class JSONService(base.JSONService):
 
     def _get_stories(self, iteration):
-        adpt = IStoriesListing(iteration)()
-        return adpt.stories
+        adpt = IStoriesListing(iteration)(actions_filter=[
+            "quickView",
+            "quickBooking",
+            "quickEdit",
+            "changeStatus"
+        ])
+        return adpt.totals, adpt.stories
 
     def _get_iterations(self):
         pc = plone.api.portal.get_tool(name='portal_catalog')
@@ -36,24 +42,38 @@ class JSONService(base.JSONService):
         if item.end:
             end = item.end.isoformat()
 
+        totals, stories = self._get_stories(item)
+
         return {
             "title": item.title,
             "description": item.description,
             "url": item.absolute_url(),
-            'status': 'TODO',
-            "stories": self._get_stories(item),
+            'status': 'TODO',  # TODO: get iteration status and display it
+            "stories": [],  # retrieved dynamically
             "is_sortable": self.user_can_manage_project(item),
             "start": start,
+            "can_edit": checkPermission('cmf.ModifyPortalContent', item),
             "end": end,
-            "warning_delta_percent": self._settings.warning_delta_percent
+            "warning_delta_percent": self._settings.warning_delta_percent,
+            "totals": totals
         }
 
     @api.permissions.accesscontrol("View")
     def view(self):
-        iterations = []
+        iterations = {
+            'past': [],
+            'current': [],
+            'future': []
+        }
+        now = date.today()
         for brain in self._get_iterations():
             obj = brain.getObject()
-            iterations.append(self._format_iteration(obj))
+            if obj.end < now:
+                iterations['past'].append(self._format_iteration(obj))
+            elif obj.end >= now and obj.start <= now:
+                iterations['current'].append(self._format_iteration(obj))
+            else:
+                iterations['future'].append(self._format_iteration(obj))
 
         return {
             "title": self.context.title,

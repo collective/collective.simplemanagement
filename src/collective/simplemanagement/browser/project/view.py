@@ -24,7 +24,3 @@ class View(BrowserView):
         return checkPermission(
             'simplemanagement.ManageProject', self.context
         )
-
-    def iterations(self):
-        # XXX: do we need this? - alliterations view
-        return {}

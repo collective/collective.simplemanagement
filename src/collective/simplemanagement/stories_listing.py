@@ -7,6 +7,7 @@ from plone.app.discussion.interfaces import IConversation
 from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IStoriesListing
+from .interfaces import IProject
 from .interfaces import IUserStoriesListing
 
 from . import api
@@ -65,7 +66,8 @@ class StoriesListing(object):
     #     return [i for i in conversation.getThreads()]
 
     def __call__(self, project_states=None,
-                 story_states=None, project_info=False):
+                 story_states=None, project_info=False,
+                 actions_filter=None):
         brains = self._stories(story_states)
         pw = getToolByName(self.context, 'portal_workflow')
         self.stories = []
@@ -82,6 +84,11 @@ class StoriesListing(object):
                 _state = pw.getInfoFor(project, 'review_state')
                 if _state not in project_states:
                     continue
+
+            if actions_filter:
+                actions = story.get_actions(actions_filter=actions_filter)
+            else:
+                actions = story.get_actions()
 
             timings = api.booking.get_timings(
                 story, portal_catalog=self.portal_catalog)
@@ -107,7 +114,7 @@ class StoriesListing(object):
                 'can_edit': story.user_can_edit(),
                 'can_review': story.user_can_review(),
                 'milestone': story.get_milestone(),
-                'actions': story.get_actions()
+                'actions': actions
             }
 
             if project_info:

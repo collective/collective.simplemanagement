@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-12-12 10:24+0000\n"
+"POT-Creation-Date: 2013-12-14 11:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -536,6 +536,10 @@ msgstr ""
 msgid "Last modified"
 msgstr ""
 
+#: ../browser/project/templates/view.pt:67
+msgid "List all iterations"
+msgstr ""
+
 #: ../browser/templates/project_report.pt:240
 msgid "Log"
 msgstr ""
@@ -946,16 +950,28 @@ msgstr ""
 msgid "The user IDs of those that have operative roles in this project (coders, designers, project managers, accounts etc.). Customers should not be included in this list.Adding someone here will add them automatically as managers to the default tracker."
 msgstr ""
 
-#: ../browser/project/templates/alliterations.pt:75
+#: ../browser/project/templates/alliterations.pt:77
 msgid "There are no current iterations"
+msgstr ""
+
+#: ../browser/project/templates/view.pt:64
+msgid "There are no current iterations."
 msgstr ""
 
 #: ../browser/project/templates/overview.pt:40
 msgid "There are no documents in this project because the designated area is missing. We suggest to create it."
 msgstr ""
 
-#: ../browser/project/templates/alliterations.pt:62
+#: ../browser/project/templates/view.pt:108
+msgid "There are no future iterations."
+msgstr ""
+
+#: ../browser/project/templates/alliterations.pt:64
 msgid "There are no past iterations"
+msgstr ""
+
+#: ../browser/project/templates/view.pt:143
+msgid "There are no past iterations."
 msgstr ""
 
 #: ../browser/templates/compass_history.pt:162
@@ -1127,8 +1143,8 @@ msgstr ""
 msgid "Your dashboard"
 msgstr ""
 
-#. Default: "To add a new iteration <a href=\"++add++Iteration\">click here</a>"
-#: ../browser/project/templates/view.pt:70
+#. Default: "Add a new iteration"
+#: ../browser/project/templates/view.pt:72
 msgid "add_iteration"
 msgstr ""
 
@@ -1173,11 +1189,6 @@ msgstr ""
 
 #: ../browser/project/templates/overview.pt:62
 msgid "modified:"
-msgstr ""
-
-#. Default: "There are no current iterations.<br />To list all iterations <a href=\"alliterations\">click here</a>"
-#: ../browser/project/templates/view.pt:66
-msgid "no_current_iteration"
 msgstr ""
 
 #. Default: "There are no iterations.<br /> To add a new iteration <a href=\"++add++Iteration\">click here</a>"

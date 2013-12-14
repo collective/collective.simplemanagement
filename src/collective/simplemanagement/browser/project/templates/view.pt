@@ -39,41 +39,102 @@
         <div class="visualClear"><!-- clear floats --></div>
       </div>
 
-      <!-- ko if: iterations().length > 0 -->
-      <div class="iterations"
-           data-bind="foreach: iterations">
-        <!-- ko if: is_current -->
-        <h2>
-          <a data-bind="attr {href: url},
-                        title: description">
-            <span data-bind="text: title">Iteration</span>
-            (<span data-bind="text: start"
-              ></span>&nbsp;-&nbsp;<span
-              data-bind="text: end"></span>)
-          </a>
-        </h2>
-
-        <metal:stories
-            use-macro="context/iteration_macros/stories" />
+      <div>
+        <!-- ko if: ! show_all_iterations() -->
+        <a href="#"
+           class="btn"
+           data-bind="click: function(data, event) {show_all_iterations(true)}"
+        >Show all iterations</a>
         <!-- /ko -->
-
+        <!-- ko if: show_all_iterations() -->
+        <a href="#"
+           class="btn"
+           data-bind="click: function(data, event) {show_all_iterations(false)}"
+        >Show only current iterations</a>
+        <!-- /ko -->
       </div>
-      <!-- /ko -->
 
-      <!-- ko if: iterations().length == 0 -->
+
+
+      <h2>Current iterations</h2>
+      <!-- ko if: current_iterations().length == 0 -->
       <div>
         <div class="portalMessage">
-          <div i18n:translate="no_current_iteration">
-            There are no current iterations.<br/>To list all iterations
-            <a href="alliterations">click here</a>
-          </div>
-          <div i18n:translate="add_iteration">
-            To add a new iteration <a href="++add++Iteration"
-              >click here</a>
+          <div>
+            <span i18n:translate="">
+            There are no current iterations.</span>
+            <!-- ko if: ! show_all_iterations() -->
+            <a class="btn"
+              i18n:translate=""
+              data-bind="click: function(data, event) {show_all_iterations(true)}"
+              >List all iterations</a>
+            <!-- /ko -->
+          <a i18n:translate="add_iteration"
+             class="btn"
+             href="++add++Iteration">Add a new iteration</a>
           </div>
         </div>
       </div>
       <!-- /ko -->
+
+      <!-- ko if: current_iterations().length > 0 -->
+      <table class="iterations-container current_iterations listing"
+           data-bind="foreach: current_iterations">
+
+        <metal:iteration
+            use-macro="context/project_macros/iteration-compact" />
+
+      </table>
+      <!-- /ko -->
+
+      <!-- ko if: show_all_iterations() -->
+      <h2>Future iterations</h2>
+
+      <!-- ko if: future_iterations().length == 0 -->
+      <div>
+        <div class="portalMessage">
+          <div i18n:translate="">
+            There are no future iterations.
+          </div>
+        </div>
+      </div>
+      <!-- /ko -->
+
+      <!-- ko if: future_iterations().length > 0 -->
+      <table class="iterations-container future_iterations listing"
+           data-bind="foreach: future_iterations">
+
+        <metal:iteration
+            use-macro="context/project_macros/iteration-compact" />
+
+      </table>
+      <!-- /ko -->
+
+
+      <h2>Past iterations</h2>
+
+      <!-- ko if: past_iterations().length == 0 -->
+      <div>
+        <div class="portalMessage">
+          <div i18n:translate="">
+            There are no past iterations.
+          </div>
+        </div>
+      </div>
+      <!-- /ko -->
+
+
+      <!-- ko if: past_iterations().length > 0 -->
+      <table class="iterations-container past_iterations listing"
+           data-bind="foreach: past_iterations">
+        <metal:iteration
+            use-macro="context/project_macros/iteration-compact" />
+
+      </table>
+      <!-- /ko -->
+
+      <!-- /ko -->
+
 
       <div class="visualClear"><!-- clear floats--></div>
     </div>

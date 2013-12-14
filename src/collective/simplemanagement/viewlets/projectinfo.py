@@ -35,6 +35,7 @@ class ProjectInfo(base.ViewletBase):
 
     def buttons(self):
         info = self.info
+        # TODO: use portal_actions/simplemanagement_actions
         buttons = [
             {
                 'url': '/'.join((info['project_url'], DOCUMENTS_ID)),
@@ -48,10 +49,6 @@ class ProjectInfo(base.ViewletBase):
             {
                 'url': "%s/@@dashboard" % info['project_url'],
                 'title': _(u'Dashboard')
-            },
-            {
-                'url': "%s/@@alliterations" % info['project_url'],
-                'title': _(u'Iterations')
             },
             {
                 'url': "%s/@@backlog" % info['project_url'],

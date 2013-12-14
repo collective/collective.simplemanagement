@@ -25,10 +25,16 @@
         self.trigger = $(trigger);
         self.url = self.trigger.data('projecturl');
 
-        self.iterations = ko.observableArray();
+        self.past_iterations = ko.observableArray();
+        self.current_iterations = ko.observableArray();
+        self.future_iterations = ko.observableArray();
+
+        self.show_all_iterations = ko.observable(false);
+
         self.title = ko.observable();
         self.description = ko.observable();
         self.warning_delta_percent = ko.observable(0);
+        self.iterations = ko.computed(self.get_all_iterations, self);
 
         self.estimate = ko.computed(function() {
             estimate = 0;
@@ -75,6 +81,15 @@
 
     models.Project.prototype = {
 
+        get_all_iterations: function () {
+            var iterations = [];
+            return iterations.concat(
+                this.past_iterations(),
+                this.current_iterations(),
+                this.future_iterations()
+            );
+        },
+
         get_time_status: function () {
             // return a string representing a time status
             // of this story
@@ -88,7 +103,9 @@
         load: function () {
             var self = this;
             $.getJSON(self.url + '/json/view', function(data) {
-                self.iterations(self.load_iterations(data.iterations));
+                self.past_iterations(self.load_iterations(data.iterations.past));
+                self.current_iterations(self.load_iterations(data.iterations.current));
+                self.future_iterations(self.load_iterations(data.iterations.future));
                 self.title(data.title);
             });
         },
@@ -133,6 +150,8 @@
         self.start = ko.observable();
         self.end = ko.observable();
 
+        self.can_edit = ko.observable();
+        self.totals = ko.observable();
         self.details = ko.observable(false);
         self.css_class = ko.observable('open');
         self.warning_delta_percent = ko.observable(0);
@@ -147,24 +166,45 @@
             revert: true
         };
 
-        self.estimate = ko.computed(function() {
-            estimate = 0;
-            for (i = 0; i < self.stories().length; i += 1) {
-                estimate += self.stories()[i].estimate();
+        self.base_estimate = ko.observable();
+        self.estimate = ko.computed({
+            read: function() {
+                estimate = 0;
+                if (self.base_estimate()) {
+                    estimate = self.base_estimate();
+                } else {
+                    for (i = 0; i < self.stories().length; i += 1) {
+                        estimate += self.stories()[i].estimate();
+                    }
+                }
+                return estimate;
+            },
+            write: function(value) {
+                self.base_estimate(value);
             }
-            return estimate;
         });
 
         self.estimate_str = ko.computed(function () {
             return base.decimal2timestr(self.estimate());
         });
 
-        self.hours = ko.computed(function() {
-            hours = 0;
-            for (i = 0; i < self.stories().length; i += 1) {
-                hours += self.stories()[i].resource_time();
+        self.base_hours = ko.observable();
+        self.hours = ko.computed({
+            read: function() {
+                hours = 0;
+                if (self.base_hours()) {
+                    hours = self.base_hours();
+                } else {
+                    for (i = 0; i < self.stories().length; i += 1) {
+                        hours += self.stories()[i].resource_time();
+                    }
+                }
+                return hours;
+
+            },
+            write: function(value) {
+                self.base_hours(value);
             }
-            return hours;
         });
 
         self.hours_str = ko.computed(function () {
@@ -172,21 +212,6 @@
         });
 
         self.time_status = ko.computed(self.get_time_status, self);
-
-        self.is_current = ko.computed(function() {
-
-            if ((typeof self.start()) === "undefined" ||
-                    (typeof self.end()) === "undefined") {
-                return false;
-            } else {
-                // iteration.end >= today and iteration.start <= today
-                if (new Date(self.end()) >= today &&
-                        new Date(self.start()) <= today) {
-                    return true;
-                }
-                return false;
-            }
-        });
 
         self.is_current = ko.computed(function() {
 
@@ -242,7 +267,11 @@
             self.end(data.end);
             self.start(data.start);
             self.is_sortable(data.is_sortable);
+            self.can_edit(data.can_edit);
             self.warning_delta_percent(data.warning_delta_percent);
+
+            self.estimate(data.totals.estimate);
+            self.hours(data.totals.hours);
 
             if ((typeof data.stories) !== 'undefined') {
                 self.stories(self.load_stories(data.stories));
