@@ -24,13 +24,26 @@
         // TODO: in this file we are using a mix & match of approaches,
         // we should standardize
         var self = this;
-        this.is_critical = ko.computed(function() {
+        this.workloads = function() {
+            var effort = 0;
             var people_effort = self.project.app.people_effort();
             var working_total_days = self.project.app.working_total_days();
-            if(people_effort[self.id] &&
-                    people_effort[self.id] > working_total_days)
-                return true;
-            return false;
+            if(people_effort[self.id])
+                effort = people_effort[self.id];
+            return {
+                effort: effort,
+                total: working_total_days,
+                minimum: working_total_days *
+                    (1.0 - self.project.app.warning_delta)
+            };
+        };
+        this.is_critical = ko.computed(function() {
+            var load = self.workloads();
+            return (load.effort > load.total);
+        });
+        this.is_free = ko.computed(function() {
+            var load = self.workloads();
+            return (load.effort <= load.minimum);
         });
         this.role.subscribe(function(value) {
             self.project.save(
@@ -103,6 +116,7 @@
         var i, l, item;
         this.app = app;
         this.id = ko.observable(data.id);
+        this.url = ko.observable(data.url);
         this.name = ko.observable(data.name);
         this.status = ko.observable(data.status);
         this.active = ko.observable(data.active);
@@ -130,6 +144,17 @@
                     effort[person.id] += person.effort();
             }
             return effort;
+        });
+        this.hidden = ko.computed(function() {
+            var i, l;
+            var selected_person = self.app.selected_person();
+            if(selected_person === null) return false;
+            var people = self.people();
+            for(i=0, l=people.length; i<l; i++) {
+                if(selected_person == people[i].id)
+                    return false;
+            }
+            return true;
         });
         this.effort.subscribe(function(value) {
             self.save(
@@ -239,6 +264,7 @@
         toJSON: function() {
             var i, l, people, data = {
                 id: this.id(),
+                url: this.url(),
                 name: this.name(),
                 status: this.status(),
                 customer: this.customer(),
@@ -253,7 +279,8 @@
                     id: people[i].id,
                     effort: people[i].effort(),
                     role: people[i].display_role(),
-                    is_critical: people[i].is_critical()
+                    is_critical: people[i].is_critical(),
+                    is_free: people[i].is_free()
                 });
             }
             return data;
@@ -273,19 +300,21 @@
     };
 
     compass.Main = function(roles, people, base_url, plan_weeks,
-                            working_week_days, last_snapshot, translations) {
+                            working_week_days, warning_delta, last_snapshot,
+                            translations) {
         // TODO: make this timeout configurable in Plone
         this.overlay = null;
         this.roles = roles;
         this._people = people;
         this.base_url = base_url;
         this.working_week_days = working_week_days;
+        this.warning_delta = warning_delta;
         this.plan_weeks = ko.observable(plan_weeks);
         this.translations = translations;
         this.people_filter = ko.observable('');
+        this.selected_person = ko.observable(null);
         this.plan_weeks_human = ko.computed(this.getFormattedWeeks, this);
         this.plan_end = ko.computed(this.getPlanEnd, this);
-        this.shown_people = ko.computed(this.getShownPeople, this);
         this.roles_list = ko.computed(this.getRolesAsList, this);
         this.active_projects = ko.observableArray([]);
         this.all_projects = ko.observableArray([]);
@@ -345,6 +374,7 @@
             }
             return effort;
         });
+        this.shown_people = ko.computed(this.getShownPeople, this);
         this.total_effort = ko.computed(function() {
             var result = 0, person_id, people_effort = self.people_effort();
             for(person_id in people_effort) {
@@ -478,6 +508,13 @@
     };
 
     compass.Main.prototype = {
+        choosePerson: function(person_id) {
+            var chosen = this.selected_person();
+            if(chosen !== person_id)
+                this.selected_person(person_id);
+            else
+                this.selected_person(null);
+        },
         resetFactory: function() {
             var factory = this.project_factory();
             factory.name(undefined);
@@ -610,19 +647,44 @@
             );
         },
         getShownPeople: function() {
-            var f_id, f_name;
+            var f_id, f_name, effort, is_critical, is_free, not_chosen, title;
             var people = [];
+            var people_effort = this.people_effort();
             var filter = this.people_filter().toLowerCase();
+            var working_total_days = this.working_total_days();
+            var selected_person = this.selected_person();
             for(var id in this._people) {
                 f_id = id.toLowerCase();
                 f_name = this._people[id]['name'].toLowerCase();
                 if(filter === '' ||
-                    f_id.indexOf(filter) !== -1 ||
-                    f_name.indexOf(filter) !== -1) {
+                        f_id.indexOf(filter) !== -1 ||
+                        f_name.indexOf(filter) !== -1) {
+                    not_chosen = false;
+                    effort = 0;
+                    is_critical = false;
+                    if(people_effort[id]) {
+                        effort = people_effort[id];
+                        if(people_effort[id] > working_total_days)
+                            is_critical = true;
+                    }
+                    is_free = effort <= (working_total_days *
+                                         (1.0 - this.warning_delta));
+                    if(selected_person !== null && selected_person !== id)
+                        not_chosen = true;
+                    title = this._people[id]['name'];
+                    if(selected_person !== null && !not_chosen)
+                        title += ' ' + this.translate('double-click-unselect');
+                    else
+                        title += ' ' + this.translate('double-click-select');
                     people.push({
                         'id': id,
                         'name': this._people[id]['name'],
-                        'avatar': this._people[id]['avatar']
+                        'avatar': this._people[id]['avatar'],
+                        'effort': effort,
+                        'is_critical': is_critical,
+                        'is_free': is_free,
+                        'not_chosen': not_chosen,
+                        'title': title
                     });
                 }
             }
@@ -739,6 +801,7 @@
                 element.attr('data-base-url'),
                 $.parseJSON(element.attr('data-plan-weeks')),
                 $.parseJSON(element.attr('data-working-week-days')),
+                $.parseJSON(element.attr('data-warning-delta')),
                 element.attr('data-last-snapshot'),
                 $.parseJSON(element.attr('data-translations')));
             element.find('.addProject').overlay({

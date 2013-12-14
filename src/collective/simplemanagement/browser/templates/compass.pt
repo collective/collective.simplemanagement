@@ -28,6 +28,7 @@
                              data-translations view/translations;
                              data-plan-weeks settings/default_plan_length;
                              data-working-week-days view/working_week_days;
+                             data-warning-delta view/warning_delta;
                              data-last-snapshot view/last_snapshot">
           <div class="control">
             <div class="plan-length">
@@ -71,9 +72,13 @@
                                       }
                                   },
                                   attr: {
-                                      title: name
+                                      title: title
                                   },
-                                  style: { backgroundImage: 'url('+avatar+')' }">
+                                  style: { backgroundImage: 'url('+avatar+')' },
+                                  css: { faded: not_chosen },
+                                  event: { dblclick: function() { $parent.choosePerson($data.id); } }">
+                      <span class="effort"
+                            data-bind="text: effort, css: { critical: is_critical, free: is_free }"></span>
                     <span class="title" data-bind="text: $parent.name"></span>
                   </div>
                   <!-- /ko -->
@@ -98,14 +103,22 @@
                                       handle: '.status-indicator'
                                   },
                                   afterMove: $root.reprioritize }">
-                <div class="project">
+                <div class="project"
+                     data-bind="css: { hidden: hidden }">
                   <div data-bind="css: css_class">
                     <a href="#"
                        class="dismiss"
                        data-bind="click: deactivate">&times;</a>
                   </div>
                   <div class="info">
-                    <div><h3 class="title" data-bind="text: name"></h3></div>
+                    <div class="title">
+                      <h3 class="title" data-bind="text: name"></h3>
+                      <a data-bind="attr: { href: url }"
+                         title="Go to project"
+                         target="_blank"
+                         i18n:attributes="title"
+                         i18n:translate="">View</a>
+                    </div>
                     <div><textarea class="notes"
                                    data-bind="value: notes"></textarea></div>
                     <div class="effort">
@@ -162,7 +175,7 @@
                                         content: '#'+dom_id(),
                                         position: 'bottom-left' }">
                       <span class="effort"
-                            data-bind="text: effort, css: { critical: is_critical }"></span>
+                            data-bind="text: effort, css: { critical: is_critical, free: is_free }"></span>
                       <span class="title" data-bind="text: display_role"></span>
                     </div>
                     <!-- /ko -->

@@ -31,6 +31,14 @@ class History(api.views.Traversable):
         self.key = None
         self.data = None
 
+    def get_effort_classes(self, person_data):
+        klasses = ['effort']
+        if person_data.get('is_critical'):
+            klasses.append('critical')
+        elif person_data.get('is_free'):
+            klasses.append('free')
+        return ' '.join(klasses)
+
     def augment_user_data(self, data):
         """Augments the user data
         """
@@ -153,7 +161,7 @@ class Compass(api.views.Traversable):
         self.tools = api.portal.LazyTools(context)
 
     def translations(self):
-        return json.dumps({
+        data = {
             "week": _(u"{week} week"),
             "weeks": _(u"{week} weeks"),
             "person-added": _(u"{person} has been added to {project}"),
@@ -178,7 +186,12 @@ class Compass(api.views.Traversable):
             "project-deactivated": _(u"{project} has been deactivated"),
             "project-created": _(u"{project} has been created"),
             "snapshot-taken": _(u"The situation has been saved"),
-            "project-invalid": _(u"{project} is not valid")
+            "project-invalid": _(u"{project} is not valid"),
+            "double-click-select": _(u"(double click to select)"),
+            "double-click-unselect": _(u"(double click to reset selection)")
+        }
+        return json.dumps({
+            k: self.context.translate(v) for k, v in data.items()
         })
 
     def global_settings(self):
@@ -188,6 +201,10 @@ class Compass(api.views.Traversable):
     def working_week_days(self):
         global_settings = self.global_settings()
         return global_settings.working_week_days
+
+    def warning_delta(self):
+        global_settings = self.global_settings()
+        return global_settings.warning_delta_percent
 
     def settings(self):
         registry = getUtility(IRegistry)
@@ -297,6 +314,7 @@ class Compass(api.views.Traversable):
         if brain is not None:
             info.update({
                 'id': brain.getPath(),
+                'url': brain.getURL(),
                 'name': brain.Title,
                 'status': brain.review_state,
                 'customer': brain.customer,
