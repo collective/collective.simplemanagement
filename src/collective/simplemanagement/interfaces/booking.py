@@ -31,15 +31,15 @@ class IBooking(Interface):
 
 class IOrderedSet(Interface):
 
-    def __len__(self):
+    def __len__():
         """Returns the number of elements.
         """
 
-    def __iter__(self):
+    def __iter__():
         """Iterates over the elements
         """
 
-    def __or__(self, other):
+    def __or__(other):
         """Merges two ``IOrderedSets`` so that no duplicates are present.
 
         Ordering is recomputed summing scores.
@@ -52,35 +52,35 @@ class IBookingStorage(Interface):
     All of them.
     """
 
-    def __len__(self):
+    def __len__():
         """Returns the number of bookings.
         """
 
-    def __contains__(self, uuid):
+    def __contains__(uuid):
         """Checks whether there is a booking with the given ``uuid``.
 
         Returns ``True`` or ``False``
         """
 
-    def __getitem__(self, uuid):
+    def __getitem__(uuid):
         """Retrieves the ``IBooking`` object with the given ``uuid``.
 
         Raises ``KeyError`` if there is no booking with the given ``uuid``
         """
 
-    def add(self, booking):
+    def add(booking):
         """Adds the given ``booking`` and returns the assigned UUID.
 
         The ``booking`` object must implement ``IBooking``.
         """
 
-    def delete(self, uuid):
+    def delete(uuid):
         """Deletes the booking with the given ``uuid``.
 
         Raises ``KeyError`` if there is no booking with the given ``uuid``
         """
 
-    def query(self, query, start=0, limit=None):
+    def query(query, start=0, limit=None):
         """Searches for bookings.
 
         Returns an ordered set of ``IBooking`` objects, which match ``query``.
@@ -93,4 +93,6 @@ class IBookingStorage(Interface):
         ``start`` and ``limit`` can be used to slice the result set.
         """
 
-
+    def vocabulary(name):
+        """Returns the list of values for the given index.
+        """
