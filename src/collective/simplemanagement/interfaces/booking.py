@@ -1,121 +1,96 @@
-from datetime import date
-
-
 from zope import schema
 from zope.interface import Interface
-from zope.component import provideAdapter
-from zope.interface import Invalid
-
-from z3c.form import validator
-from z3c.form import widget
-
-from z3c.relationfield.schema import RelationChoice
-
-from plone.supermodel import model
-from plone.autoform import directives as form
-from plone.formwidget.contenttree import ObjPathSourceBinder
-
-from ..browser.widgets.time_widget import TimeFieldWidget
 
 from .. import _
 
 
-class IBooking(model.Schema):
+class IBooking(Interface):
 
     date = schema.Date(
         title=_(u"Date"),
-        required=True,
+        required=True
     )
 
-    form.widget('time', TimeFieldWidget)
     time = schema.Decimal(
         title=_(u"Hours"),
-        required=True,
+        required=True
     )
 
-    related = RelationChoice(
-        title=_(u"Related activity"),
-        source=ObjPathSourceBinder(),
-        required=False
+    owner = schema.ASCIILine(
+        title=_(u"Owner ID"),
+        required=True
+    )
+
+    references = schema.Dict(
+        title=_(u"Related objects"),
+        required=False,
+        key_type=schema.ASCIILine(title="Object type"),
+        value_type=schema.ASCIILine(title="Object ID")
     )
 
 
-def default_date(data):
-    return date.today()
+class IOrderedSet(Interface):
 
-provideAdapter(
-    widget.ComputedWidgetAttribute(
-        default_date,
-        field=IBooking['date']
-    ),
-    name='default'
-)
+    def __len__(self):
+        """Returns the number of elements.
+        """
 
+    def __iter__(self):
+        """Iterates over the elements
+        """
 
-class timeValidator(validator.SimpleFieldValidator):
-    def validate(self, value):
-        if not value:
-            raise Invalid(_(u"Please, provide a valid time"))
+    def __or__(self, other):
+        """Merges two ``IOrderedSets`` so that no duplicates are present.
 
-validator.WidgetValidatorDiscriminators(
-    timeValidator, field=IBooking['time']
-)
-
-provideAdapter(timeValidator)
+        Ordering is recomputed summing scores.
+        """
 
 
-class IBookingHole(Interface):
-    """Explains why someone seemingly hasn't worked on anything for many hours.
+class IBookingStorage(Interface):
+    """Contains all the bookings.
 
-    Since bookings keep track of worked time on projects,
-    there can be hours of unbooked time for various reasons.
-
-    This object helps keep track of this *missing time*
-    so that it is not reported as *unknown hole*.
+    All of them.
     """
 
-    day = schema.Date()
-    form.widget('hours',
-                TimeFieldWidget,
-                show_min=False,
-                hour_free_input=True)
-    hours = schema.Decimal()
-    user_id = schema.TextLine()
-    reason = schema.Choice(
-        title=_(u"Reason"),
-        source="collective.simplemanagement.off_duty_reasons"
-    )
-
-
-class IBookingHoles(Interface):
-    """The list of booking holes.
-
-    See :class:`IBookingHole` for details.
-    """
-
-    def add(hole):
-        """Adds a hole.
-
-        ``hole`` must provide :class:`IBookingHole`
+    def __len__(self):
+        """Returns the number of bookings.
         """
 
-    def remove(user_id, day=None):
-        """Removes the hole registered by ``user_id`` for the given ``day``.
+    def __contains__(self, uuid):
+        """Checks whether there is a booking with the given ``uuid``.
 
-        If ``day`` is ``None`` removes everything.
+        Returns ``True`` or ``False``
         """
 
-    def __contains__(user_id):
-        """Returns true if ``user_id`` is contained.
+    def __getitem__(self, uuid):
+        """Retrieves the ``IBooking`` object with the given ``uuid``.
+
+        Raises ``KeyError`` if there is no booking with the given ``uuid``
         """
 
-    def __iter__():
-        """Iterates over all the contained holes, in random order
+    def add(self, booking):
+        """Adds the given ``booking`` and returns the assigned UUID.
+
+        The ``booking`` object must implement ``IBooking``.
         """
 
-    def iter_user(user_id, from_, to):
-        """Return an iterator over the holes inserted for ``user_id``,
-        between ``from_`` and ``to``.
+    def delete(self, uuid):
+        """Deletes the booking with the given ``uuid``.
 
-        ``from_`` and ``to`` shall be :class:`~datetime.date` objects.
+        Raises ``KeyError`` if there is no booking with the given ``uuid``
         """
+
+    def query(self, query, start=0, limit=None):
+        """Searches for bookings.
+
+        Returns an ordered set of ``IBooking`` objects, which match ``query``.
+        ``query`` is a dictionary with the keys being field names
+        or keys contained in ``references``,
+        and the values either a specific value
+        or a range in the form of a ``(to, from)`` tuple
+        (with ``None`` being no limit).
+
+        ``start`` and ``limit`` can be used to slice the result set.
+        """
+
+
