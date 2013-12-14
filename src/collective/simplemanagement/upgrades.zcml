@@ -75,4 +75,14 @@
       profile="collective.simplemanagement:default"
       />
 
+  <genericsetup:upgradeStep
+      title="Install collective.select2"
+      description=""
+      source="1007"
+      destination="1008"
+      handler=".upgrades.upgrade_to_1008"
+      sortkey="1"
+      profile="collective.simplemanagement:default"
+      />
+
 </configure>

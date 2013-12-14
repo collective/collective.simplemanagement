@@ -130,3 +130,10 @@ def upgrade_to_1007(context, logger=None):
     logger = getLogger(logger)
     logger.info("Reloading javascript registry")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'jsregistry')
+
+
+def upgrade_to_1008(context, logger=None):
+    logger = getLogger(logger)
+    logger.info("install collective.select2")
+    qi = getToolByName(context, 'portal_quickinstaller')
+    qi.installProduct('collective.select2')
