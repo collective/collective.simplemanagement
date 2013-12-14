@@ -1239,10 +1239,11 @@ input.effort {
 }
 .compassview .control .plan-length span {
     float: right;
+    margin-left: 5px;
 }
 .compassview .control .plan-length input[type="range"] {
     display: block;
-    width: 10em;
+    width: 100%;
 }
 #content .compassview .ui-draggable-dragging {
     z-index: 1000;

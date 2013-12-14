@@ -161,7 +161,7 @@ class Compass(api.views.Traversable):
         self.tools = api.portal.LazyTools(context)
 
     def translations(self):
-        return json.dumps({
+        data = {
             "week": _(u"{week} week"),
             "weeks": _(u"{week} weeks"),
             "person-added": _(u"{person} has been added to {project}"),
@@ -189,6 +189,9 @@ class Compass(api.views.Traversable):
             "project-invalid": _(u"{project} is not valid"),
             "double-click-select": _(u"(double click to select)"),
             "double-click-unselect": _(u"(double click to reset selection)")
+        }
+        return json.dumps({
+            k: self.context.translate(v) for k, v in data.items()
         })
 
     def global_settings(self):
