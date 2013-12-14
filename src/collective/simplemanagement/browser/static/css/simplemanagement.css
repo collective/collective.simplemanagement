@@ -1083,6 +1083,17 @@ div.token-input-dropdown-facebook {
     height: 60px;
     margin: 6px 3px;
 }
+#peopleToolbox .thumbnail.placeholder,
+#peopleToolbox .thumbnail.employee {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+#peopleToolbox .thumbnail.employee.faded {
+    opacity: 0.5;
+}
+#peopleToolbox > .container {
+    margin-top: 3px;
+}
 input.filter-data {
     margin-left: 3px;
     margin-bottom: 3px;
@@ -1095,6 +1106,18 @@ input[name="filter-people"] {
     width: 100%;
     clear: both;
     margin-bottom: 1em;
+    transition: height 0.8s ease;
+    -webkit-transition: height 0.8s ease;
+    -moz-transition: height 0.8s ease;
+    -o-transition: height 0.8s ease;
+}
+.compassview .project.hidden {
+    height: 0px;
+    overflow: hidden;
+}
+.compassview .project div.title > * {
+    display: inline-block;
+    margin-right: 6px;
 }
 .compassview .project > div {
     float: left;
@@ -1172,13 +1195,14 @@ input.effort {
     width: 2.5em;
 }
 
+.compassview #peopleToolbox .thumbnail.employee span.effort,
 .critical-resources .thumbnail.person span.effort,
 .compassview .project > .people .thumbnail.person span.effort {
     position: absolute;
     display: block;
     height: 1.5em;
     top: -0.7em;
-    background: #333;
+    background: #75AD0A;
     color: #fff;
     border-radius: 0.5em;
     text-align: center;
@@ -1187,9 +1211,14 @@ input.effort {
     padding-right: 0.4em;
     left: -0.3em;
 }
+.compassview #peopleToolbox .thumbnail.employee span.effort.critical,
 .critical-resources .thumbnail.person span.effort,
 .compassview .project > .people .thumbnail.person span.effort.critical {
     background: #c33;
+}
+.compassview .project > .people .thumbnail.person span.effort.free,
+.compassview #peopleToolbox .thumbnail.employee span.effort.free {
+    background: #f17e03;
 }
 .compassview .project > .info .effort {
     margin-top: 0.3em;

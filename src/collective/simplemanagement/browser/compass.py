@@ -189,6 +189,10 @@ class Compass(api.views.Traversable):
         global_settings = self.global_settings()
         return global_settings.working_week_days
 
+    def warning_delta(self):
+        global_settings = self.global_settings()
+        return global_settings.warning_delta_percent
+
     def settings(self):
         registry = getUtility(IRegistry)
         return registry.forInterface(ICompassSettings)
@@ -297,6 +301,7 @@ class Compass(api.views.Traversable):
         if brain is not None:
             info.update({
                 'id': brain.getPath(),
+                'url': brain.getURL(),
                 'name': brain.Title,
                 'status': brain.review_state,
                 'customer': brain.customer,
