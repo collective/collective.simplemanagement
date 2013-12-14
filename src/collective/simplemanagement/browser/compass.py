@@ -31,6 +31,14 @@ class History(api.views.Traversable):
         self.key = None
         self.data = None
 
+    def get_effort_classes(self, person_data):
+        klasses = ['effort']
+        if person_data.get('is_critical'):
+            klasses.append('critical')
+        elif person_data.get('is_free'):
+            klasses.append('free')
+        return ' '.join(klasses)
+
     def augment_user_data(self, data):
         """Augments the user data
         """
