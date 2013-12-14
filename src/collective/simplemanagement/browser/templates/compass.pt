@@ -72,7 +72,7 @@
                                       }
                                   },
                                   attr: {
-                                      title: name
+                                      title: title
                                   },
                                   style: { backgroundImage: 'url('+avatar+')' },
                                   css: { faded: not_chosen },

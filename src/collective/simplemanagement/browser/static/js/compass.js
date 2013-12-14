@@ -647,7 +647,7 @@
             );
         },
         getShownPeople: function() {
-            var f_id, f_name, effort, is_critical, is_free, not_chosen;
+            var f_id, f_name, effort, is_critical, is_free, not_chosen, title;
             var people = [];
             var people_effort = this.people_effort();
             var filter = this.people_filter().toLowerCase();
@@ -671,6 +671,11 @@
                                          (1.0 - this.warning_delta));
                     if(selected_person !== null && selected_person !== id)
                         not_chosen = true;
+                    title = this._people[id]['name'];
+                    if(selected_person !== null && !not_chosen)
+                        title += ' ' + this.translate('double-click-unselect');
+                    else
+                        title += ' ' + this.translate('double-click-select');
                     people.push({
                         'id': id,
                         'name': this._people[id]['name'],
@@ -678,7 +683,8 @@
                         'effort': effort,
                         'is_critical': is_critical,
                         'is_free': is_free,
-                        'not_chosen': not_chosen
+                        'not_chosen': not_chosen,
+                        'title': title
                     });
                 }
             }

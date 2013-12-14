@@ -186,7 +186,9 @@ class Compass(api.views.Traversable):
             "project-deactivated": _(u"{project} has been deactivated"),
             "project-created": _(u"{project} has been created"),
             "snapshot-taken": _(u"The situation has been saved"),
-            "project-invalid": _(u"{project} is not valid")
+            "project-invalid": _(u"{project} is not valid"),
+            "double-click-select": _(u"(double click to select)"),
+            "double-click-unselect": _(u"(double click to reset selection)")
         })
 
     def global_settings(self):
