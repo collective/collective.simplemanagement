@@ -1114,6 +1114,7 @@ input[name="filter-people"] {
 .compassview .project.hidden {
     height: 0px;
     overflow: hidden;
+    margin: 0px;
 }
 .compassview .project div.title > * {
     display: inline-block;
