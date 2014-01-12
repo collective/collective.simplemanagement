@@ -45,6 +45,8 @@ a.danger-link:visited {
 }
 
 #content .iterations-container th a.quickedit {
+    display: inline-block;
+    float: none;
     margin: 4px 4px 0 0;
 }
 
@@ -54,7 +56,7 @@ table.listing tbody tr td.stories-container {
 }
 
 table.listing tbody tr td.stories-container .actions {
-    width: 82px
+    width: 100px
 }
 
 
@@ -395,6 +397,8 @@ ul.stories .actions {
     cursor: copy;
 }
 
+#content a.hide-stories,
+#content a.show-stories,
 #content a.status,
 #content a.iteration,
 #content a.quickedit,
@@ -410,10 +414,26 @@ ul.stories .actions {
     width: 16px;
 }
 
+#content a.hide-stories,
+#content a.show-stories {
+    background-position: 0 3px;
+    height: 19px;
+    width: 18px;
+}
+
 .template-quickedit #portal-column-content {
     margin-left: -98.875%;
     width: 96.75%;
     padding: .5em;
+}
+
+
+#content a.hide-stories {
+    background-image: url('../img/hide-stories.png');
+}
+
+#content a.show-stories {
+    background-image: url('../img/show-stories.png');
 }
 
 #content a.story-quickview {
@@ -432,12 +452,27 @@ ul.stories .actions {
     background-image: url('../img/iteration.png');
 }
 
+#content a.hide-stories span,
+#content a.show-stories span,
 #content a.status span,
 #content a.iteration span,
 #content a.story-quickview span,
 #content a.quick-booking span,
 #content a.quickedit span {
     padding: 20px;
+}
+
+.iteration-actions {
+    float: left;
+    line-height: 20px;
+    margin-right: 1em;
+}
+
+.iteration-dates {
+    font-weight: normal;
+    font-size: 90%;
+    display: inline-block;
+    margin-left: 1em;
 }
 
 .story-text {

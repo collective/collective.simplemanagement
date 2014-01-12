@@ -148,7 +148,9 @@
         self.title = ko.observable();
         self.description = ko.observable();
         self.start = ko.observable();
+        self.start_str = ko.observable();
         self.end = ko.observable();
+        self.end_str = ko.observable();
 
         self.can_edit = ko.observable();
         self.totals = ko.observable();
@@ -249,23 +251,17 @@
             return false;
         });
 
-        self.toggleDetails = function () {
-            if (self.details() === true) {
-                self.details(false);
-                self.css_class('open');
-            } else {
-                self.populate();
-                self.details(true);
-                self.css_class('close');
-            }
-        };
+        self.display_stories = ko.observable(false);
+        self.stories_toggler_css = ko.observable("show-stories");
 
         if (data !== undefined) {
             self.url = data.url;
             self.status(data.status);
             self.title(data.title);
             self.end(data.end);
+            self.end_str(data.end_str);
             self.start(data.start);
+            self.start_str(data.start_str);
             self.is_sortable(data.is_sortable);
             self.can_edit(data.can_edit);
             self.warning_delta_percent(data.warning_delta_percent);
@@ -284,6 +280,19 @@
     };
 
     models.Iteration.prototype = {
+
+        toggle_stories: function () {
+            var self = this;
+            if (self.display_stories() === true) {
+                self.display_stories(false);
+                self.stories_toggler_css("show-stories");
+            } else {
+                self.display_stories(true);
+                self.stories_toggler_css("hide-stories");
+                self.retrieve_stories(self.url);
+            }
+
+        },
 
         get_time_status: function () {
             // return a string representing a time status
@@ -309,6 +318,13 @@
                 self.stories(self.load_stories(data.stories));
                 self.title(data.title);
                 self.is_sortable(data.is_sortable);
+            });
+        },
+
+        retrieve_stories: function (url) {
+            var self = this;
+            $.getJSON(url + '/json/stories', function(data) {
+                self.stories(self.load_stories(data));
             });
         },
 

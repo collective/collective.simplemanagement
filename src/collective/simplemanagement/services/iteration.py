@@ -18,6 +18,10 @@ class JSONService(base.JSONService):
         )
 
     @api.permissions.accesscontrol("View")
+    def stories(self):
+        return self._get_stories()
+
+    @api.permissions.accesscontrol("View")
     def view(self):
         """Return iteration's properties in this format
         {
@@ -25,7 +29,9 @@ class JSONService(base.JSONService):
             "description",
             "is_sortable",
             "start",
+            "start_str",
             "end",
+            "end_str",
             "warning_delta_percent",
             "stories": [
                 {
@@ -68,7 +74,9 @@ class JSONService(base.JSONService):
             "description": self.context.description,
             "stories": self._get_stories(),
             "start": start,
+            "start_str": self.context.toLocalizedTime(start),
             "end": end,
+            "end_str": self.context.toLocalizedTime(end),
             "warning_delta_percent": self._settings.warning_delta_percent
         }
 

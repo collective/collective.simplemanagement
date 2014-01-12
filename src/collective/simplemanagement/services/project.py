@@ -52,8 +52,10 @@ class JSONService(base.JSONService):
             "stories": [],  # retrieved dynamically
             "is_sortable": self.user_can_manage_project(item),
             "start": start,
-            "can_edit": checkPermission('cmf.ModifyPortalContent', item),
+            "start_str": self.context.toLocalizedTime(start),
             "end": end,
+            "end_str": self.context.toLocalizedTime(end),
+            "can_edit": checkPermission('cmf.ModifyPortalContent', item),
             "warning_delta_percent": self._settings.warning_delta_percent,
             "totals": totals
         }

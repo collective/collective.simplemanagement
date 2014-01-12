@@ -10,16 +10,24 @@
   <metal:stories define-macro="iteration-compact">
     <tr>
       <th>
-        <a href="#" data-bind="if: can_edit(), attr {href: url + '/edit'}"
-            class="quickedit"><span i18n:translate="">Edit</span></a>
+        <div class="iteration-actions">
+          <a href="#"
+             data-bind="click: toggle_stories, css: stories_toggler_css">
+             <span i18n:translate="">Hide/Show stories</span></a>
+        </div>
         <h3>
           <a data-bind="attr {href: url},
                         title: description">
             <span data-bind="text: title">Iteration</span>
-            (<span data-bind="text: start"
-              ></span>&nbsp;-&nbsp;<span
-              data-bind="text: end"></span>)
           </a>
+          <a href="#" data-bind="if: can_edit(), attr {href: url + '/edit'}"
+              class="quickedit"><span i18n:translate="">Edit</span></a>
+
+          <span class="iteration-dates">
+            <span data-bind="text: start_str"
+              ></span>&nbsp;-&nbsp;<span
+              data-bind="text: end_str"></span>
+          </span>
         </h3>
       </th>
       <th class="data numeric-data"
@@ -30,8 +38,7 @@
                      css: time_status">0.00</th>
     </tr>
 
-<!-- TODO: retrieve stories in ajax
-     <tr>
+     <tr data-bind="visible: display_stories">
       <td colspan="3" class="stories-container">
         <metal:stories
           use-macro="context/iteration_macros/stories">
@@ -39,7 +46,7 @@
           <metal:footer fill-slot="footer" />
         </metal:stories>
       </td>
-    </tr> -->
+    </tr>
   </metal:stories>
 
 </html>

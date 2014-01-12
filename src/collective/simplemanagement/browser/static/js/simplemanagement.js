@@ -254,14 +254,6 @@
             }
         });
 
-
-        // XXX: i's not necessary
-        // taken from kss-bbb.js
-        // var spinner = $('<div id="ajax-spinner"><img src="' + portal_url + '/spinner.gif" alt=""/></div>');
-        // spinner.appendTo('body').hide();
-        // $(document).ajaxStart(function() { spinner.show(); });
-        // $(document).ajaxStop(function() { spinner.hide(); });
-
     });
 
 }(jQuery));
