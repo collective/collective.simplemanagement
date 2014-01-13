@@ -63,12 +63,6 @@
           <div>
             <span i18n:translate="">
             There are no current iterations.</span>
-            <!-- ko if: ! show_all_iterations() -->
-            <a class="btn"
-              i18n:translate=""
-              data-bind="click: function(data, event) {show_all_iterations(true)}"
-              >List all iterations</a>
-            <!-- /ko -->
           <a i18n:translate="add_iteration"
              class="btn"
              href="++add++Iteration">Add a new iteration</a>
