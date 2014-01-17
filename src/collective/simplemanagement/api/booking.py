@@ -92,7 +92,7 @@ def get_bookings(userid=None, project=None, portal_catalog=None,
         query['booking_date'] = {'query': to_date, 'range': 'max'}
     elif from_date and to_date:
         query['booking_date'] = {'query': [from_date, to_date],
-                                 'range': 'minmax'}
+                                 'range': 'min:max'}
     if booking_date:
         query['booking_date'] = booking_date
     if sort:
