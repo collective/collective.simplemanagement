@@ -52,7 +52,8 @@
               <div id="synoptic" class="pane">
 
                 <form tal:attributes="action view/__name__">
-                  <!-- <select name="month">
+                  <select name="month">
+                    <option value="all" i18n:translate="">All</option>
                     <tal:opt repeat="month view/months">
                       <option
                         tal:attributes="value month/value;
@@ -60,7 +61,7 @@
                         tal:content="month/label"
                         />
                     </tal:opt>
-                  </select> -->
+                  </select>
                   <input type="hidden" name="tab" value="synoptic" />
                   <select name="year">
                     <tal:opt repeat="year view/years">
