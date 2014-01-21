@@ -182,4 +182,4 @@ class ReportView(DashboardMixin):
         """ return formatted time in days for given hour value
         """
         # TODO: handle rounding
-        return value / 8
+        return "%.2f" % (value / 8)
