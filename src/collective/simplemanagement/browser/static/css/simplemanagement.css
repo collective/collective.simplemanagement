@@ -1718,3 +1718,8 @@ input.effort {
 #plone-contentmenu-workflow .state-dead {
     border-color: #540054;
 }
+
+/* make spinner visible when overlay is opened */
+#ajax-spinner {
+    z-index: 100000;
+}
