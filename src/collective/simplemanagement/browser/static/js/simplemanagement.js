@@ -86,6 +86,11 @@
             "#overview div.panes > div"
         );
 
+        // initialize tabs in report view
+        $('.template-report #overview ul.tabs').tabs(
+            "#overview div.panes > div"
+        );
+
 
         // Show and hide add story form on press key in 'title' input
         $('#addstory-form').each(function () {
