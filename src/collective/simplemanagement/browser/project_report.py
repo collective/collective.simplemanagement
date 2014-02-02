@@ -157,11 +157,7 @@ class ReportView(DashboardMixin):
 
     def monthly_report(self):
         bymonth = []
-        today = datetime.date.today()
-        year = int(self.request.get('year', today.year))
-        from_date = datetime.date(year, 1, 31)
-        to_date = datetime.date(year, 12, 31)
-        bookings = self.get_bookings(date_range=(from_date, to_date))
+        bookings = self.get_bookings()
         grouped = self._group_by_month(bookings)
         big_total = 0
         for month, weeks in grouped.iteritems():
@@ -186,4 +182,4 @@ class ReportView(DashboardMixin):
         """ return formatted time in days for given hour value
         """
         # TODO: handle rounding
-        return value / 8
+        return "%.2f" % (value / 8)
