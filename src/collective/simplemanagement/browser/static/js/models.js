@@ -268,6 +268,7 @@
 
             self.estimate(data.totals.estimate);
             self.hours(data.totals.hours);
+            self.showNoStoriesMessage = ko.observable(false);
 
             if ((typeof data.stories) !== 'undefined') {
                 self.stories(self.load_stories(data.stories));
@@ -323,8 +324,12 @@
 
         retrieve_stories: function (url) {
             var self = this;
+            self.showNoStoriesMessage(false);
             $.getJSON(url + '/json/stories', function(data) {
                 self.stories(self.load_stories(data));
+                if (self.stories().length == 0) {
+                    self.showNoStoriesMessage(true);
+                }
             });
         },
 

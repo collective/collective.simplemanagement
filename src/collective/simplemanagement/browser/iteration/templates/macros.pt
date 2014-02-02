@@ -143,15 +143,12 @@
     </div>
     <!-- /ko -->
 
-    <!-- ko if: stories().length == 0 -->
-    <div>
-      <p class="discreet"
-          i18n:translate="">
-          No stories found.
-          Add a new one or bring them in via the iteration planner.
+    <div data-bind="if: showNoStoriesMessage()">
+      <p i18n:translate="">
+        No stories found.
+        Add a new one or bring them in via the iteration planner.
       </p>
     </div>
-    <!-- /ko -->
 
   </metal:stories>
 
