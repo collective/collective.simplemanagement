@@ -260,9 +260,9 @@
         });
 
 
-        /* Show animated spinner while AJAX is loading.
-        See: kss-bbb.js */
-        if ($('#ajax-spinner').length == 0) {
+        // Show animated spinner while AJAX is loading.
+        // See: kss-bbb.js
+        if ($('#ajax-spinner').length === 0) {
             var spinner = $('<div id="ajax-spinner"><img src="' + portal_url + '/spinner.gif" alt=""/></div>');
             spinner.appendTo('body').hide();
             $(document).ajaxStart(function() { spinner.show(); });
