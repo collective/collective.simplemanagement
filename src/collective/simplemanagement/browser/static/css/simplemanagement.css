@@ -1297,17 +1297,14 @@ input.effort {
     margin-left: 1em;
     vertical-align: middle;
 }
-.compassview .control .plan-length {
+.compassview .control .plan-span {
     display: inline-block;
-    text-align: left;
 }
-.compassview .control .plan-length span {
-    float: right;
-    margin-left: 5px;
+.compassview .control .plan-span input.hasDatepicker {
+    width: 5.5em;
 }
-.compassview .control .plan-length input[type="range"] {
-    display: block;
-    width: 100%;
+.template-compass .ui-datepicker {
+    z-index: 100 !important;
 }
 #content .compassview .ui-draggable-dragging {
     z-index: 1000;

@@ -302,6 +302,7 @@
     compass.Main = function(roles, people, base_url, plan_weeks,
                             working_week_days, warning_delta, last_snapshot,
                             translations) {
+        var now = new Date();
         // TODO: make this timeout configurable in Plone
         this.overlay = null;
         this.roles = roles;
@@ -309,12 +310,17 @@
         this.base_url = base_url;
         this.working_week_days = working_week_days;
         this.warning_delta = warning_delta;
-        this.plan_weeks = ko.observable(plan_weeks);
         this.translations = translations;
         this.people_filter = ko.observable('');
         this.selected_person = ko.observable(null);
-        this.plan_weeks_human = ko.computed(this.getFormattedWeeks, this);
-        this.plan_end = ko.computed(this.getPlanEnd, this);
+        this.plan_start = ko.observable(new Date(now.getFullYear(),
+                                                 now.getMonth(),
+                                                 now.getDate()));
+        this.plan_end = ko.observable(new Date(this.plan_start().getTime()+
+                                               (1000*60*60*24*7*plan_weeks)));
+        this.plan_end_human = ko.computed(function() {
+            return this.formatDate(this.plan_end());
+        }, this);
         this.roles_list = ko.computed(this.getRolesAsList, this);
         this.active_projects = ko.observableArray([]);
         this.all_projects = ko.observableArray([]);
@@ -357,7 +363,16 @@
 
         var self = this;
         this.working_total_days = ko.computed(function() {
-            return self.working_week_days * self.plan_weeks();
+            // Ok this is a bit complex,
+            // first we get the difference in pure days,
+            // then in floored weeks,
+            // then we basically remove the weekends
+            // for every week that's in between
+            var full_days, full_weeks;
+            full_days = Math.ceil(
+                (self.plan_end()-self.plan_start())/(24*60*60*1000));
+            full_weeks = Math.floor(full_days/7);
+            return full_days-((7-self.working_week_days)*full_weeks);
         });
         this.people_effort = ko.computed(function() {
             var i, l, project, project_effort, person_id,
@@ -455,7 +470,8 @@
                 projects: [],
                 total: self.total_effort(),
                 critical: [],
-                plan_end: self.plan_end()
+                plan_start: self.formatDate(self.plan_start()),
+                plan_end: self.formatDate(self.plan_end())
             };
             active_projects = self.active_projects();
             for(i=0, l=active_projects.length; i<l; i++) {
@@ -633,18 +649,8 @@
             }
             return roles_list;
         },
-        getPlanEnd: function() {
-            var weeks = this.plan_weeks();
-            var today = new Date();
-            var end = new Date(today.getTime() + (weeks*7*24*60*60*1000));
-            return $.datepicker.formatDate('d MM yy', end);
-        },
-        getFormattedWeeks: function() {
-            var weeks = this.plan_weeks();
-            return base.format(
-                this.translate(weeks > 1 ? 'weeks' : 'week'),
-                { 'week': weeks }
-            );
+        formatDate: function(date) {
+            return $.datepicker.formatDate('d MM yy', date);
         },
         getShownPeople: function() {
             var f_id, f_name, effort, is_critical, is_free, not_chosen, title;

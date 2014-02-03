@@ -31,15 +31,15 @@
                              data-warning-delta view/warning_delta;
                              data-last-snapshot view/last_snapshot">
           <div class="control">
-            <div class="plan-length">
-              <label for="weekn" i18n:translate="">Plan for</label>
-              <span data-bind="text: plan_weeks_human">2</span>
-              <input name="weekn"
-                     type="range"
-                     data-bind="value: plan_weeks"
-                     step="1"
-                     tal:attributes="min settings/minimum_plan_length;
-                                     max settings/maximum_plan_length" />
+            <div class="plan-span">
+              <label for="plan_start" i18n:translate="">Plan from</label>
+              <input type="text"
+                     name="plan_start"
+                     data-bind="datepicker: plan_start, datepickerOptions: { dateFormat: 'yy-mm-dd' }" />
+              <label for="plan_end" i18n:translate="">to</label>
+              <input type="text"
+                     name="plan_end"
+                     data-bind="datepicker: plan_end, datepickerOptions: { dateFormat: 'yy-mm-dd' }" />
             </div>
             <!-- ko if: last_snapshot -->
             <a href="#"
@@ -127,7 +127,7 @@
                              data-bind="value: effort" />
                       <b i18n:translate="">man days</b>
                       <span i18n:translate="">to be done before</span>
-                      <span class="date" data-bind="text: $root.plan_end"></span>
+                      <span class="date" data-bind="text: $root.plan_end_human"></span>
                     </div>
                   </div>
                   <div class="people">

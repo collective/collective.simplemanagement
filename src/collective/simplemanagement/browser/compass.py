@@ -88,6 +88,8 @@ class History(api.views.Traversable):
         return self.base_url()+str(self.key)+'/list_keys'
 
     def active_date(self):
+        if self.data and 'plan_start' in self.data:
+            return self.data['plan_start']
         return api.date.format(DateTime(self.key))
 
     @api.jsonutils.jsonmethod()

@@ -331,4 +331,45 @@
         });
     };
 
+    // jQuery UI datepicker binding.
+    //
+    // Simply binds with a jQuery UI datepicker.
+    //
+    // Example:
+    //
+    //     data-bind="datepicker: my_observable, datepickerOptions { ... }"
+    //
+    // Where my-observable contains a Date,
+    // and datepickerOptions are the options you'd pass to jQuery UI
+    ko.bindingHandlers.datepicker = {
+        init: function(element, valueAccessor, allBindingsAccessor) {
+            //initialize datepicker with some optional options
+            var options = allBindingsAccessor().datepickerOptions || {},
+            $el = $(element);
+
+            $el.datepicker(options);
+
+            //handle the field changing
+            ko.utils.registerEventHandler(element, "change", function () {
+                var observable = valueAccessor();
+                observable($el.datepicker("getDate"));
+            });
+
+            //handle disposal (if KO removes by the template binding)
+            ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+                $el.datepicker("destroy");
+            });
+
+        },
+        update: function(element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor()),
+            $el = $(element);
+            var current = $el.datepicker("getDate");
+            if (value - current !== 0) {
+                $el.datepicker("setDate", value);
+            }
+        }
+    };
+
+
 })(jQuery, ko);
