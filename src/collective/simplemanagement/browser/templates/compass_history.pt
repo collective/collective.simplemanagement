@@ -100,36 +100,60 @@
                 <tal:u i18n:translate="">Active projects at</tal:u>
                 <span tal:content="view/active_date"></span>
               </h2>
+              <div class="filter">
+                <span i18n:translate="">Show</span>
+                <label>
+                  <input type="radio"
+                         name="all_or_my_projects"
+                         value="all"
+                         data-bind="checked: filter" />
+                  <tal:u i18n:translate="">all projects</tal:u>
+                </label>
+                <label>
+                  <input type="radio"
+                         name="all_or_my_projects"
+                         value="my"
+                         data-bind="checked: filter" />
+                  <tal:u i18n:translate="">only my projects</tal:u>
+                </label>
+              </div>
               <div class="container">
-                <div class="project"
-                     tal:repeat="project data/projects">
-                  <div tal:attributes="class project/css_class">
-                    <span tal:content="repeat/project/number">X</span>
-                  </div>
-                  <div class="info">
-                    <div><h3 class="title" tal:content="project/name"></h3></div>
-                    <div><div class="notes"
-                              tal:content="structure python:view.html_notes(project['notes'])"></div></div>
-                    <div class="effort">
-                      <span class="effort"
-                            tal:content="project/effort" />
-                      <b i18n:translate="">man days</b>
-                      <span i18n:translate="">to be done before</span>
-                      <span class="date" tal:content="data/plan_end"></span>
+                <tal:project repeat="project data/projects">
+                  <div tal:define="extraclass python:'mine' if view.is_my_project(project) else ''"
+                       tal:attributes="class string:project ${extraclass}">
+                    <div tal:attributes="class project/css_class">
+                      <span tal:content="repeat/project/number">X</span>
+                    </div>
+                    <div class="info">
+                      <div><h3 class="title" tal:content="project/name"></h3></div>
+                      <div><div class="notes"
+                                tal:content="structure python:view.html_notes(project['notes'])"></div></div>
+                      <div class="effort">
+                        <span class="effort"
+                              tal:content="project/effort" />
+                        <b i18n:translate="">man days</b>
+                        <span i18n:translate="">to be done before</span>
+                        <span class="date" tal:content="data/plan_end"></span>
+                      </div>
+                    </div>
+                    <div class="people">
+                      <tal:person repeat="person project/people">
+                        <div class="thumbnail thumbnail-small person"
+                             tal:define="person_data python:view.augment_user_data(person)"
+                             tal:attributes="title person_data/name;
+                                             style string:background-image:url('${person_data/avatar}');;">
+                          <span tal:attributes="class python:view.get_effort_classes(person_data)"
+                                tal:content="person_data/effort"></span>
+                          <span class="title" tal:content="person_data/role"></span>
+                        </div>
+                      </tal:person>
                     </div>
                   </div>
-                  <div class="people">
-                    <tal:person repeat="person project/people">
-                    <div class="thumbnail thumbnail-small person"
-                         tal:define="person_data python:view.augment_user_data(person)"
-                         tal:attributes="title person_data/name;
-                                         style string:background-image:url('${person_data/avatar}');;">
-                      <span tal:attributes="class python:view.get_effort_classes(person_data)"
-                            tal:content="person_data/effort"></span>
-                      <span class="title" tal:content="person_data/role"></span>
-                    </div>
-                    </tal:person>
-                  </div>
+                </tal:project>
+                <div class="no-projects"
+                     style="display: none;"
+                     i18n:translate="">
+                  No active projects.
                 </div>
               </div>
               <div class="bottom-pane">

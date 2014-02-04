@@ -75,6 +75,15 @@ class History(api.views.Traversable):
             return data
         return None
 
+    def is_my_project(self, project):
+        if plone.api.user.is_anonymous():
+            return False
+        me = plone.api.user.get_current().getUserName()
+        for person in project.get('people', []):
+            if person.get('id') == me:
+                return True
+        return False
+
     def compass_url(self):
         return self.context.absolute_url() + '/@@compass'
 

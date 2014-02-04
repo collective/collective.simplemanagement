@@ -753,8 +753,22 @@
         this.keys = ko.observableArray([]);
         this.keys_count = null;
         this.loading = false;
+        this.filter = ko.observable('all');
 
         var self = this;
+        this.filter.subscribe(function(value) {
+            if(value==='all') {
+                $('.project').show();
+                $('.no-projects').hide();
+            }
+            if(value==='my') {
+                $('.project').hide();
+                if($('.project.mine').length > 0)
+                    $('.project.mine').show();
+                else
+                    $('.no-projects').show();
+            }
+        });
         // TODO: this infinite scroller might have bugs,
         // we should chain calls like we do in eprice
         this.load = function() {
@@ -775,7 +789,6 @@
                 success: function(data, status, request) {
                     var i, l, keys=data.items;
                     for(i=0, l=keys.length; i<l; i++) {
-                        console.log(keys[i]);
                         self.keys.push({
                             title: $.datepicker.formatDate(
                                 'd MM yy', new Date(keys[i].value*1000)),

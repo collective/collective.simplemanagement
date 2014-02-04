@@ -1643,6 +1643,16 @@ input.effort {
     color: #fff !important;
 }
 
+#content .compassview.historymode .filter {
+    padding: 5px;
+    margin: 4px 0px 8px 0px;
+    background-color: #ccc;
+}
+
+#content .compassview.historymode .filter > * {
+    padding-right: 0.5em;
+}
+
 #peopleToolbox {
     background-color: #fff;
     z-index: 200;
