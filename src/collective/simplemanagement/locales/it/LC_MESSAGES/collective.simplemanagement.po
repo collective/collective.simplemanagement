@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "POT-Creation-Date: 2014-02-04 10:40+0000\n"
-"PO-Revision-Date: 2014-02-04 12:18+0100\n"
+"PO-Revision-Date: 2014-02-04 15:48+0100\n"
 "Last-Translator: Simone Deponti <simone.deponti@abstract.it>\n"
 "Language-Team: Italian <info@abstract.it>\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgstr "Dashboard di ${username}"
 
 #: ../browser/templates/dashboard.pt:211
 msgid "${username} have no bookings yet"
-msgstr "${username} non hai alcun booking al momento"
+msgstr "${username} non ha alcun booking al momento"
 
 #: ../browser/templates/project_report.pt:104
 msgid "(${hours} hours)"
@@ -128,7 +128,8 @@ msgstr "Tutti"
 msgid ""
 "An error has occurred, please <a href=\"{url}\">reload the page clicking "
 "here</a>"
-msgstr "Errore, <a href=\"{url}\">Ricarica la pagina cliccando qui</a>"
+msgstr ""
+"È esploso qualcosa. <a href=\"{url}\">Ricarica la pagina cliccando qui</a>"
 
 #: ../services/base.py:85
 msgid "An error occurred on change status"
@@ -140,7 +141,7 @@ msgstr "Errore durante lo spostamento della storia"
 
 #: ../browser/templates/compass_history.pt:72
 msgid "Anonymous user"
-msgstr "Utente Anonimo"
+msgstr "l'Innominato"
 
 #: ../browser/worklog.py:26
 msgid "April"
@@ -314,7 +315,7 @@ msgstr "Documentazione"
 
 #: ../browser/project/templates/overview.pt:23
 msgid "Documents"
-msgstr "documenti"
+msgstr "Documenti"
 
 #: ../browser/project/templates/overview.pt:30
 msgid "Documents folder"
@@ -368,7 +369,7 @@ msgstr "Ambiente"
 
 #: ../interfaces/settings.py:39
 msgid "Environment types"
-msgstr "Ambienti, tipologia"
+msgstr "Tipologia ambienti"
 
 #: ../browser/project/templates/overview.pt:71
 msgid "Environments"
@@ -686,7 +687,7 @@ msgstr "Completa il tuo booking"
 
 #: ../interfaces/booking.py:58
 msgid "Please, provide a valid time"
-msgstr "Fornisi un orario valido"
+msgstr "Fornisci un orario valido"
 
 #: ../interfaces/settings.py:47
 msgid "Possible reasons to be off duty"
@@ -779,7 +780,7 @@ msgstr "Risorse"
 
 #: ../browser/templates/compass_history.pt:86
 msgid "Revisions"
-msgstr "Revisionio"
+msgstr "Revisioni"
 
 #: ../interfaces/project.py:23
 msgid "Role"
@@ -975,7 +976,7 @@ msgid ""
 "The percentage (between 0 and 1) after which a deviation needs to be "
 "highlighted"
 msgstr ""
-"La precentualie (tra 0 e 1) dopo la quale la deviazione dal pianificato "
+"La percentuale (tra 0 e 1) dopo la quale la deviazione dal pianificato "
 "dev'essere evidenziata"
 
 #: ../browser/compass.py:199
@@ -1016,11 +1017,11 @@ msgstr "Non ci sono iterazioni future"
 
 #: ../browser/project/templates/view.pt:113
 msgid "There are no past iterations."
-msgstr "Non ci sono iterazioni passate"
+msgstr "Non ci sono iterazioni passate."
 
 #: ../browser/templates/compass_history.pt:186
 msgid "There are no saved compass plans."
-msgstr "Non esistono pianificazioni compass salvate"
+msgstr "Non esistono pianificazioni compass salvate."
 
 #: ../browser/templates/dashboard.pt:112
 msgid "There are not stories assigned to ${username}"
@@ -1126,7 +1127,7 @@ msgstr "Nome utente"
 
 #: ../interfaces/compass.py:10
 msgid "Usual plan length"
-msgstr "Lunhgezza standard della pianificazione"
+msgstr "Lunghezza standard della pianificazione"
 
 #: ../browser/epic/templates/view.pt:31
 msgid "Value (man hours)"
@@ -1155,7 +1156,7 @@ msgstr "Settimana"
 
 #: ../browser/templates/project_report.pt:155
 msgid "Week ${weekno}:"
-msgstr "Settimane ${weekno}:"
+msgstr "Settimana ${weekno}:"
 
 #: ../browser/templates/project_report.pt:91
 msgid "Work summary"
