@@ -833,6 +833,10 @@
             compass.apps.push(app);
             ko.applyBindings(app, this);
             $('#peopleToolbox').fixedbox();
+            // BBB: stupid hack to solve localization problem.
+            $(window).load(function() {
+                app.plan_end(app.plan_end());
+            });
         });
         $('.compassview.historymode').each(function() {
             var element = $(this);
