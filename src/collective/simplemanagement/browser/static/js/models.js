@@ -253,6 +253,7 @@
 
         self.display_stories = ko.observable(false);
         self.stories_toggler_css = ko.observable("show-stories");
+        self.showNoStoriesMessage = ko.observable(false);
 
         if (data !== undefined) {
             self.url = data.url;
@@ -268,7 +269,6 @@
 
             self.estimate(data.totals.estimate);
             self.hours(data.totals.hours);
-            self.showNoStoriesMessage = ko.observable(false);
 
             if ((typeof data.stories) !== 'undefined') {
                 self.stories(self.load_stories(data.stories));
