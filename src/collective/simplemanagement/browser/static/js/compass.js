@@ -81,8 +81,8 @@
 
     compass.Person.prototype = {
         domId: function() {
-            return this.project.id().replace(/\//g, '-') + '-' +
-                    this.id.replace('.', '-');
+            return this.project.id().replace(/\//g, '-').replace('.', '-') +
+                '-' + this.id.replace('.', '-');
         },
         getAvatar: function() {
             var data = this.project.app._people[this.id];
