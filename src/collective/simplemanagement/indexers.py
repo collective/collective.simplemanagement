@@ -1,13 +1,14 @@
 from DateTime import DateTime
 from plone.indexer.decorator import indexer
 
-from Products.CMFCore.interfaces import IContentish
+# from Products.CMFCore.interfaces import IContentish
 
 from .interfaces import IIteration
 from .interfaces import IEpic
 from .interfaces import IStory
 from .interfaces import IProject
 from .interfaces import IBooking
+from .interfaces import IOrderNumber
 
 
 @indexer(IIteration)
@@ -66,8 +67,6 @@ def SearchableText_epic(obj):
     return ' '.join((SearchableText(obj), obj.text.output))
 
 
-@indexer(IContentish)
+@indexer(IOrderNumber)
 def order_number(obj):
-    if IProject.providedBy(obj):
-        return obj.order_number
-    raise AttributeError
+    return obj.order_number
