@@ -85,4 +85,14 @@
       profile="collective.simplemanagement:default"
       />
 
+  <genericsetup:upgradeStep
+      title="Order Number behavior"
+      description=""
+      source="1008"
+      destination="1009"
+      handler=".upgrades.upgrade_to_1009"
+      sortkey="1"
+      profile="collective.simplemanagement:default"
+      />
+
 </configure>

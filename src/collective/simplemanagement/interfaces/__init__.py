@@ -19,3 +19,4 @@ from .settings import ISettings
 from .report import IReportable
 from .compass import ICompassSettings
 from .jsonservices import IJSONService
+from .ordernumber import IOrderNumber

@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.simplemanagement">
+
+    <plone:behavior
+        title="Order number behavior"
+        description="This behavior add a field order_number"
+        provides=".interfaces.ordernumber.IOrderNumber"
+        for="plone.dexterity.interfaces.IDexterityContent"
+    />
+
+</configure>

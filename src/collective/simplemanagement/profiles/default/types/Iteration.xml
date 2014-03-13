@@ -29,6 +29,7 @@
   <element value="plone.app.dexterity.behaviors.exclfromnav.IExcludeFromNavigation"/>
   <element value="plone.app.relationfield.behavior.IRelatedItems"/>
   <element value="plone.app.dexterity.behaviors.nextprevious.INextPreviousToggle"/>
+  <element value="collective.simplemanagement.interfaces.ordernumber.IOrderNumber" />
  </property>
  <property name="schema">collective.simplemanagement.interfaces.IIteration</property>
  <property name="model_source"></property>

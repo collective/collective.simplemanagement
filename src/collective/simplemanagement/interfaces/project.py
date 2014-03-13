@@ -69,10 +69,7 @@ class IProject(model.Schema):
     customer = schema.TextLine(
         title=_(u"Customer")
     )
-    order_number = schema.TextLine(
-        title=_(u"Order number"),
-        required=False
-    )
+
     budget = schema.Decimal(
         title=_(u"Budget (man days)"),
         description=_(u"The man days that this project is paid for")

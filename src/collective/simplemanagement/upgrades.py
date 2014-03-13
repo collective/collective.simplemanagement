@@ -1,10 +1,9 @@
 import logging
-
-from zope.component import getUtility
-
-from plone.registry.interfaces import IRegistry
 import plone.api
 
+from zope.component import getUtility
+from plone.registry.interfaces import IRegistry
+from plone.dexterity.interfaces import IDexterityFTI
 from Products.CMFCore.utils import getToolByName
 
 from .interfaces.compass import ICompassSettings
@@ -137,3 +136,24 @@ def upgrade_to_1008(context, logger=None):
     logger.info("install collective.select2")
     qi = getToolByName(context, 'portal_quickinstaller')
     qi.installProduct('collective.select2')
+
+
+def upgrade_to_1009(context, logger=None):
+    logger = getLogger(logger)
+    logger.info("update behaviors")
+
+    new_behavior = "collective.simplemanagement.interfaces.ordernumber.IOrderNumber"
+
+    types = [
+        'Story',
+        'Project',
+        'Iteration',
+        'Epic',
+    ]
+
+    for name in types:
+        fti = getUtility(IDexterityFTI, name=name)
+        behaviors = list(fti.behaviors)
+        if new_behavior not in behaviors:
+            behaviors.append(new_behavior)
+        fti.behaviors = behaviors
