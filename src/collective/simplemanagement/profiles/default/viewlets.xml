@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<object>
+  <order manager="plone.belowcontenttitle" skinname="*" based-on="*">
+    <viewlet name="simplemanagement.ordernumber" insert-before="*" />
+  </order>
+</object>

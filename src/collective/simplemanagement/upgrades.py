@@ -140,7 +140,7 @@ def upgrade_to_1008(context, logger=None):
 
 def upgrade_to_1009(context, logger=None):
     logger = getLogger(logger)
-    logger.info("update behaviors")
+    logger.info("Update behaviors")
 
     new_behavior = "collective.simplemanagement.interfaces.ordernumber.IOrderNumber"
 
@@ -157,3 +157,6 @@ def upgrade_to_1009(context, logger=None):
         if new_behavior not in behaviors:
             behaviors.append(new_behavior)
         fti.behaviors = behaviors
+
+    logger.info("Importing viewlets")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'viewlets')

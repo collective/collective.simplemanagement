@@ -1,0 +1,9 @@
+<tal:projectinfo omit-tag="" condition="view/available">
+
+  <div class="ordernumber-viewlet">
+    <h3 class="documentFirstHeading"
+      i18n:translate="">Order number: <span i18n:name="number"
+      tal:content="view/order_number"/></h3>
+  </div>
+
+</tal:projectinfo>

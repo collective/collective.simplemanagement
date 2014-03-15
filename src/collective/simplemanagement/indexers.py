@@ -70,5 +70,9 @@ def SearchableText_epic(obj):
 @indexer(IContentish)
 def order_number(obj):
     if IOrderNumber.providedBy(obj):
-        return obj.order_number
+        # Store index value in lowercase
+        order_n = obj.order_number
+        if order_n:
+            order_n = order_n.lower()
+        return order_n
     raise AttributeError

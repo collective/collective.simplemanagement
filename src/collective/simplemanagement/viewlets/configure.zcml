@@ -11,6 +11,15 @@
     layer="collective.simplemanagement.interfaces.IBrowserLayer"
     class=".projectinfo.ProjectInfo"
     permission="zope2.View"
-  />
+    />
+
+  <browser:viewlet
+    name="simplemanagement.ordernumber"
+    for="..interfaces.IOrderNumber"
+    manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
+    layer="collective.simplemanagement.interfaces.IBrowserLayer"
+    class=".ordernumber.OrderNumber"
+    permission="zope2.View"
+    />
 
 </configure>

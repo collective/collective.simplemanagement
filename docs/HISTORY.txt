@@ -4,6 +4,9 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Add simplemanagement.ordernumber viewlet
+  [gborelli]
+
 - Add IOrderNumber behavior and remove order_number field from Project CT
   [borelli]
 
