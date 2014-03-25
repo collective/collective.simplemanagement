@@ -178,8 +178,17 @@ class ReportView(DashboardMixin):
     def total_estimated(self):
         return self.project.initial_estimate
 
+    def format_number(self, value):
+        return "%.2f" % value
+
     def hour_to_days(self, value):
         """ return formatted time in days for given hour value
         """
         # TODO: handle rounding
-        return "%.2f" % (value / 8)
+        return self.format_number(value / 8)
+
+    def days_to_hours(self, value):
+        """ return formatted time in hours for given days value
+        """
+        # TODO: handle rounding
+        return self.format_number(value * 8)

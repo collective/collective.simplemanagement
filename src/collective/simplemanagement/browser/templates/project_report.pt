@@ -98,10 +98,10 @@
                         <td class="total estimated">
                           <span i18n:translate="">
                             <span i18n:name="days"
-                                  tal:replace="python: view.hour_to_days(total_estimated)" /> days
+                                  tal:replace="total_estimated" /> days
                           </span>
                           <span i18n:translate="">
-                            (<span i18n:name="hours" tal:content="total_estimated" /> hours)
+                            (<span i18n:name="hours" tal:content="python: view.days_to_hours(total_estimated)" /> hours)
                           </span>
                         </td>
                       </tal:if>
@@ -126,13 +126,13 @@
                           Diff:
                         </th>
                         <td class="total diff"
-                            tal:define="diff python:total_estimated - monthly['total']">
+                            tal:define="diff python:total_estimated - monthly['total'] / 8">
                           <span i18n:translate="">
                             <span i18n:name="days"
-                                  tal:replace="python: view.hour_to_days(diff)" /> days
+                                  tal:replace="python: view.format_number(diff)" /> days
                           </span>
                           <span i18n:translate="">
-                            (<span i18n:name="hours" tal:content="diff" /> hours)
+                            (<span i18n:name="hours" tal:content="python: view.days_to_hours(diff)" /> hours)
                           </span>
                         </td>
                       </tal:if>
