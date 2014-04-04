@@ -56,7 +56,7 @@ class BookingStorage(Persistent):
         self.add(booking)
         return booking
 
-    def _generate_uid(self):
+    def _generate_uuid(self):
         return uuid.uuid1().int
 
     def query(self, query, start=0, limit=None):
