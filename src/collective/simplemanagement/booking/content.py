@@ -7,11 +7,10 @@ from BTrees.OOBTree import OOSet
 from zope.interface import implementer
 from zope.schema.fieldproperty import FieldProperty
 
-from .interfaces import IBooking
-from .utils import AttrDict
+from ..interfaces import IBooking
 
 
-class ReferenceDict(PersistentDict, AttrDict):
+class ReferenceDict(PersistentDict):
     """ a smarter persistent dict for our references
     """
     __allow_access_to_unprotected_subobjects__ = True

@@ -8,12 +8,18 @@ from zope.catalog.interfaces import ICatalogIndex
 from zope.catalog.attribute import AttributeIndex
 from zope.index import field
 from zope.index import text
+from zope.index import keyword
 
 from ..interfaces import IBooking
 
 
 @implementer(ICatalogIndex)
 class TextIndex(AttributeIndex, text.TextIndex, Contained):
+    pass
+
+
+@implementer(ICatalogIndex)
+class KeywordIndex(AttributeIndex, keyword.KeywordIndex, Contained):
     pass
 
 
@@ -40,12 +46,12 @@ def setup_catalog():
         True
     )
     catalog['references'] = FieldIndex(
-        'owner',
+        'references',
         IBooking,
         True
     )
-    catalog['tags'] = FieldIndex(
-        'owner',
+    catalog['tags'] = KeywordIndex(
+        'tags',
         IBooking,
         True
     )

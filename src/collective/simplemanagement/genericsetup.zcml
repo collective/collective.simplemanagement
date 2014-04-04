@@ -4,27 +4,11 @@
            i18n_domain="collective.simplemanagement">
 
   <gs:importStep
-      name="collective.simplemanagement.bookingholes.install"
-      title="Install SimpleManagement booking holes"
-      description="Creates the booking holes utility"
-      handler=".bookingholes.install_utility">
-    <depends name="componentregistry"/>
-  </gs:importStep>
-
-  <gs:importStep
       name="collective.simplemanagement.install"
       title="Extra setup"
       description="Extra simplemanagement install steps"
       handler=".setuphandlers.setupSimpleManagement">
     <depends name="sharing"/>
-  </gs:importStep>
-
-  <gs:importStep
-      name="collective.simplemanagement.bookingholes.uninstall"
-      title="Uninstall SimpleManagement booking holes"
-      description="Deletes the booking holes utility"
-      handler=".bookingholes.remove_utility">
-    <depends name="componentregistry"/>
   </gs:importStep>
 
   <gs:registerProfile

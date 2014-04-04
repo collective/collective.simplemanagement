@@ -13,7 +13,7 @@ from plone.memoize.instance import memoize as instance_memoize
 
 from .. import api
 from .. import messageFactory as _
-from ..interfaces import IBookingHoles, IProject
+from ..interfaces import IProject
 from ..configure import ONE_DAY, ONE_WEEK, Settings
 
 from ..utils import AttrDict, quantize

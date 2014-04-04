@@ -11,8 +11,6 @@ from Products.CMFCore.utils import getToolByName
 from ..configure import Settings
 from ..configure import DECIMAL_QUANT
 from ..interfaces import IStory
-from ..interfaces import IBookingHoles
-from ..bookingholes import BookingHole
 from ..utils import AttrDict, quantize
 from .date import datetimerange
 
@@ -45,10 +43,11 @@ def create_booking(context, data, reindex=True):
 
 
 def create_hole(day, hours, user_id, reason=""):
-    hole = BookingHole(day, hours, user_id, reason)
-    util = getUtility(IBookingHoles)
-    util.add(hole)
-    return hole
+    # hole = BookingHole(day, hours, user_id, reason)
+    # util = getUtility(IBookingHoles)
+    # util.add(hole)
+    # return hole
+    print 'nothing to do here buddy!'
 
 
 def get_difference_class(a, b, settings=None):

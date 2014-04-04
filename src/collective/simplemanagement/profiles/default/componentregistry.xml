@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<componentregistry>
+  <adapters/>
+  <utilities>
+    <utility
+      interface="collective.simplemanagement.interfaces.IBooking"
+      factory="collective.simplemanagement.booking.storage.BookingStorage"
+      name="sm.booking"
+      id="sm.booking"
+      />
+  </utilities>
+</componentregistry>

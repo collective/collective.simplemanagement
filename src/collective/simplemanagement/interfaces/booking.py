@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 from zope import schema
 from zope.interface import Interface
 
@@ -36,14 +38,14 @@ class IBooking(Interface):
     references = schema.Dict(
         title=_(u"Related objects"),
         required=False,
-        key_type=schema.ASCIILine(title="Object type"),
-        value_type=schema.ASCIILine(title="Object ID")
+        key_type=schema.ASCIILine(title=u"Object type"),
+        value_type=schema.ASCIILine(title=u"Object ID")
     )
 
     tags = schema.List(
         title=_(u"Tags"),
         required=False,
-        value_type=schema.TextLine(title="Tag")
+        value_type=schema.TextLine(title=u"Tag")
     )
 
 

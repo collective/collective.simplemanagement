@@ -11,8 +11,7 @@ from .story import IStory
 from .story import IStoriesListing
 from .story import IUserStoriesListing
 from .booking import IBooking
-from .booking import IBookingHole
-from .booking import IBookingHoles
+from .booking import IBookingStorage
 from .timeline import ITimeline
 from .backlog import IBacklogView
 from .settings import ISettings
