@@ -42,14 +42,6 @@ def create_booking(context, data, reindex=True):
     return item
 
 
-def create_hole(day, hours, user_id, reason=""):
-    # hole = BookingHole(day, hours, user_id, reason)
-    # util = getUtility(IBookingHoles)
-    # util.add(hole)
-    # return hole
-    print 'nothing to do here buddy!'
-
-
 def get_difference_class(a, b, settings=None):
     if a > 0 or a < 0:
         if settings is None:
@@ -63,7 +55,7 @@ def get_difference_class(a, b, settings=None):
     return 'success'
 
 
-def get_bookings(userid=None, project=None, portal_catalog=None,
+def get_bookings(userid=None, project=None,
                  from_date=None, to_date=None, booking_date=None,
                  sort=True):
     """ returns bookings.
@@ -73,24 +65,19 @@ def get_bookings(userid=None, project=None, portal_catalog=None,
     ``to_date`` upper date limit
     ``sort`` disable sorting
     """
-    if portal_catalog is None:
-        context = project or getSite()
-        pc = getToolByName(context, 'portal_catalog')
-    else:
-        pc = portal_catalog
-    query = {
-        'portal_type': 'Booking',
-    }
+    query = {}
     if userid:
-        query['Creator'] = userid
+        query['owner'] = userid
+
+    references = {}
     if project:
-        query['path'] = '/'.join(project.getPhysicalPath())
+        references['project'] = project
     if from_date and not to_date:
-        query['booking_date'] = {'query': from_date, 'range': 'min'}
+        query['date'] = {'query': from_date, 'range': 'min'}
     elif to_date and not from_date:
-        query['booking_date'] = {'query': to_date, 'range': 'max'}
+        query['date'] = {'query': to_date, 'range': 'max'}
     elif from_date and to_date:
-        query['booking_date'] = {'query': [from_date, to_date],
+        query['date'] = {'query': [from_date, to_date],
                                  'range': 'min:max'}
     if booking_date:
         query['booking_date'] = booking_date
