@@ -10,8 +10,13 @@ class IBooking(Interface):
     """ schema for booking object
     """
 
-    uuid = schema.Int(
-        title=_(u"UUID"),
+    cat_id = schema.Int(
+        title=_(u"Catalog id"),
+        required=True
+    )
+
+    uid = schema.ASCIILine(
+        title=_(u"UID"),
         required=True
     )
 
@@ -39,10 +44,10 @@ class IBooking(Interface):
         title=_(u"Related objects"),
         required=False,
         key_type=schema.ASCIILine(title=u"Object type"),
-        value_type=schema.ASCIILine(title=u"Object ID")
+        value_type=schema.ASCIILine(title=u"Object UID")
     )
 
-    tags = schema.List(
+    tags = schema.Set(
         title=_(u"Tags"),
         required=False,
         value_type=schema.TextLine(title=u"Tag")
@@ -71,9 +76,8 @@ class IBookingStorage(Interface):
         Raises ``KeyError`` if there is no booking with the given ``uuid``
         """
 
-    def _generate_uuid():
-        """Generates an UUID for the booking.
-        This UUID is used both as storage key for the booking and indexing.
+    def _get_next_uid():
+        """Return next id for a new booking
         """
 
     def add(booking):

@@ -4,3 +4,8 @@
   - catalogo con zope.catalog e metodo query
   - indicizzare date, owner
   - indicizzare il campo references (con Simo)
+
+
+* Upgrade step migrazione booking esistenti
+* Upgrade step per rimuovere BookingHole utility
+e altre cose persistenti del vecchio booking

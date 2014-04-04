@@ -1,45 +1,42 @@
 from datetime import date
 from decimal import Decimal
 from zope.component import getUtility
-from zope.component.hooks import getSite
 
 from z3c.relationfield.relation import create_relation
 from plone.dexterity.utils import createContentInContainer
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 
 from ..configure import Settings
-from ..configure import DECIMAL_QUANT
 from ..interfaces import IStory
+from ..interfaces import IProject
+from ..interfaces import IBookingStorage
 from ..utils import AttrDict, quantize
 from .date import datetimerange
 
 
 convert_funcs = {
+    'text': safe_unicode,
     'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
 }
 
 
-def create_booking(context, data, reindex=True):
-    """ create booking in given `context`.
-        `data` must contains booking params.
-        `reindex` switches on/off new item reindexing.
+def get_booking_storage():
+    return getUtility(IBookingStorage)
+
+
+def create_booking(**values):
+    """ create booking.
+        `values` must contains booking params.
     """
-    assert 'title' in data.keys()
-    item = createContentInContainer(
-        context,
-        'Booking',
-        title=data.pop('title')
-    )
-    if not 'date' in data.keys():
-        data['date'] = date.today()
-    for k, v in data.items():
+    if not 'date' in values.keys():
+        values['date'] = date.today()
+    for k, v in values.iteritems():
         if v and k in convert_funcs:
-            v = convert_funcs[k](v)
-        setattr(item, k, v)
-    if reindex:
-        item.reindexObject()
-    return item
+            values[k] = convert_funcs[k](v)
+    storage = get_booking_storage()
+    return storage.create(**values)
 
 
 def get_difference_class(a, b, settings=None):
@@ -55,41 +52,40 @@ def get_difference_class(a, b, settings=None):
     return 'success'
 
 
-def get_bookings(userid=None, project=None,
+def get_bookings(owner=None, project=None,
                  from_date=None, to_date=None, booking_date=None,
                  sort=True):
     """ returns bookings.
-    ``userid`` limits results to objs belonging to that user.
+    ``owner`` limits results to objs belonging to that user.
     ``project`` a project obj. If given, results will be limited to that proj.
     ``from_date`` lower date limit
     ``to_date`` upper date limit
     ``sort`` disable sorting
     """
     query = {}
-    if userid:
-        query['owner'] = userid
+    if owner:
+        query['owner'] = owner
 
     references = {}
     if project:
+        if IProject.providedBy(project):
+            project = project.UID()
         references['project'] = project
-    if from_date and not to_date:
-        query['date'] = {'query': from_date, 'range': 'min'}
-    elif to_date and not from_date:
-        query['date'] = {'query': to_date, 'range': 'max'}
-    elif from_date and to_date:
-        query['date'] = {'query': [from_date, to_date],
-                                 'range': 'min:max'}
-    if booking_date:
-        query['booking_date'] = booking_date
-    if sort:
-        # XXX: this is not working in tests (???)
-        query['sort_on'] = 'booking_date'
-        query['sort_order'] = 'descending'
 
-    return pc.searchResults(query)
+    if from_date or to_date:
+        query['date'] = (from_date, to_date)
+    # sorting = None
+    # if sort:
+    #     sorting = {
+    #         'sort_on': 'date',
+    #         'sort_order': 'descending',
+    #     }
+
+    util = get_booking_storage()
+    return util.query(query)
 
 
-def get_booking_holes(userid, bookings, expected_working_time=None,
+def get_booking_holes(owner, bookings, expected_working_time=None,
                       man_day_hours=None, from_date=None, to_date=None):
     """ given a user and a list of bookings returns booking holes
     ``expected_working_time`` minimal expected working hours per day
@@ -115,7 +111,7 @@ def get_booking_holes(userid, bookings, expected_working_time=None,
 
     # then we check that total time matches our constraints
     holes_utility = getUtility(IBookingHoles)
-    holes = tuple(holes_utility.iter_user(userid, from_date, to_date))
+    holes = tuple(holes_utility.iter_user(owner, from_date, to_date))
     missing = []
     for dt, tm in sorted(_missing.items()):
         if tm >= expected_working_time:

@@ -1,6 +1,6 @@
 from datetime import date
-from datetime import timedelta
-from decimal import Decimal
+# from datetime import timedelta
+# from decimal import Decimal
 
 import unittest2 as unittest
 from zope.component import getUtility
@@ -41,8 +41,10 @@ class TestBookingCheck(unittest.TestCase):
         brains = self.portal.portal_catalog(portal_type='Story')
         return brains[0].getObject()
 
-    def setup_bookings(self, userid=''):
-        story = self.get_story()
+    def setup_bookings(self, owner='',
+                       project=None, story=None,
+                       references=None,
+                       count=99999):
         self.booking_data = [
             # (date, worked hours)
             (date(2013, 1, 1), 4),
@@ -57,18 +59,16 @@ class TestBookingCheck(unittest.TestCase):
         if not hasattr(self, 'bookings'):
             self.bookings = []
         for i, (dt, tm) in enumerate(self.booking_data):
-            bkng = api.booking.create_booking(
-                story,
-                {
-                    'title': 'Booking %s %s' % (userid, i),
-                    'date': dt,
-                    'time': tm,
-                }
-            )
-            if userid:
-                bkng.setCreators((userid))
-                bkng.reindexObject()
+            bdata = {
+                'text': 'Booking %s %s' % (owner, i),
+                'date': dt,
+                'time': tm,
+                'owner': owner,
+            }
+            bkng = api.booking.create_booking(**bdata)
             self.bookings.append(bkng)
+            if i + 1 == count:
+                break
 
     def remove_bookings(self):
         pass
@@ -77,32 +77,42 @@ class TestBookingCheck(unittest.TestCase):
         util = getUtility(IBookingStorage)
         self.assertTrue(verifyObject(IBookingStorage, util))
 
-    # def test_get_bookings(self):
-    #     self.setup_bookings(userid='johndoe')
-    #     pc = self.portal.portal_catalog
-    #     # every user should have 6 bookings
-    #     bookings = api.booking.get_bookings(
-    #         userid=TEST_USER_ID,
-    #         portal_catalog=pc,
-    #         sort=False
-    #     )
-    #     assert len(bookings) == 8
-    #     bookings = api.booking.get_bookings(
-    #         userid='johndoe',
-    #         portal_catalog=pc,
-    #         sort=False
-    #     )
-    #     assert len(bookings) == 8
-    #     # if no user passed we shold get all the bookings
-    #     bookings = api.booking.get_bookings(
-    #         portal_catalog=pc,
-    #         sort=False
-    #     )
-    #     assert len(bookings) == 16
-    #     # TODO: test get bookings limited to projects
+    def test_create_booking(self):
+        values = {
+            'text': 'Booking now!',
+            'date': date(2013, 1, 1),
+            'time': 2,
+            'tags': set(['foo', 'bar', 'baz'])
+        }
+        booking = api.booking.create_booking(**values)
+        self.assertTrue(verifyObject(IBooking, booking))
+        for k, v in values.iteritems():
+            self.assertEqual(getattr(booking, k), v)
+        # retrieve booking via storage
+        storage = getUtility(IBookingStorage)
+        self.assertTrue(booking.uid in storage)
+        self.assertEqual(booking, storage[booking.uid])
+
+    def test_get_bookings(self):
+        user1 = 'johndoe'
+        user2 = 'foobar'
+        self.setup_bookings(owner=user1, count=4)
+        self.setup_bookings(owner=user2, count=2)
+
+        bookings = api.booking.get_bookings()
+        # total bookings
+        self.assertEqual(len(bookings), 6)
+        # user1 bookings
+        u1_bookings = api.booking.get_bookings(owner=user1)
+        self.assertEqual(len(u1_bookings), 4)
+        # user1 bookings
+        u2_bookings = api.booking.get_bookings(owner=user2)
+        self.assertEqual(len(u2_bookings), 2)
+
+        # TODO: test get bookings limited to specific refs such as projects
 
     # def test_missing_bookings(self):
-    #     userid = TEST_USER_ID
+    #     owner = TEST_USER_ID
     #     pc = self.portal.portal_catalog
     #     expected_working_time = 6
     #     man_day_hours = 8
@@ -111,7 +121,7 @@ class TestBookingCheck(unittest.TestCase):
     #     to_date = today - timedelta(1)
 
     #     bookings = api.booking.get_bookings(
-    #         userid=userid,
+    #         owner=owner,
     #         portal_catalog=pc,
     #         sort=False
     #     )
@@ -119,7 +129,7 @@ class TestBookingCheck(unittest.TestCase):
     #     bookings = [x.getObject() for x in bookings
     #                 if from_date <= x.getObject().date <= to_date]
     #     holes = api.booking.get_booking_holes(
-    #         userid, bookings,
+    #         owner, bookings,
     #         expected_working_time=expected_working_time,
     #         man_day_hours=man_day_hours,
     #         from_date=from_date,
@@ -135,13 +145,13 @@ class TestBookingCheck(unittest.TestCase):
     #     hole = BookingHole(
     #         date(2013, 1, 4),
     #         Decimal("4"),
-    #         userid,
+    #         owner,
     #         reason=u"sick"
     #     )
     #     utility.add(hole)
     #     # now we expect to have 1 missing booking less
     #     holes = api.booking.get_booking_holes(
-    #         userid, bookings,
+    #         owner, bookings,
     #         expected_working_time=expected_working_time,
     #         man_day_hours=man_day_hours,
     #         from_date=from_date,
