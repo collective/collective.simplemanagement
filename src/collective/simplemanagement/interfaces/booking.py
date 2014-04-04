@@ -5,6 +5,13 @@ from .. import _
 
 
 class IBooking(Interface):
+    """ schema for booking object
+    """
+
+    uuid = schema.Int(
+        title=_(u"UUID"),
+        required=True
+    )
 
     date = schema.Date(
         title=_(u"Date"),
@@ -13,6 +20,11 @@ class IBooking(Interface):
 
     time = schema.Decimal(
         title=_(u"Hours"),
+        required=True
+    )
+
+    text = schema.TextLine(
+        title=_(u"Text"),
         required=True
     )
 
@@ -28,22 +40,11 @@ class IBooking(Interface):
         value_type=schema.ASCIILine(title="Object ID")
     )
 
-
-class IOrderedSet(Interface):
-
-    def __len__():
-        """Returns the number of elements.
-        """
-
-    def __iter__():
-        """Iterates over the elements
-        """
-
-    def __or__(other):
-        """Merges two ``IOrderedSets`` so that no duplicates are present.
-
-        Ordering is recomputed summing scores.
-        """
+    tags = schema.List(
+        title=_(u"Tags"),
+        required=False,
+        value_type=schema.TextLine(title="Tag")
+    )
 
 
 class IBookingStorage(Interface):
@@ -68,10 +69,20 @@ class IBookingStorage(Interface):
         Raises ``KeyError`` if there is no booking with the given ``uuid``
         """
 
+    def _generate_uuid():
+        """Generates an UUID for the booking.
+        This UUID is used both as storage key for the booking and indexing.
+        """
+
     def add(booking):
         """Adds the given ``booking`` and returns the assigned UUID.
 
         The ``booking`` object must implement ``IBooking``.
+        """
+
+    def create(**values):
+        """Given booking ``values`` it creates an ``ÌBooking`` object and
+        it adds it to the storage.
         """
 
     def delete(uuid):
