@@ -1,6 +1,7 @@
 import json
 import plone.api
 from datetime import date
+from datetime import datetime
 from decimal import Decimal
 from DateTime import DateTime
 from AccessControl import Unauthorized
@@ -19,9 +20,10 @@ from .. import messageFactory as _
 # Validate both on the server and client side,
 # using z3c.form on the client side in a less stressful way
 
+
 class History(api.views.Traversable):
 
-    STEP = 20 # Used for pagination/infinite scroll
+    STEP = 20  # Used for pagination/infinite scroll
 
     template = ViewPageTemplateFile('templates/compass_history.pt')
 
@@ -30,6 +32,11 @@ class History(api.views.Traversable):
         self.tools = api.portal.LazyTools(context)
         self.key = None
         self.data = None
+
+    def get_data(self):
+        data = self.data.copy()
+        data['plan_end'] = api.date.format(data['plan_end'])
+        return data
 
     def get_effort_classes(self, person_data):
         klasses = ['effort']
@@ -91,15 +98,17 @@ class History(api.views.Traversable):
         return self.context.absolute_url() + '/@@compass/history/'
 
     def delete_url(self):
-        return self.base_url()+str(self.key)+'/delete'
+        return self.base_url() + str(self.key) + '/delete'
 
     def list_keys_url(self):
-        return self.base_url()+str(self.key)+'/list_keys'
+        return self.base_url() + str(self.key) + '/list_keys'
 
     def active_date(self):
         if self.data and 'plan_start' in self.data:
-            return self.data['plan_start']
-        return api.date.format(DateTime(self.key))
+            active_date = self.data['plan_start']
+        else:
+            active_date = DateTime(self.key)
+        return api.date.format(active_date)
 
     @api.jsonutils.jsonmethod()
     def do_list_keys(self):
@@ -109,7 +118,7 @@ class History(api.views.Traversable):
         for tstamp in portal_compass.keys(start, self.STEP):
             items.append({
                 'value': tstamp,
-                'url': self.base_url()+str(tstamp)
+                'url': self.base_url() + str(tstamp)
             })
         return {
             'items': items,
@@ -129,7 +138,7 @@ class History(api.views.Traversable):
             portal_compass.remove(self.key)
             max_key = portal_compass.max_key()
             if max_key is not None:
-                self.request.response.redirect(self.base_url()+str(max_key))
+                self.request.response.redirect(self.base_url() + str(max_key))
             else:
                 self.request.response.redirect(self.compass_url())
             plone.api.portal.show_message(
@@ -160,6 +169,7 @@ class History(api.views.Traversable):
             if max_key is not None:
                 self.request.response.redirect(self.base_url()+str(max_key))
                 return u''
+
         return super(History, self).__call__()
 
 
@@ -444,6 +454,13 @@ class Compass(api.views.Traversable):
         current_user = plone.api.user.get_current()
         data['saved_by'] = current_user.id
         portal_compass = self.tools['portal_compass']
+
+        # Convert date
+        data['plan_start'] = datetime.strptime(
+            data['plan_start'], '%Y-%m-%d').date()
+        data['plan_end'] = datetime.strptime(
+            data['plan_end'], '%Y-%m-%d').date()
+
         key = portal_compass.add(data)
         return {
             'url': '{0}history/{1}'.format(

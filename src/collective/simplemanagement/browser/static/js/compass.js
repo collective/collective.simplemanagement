@@ -1,3 +1,4 @@
+/*global window, jQuery, document, ko  */
 (function($) {
     if ((typeof window.simplemanagement) === "undefined") {
         window.simplemanagement = {};
@@ -470,8 +471,8 @@
                 projects: [],
                 total: self.total_effort(),
                 critical: [],
-                plan_start: self.formatDate(self.plan_start()),
-                plan_end: self.formatDate(self.plan_end())
+                plan_start: $.datepicker.formatDate('yy-mm-dd', self.plan_start()),
+                plan_end: $.datepicker.formatDate('yy-mm-dd', self.plan_end())
             };
             active_projects = self.active_projects();
             for(i=0, l=active_projects.length; i<l; i++) {

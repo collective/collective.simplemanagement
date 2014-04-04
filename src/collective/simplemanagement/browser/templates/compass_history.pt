@@ -16,7 +16,7 @@
     <metal:bodytext fill-slot="main">
       <metal:main define-macro="main"
                   tal:define="helpers context/@@sm_helpers;
-                              data view/data">
+                              data view/get_data">
         <div tal:replace="structure provider:plone.abovecontenttitle" />
         <h1 class="documentFirstHeading" i18n:translate="">Compass</h1>
 
