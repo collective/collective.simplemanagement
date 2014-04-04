@@ -17,7 +17,7 @@ from ..interfaces import IBookingStorage
 from .. import api
 
 
-class TestBookingCheck(unittest.TestCase):
+class TestBooking(unittest.TestCase):
 
     layer = BASE_INTEGRATION_TESTING
 
@@ -31,9 +31,12 @@ class TestBookingCheck(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         login(self.portal, TEST_USER_NAME)
         # self.setup_bookings()
+        self.bookings = []
 
     def tearDown(self):
-        self.remove_bookings()
+        self.bookings = []
+        util = getUtility(IBookingStorage)
+        util.bookings.clear()
         setRoles(self.portal, TEST_USER_ID, ['Member'])
 
     def get_story(self):
@@ -56,8 +59,6 @@ class TestBookingCheck(unittest.TestCase):
             (date(2013, 1, 5), 2),
             (date(2013, 1, 5), 2),
         ]
-        if not hasattr(self, 'bookings'):
-            self.bookings = []
         for i, (dt, tm) in enumerate(self.booking_data):
             bdata = {
                 'text': 'Booking %s %s' % (owner, i),
@@ -69,9 +70,6 @@ class TestBookingCheck(unittest.TestCase):
             self.bookings.append(bkng)
             if i + 1 == count:
                 break
-
-    def remove_bookings(self):
-        pass
 
     def test_get_storage(self):
         util = getUtility(IBookingStorage)
@@ -163,5 +161,5 @@ class TestBookingCheck(unittest.TestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestBookingCheck))
+    suite.addTest(unittest.makeSuite(TestBooking))
     return suite

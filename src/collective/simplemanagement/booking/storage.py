@@ -87,16 +87,16 @@ class BookingStorage(Persistent):
         self.catalog.index_doc(booking.cat_id, booking)
         self.mapping[booking.cat_id] = booking.uid
 
-    def reindex(self):
+    def unindex(self, booking):
+        self.catalog.unindex_doc(booking.cat_id)
+        self.mapping.pop(booking.cat_id)
+
+    def reindex_catalog(self):
         self.mapping.clear()
         self.catalog.clear()
         for booking in self.bookings:
             booking.cat_id = self._get_next_cat_id()
             self.index(booking)
-
-    def unindex(self, booking):
-        self.catalog.unindex_doc(booking.cat_id)
-        self.mapping.pop(booking.cat_id)
 
     def query(self, query, start=0, limit=None):
         """Searches for bookings.

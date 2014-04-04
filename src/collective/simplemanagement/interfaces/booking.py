@@ -80,6 +80,14 @@ class IBookingStorage(Interface):
         """Return next id for a new booking
         """
 
+    def _get_next_cat_id():
+        """Return next id for a new catalog doc
+        """
+
+    def _catalog_id_to_object(cat_id):
+        """Return next booking object by catalog id
+        """
+
     def add(booking):
         """Adds the given ``booking`` and returns the assigned UUID.
 
@@ -95,6 +103,18 @@ class IBookingStorage(Interface):
         """Deletes the booking with the given ``uuid``.
 
         Raises ``KeyError`` if there is no booking with the given ``uuid``
+        """
+
+    def index(booking):
+        """Indexes a booking object.
+        """
+
+    def unindex(booking):
+        """Unindexes a booking object.
+        """
+
+    def reindex_catalog():
+        """Flushes catalog values and reindexes all bookings.
         """
 
     def query(query, start=0, limit=None):

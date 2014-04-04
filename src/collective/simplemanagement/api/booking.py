@@ -18,6 +18,7 @@ from .date import datetimerange
 
 convert_funcs = {
     'text': safe_unicode,
+    'tags': lambda x: set([safe_unicode(y) for y in x]),
     'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
 }
 
