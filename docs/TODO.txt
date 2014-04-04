@@ -1,0 +1,6 @@
+* Oggetto Booking(Persistent)
+* Storage booking (LOBTree):
+  - tutti i metodi tranne query
+  - catalogo con zope.catalog e metodo query
+  - indicizzare date, owner
+  - indicizzare il campo references (con Simo)
