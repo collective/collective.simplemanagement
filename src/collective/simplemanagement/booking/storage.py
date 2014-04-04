@@ -6,10 +6,13 @@ from persistent import Persistent
 from BTrees.LOBTree import LOBTree
 
 from zope.interface import implementer
+from zope.event import notify
 
-from .content import Booking
 from ..interfaces import IBooking
 from ..interfaces import IBookingStorage
+from .content import Booking
+from .catalog import setup_catalog
+from .events import BookingAddedEvent
 
 
 @implementer(IBookingStorage)
@@ -17,6 +20,7 @@ class BookingStorage(Persistent):
 
     def __init__(self):
         self.bookings = LOBTree()
+        self.catalog = setup_catalog()
 
     def __len__(self):
         """Returns the number of bookings.
@@ -31,7 +35,16 @@ class BookingStorage(Persistent):
 
     def add(self, booking):
         assert IBooking.providedBy(booking)
+        if not booking.uuid:
+            # maybe we are not using `create` method
+            booking.uuid = self._generate_uuid()
+        # add booking
         self.bookings[booking.uuid] = booking
+        # index it
+        self.catalog.index_doc(booking.uuid, booking)
+        # trigger event
+        notify(BookingAddedEvent(booking))
+        return booking.uuid
 
     def delete(self, uuid):
         del self.bookings[uuid]
@@ -41,6 +54,7 @@ class BookingStorage(Persistent):
         values['uuid'] = self._generate_uuid()
         booking = Booking(**values)
         self.add(booking)
+        return booking
 
     def _generate_uid(self):
         return uuid.uuid1().int

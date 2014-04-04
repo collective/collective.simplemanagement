@@ -82,7 +82,7 @@ class IBookingStorage(Interface):
 
     def create(**values):
         """Given booking ``values`` it creates an ``ÌBooking`` object and
-        it adds it to the storage.
+        it adds it to the storage. Returns the booking object.
         """
 
     def delete(uuid):
