@@ -19,7 +19,7 @@ e altre cose persistenti del vecchio booking
 [WIP]* Sistemare i listing
 * Sistemare form a caso in giro per l'universo (tipo dashboard)
 * Sistemare converter
-* Cancellazione totale non elimina da stream
+[ok] * Cancellazione totale non elimina da stream
 * Ctrl+C e Ctrl+V
 * Sistemare conteggi (grep get_bookings)
 * Tab da levare

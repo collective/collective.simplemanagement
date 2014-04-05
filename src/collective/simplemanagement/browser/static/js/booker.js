@@ -36,12 +36,16 @@
     };
 
     sm.Booker.prototype = {
-        parse: function() {
-            var c, elchars = [], references, tags, item, regex = '',
-                self = this;
+        get_regex: function() {
+            var c, elchars = [], regex;
             for(c in this.electric_chars) elchars.push(c);
             regex = new RegExp('('+elchars.join('|')+')('+
                                this._valid_chars+'+)', 'g');
+            return regex;
+        },
+        parse: function() {
+            var references, tags, item, regex, self = this;
+            regex = this.get_regex();
             references = $.parseJSON(this.$references.val() || '[]');
             tags = $.parseJSON(this.$tags.val() || '[]');
             XRegExp.forEach(this.$root.val(), regex, function(m) {
@@ -63,8 +67,7 @@
             });
         },
         add: function(item) {
-            var i, l, references_values = [], tags_values = [],
-                replace = null, value = this.$root.val();
+            var i, l, replace = null, value = this.$root.val();
             for(i=0, l=this.stream.length; i<l; i++) {
                 if((this.token[2] >= this.stream[i].start &&
                         this.token[2] < this.stream[i].end) ||
@@ -95,6 +98,15 @@
                 if(a.start > b.start) return 1;
                 return 0;
             });
+            this.save_related();
+            this.$root.val(
+                value.substr(0, this.token[2]) +
+                    this.token[0] + item.id +
+                    value.substr(this.token[3], value.length));
+            this.$root.caret(this.token[2] + item.id.length + 1);
+        },
+        save_related: function() {
+            var i, l, references_values = [], tags_values = [];
             for(i=0, l=this.stream.length; i<l; i++) {
                 if(this.stream[i].portal_type)
                     references_values.push({
@@ -106,11 +118,6 @@
             }
             this.$references.val(JSON.stringify(references_values));
             this.$tags.val(JSON.stringify(tags_values));
-            this.$root.val(
-                value.substr(0, this.token[2]) +
-                    this.token[0] + item.id +
-                    value.substr(this.token[3], value.length));
-            this.$root.caret(this.token[2] + item.id.length + 1);
         },
         render_autocomplete: function() {
             var i, l, $wrapper, $info, $item, item;
@@ -234,6 +241,18 @@
             e = i;
             return [electric_char, token, s, e];
         },
+        cleanup: function() {
+            var i, l, item, regex, stream = [], self = this;
+            regex = this.get_regex();
+            XRegExp.forEach(this.$root.val(), regex, function(m) {
+                for(i=0, l=self.stream.length; i<l; i++) {
+                    if(self.stream[i].start == m.index)
+                        stream.push(self.stream[i]);
+                }
+            });
+            this.stream = stream;
+            this.save_related();
+        },
         init: function() {
             var self = this;
             this.parse();
@@ -275,6 +294,7 @@
                 }
             });
             this.$root.keypress(function(e) {
+                self.cleanup();
                 if(e.which) {
                     var ch;
                     var position = self.$root.caret();
@@ -298,6 +318,7 @@
             });
             this.$root.blur(function() {
                 self.autocomplete('close');
+                self.cleanup();
             });
         }
     };

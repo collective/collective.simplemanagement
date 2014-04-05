@@ -119,9 +119,9 @@ def BookFieldWidget(field, request):
     return FieldWidget(field, BookWidget(request))
 
 
-@implementer(IReferencesWidget)
 class ReferencesWidget(TextWidget):
-    pass
+
+    implementsOnly(IReferencesWidget)
 
 
 @adapter(IField, IFormLayer)
@@ -131,9 +131,9 @@ def ReferencesFieldWidget(field, request):
     return FieldWidget(field, ReferencesWidget(request))
 
 
-@implementer(ITagsWidget)
 class TagsWidget(TextWidget):
-    pass
+
+    implementsOnly(ITagsWidget)
 
 
 @adapter(IField, IFormLayer)
@@ -186,6 +186,12 @@ class Autocomplete(BrowserView):
     MAX_RESULTS = 50
     MIN_QUERY = 1
 
+    @staticmethod
+    def next_query(value):
+        if len(value) > 0:
+            value = value[:-1] + chr(ord(value[-1])+1)
+        return value
+
     def search_tags(self, query, results):
         # BBB: use real values
         tags = [
@@ -214,7 +220,8 @@ class Autocomplete(BrowserView):
 
     def search_content(self, query, portal_type, results):
         kwargs = {
-            'Title': query + '*',
+            'getId': { 'query': (query, self.next_query(query)),
+                       'range': 'min:max' },
             'portal_type': portal_type
         }
         filter_context = self.request.form.get('filter_context')
