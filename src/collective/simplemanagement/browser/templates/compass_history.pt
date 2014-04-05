@@ -126,7 +126,7 @@
                     </div>
                     <div class="info">
                       <div><h3 class="title"><a
-                          tal:omit-tag="project/url|nothing"
+                          tal:omit-tag="not:project/url|nothing"
                           tal:attributes="href project/url|nothing"
                           tal:content="project/name"/></h3></div>
                       <div><div class="notes"
