@@ -53,6 +53,7 @@ def format_text(booking, context=None):
             booking.references if booking.references is not None else []
         )
     ]
+
     def format_tag(m):
         tag = m.group(0)
         if ELECTRIC_CHARS[m.group(1)] is None:
@@ -63,8 +64,11 @@ def format_text(booking, context=None):
             else:
                 url = context.absolute_url()
         else:
-            object_ = uuidToObject(references.pop(0)[1])
-            url = object_.absolute_url()
+            try:
+                object_ = uuidToObject(references.pop(0)[1])
+                url = object_.absolute_url()
+            except IndexError:
+                url = ''
         return TEMPLATE.format(url=url, tag=tag)
     return REGEXP.sub(format_tag, booking.text)
 
