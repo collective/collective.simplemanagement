@@ -7,9 +7,6 @@
     <index name="classifiers" meta_type="KeywordIndex">
       <indexed_attr value="classifiers"/>
     </index>
-    <index name="booking_date" meta_type="DateIndex">
-      <indexed_attr value="date"/>
-    </index>
     <index name="order_number" meta_type="FieldIndex">
         <indexed_attr value="order_number" />
     </index>
@@ -24,7 +21,6 @@
     <column value="assigned_to"/>
     <column value="time"/>
     <column value="estimate"/>
-    <column value="date"/>
     <column value="order_number" />
     <column value="priority"/>
     <column value="customer"/>

@@ -123,7 +123,7 @@ class IBookingStorage(Interface):
         """Flushes catalog values and reindexes all bookings.
         """
 
-    def query(query, start=0, limit=None):
+    def query(query=None, start=0, limit=None):
         """Searches for bookings.
 
         Returns an ordered set of ``IBooking`` objects, which match ``query``.

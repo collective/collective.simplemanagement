@@ -5,22 +5,12 @@
     i18n_domain="collective.simplemanagement">
 
   <browser:page
-    for="...interfaces.IBooking"
-    name="view"
+    for="*"
+    name="booking"
     layer="...interfaces.IBrowserLayer"
     class=".view.View"
     permission="zope2.View"
     template="templates/view.pt"
-  />
-
-  <browser:page
-    for="*"
-    name="booking-demo"
-    layer="...interfaces.IBrowserLayer"
-    class=".demo.DemoView"
-    permission="zope2.View"
-    template="templates/booking_demo.pt"
-  />
-
+    />
 
 </configure>

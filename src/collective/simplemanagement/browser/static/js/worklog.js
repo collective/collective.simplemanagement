@@ -132,17 +132,6 @@
                                     row = row_template.clone();
                                     row.find('td:eq(0)').empty();
                                     switch(data[i].type) {
-                                    case "hole": {
-                                        row.find('td:eq(0)').text(
-                                            data[i].reason);
-                                        row.find('td:eq(0)').attr(
-                                            'colspan', '3');
-                                        row.find('td:eq(3)').text(
-                                            data[i].hours);
-                                        row.find('td:eq(1)').remove();
-                                        row.find('td:eq(1)').remove();
-                                        break;
-                                    }
                                     case "booking": {
                                         row.find('td:eq(0)').text(
                                             data[i].project);

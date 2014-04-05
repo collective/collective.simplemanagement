@@ -767,19 +767,6 @@ td.data.warning {
     margin: 0 auto;
     margin-bottom: 30px;
 }
-.template-dashboard #missed-bookings .booking-hole{
-    font-size:120%;
-}
-.template-dashboard #missed-bookings .booking-hole .booking-date{
-    font-weight: bold;
-}
-.template-dashboard #missed-bookings .booking-hole *{
-    vertical-align: middle;
-}
-/*.template-dashboard #missed-bookings{
-    overflow: hidden;
-    width: 50%;
-}*/
 .alert-top{
     border: 2px solid #00008D;
     border-radius: 10px;

@@ -8,10 +8,10 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 
 from ..configure import Settings
+from ..interfaces import IProject
 from ..interfaces import IStory
 from ..interfaces import IBookingStorage
-from ..utils import AttrDict, quantize
-from .date import datetimerange
+from ..utils import quantize
 
 
 def to_utf8(x):
@@ -65,21 +65,26 @@ def get_difference_class(a, b, settings=None):
 
 
 def get_bookings(owner=None, references=None,
-                 date=None, booking_date=None,
-                 project=None,
+                 date=None, project=None,
                  sort=True, **kwargs):
     """ returns bookings.
     ``owner`` limits results to objs belonging to that user.
+    ``project`` project object or uid.
     ``references`` uid or list of uids to referenced objects.
     ``date`` datetime object or tuple of datetime objects to query a range.
     ``sort`` disable sorting.
     """
     query = {}
-    if owner:
-        query['owner'] = owner
+    if owner or kwargs.get('userid'):
+        query['owner'] = owner or kwargs.get('userid')
 
     # get references
     references = references or []
+    if project:
+        if IProject.providedBy(project):
+            project = project.UID()
+        references.append(project)
+
     if references:
         if not isinstance(references, (list, tuple)):
             references = (references, )
@@ -103,52 +108,6 @@ def get_bookings(owner=None, references=None,
 
     storage = get_booking_storage()
     return storage.query(query)
-
-
-def get_booking_holes(owner, bookings, expected_working_time=None,
-                      man_day_hours=None, from_date=None, to_date=None):
-    """ given a user and a list of bookings returns booking holes
-    ``expected_working_time`` minimal expected working hours per day
-    ``man_day_hours`` amount of working hours per day
-    ``from_date`` and ``to_date`` limit the range of dates to check upon
-    """
-    # TODO: get settings from global settings if not passed
-    _missing = {}
-    for booking in bookings:
-        if booking.time >= expected_working_time:
-            # let's skip this if already have sufficient hours
-            continue
-        # let's check for a hole matching this booking
-        if _missing.get(booking.date):
-            _missing[booking.date] += booking.time
-        else:
-            _missing[booking.date] = booking.time
-
-    # look up for entire-day hole
-    for adate, __ in datetimerange(from_date, to_date, exclude_weekend=1):
-        if not adate in _missing:
-            _missing[adate] = Decimal('0.0')
-
-    # then we check that total time matches our constraints
-    holes_utility = getUtility(IBookingHoles)
-    holes = tuple(holes_utility.iter_user(owner, from_date, to_date))
-    missing = []
-    for dt, tm in sorted(_missing.items()):
-        if tm >= expected_working_time:
-            # drop it if time is enough
-            continue
-        the_hole = [x for x in holes if dt == x.day]
-        if the_hole and \
-                (the_hole[0].hours + tm) >= expected_working_time:
-            # if we have a hole matching our booking date
-            # and hole hours + booked time matches our constraint
-            # we are ok with this booking
-            continue
-        missing.append(AttrDict({
-            'date': dt,
-            'time': tm,
-        }))
-    return missing
 
 
 def get_timings(context, portal_catalog=None):

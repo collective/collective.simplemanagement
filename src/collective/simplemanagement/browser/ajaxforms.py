@@ -1,16 +1,12 @@
 #-*- coding: utf-8 -*-
-import datetime
 import json
-from decimal import Decimal
 
 from zope.pagetemplate.pagetemplatefile import PageTemplateFile
 
 from Products.Five.browser import BrowserView
 
 from .. import logger
-from .. import api
 from .story.view import View as StoryView
-from ..configure import Settings
 from ..booking import BookingForm
 from .. import _
 from .engine import MacroRenderer
@@ -91,27 +87,6 @@ class Mixin(BrowserView):
         return self.context.restrictedTraverse('plone_portal_state')
 
 
-class CreateHole(Mixin):
-
-    def process(self):
-        # TODO: use a form in here
-        date = [int(x) for x in self.request['date'].split('-')]
-        date = datetime.date(*date)
-        time = Decimal(self.request['time'])
-        reason = self.request['reason']
-
-        settings = Settings()
-        missing_time = settings.man_day_hours - time
-        missing_time = Decimal(missing_time)
-        member = self.portal_state.member()
-        # create hole
-        api.booking.create_hole(date,
-                    missing_time,
-                    member.getId(),
-                    reason=reason)
-        return self.success
-
-
 class AddBooking(Mixin):
 
     FormKlass = BookingForm
@@ -124,11 +99,15 @@ class ReloadBooking(Mixin):
         template = PageTemplateFile("templates/macros.pt")
 
         bookings = view.get_booking()
-        renderer = MacroRenderer(template, 'booking-list', context=self.context)
+        renderer = MacroRenderer(template,
+                                 'booking-list',
+                                 context=self.context)
         bookings_html = renderer(**dict(booking_list=bookings))
 
         timing = view.timing()
-        renderer = MacroRenderer(template, 'story-timing', context=self.context)
+        renderer = MacroRenderer(template,
+                                 'story-timing',
+                                 context=self.context)
         timing_html = renderer(**dict(timing=timing))
 
         self.success.update({

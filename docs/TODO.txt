@@ -14,13 +14,40 @@ e altre cose persistenti del vecchio booking
 
 * Fix loadcontent profile that still creates dexterity object for booking
 
-* pulizia totale booking holes dalle viste
+[WIP]* pulizia totale booking holes dalle viste
+[WIP]* Sistemare conteggi (grep get_bookings)
+[WIP]* Sistemare i listing
+* Sistemare form a caso in giro per l'universo (tipo dashboard)
 * Sistemare converter
 * Cancellazione totale non elimina da stream
 * Ctrl+C e Ctrl+V
 * Sistemare conteggi (grep get_bookings)
-* Sistemare form a caso in giro per l'universo (tipo dashboard)
-* Sistemare i listing
 * Tab da levare
 * Default quando stai su storie
 * Data di default su oggi
+* settings.off_duty_reasons e altri settings in registry ci sono ancora?
+* update translations
+* upgrade steps pulizia metadata `date` e index `booking_date`
+
+* test pack d.fs:
+
+CorruptedError: /home/simahawk/dev/plone/p4py27/simplemgmt/var/filestorage/Data.fs:328569969:invalid previous pointer: 863407617
+2014-04-06 00:06:55 ERROR Zope.SiteErrorLog 1396735615.150.936418614102 http://localhost:8080/Control_Panel/Database/main/manage_pack
+Traceback (innermost last):
+  Module ZPublisher.Publish, line 126, in publish
+  Module ZPublisher.mapply, line 77, in mapply
+  Module ZPublisher.Publish, line 46, in call_object
+  Module <string>, line 3, in manage_pack
+  Module AccessControl.requestmethod, line 70, in _curried
+  Module App.ApplicationManager, line 399, in manage_pack
+  Module ZODB.DB, line 812, in pack
+  Module ZODB.blob, line 796, in pack
+  Module ZODB.FileStorage.FileStorage, line 1078, in pack
+  Module ZODB.FileStorage.FileStorage, line 1034, in packer
+  Module ZODB.FileStorage.fspack, line 397, in pack
+  Module ZODB.FileStorage.fspack, line 188, in findReachable
+  Module ZODB.FileStorage.fspack, line 220, in buildPackIndex
+  Module ZODB.FileStorage.format, line 228, in checkData
+  Module ZODB.FileStorage.format, line 205, in fail
+CorruptedError: /home/simahawk/dev/plone/p4py27/simplemgmt/var/filestorage/Data.fs:328569969:invalid previous pointer: 863407617
+

@@ -171,44 +171,6 @@
             });
         });
 
-        // manage booking holes init
-        $('select.hole-reasons').change(function() {
-            $(this).siblings('button').removeAttr('disabled');
-        });
-        $('.create-hole').click(function() {
-            var $self = $(this),
-                date = $(this).attr('data-date'),
-                time = $(this).attr('data-time'),
-                reason = $(this).siblings('select').val();
-            $.getJSON(
-                './create-hole?date=' + date + '&time=' + time + '&reason=' + reason,
-                function(data) {
-                    if (data.success === true) {
-                        var $container = $('#missed-bookings');
-                        if ($container.find('.booking-hole').length === 1) {
-                            $container.animate(
-                                {height: 0, opacity: 0},
-                                'slow',
-                                function() {
-                                    $(this).remove();
-                                }
-                            );
-                        } else {
-                            $self.closest('.booking-hole').animate(
-                                {height: 0, opacity: 0},
-                                'slow',
-                                function() {
-                                    $(this).remove();
-                                }
-                            );
-                        }
-                    } else {
-                        alert(data.error);
-                    }
-                }
-            );
-        });
-
         // ajax submit
         // TODO: prevent unload protection!
         $('#booking_form').ajaxForm({

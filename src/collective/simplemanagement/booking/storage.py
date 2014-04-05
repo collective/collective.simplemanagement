@@ -128,7 +128,7 @@ class BookingStorage(Persistent):
             results = self.catalog.apply(query)
         return results
 
-    def query(self, query, start=0, limit=None):
+    def query(self, query=None, start=0, limit=None):
         """Searches for bookings.
 
         Returns an ordered set of ``IBooking`` objects, which match ``query``.
@@ -143,7 +143,7 @@ class BookingStorage(Persistent):
         if not query:
             # the catalog does not like empty query
             # and returns None :S
-            return self.bookings
+            return self.bookings.values()
 
         _results = self._query(query, start=start, limit=limit)
 

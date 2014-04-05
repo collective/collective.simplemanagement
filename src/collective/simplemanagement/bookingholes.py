@@ -17,14 +17,3 @@ class BookingHoles(Persistent):
     """
 
     implements(IBookingHoles)
-
-
-# def remove_utility(context):
-#     """Removes the registered booking holes utility
-#     """
-#     data_file = 'collective-simplemanagement-bookingholes-uninstall.txt'
-#     if context.readDataFile(data_file) is None:
-#         return
-#     site = context.getSite()
-#     sm = site.getSiteManager()
-#     sm.unregisterUtility(provided=IBookingHoles)

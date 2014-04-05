@@ -45,6 +45,9 @@ TEMPLATE = '<a href="{url}" target="_blank">{tag}<a>'
 
 
 def format_text(booking, context=None):
+    """ return formatted text for booking.
+    It renders booking text as rich text with links to resources
+    """
     references = [
         r for r in (
             booking.references if booking.references is not None else []

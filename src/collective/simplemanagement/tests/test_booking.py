@@ -40,7 +40,6 @@ class TestBooking(unittest.TestCase):
         del self.portal[self.project2.id]
 
     def reset_storage(self):
-
         util = api.booking.get_booking_storage()
         util.bookings.clear()
         util.mapping.clear()
@@ -134,17 +133,18 @@ class TestBooking(unittest.TestCase):
         self.assertEqual(len(u3_bookings), 3)
 
         # get booking by project
-        # project 1
-        p1_bookings = api.booking.get_bookings(references=self.project1.UID())
+        # project 1 (we can query via project object)
+        p1_bookings = api.booking.get_bookings(project=self.project1)
         self.assertEqual(len(p1_bookings), len(u1_bookings + u2_bookings))
-        # project 2
-        p2_bookings = api.booking.get_bookings(references=self.project2.UID())
+        # project 2 (we can query via project UID)
+        p2_bookings = api.booking.get_bookings(project=self.project2.UID())
         self.assertEqual(len(p2_bookings), len(u3_bookings))
         # all
         refs = [
             self.project1.UID(),
             self.project2.UID(),
         ]
+        # project 1 + 2 (we can query via references)
         allp_bookings = api.booking.get_bookings(references=refs)
         self.assertEqual(len(allp_bookings), len(bookings))
 
@@ -174,56 +174,6 @@ class TestBooking(unittest.TestCase):
         bookings = api.booking.get_bookings(to_date=dates[0])
         expected = [x for x in self.bookings if x.date <= dates[0]]
         self.assertEqual(len(bookings), len(expected))
-
-
-    # def test_missing_bookings(self):
-    #     owner = TEST_USER_ID
-    #     pc = self.portal.portal_catalog
-    #     expected_working_time = 6
-    #     man_day_hours = 8
-    #     today = date(2014, 1, 5)
-    #     from_date = today - timedelta(3)
-    #     to_date = today - timedelta(1)
-
-    #     bookings = api.booking.get_bookings(
-    #         owner=owner,
-    #         portal_catalog=pc,
-    #         sort=False
-    #     )
-    #     # filtering catalog search using from/to date does not work in tests
-    #     bookings = [x.getObject() for x in bookings
-    #                 if from_date <= x.getObject().date <= to_date]
-    #     holes = api.booking.get_booking_holes(
-    #         owner, bookings,
-    #         expected_working_time=expected_working_time,
-    #         man_day_hours=man_day_hours,
-    #         from_date=from_date,
-    #         to_date=to_date
-    #     )
-    #     expected = 3  # we expect also entire missing day
-    #     assert len(holes) == expected, \
-    #         'found %s holes instead of %s' % (len(holes), expected)
-    #     # now we can create a hole for one of the missing booking
-    #     # on 2014/1/4 we worked 4 hours so we create a hole
-    #     # for the remaing 4 hours
-    #     utility = getUtility(IBookingHoles)
-    #     hole = BookingHole(
-    #         date(2014, 1, 4),
-    #         Decimal("4"),
-    #         owner,
-    #         reason=u"sick"
-    #     )
-    #     utility.add(hole)
-    #     # now we expect to have 1 missing booking less
-    #     holes = api.booking.get_booking_holes(
-    #         owner, bookings,
-    #         expected_working_time=expected_working_time,
-    #         man_day_hours=man_day_hours,
-    #         from_date=from_date,
-    #         to_date=to_date)
-    #     expected = 2
-    #     assert len(holes) == expected, \
-    #             'found %s holes instead of %s' % (len(holes), expected)
 
 
 def test_suite():

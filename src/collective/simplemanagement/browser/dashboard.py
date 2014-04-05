@@ -6,15 +6,11 @@ from zope.security import checkPermission
 
 from z3c.form import form, field, button
 from z3c.form.interfaces import IFormLayer
-from z3c.form.browser import text
-from z3c.relationfield.relation import create_relation
 
 from plone.memoize.instance import memoize as instance_memoize
-from plone.memoize.view import memoize as view_memoize
 from plone.z3cform import z2
 from plone.z3cform.layout import wrap_form
 from plone.uuid.interfaces import IUUID
-from plone.dexterity.utils import createContentInContainer
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
@@ -250,31 +246,10 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         projects.sort(key=lambda x: x['priority'])
         return projects
 
-    @property
-    def hole_reasons(self):
-        return self.settings.off_duty_reasons
-
-    @property
-    @view_memoize
-    def hole_settings(self):
-        start_delta = self.settings.booking_check_delta_days_start
-        end_delta = self.settings.booking_check_delta_days_end
-        today = datetime.date.today()
-        from_date = today - datetime.timedelta(start_delta)
-        to_date = today - datetime.timedelta(end_delta)
-        return AttrDict({
-            'from_date': from_date,
-            'to_date': to_date,
-            'warning_delta_percent': self.settings.warning_delta_percent,
-            'man_day_hours': self.settings.man_day_hours,
-        })
-
     # @view_memoize
     def _bookings(self, userid, from_date, to_date):
-        cat = self.tools.portal_catalog
         bookings = api.booking.get_bookings(
-            userid=userid,
-            portal_catalog=cat,
+            owner=userid,
             from_date=from_date,
             to_date=to_date
         )
@@ -316,20 +291,3 @@ class DashboardView(DashboardMixin, TicketsMixIn):
 
             })
         return results
-
-    def booking_holes(self):
-        userid = self.user.getId()
-        hole_settings = self.hole_settings
-        man_day_hours = hole_settings.man_day_hours
-        expected_working_time = man_day_hours - \
-            (man_day_hours * hole_settings.warning_delta_percent)
-        from_date = hole_settings.from_date
-        to_date = hole_settings.to_date
-        bookings = self._bookings(userid, from_date, to_date)
-        holes = api.booking.get_booking_holes(
-            userid, bookings,
-            expected_working_time=expected_working_time,
-            man_day_hours=man_day_hours,
-            from_date=from_date, to_date=to_date
-        )
-        return holes

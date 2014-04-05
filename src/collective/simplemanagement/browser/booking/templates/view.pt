@@ -7,28 +7,33 @@
       i18n:domain="collective.simplemanagement">
 <body>
 
-<metal:content-core fill-slot="content-core">
-    <metal:block define-macro="content-core">
-    <dl>
+<metal:content-core fill-slot="main">
+  <div id="booking-view" tal:define="booking view/booking_item">
+
+    <h1>XXX: Test view for bookings</h1>
+    <p class="no-booking" tal:condition="not: booking">booking not found</p>
+    <dl tal:condition="booking">
       <dt i18n:translate="">Date</dt>
-      <dd tal:content="python:context.toLocalizedTime(context.date.isoformat())"></dd>
+      <dd tal:content="python:context.toLocalizedTime(booking.date.isoformat())"></dd>
       <dt i18n:translate="">Time</dt>
-      <dd tal:content="context/time"></dd>
-      <tal:block
-        define="related view/context/get_related"
-        condition="related">
-        <dt i18n:translate="">Related</dt>
-        <dd>
-          <a href=""
-             title=""
-             tal:content="related/title"
-             tal:attributes="href related/href;
-                             title related/description"></a>
-        </dd>
-      </tal:block>
+      <dd tal:content="booking/time"></dd>
+      <dt i18n:translate="">Time</dt>
+      <dd tal:content="structure python: view.render_text(booking)"></dd>
     </dl>
 
-    </metal:block>
+    <ul tal:condition="not: booking">
+      <li tal:repeat="booking view/bookings">
+        <!-- <tal:text replace="structure python: view.render_text(booking)" /> -->
+        <a tal:attributes="href python: view.view_url(booking)">
+          <!-- <tal:text replace="booking/references" /> -->
+          <tal:text replace="structure python: view.render_text(booking)" />
+        </a>
+      </li>
+    </ul>
+
+  </div>
+
+
 </metal:content-core>
 
 </body>
