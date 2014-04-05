@@ -14,8 +14,21 @@ from ..utils import AttrDict, quantize
 from .date import datetimerange
 
 
+def to_utf8(x):
+    if isinstance(x, unicode):
+        return x.encode('utf-8')
+    return x
+
+
+def to_references(x):
+    return [(to_utf8(y[0]), to_utf8(y[1]))
+            for y in x]
+
+
 convert_funcs = {
+    'owner': to_utf8,
     'text': safe_unicode,
+    'references': to_references,
     'tags': lambda x: set([safe_unicode(y) for y in x]),
     'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
 }

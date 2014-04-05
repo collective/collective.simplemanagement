@@ -69,7 +69,8 @@ class TestBooking(unittest.TestCase):
             'date': date(2014, 1, 1),
             'time': 2,
             'references': [
-                ('project', self.project1.UID()),
+                # unicode string gets converted!
+                (u'project', self.project1.UID()),
             ],
             'tags': set(sorted(['foo', 'bar', 'baz'])),
         }
@@ -94,13 +95,13 @@ class TestBooking(unittest.TestCase):
             (date(2014, 1, 5), 2),
             (date(2014, 1, 5), 2),
         ]
-        user1 = 'johndoe'
+        user1 = u'johndoe'
         user1_refs = [
             ('project', self.project1.UID()),
             ('story', self.project1['test-story-1'].UID()),
         ]
         user1_tags = ['boo', 'baz']
-        user2 = 'popeye'
+        user2 = u'popeye'
         user2_refs = [
             ('project', self.project1.UID()),
             ('story', self.project1['test-story-2'].UID()),
