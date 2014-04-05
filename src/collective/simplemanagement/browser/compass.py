@@ -123,7 +123,7 @@ class History(api.views.Traversable, CompassMixIn):
             else:
                 try:
                     project = portal.restrictedTraverse(prj['id'].encode())
-                except AttributeError, KeyError:
+                except:
                     continue
                 prj_uid = IUUID(project)
 

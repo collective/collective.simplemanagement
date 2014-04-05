@@ -144,10 +144,10 @@
                            tal:define="person_data python:view.augment_user_data(person)"
                            tal:attributes="title person_data/name;
                                            style string:background-image:url('${person_data/avatar}');
-                                           href person_data/url">
+                                           href person_data/url|nothing">
                           <span tal:attributes="class python:view.get_effort_classes(person_data)">
                             <span tal:replace="person_data/effort"></span>/
-                            <span tal:replace="person_data/booking"></span>
+                            <span tal:replace="person_data/booking|nothing"></span>
                           </span>
                           <span class="title"
                                 tal:condition="person_data/role"
@@ -177,7 +177,7 @@
                     <div class="thumbnail thumbnail-small person"
                          tal:define="person_data python:view.augment_user_data(person)"
                          tal:attributes="title person_data/name;
-                                         style string:background-image:url('${person_data/avatar}');;">
+                                         style string:background-image:url('${person_data/avatar}');">
                       <span class="effort" tal:content="person_data/effort"></span>
                     </div>
                     </tal:person>
