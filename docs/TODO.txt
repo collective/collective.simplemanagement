@@ -7,5 +7,9 @@
 
 
 * Upgrade step migrazione booking esistenti
+* Traverse per booking object
+
 * Upgrade step per rimuovere BookingHole utility
 e altre cose persistenti del vecchio booking
+
+* Fix loadcontent profile that still creates dexterity object for booking

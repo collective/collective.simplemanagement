@@ -45,16 +45,16 @@ def setup_catalog():
         IBooking,
         False
     )
-    # catalog['references'] = FieldIndex(
-    #     'references',
-    #     IBooking,
-    #     False
-    # )
-    # catalog['tags'] = KeywordIndex(
-    #     'tags',
-    #     IBooking,
-    #     True
-    # )
+    catalog['references'] = KeywordIndex(
+        'index_references',
+        IBooking,
+        True
+    )
+    catalog['tags'] = KeywordIndex(
+        'tags',
+        IBooking,
+        False
+    )
     return catalog
 
 
@@ -63,8 +63,14 @@ def prepare_query(catalog, query):
     """
     catalog_query = {}
     for key, value in query.iteritems():
-        if isinstance(catalog[key], FieldIndex) and \
-                not isinstance(value, (tuple, list)):
-            value = (value, value)
+        if isinstance(catalog[key], FieldIndex):
+            if isinstance(value, list):
+                value = tuple(value)
+            if not isinstance(value, (tuple, list)):
+                value = (value, value)
         catalog_query[key] = value
     return catalog_query
+
+
+def is_keyword_index(catalog, key):
+    return isinstance(catalog[key], KeywordIndex)

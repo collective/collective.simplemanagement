@@ -53,6 +53,10 @@ class IBooking(Interface):
         value_type=schema.TextLine(title=u"Tag")
     )
 
+    def index_references():
+        """ returns the value to be indexed for ``references`` field
+        """
+
 
 class IBookingStorage(Interface):
     """Contains all the bookings.

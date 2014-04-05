@@ -3,14 +3,12 @@ from decimal import Decimal
 from zope.component import getUtility
 
 from z3c.relationfield.relation import create_relation
-from plone.dexterity.utils import createContentInContainer
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 
 from ..configure import Settings
 from ..interfaces import IStory
-from ..interfaces import IProject
 from ..interfaces import IBookingStorage
 from ..utils import AttrDict, quantize
 from .date import datetimerange
@@ -53,28 +51,30 @@ def get_difference_class(a, b, settings=None):
     return 'success'
 
 
-def get_bookings(owner=None, project=None,
-                 from_date=None, to_date=None, booking_date=None,
+def get_bookings(owner=None, references=None,
+                 date=None, booking_date=None,
+                 project=None,
                  sort=True):
     """ returns bookings.
     ``owner`` limits results to objs belonging to that user.
-    ``project`` a project obj. If given, results will be limited to that proj.
-    ``from_date`` lower date limit
-    ``to_date`` upper date limit
-    ``sort`` disable sorting
+    ``references`` uid or list of uids to referenced objects.
+    ``date`` datetime object or tuple of datetime objects to query a range.
+    ``sort`` disable sorting.
     """
     query = {}
     if owner:
         query['owner'] = owner
 
-    references = {}
-    if project:
-        if IProject.providedBy(project):
-            project = project.UID()
-        references['project'] = project
+    # get references
+    references = references or []
+    if references:
+        if not isinstance(references, (list, tuple)):
+            references = (references, )
+        query['references'] = references
 
-    if from_date or to_date:
-        query['date'] = (from_date, to_date)
+    if date:
+        query['date'] = date
+
     # sorting = None
     # if sort:
     #     sorting = {
@@ -82,8 +82,8 @@ def get_bookings(owner=None, project=None,
     #         'sort_order': 'descending',
     #     }
 
-    util = get_booking_storage()
-    return util.query(query)
+    storage = get_booking_storage()
+    return storage.query(query)
 
 
 def get_booking_holes(owner, bookings, expected_working_time=None,
