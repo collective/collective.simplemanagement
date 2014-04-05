@@ -32,19 +32,19 @@ class TestBooking(unittest.TestCase):
         login(self.portal, TEST_USER_NAME)
         # self.setup_bookings()
         self.bookings = []
+        self.reset_storage()
 
     def tearDown(self):
         self.bookings = []
-        util = getUtility(IBookingStorage)
-        util.bookings.clear()
         setRoles(self.portal, TEST_USER_ID, ['Member'])
         del self.portal[self.project1.id]
         del self.portal[self.project2.id]
 
-    def get_story(self):
-        # stories have been already setup by layer conf
-        brains = self.portal.portal_catalog(portal_type='Story')
-        return brains[0].getObject()
+    def reset_storage(self):
+        util = getUtility(IBookingStorage)
+        util.bookings.clear()
+        util.mapping.clear()
+        util.catalog.clear()
 
     def setup_bookings(self, dates, owner='', references=None, tags=None):
         for i, (dt, tm) in enumerate(dates):
@@ -59,7 +59,6 @@ class TestBooking(unittest.TestCase):
             bkng = api.booking.create_booking(**bdata)
             self.bookings.append(bkng)
 
-
     def test_get_storage(self):
         util = getUtility(IBookingStorage)
         self.assertTrue(verifyObject(IBookingStorage, util))
@@ -69,9 +68,9 @@ class TestBooking(unittest.TestCase):
             'text': 'Booking now!',
             'date': date(2014, 1, 1),
             'time': 2,
-            'references': {
-                'project': self.project1.UID(),
-            },
+            'references': [
+                ('project', self.project1.UID()),
+            ],
             'tags': set(sorted(['foo', 'bar', 'baz'])),
         }
         booking = api.booking.create_booking(**values)
@@ -96,21 +95,21 @@ class TestBooking(unittest.TestCase):
             (date(2014, 1, 5), 2),
         ]
         user1 = 'johndoe'
-        user1_refs = {
-            'project': self.project1.UID(),
-            'story': self.project1['test-story-1'].UID(),
-        }
+        user1_refs = [
+            ('project', self.project1.UID()),
+            ('story', self.project1['test-story-1'].UID()),
+        ]
         user1_tags = ['boo', 'baz']
         user2 = 'popeye'
-        user2_refs = {
-            'project': self.project1.UID(),
-            'story': self.project1['test-story-2'].UID(),
-        }
+        user2_refs = [
+            ('project', self.project1.UID()),
+            ('story', self.project1['test-story-2'].UID()),
+        ]
         user2_tags = ['foo', 'baz']
         user3 = 'goofy'
-        user3_refs = {
-            'project': self.project2.UID(),
-        }
+        user3_refs = [
+            ('project', self.project2.UID()),
+        ]
         user3_tags = ['boo', 'foo']
         self.setup_bookings(dates[:4], owner=user1,
                             references=user1_refs, tags=user1_tags)

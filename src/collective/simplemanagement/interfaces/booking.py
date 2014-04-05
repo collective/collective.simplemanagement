@@ -40,11 +40,13 @@ class IBooking(Interface):
         required=True
     )
 
-    references = schema.Dict(
+    references = schema.List(
         title=_(u"Related objects"),
         required=False,
-        key_type=schema.ASCIILine(title=u"Object type"),
-        value_type=schema.ASCIILine(title=u"Object UID")
+        value_type=schema.Tuple(
+            title=u"Reference",
+            value_type=schema.ASCIILine(title=u'Stuff')
+        )
     )
 
     tags = schema.Set(

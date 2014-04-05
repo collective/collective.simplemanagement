@@ -29,21 +29,25 @@ class Booking(Persistent):
         self.time = time
         self.text = text
         self.owner = owner
-        self.references = dict(references or {})
+        self.references = list(references or [])
         self.tags = set(sorted(tags or []))
 
     def index_references(self):
         # we indexes only the uid of the references
-        return self.references.values()
+        return [x[1] for x in self.references]
+
+    @property
+    def references_dict(self):
+        return dict(self.references)
 
     @property
     def project(self):
-        return self.references.get('project')
+        return self.references_dict.get('project')
 
     @property
     def story(self):
-        return self.references.get('story')
+        return self.references_dict.get('story')
 
     @property
     def ticket(self):
-        return self.references.get('ticket')
+        return self.references_dict.get('ticket')
