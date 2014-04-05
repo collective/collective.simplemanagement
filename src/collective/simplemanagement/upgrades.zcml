@@ -95,4 +95,14 @@
       profile="collective.simplemanagement:default"
       />
 
+  <genericsetup:upgradeStep
+      title="New booking"
+      description=""
+      source="1009"
+      destination="1010"
+      handler=".upgrades.upgrade_to_1010"
+      sortkey="1"
+      profile="collective.simplemanagement:default"
+      />
+
 </configure>

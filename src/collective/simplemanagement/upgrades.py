@@ -160,3 +160,9 @@ def upgrade_to_1009(context, logger=None):
 
     logger.info("Importing viewlets")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'viewlets')
+
+
+def upgrade_to_1010(context, logger=None):
+    logger = getLogger(logger)
+    logger.info("Reloading javascript registry")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'jsregistry')

@@ -133,3 +133,8 @@ class IBookingStorage(Interface):
     def vocabulary(name):
         """Returns the list of values for the given index.
         """
+
+
+class IBookingHoles(Interface):
+    """BBB: backward compatibility.
+    """

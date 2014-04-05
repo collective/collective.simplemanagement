@@ -150,4 +150,25 @@
       inline="False"
       insert-after="++resource++simplemanagement/js/iteration.js" />
 
+  <javascript
+      cacheable="True"
+      compression="safe"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/js/jquery.caret.js"
+      inline="False"
+      insert-after="++resource++simplemanagement/js/project.js" />
+
+  <javascript
+      cacheable="True"
+      compression="safe"
+      cookable="True"
+      enabled="True"
+      expression=""
+      id="++resource++simplemanagement/js/booker.js"
+      inline="False"
+      insert-after="++resource++simplemanagement/js/jquery.caret.js" />
+
+
 </object>

@@ -13,4 +13,14 @@
     template="templates/view.pt"
   />
 
+  <browser:page
+    for="*"
+    name="booking-demo"
+    layer="...interfaces.IBrowserLayer"
+    class=".demo.DemoView"
+    permission="zope2.View"
+    template="templates/booking_demo.pt"
+  />
+
+
 </configure>

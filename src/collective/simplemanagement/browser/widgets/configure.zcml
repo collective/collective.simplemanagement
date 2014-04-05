@@ -61,4 +61,40 @@
     widget=".interfaces.ITimeWidget"
     />
 
+  <!-- book widget -->
+  <class class=".book_widget.BookWidget">
+    <require permission="zope.Public"
+             interface=".interfaces.IBookWidget"
+             />
+  </class>
+
+  <z3c:widgetTemplate
+    mode="display"
+    template="book_display.pt"
+    layer="z3c.form.interfaces.IFormLayer"
+    widget=".interfaces.IBookWidget"
+    />
+
+  <z3c:widgetTemplate
+    mode="input"
+    template="book_input.pt"
+    layer="z3c.form.interfaces.IFormLayer"
+    widget=".interfaces.IBookWidget"
+    />
+
+  <z3c:widgetTemplate
+    mode="hidden"
+    template="book_hidden.pt"
+    layer="z3c.form.interfaces.IFormLayer"
+    widget=".interfaces.IBookWidget"
+    />
+
+  <browser:page
+    for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
+    name="booking-autocomplete"
+    layer="...interfaces.IBrowserLayer"
+    class=".book_widget.Autocomplete"
+    permission="zope2.View"
+    />
+
 </configure>

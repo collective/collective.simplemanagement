@@ -1,11 +1,11 @@
 # from datetime import date
-# from zope.interface import implements
+from zope.interface import implements
 # from zope import component
-# from persistent import Persistent
+from persistent import Persistent
 # from BTrees.OOBTree import OOBTree
 
 # from .interfaces import IBookingHole
-# from .interfaces import IBookingHoles
+from .interfaces import IBookingHoles
 
 
 # class BookingHole(Persistent):
@@ -19,9 +19,9 @@
 #         self.reason = reason
 
 
-# class BookingHoles(Persistent):
+class BookingHoles(Persistent):
 
-#     implements(IBookingHoles)
+    implements(IBookingHoles)
 
 #     def __init__(self):
 #         self.users = OOBTree()

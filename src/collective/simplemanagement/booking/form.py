@@ -3,8 +3,8 @@ from z3c.form import form, field
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from .. import api
 from ..interfaces import IBooking
-from ..interfaces import IQuickForm
 from ..browser.widgets.time_widget import TimeFieldWidget
+from ..browser.widgets.book_widget import BookFieldWidget
 
 
 class BookingForm(form.AddForm):
@@ -12,10 +12,11 @@ class BookingForm(form.AddForm):
 
     @property
     def fields(self):
-        fields = field.Fields(IQuickForm).select('text') + \
+        fields = field.Fields(IBooking).select('text') + \
             field.Fields(IBooking).select('time') + \
             field.Fields(IBooking).select('date')
         fields['time'].widgetFactory = TimeFieldWidget
+        fields['text'].widgetFactory = BookFieldWidget
         return fields
 
     name = 'booking_form'

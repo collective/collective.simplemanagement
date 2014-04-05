@@ -105,3 +105,32 @@ def get_wf_state_info(brain, context=None):
         )
 
     return _info
+
+
+class BreadcrumbGetter(object):
+    """Gets a breadcrumb from a brain
+    """
+
+    def __init__(self, catalog):
+        self.catalog = catalog
+
+    def get_title(self, path):
+        results = self.catalog.searchResults(path={
+            'query': path,
+            'depth': 0
+        })
+        if len(results) > 0:
+            return results[0]['Title']
+        return None
+
+    def __call__(self, brain):
+        breadcrumb = []
+        path = brain.getPath()
+        breadcrumb.append(self.get_title(path))
+        path_components = path.split("/")
+        for i in xrange(1, len(path_components)):
+            title = self.get_title("/".join(path_components[:-1*i]))
+            if title is not None:
+                breadcrumb.append(title)
+        breadcrumb.reverse()
+        return breadcrumb

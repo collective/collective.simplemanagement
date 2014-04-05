@@ -1730,3 +1730,15 @@ input.effort {
 #ajax-spinner {
     z-index: 100000;
 }
+
+.booker-dropdown {
+    background: #fff;
+    border: 1px solid #333;
+    padding: 0px;
+    z-index: 200;
+}
+
+.booker-dropdown .item.selected {
+    background-color: #336bca;
+    color: #fff;
+}
