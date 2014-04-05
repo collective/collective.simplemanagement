@@ -95,7 +95,7 @@
                     if(item.breadcrumb)
                         $('<p class="breadcrumb"></p>').html(
                             item.breadcrumb.join(
-                                ' <span class="sep">/</span>')).
+                                ' <span class="sep">/</span> ')).
                             appendTo($item);
                     $wrapper.append($item);
                 }
@@ -103,7 +103,7 @@
         },
         autocomplete: function(method) {
             var value, selected, values, values_length, selection,
-                self = this;
+                offset = this.$root.offsetParent(), self = this;
             value = this.$root.val();
             selected = this.autocomplete_selected;
             values = this.autocomplete_values;
@@ -138,11 +138,12 @@
                 case 'reload': {
                     this.autocomplete_selected = 0;
                     if(!this.$dropdown.is(':visible')) {
-                        this.$dropdown.show();
                         this.$dropdown.css({
-                            top: this.$root.height(),
-                            left: this.token[2] * this.font_size
+                            top: (offset.top + this.$root.height()) + 'px',
+                            left: (offset.left +
+                                   (this.token[2] * this.font_size)) + 'px'
                         });
+                        this.$dropdown.show();
                     }
                     this.render_autocomplete();
                     this.autocomplete_get({
@@ -194,7 +195,6 @@
                 token = token + value[i];
             }
             e = i;
-            console.log([electric_char, token, s, e]);
             return [electric_char, token, s, e];
         },
         init: function() {
@@ -239,16 +239,23 @@
             });
             this.$root.keypress(function(e) {
                 if(e.which) {
+                    var ch;
                     var position = self.$root.caret();
                     var value = self.$root.val();
-                    var ch = String.fromCharCode(e.which);
-                    console.log('|'+ch+'|');
-                    self.token = self.tokenize(
-                        value+ch,
-                        position);
-                    if(self.token[0] !== null)
+                    if(e.which === 8) {
+                        value = value.substr(0, value.length-1);
+                        position = position - 2;
+                    }
+                    else {
+                        ch = String.fromCharCode(e.which);
+                        value = value + ch;
+                    }
+                    self.token = self.tokenize(value, position);
+                    if((self.valid_chars.exec(ch) !== null ||
+                            e.which === 8) &&
+                                self.token[0] !== null)
                         self.autocomplete('reload');
-                    if(self.valid_chars.exec(ch) === null)
+                    else
                         self.autocomplete('close');
                 }
             });

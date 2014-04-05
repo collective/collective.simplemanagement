@@ -10,6 +10,7 @@
            data-autocomplete-url=""
            placeholder="activity @project @story !ticket #tag"
            data-novalues="No completions"
+           autocomplete="off"
            i18n:attributes="placeholder data-novalues"
            tal:attributes="id view/id;
                            name view/name;

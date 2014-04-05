@@ -1731,14 +1731,46 @@ input.effort {
     z-index: 100000;
 }
 
-.booker-dropdown {
+#content .booker-dropdown {
     background: #fff;
     border: 1px solid #333;
     padding: 0px;
     z-index: 200;
+    min-width: 350px;
 }
 
-.booker-dropdown .item.selected {
+#content .booker-dropdown .no-results {
+}
+
+#content .booker-dropdown .item {
+    padding: 0.5em;
+    line-height: 1.2em;
+}
+
+#content .booker-dropdown .item p {
+    margin-bottom: 0px;
+}
+
+#content .booker-dropdown .item .breadcrumb {
+    font-size: 85%;
+    font-style: italic;
+    margin: 0px;
+    padding: 0px;
+}
+
+#content .booker-dropdown .item .breadcrumb .sep {
+    color: #999;
+}
+
+#content .booker-dropdown .item .breadcrumb:before {
+    content: "(";
+}
+
+#content .booker-dropdown .item .breadcrumb:after {
+    content: ")";
+}
+
+#content .booker-dropdown .item.selected {
     background-color: #336bca;
     color: #fff;
 }

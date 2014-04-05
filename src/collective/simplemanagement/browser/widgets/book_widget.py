@@ -72,7 +72,6 @@ class Autocomplete(BrowserView):
             'spam',
             'eggs'
         ]
-        results = []
         for tag in tags:
             if query in tag:
                 results.append({
@@ -82,14 +81,14 @@ class Autocomplete(BrowserView):
                     'id': tag,
                     'breadcrumb': None
                 })
-        results.append({
-            'portal_type': None,
-            'uuid': query,
-            'title': query,
-            'id': query,
-            'breadcrumb': None
-        })
-        return results
+        if query not in [ r['id'] for r in results ]:
+            results.append({
+                'portal_type': None,
+                'uuid': query,
+                'title': query,
+                'id': query,
+                'breadcrumb': None
+            })
 
     def search_content(self, query, portal_type, results):
         kwargs = {

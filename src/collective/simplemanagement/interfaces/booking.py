@@ -142,3 +142,9 @@ class IBookingStorage(Interface):
 class IBookingHoles(Interface):
     """BBB: backward compatibility.
     """
+
+
+class IBookingHole(Interface):
+    """BBB: backward compatibility.
+    """
+
