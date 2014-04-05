@@ -68,6 +68,30 @@
              />
   </class>
 
+  <class class=".book_widget.ReferencesWidget">
+    <require permission="zope.Public"
+             interface=".interfaces.IReferencesWidget"
+             />
+  </class>
+
+  <class class=".book_widget.TagsWidget">
+    <require permission="zope.Public"
+             interface=".interfaces.ITagsWidget"
+             />
+  </class>
+
+  <adapter
+    factory=".book_widget.ReferencesConverter"
+    for="zope.schema.interfaces.IDecimal
+         .interfaces.IReferencesWidget"
+    />
+
+  <adapter
+    factory=".book_widget.TagsConverter"
+    for="zope.schema.interfaces.IDecimal
+         .interfaces.ITagsWidget"
+    />
+
   <z3c:widgetTemplate
     mode="display"
     template="book_display.pt"

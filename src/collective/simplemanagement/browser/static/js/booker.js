@@ -1,4 +1,4 @@
-/*global window, jQuery, document, String */
+/*global window, jQuery, document, String, XRegExp */
 (function ($) {
     "use strict";
 
@@ -13,10 +13,8 @@
         this.$root.parent().css({ position: 'relative' });
         this.font_size = (
             this.$root.innerWidth() / parseInt(this.$root.attr('size'), 10));
-        this.name = this.$root.attr('name');
-        this.$hidden = $('<input type="hidden" />');
-        this.$hidden.attr('name', this.name+'.parsed');
-        this.$hidden.insertAfter(this.$root);
+        this.$references = $(this.$root.attr('data-references'));
+        this.$tags = $(this.$root.attr('data-tags'));
         this.$dropdown = $('<div class="booker-dropdown">'+
                            '<div class="wrapper" /></div>');
         this.$dropdown.insertAfter(this.$root);
@@ -26,7 +24,8 @@
         });
         this.electric_chars = $.parseJSON(
             this.$root.attr('data-electric-chars'));
-        this.valid_chars = /[\w\-\.]/;
+        this._valid_chars = this.$root.attr('data-valid-chars');
+        this.valid_chars = new RegExp(this._valid_chars);
         this.autocomplete_url = this.$root.attr('data-autocomplete-url');
         this.autocomplete_cache = {};
         this.autocomplete_values = [];
@@ -37,8 +36,35 @@
     };
 
     sm.Booker.prototype = {
+        parse: function() {
+            var c, elchars = [], references, tags, item, regex = '',
+                self = this;
+            for(c in this.electric_chars) elchars.push(c);
+            regex = new RegExp('('+elchars.join('|')+')('+
+                               this._valid_chars+'+)', 'g');
+            references = $.parseJSON(this.$references.val() || '[]');
+            tags = $.parseJSON(this.$tags.val() || '[]');
+            XRegExp.forEach(this.$root.val(), regex, function(m) {
+                if(self.electric_chars[m[1]] === null) {
+                    item = tags.shift();
+                    self.stream.push({
+                        portal_type: null,
+                        uuid: m[1],
+                        start: m.index,
+                        end: m.index + m[0].length
+                    });
+                }
+                else {
+                    item = references.shift();
+                    item.start = m.index;
+                    item.end = m.index + m[0].length;
+                    self.stream.push(item);
+                }
+            });
+        },
         add: function(item) {
-            var i, l, replace = null, value = this.$root.val();
+            var i, l, references_values = [], tags_values = [],
+                replace = null, value = this.$root.val();
             for(i=0, l=this.stream.length; i<l; i++) {
                 if((this.token[2] >= this.stream[i].start &&
                         this.token[2] < this.stream[i].end) ||
@@ -69,6 +95,17 @@
                 if(a.start > b.start) return 1;
                 return 0;
             });
+            for(i=0, l=this.stream.length; i<l; i++) {
+                if(this.stream[i].portal_type)
+                    references_values.push({
+                        portal_type: this.stream[i].portal_type,
+                        uuid: this.stream[i].uuid
+                    });
+                else
+                    tags_values.push(this.stream[i].id);
+            }
+            this.$references.val(JSON.stringify(references_values));
+            this.$tags.val(JSON.stringify(tags_values));
             this.$root.val(
                 value.substr(0, this.token[2]) +
                     this.token[0] + item.id +
@@ -199,6 +236,7 @@
         },
         init: function() {
             var self = this;
+            this.parse();
             this.$root.keydown(function(e) {
                 switch(e.keyCode) {
                     case 37: // arrow back

@@ -8,8 +8,10 @@ from z3c.form.interfaces import IFieldWidget
 from z3c.form.interfaces import IFormLayer
 from z3c.form.widget import Widget
 from z3c.form.widget import FieldWidget
+from z3c.form.converter import BaseDataConverter
 from z3c.form.browser.widget import HTMLTextInputWidget
 from z3c.form.browser.widget import addFieldClass
+from z3c.form.browser.text import TextWidget
 
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
@@ -19,6 +21,8 @@ from plone import api
 from ...api.content import get_project
 from ...api.content import BreadcrumbGetter
 from .interfaces import IBookWidget
+from .interfaces import IReferencesWidget
+from .interfaces import ITagsWidget
 
 
 ELECTRIC_CHARS = {
@@ -26,6 +30,8 @@ ELECTRIC_CHARS = {
     '!': ('PoiIssue',),
     '#': None
 }
+
+VALID_CHARS = '[\\w\\.\\-]'
 
 
 class BookWidget(HTMLTextInputWidget, Widget):
@@ -35,6 +41,9 @@ class BookWidget(HTMLTextInputWidget, Widget):
     css = u'text'
     value = u''
     size = 45
+    references_field = None
+    tags_field = None
+    valid_chars = VALID_CHARS
 
     @property
     def autocomplete_url(self):
@@ -42,7 +51,19 @@ class BookWidget(HTMLTextInputWidget, Widget):
 
     @property
     def electric_chars(self):
-        return json.dumps({ k: k for k in ELECTRIC_CHARS })
+        return json.dumps(ELECTRIC_CHARS)
+
+    @property
+    def references_selector(self):
+        if self.references_field is None:
+            return None
+        return 'input[name="{name}"]'.format(name=self.references_field)
+
+    @property
+    def tags_selector(self):
+        if self.tags_field is None:
+            return None
+        return 'input[name="{name}"]'.format(name=self.tags_field)
 
     def update(self):
         super(BookWidget, self).update()
@@ -57,6 +78,68 @@ class BookWidget(HTMLTextInputWidget, Widget):
 def BookFieldWidget(field, request):
     """IFieldWidget factory for BookWidget."""
     return FieldWidget(field, BookWidget(request))
+
+
+@implementer(IReferencesWidget)
+class ReferencesWidget(TextWidget):
+    pass
+
+
+@adapter(IField, IFormLayer)
+@implementer(IFieldWidget)
+def ReferencesFieldWidget(field, request):
+    """IFieldWidget factory for ReferencesWidget."""
+    return FieldWidget(field, ReferencesWidget(request))
+
+
+@implementer(ITagsWidget)
+class TagsWidget(TextWidget):
+    pass
+
+
+@adapter(IField, IFormLayer)
+@implementer(IFieldWidget)
+def TagsFieldWidget(field, request):
+    """IFieldWidget factory for TagsWidget."""
+    return FieldWidget(field, TagsWidget(request))
+
+
+class ReferencesConverter(BaseDataConverter):
+
+    def toWidgetValue(self, value):
+        widget_value = []
+        if isinstance(value, (list, tuple)):
+            for item in value:
+                widget_value.append({
+                    'portal_type': item[0],
+                    'uuid': item[1]
+                })
+        return json.dumps(widget_value)
+
+    def toFieldValue(self, value):
+        field_value = []
+        if value:
+            value = json.load(value)
+            for item in value:
+                field_value.append((item['portal_type'], item['uuid']))
+        return field_value
+
+
+class TagsConverter(BaseDataConverter):
+
+    def toWidgetValue(self, value):
+        widget_value = []
+        if isinstance(value, (list, tuple, set)):
+            for item in value:
+                widget_value.append(item)
+        return json.dumps(widget_value)
+
+
+    def toFieldValue(self, value):
+        field_value = set()
+        if value:
+            field_value = set(json.load(value))
+        return field_value
 
 
 class Autocomplete(BrowserView):

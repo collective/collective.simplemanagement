@@ -8,6 +8,9 @@
            style="" value="" type="text"
            data-electric-chars=""
            data-autocomplete-url=""
+           data-references=""
+           data-tags=""
+           data-valid-chars=""
            placeholder="activity @project @story !ticket #tag"
            data-novalues="No completions"
            autocomplete="off"
@@ -41,5 +44,8 @@
                            size view/size;
                            maxlength view/maxlength;
                            data-electric-chars view/electric_chars;
-                           data-autocomplete-url view/autocomplete_url" />
+                           data-autocomplete-url view/autocomplete_url;
+                           data-references view/references_selector;
+                           data-tags view/tags_selector;
+                           data-valid-chars view/valid_chars" />
 </html>

@@ -46,3 +46,14 @@ class ITimeWidget(IWidget):
 class IBookWidget(IWidget):
     """Booking widget
     """
+
+
+class IReferencesWidget(IWidget):
+    """References widget
+    """
+
+
+class ITagsWidget(IWidget):
+    """Tags widget
+    """
+
