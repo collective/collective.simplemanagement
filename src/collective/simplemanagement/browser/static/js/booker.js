@@ -267,7 +267,6 @@
                         break;
                     }
                     case 9: { // tab
-                        e.preventDefault();
                         break;
                     }
                     default: {
