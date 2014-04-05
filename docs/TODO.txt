@@ -1,15 +1,15 @@
-* Oggetto Booking(Persistent)
-* Storage booking (LOBTree):
+[ok]* Oggetto Booking(Persistent)
+[ok]* Storage booking (LOBTree):
   - tutti i metodi tranne query
   - catalogo con zope.catalog e metodo query
   - indicizzare date, owner
   - indicizzare il campo references (con Simo)
 
 
-* Upgrade step migrazione booking esistenti
+[ok]* Upgrade step migrazione booking esistenti
 * Traverse per booking object
 
-* Upgrade step per rimuovere BookingHole utility
+[ok]* Upgrade step per rimuovere BookingHole utility
 e altre cose persistenti del vecchio booking
 
 * Fix loadcontent profile that still creates dexterity object for booking

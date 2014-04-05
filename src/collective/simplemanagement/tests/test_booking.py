@@ -3,7 +3,6 @@ from datetime import date
 # from decimal import Decimal
 
 import unittest2 as unittest
-from zope.component import getUtility
 from zope.interface.verify import verifyObject
 
 from plone.app.testing import (TEST_USER_ID,
@@ -41,7 +40,8 @@ class TestBooking(unittest.TestCase):
         del self.portal[self.project2.id]
 
     def reset_storage(self):
-        util = getUtility(IBookingStorage)
+
+        util = api.booking.get_booking_storage()
         util.bookings.clear()
         util.mapping.clear()
         util.catalog.clear()
@@ -60,7 +60,7 @@ class TestBooking(unittest.TestCase):
             self.bookings.append(bkng)
 
     def test_get_storage(self):
-        util = getUtility(IBookingStorage)
+        util = api.booking.get_booking_storage()
         self.assertTrue(verifyObject(IBookingStorage, util))
 
     def test_create_booking(self):
@@ -79,7 +79,7 @@ class TestBooking(unittest.TestCase):
         for k, v in values.iteritems():
             self.assertEqual(getattr(booking, k), v)
         # retrieve booking via storage
-        storage = getUtility(IBookingStorage)
+        storage = api.booking.get_booking_storage()
         self.assertTrue(booking.uid in storage)
         self.assertEqual(booking, storage[booking.uid])
 
@@ -161,8 +161,20 @@ class TestBooking(unittest.TestCase):
         bookings = api.booking.get_bookings(date=dates)
         expected = [x for x in self.bookings if x.date != date(2014, 1, 1)]
         self.assertEqual(len(bookings), len(expected))
+        # BBB `from_date` and `to_date` support
+        bookings = api.booking.get_bookings(from_date=dates[0],
+                                            to_date=dates[1])
+        expected = [x for x in self.bookings if x.date != date(2014, 1, 1)]
+        self.assertEqual(len(bookings), len(expected))
 
-        # TODO: test get bookings limited to specific refs such as projects
+        bookings = api.booking.get_bookings(from_date=dates[0])
+        expected = [x for x in self.bookings if x.date >= dates[0]]
+        self.assertEqual(len(bookings), len(expected))
+
+        bookings = api.booking.get_bookings(to_date=dates[0])
+        expected = [x for x in self.bookings if x.date <= dates[0]]
+        self.assertEqual(len(bookings), len(expected))
+
 
     # def test_missing_bookings(self):
     #     owner = TEST_USER_ID

@@ -67,7 +67,7 @@ def get_difference_class(a, b, settings=None):
 def get_bookings(owner=None, references=None,
                  date=None, booking_date=None,
                  project=None,
-                 sort=True):
+                 sort=True, **kwargs):
     """ returns bookings.
     ``owner`` limits results to objs belonging to that user.
     ``references`` uid or list of uids to referenced objects.
@@ -87,6 +87,12 @@ def get_bookings(owner=None, references=None,
 
     if date:
         query['date'] = date
+
+    dates = []
+    for k in ('from_date', 'to_date'):
+        dates.append(kwargs.get(k))
+    if any(dates):
+        query['date'] = tuple(dates)
 
     # sorting = None
     # if sort:

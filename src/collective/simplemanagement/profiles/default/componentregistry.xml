@@ -3,7 +3,7 @@
   <adapters/>
   <utilities>
     <utility
-      interface="collective.simplemanagement.interfaces.IBooking"
+      interface="collective.simplemanagement.interfaces.IBookingStorage"
       factory="collective.simplemanagement.booking.storage.BookingStorage"
       name="sm.booking"
       id="sm.booking"
