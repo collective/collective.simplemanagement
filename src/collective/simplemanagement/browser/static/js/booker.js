@@ -305,10 +305,29 @@
 
     sm.bookers = [];
 
+    $.fn.extend({
+        bookWidget: function() {
+            var options = {};
+            if(arguments.length > 0)
+                options = arguments[0];
+            return this.each(function() {
+                var settings = $.extend(true, {}, options),
+                    $this = $(this),
+                    data = $this.data('booker'),
+                    booker;
+                // If the plugin hasn't been initialized yet
+                if(!data) {
+                    booker = new sm.Booker(this);
+                    sm.bookers.push(booker);
+
+                    $(this).data('booker', booker);
+                }
+            });
+        }
+    });
+
     $(document).ready(function() {
-        $('.book-widget').each(function() {
-            sm.bookers.push(new sm.Booker(this));
-        });
+        $('.book-widget').bookWidget();
     });
 
 }(jQuery));

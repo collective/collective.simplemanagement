@@ -1,3 +1,4 @@
+import re
 import json
 
 from zope.interface import implementsOnly, implementer
@@ -33,6 +34,37 @@ ELECTRIC_CHARS = {
 
 VALID_CHARS = '[\\w\\.\\-]'
 
+REGEXP = re.compile(
+    '({electric})({id})'.format(
+        electric='|'.join(ELECTRIC_CHARS.keys()),
+        id=VALID_CHARS
+    )
+)
+
+TEMPLATE = '<a href="{url}" target="_blank">{tag}<a>'
+
+
+def format_text(booking, context=None):
+    references = [
+        r for r in (
+            booking.references if booking.references is not None else []
+        )
+    ]
+    def format_tag(m):
+        tag = m.group(0)
+        if ELECTRIC_CHARS[m.group(1)] is None:
+            # BBB: actually decide what to do
+            #url = '/url/for/{tag}'.format(tag=m.group(2))
+            if context is None:
+                url = '/'
+            else:
+                url = context.absolute_url()
+        else:
+            object_ = uuidToObject(references.pop(0)[1])
+            url = object_.absolute_url()
+        return TEMPLATE.format(url=url, tag=tag)
+    return REGEXP.sub(format_tag, booking.text)
+
 
 class BookWidget(HTMLTextInputWidget, Widget):
     implementsOnly(IBookWidget)
@@ -40,7 +72,7 @@ class BookWidget(HTMLTextInputWidget, Widget):
     klass = u"book-widget"
     css = u'text'
     value = u''
-    size = 45
+    size = 35
     references_field = None
     tags_field = None
     valid_chars = VALID_CHARS

@@ -1731,7 +1731,7 @@ input.effort {
     z-index: 100000;
 }
 
-#content .booker-dropdown {
+.booker-dropdown {
     background: #fff;
     border: 1px solid #333;
     padding: 0px;
@@ -1739,10 +1739,17 @@ input.effort {
     min-width: 350px;
 }
 
-#content .booker-dropdown .no-results {
+.booker-dropdown .no-results {
+    color: #777;
+    font-weight: bold;
 }
 
 #content .booker-dropdown .item {
+    padding: 0.5em;
+    line-height: 1.2em;
+}
+
+.booker-dropdown .item {
     padding: 0.5em;
     line-height: 1.2em;
 }
@@ -1751,26 +1758,30 @@ input.effort {
     margin-bottom: 0px;
 }
 
-#content .booker-dropdown .item .breadcrumb {
+.booker-dropdown .item p {
+    margin-bottom: 0px;
+}
+
+.booker-dropdown .item .breadcrumb {
     font-size: 85%;
     font-style: italic;
     margin: 0px;
     padding: 0px;
 }
 
-#content .booker-dropdown .item .breadcrumb .sep {
+.booker-dropdown .item .breadcrumb .sep {
     color: #999;
 }
 
-#content .booker-dropdown .item .breadcrumb:before {
+.booker-dropdown .item .breadcrumb:before {
     content: "(";
 }
 
-#content .booker-dropdown .item .breadcrumb:after {
+.booker-dropdown .item .breadcrumb:after {
     content: ")";
 }
 
-#content .booker-dropdown .item.selected {
+.booker-dropdown .item.selected {
     background-color: #336bca;
     color: #fff;
 }

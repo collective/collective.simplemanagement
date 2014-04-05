@@ -46,6 +46,7 @@
         sm.booking_tooltip();
         $('.select2-multi-widget').select2Widget({multiple: true});
         $('.select2-widget').select2Widget();
+        $('.book-widget').bookWidget();
     };
 
     $(document).ready(function() {
