@@ -148,7 +148,7 @@
                                            href person_data/url|nothing">
                           <span tal:attributes="class python:view.get_effort_classes(person_data)">
                             <span tal:replace="person_data/effort"></span>
-                            <tal:booking tal:define="booking python:person.data.get('booking', None)"
+                            <tal:booking tal:define="booking python:person_data.get('booking', None)"
                               tal:condition="python:booking != None">/
                               <span tal:replace="booking" />
                             </tal:booking>
