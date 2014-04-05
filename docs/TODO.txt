@@ -13,3 +13,13 @@
 e altre cose persistenti del vecchio booking
 
 * Fix loadcontent profile that still creates dexterity object for booking
+
+
+
+ * Sistemare conteggi (grep get_bookings)
+ * Sistemare form a caso in giro per l'universo (tipo dashboard)
+ * Sistemare i listing
+ * Tab da levare
+ * Default quando stai su storie
+ * Cancellazione totale non elimina da stream
+ * Data di default su oggi
