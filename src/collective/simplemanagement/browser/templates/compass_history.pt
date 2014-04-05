@@ -126,7 +126,8 @@
                     </div>
                     <div class="info">
                       <div><h3 class="title"><a
-                          tal:attributes="href project/url"
+                          tal:omit-tag="project/url|nothing"
+                          tal:attributes="href project/url|nothing"
                           tal:content="project/name"/></h3></div>
                       <div><div class="notes"
                                 tal:content="structure python:view.html_notes(project['notes'])"></div></div>

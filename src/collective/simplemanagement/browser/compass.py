@@ -109,8 +109,10 @@ class History(api.views.Traversable, CompassMixIn):
 
         portal = plone.api.portal.get()
         portal_url = portal.absolute_url()
-        start = data['plan_start']
-        end = data['plan_end']
+        start = data.get('plan_start')
+        end = data.get('plan_end')
+        if not (start and end):
+            return data
         data['plan_end'] = api.date.format(end)
         data['plan_start'] = api.date.format(start)
 
