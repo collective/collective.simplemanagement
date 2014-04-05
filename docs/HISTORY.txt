@@ -4,6 +4,9 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Compass history improvements
+  [gborelli]
+
 - Add simplemanagement.ordernumber viewlet
   [gborelli]
 
@@ -62,35 +65,35 @@ Changelog
   [simahawk]
 
 - Added IUserStoriesListing adapter to listing stories by user
-  [giorgio]
+  [gborelli]
 
 - Removed IMyStoriesListing adapter
-  [giorgio]
+  [gborelli]
 
 - added "Simplemanagement: Manage project" permission to
   Manager, PM and Site Administrator
-  [giorgio]
+  [gborelli]
 
 - fix Dexterity2.0 relations issue
-  [giorgio]
+  [gborelli]
 
 - added workflow to discussion item
-  [giorgio]
+  [gborelli]
 
 - added plone.formwidget.contenttree dependency
-  [giorgio]
+  [gborelli]
 
 - UI improvements
-  [giorgio]
+  [gborelli]
 
 - disabled form releated kss
-  [giorgio]
+  [gborelli]
 
 - added customer, employee, PM roles and groups
-  [giorgio]
+  [gborelli]
 
 - updated translations
-  [giorgio]
+  [gborelli]
 
 - added my tickets view in dasboard
   [gborelli]

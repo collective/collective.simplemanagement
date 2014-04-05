@@ -1,5 +1,6 @@
 import json
 import plone.api
+from copy import deepcopy
 from datetime import date
 from datetime import datetime
 from decimal import Decimal
@@ -9,19 +10,89 @@ from zope.component import getUtility
 from zope.security import checkPermission
 from zope.schema.interfaces import IVocabularyFactory
 from plone.registry.interfaces import IRegistry
+from plone.app.uuid.utils import uuidToObject
+from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from ..interfaces.settings import ISettings
 from ..interfaces.compass import ICompassSettings
 from .. import api
 from ..structures import Resource
+from ..configure import DAY_HOURS
 from .. import messageFactory as _
 
 # Validate both on the server and client side,
-# using z3c.form on the client side in a less stressful way
+# using z3c.form on the client se in a less stressful way
+
+FORMAT_BOOKING_VALUE = lambda x: round(x / DAY_HOURS, 1)
 
 
-class History(api.views.Traversable):
+def get_bookings(start, end):
+    end = DateTime(end.year, end.month, end.day, 23, 59, 59)
+    start = DateTime(start.year, start.month, start.day, 0, 0, 0)
+    bookings = api.booking.get_bookings(from_date=start, to_date=end)
+    results = {}
+    for item in bookings:
+        obj = item.getObject()
+        project = api.content.get_project(obj)
+        uid = IUUID(project)
+        if not project in results:
+            prj_dict = {}
+            results[uid] = prj_dict
+        creator = item.Creator
+        if creator not in prj_dict:
+            prj_dict[creator] = 0
+        prj_dict[creator] += item.time
+    return results
+
+
+class CompassMixIn(object):
+
+    def _get_project_info(self, project, brain=None):
+        info = {}
+        if brain is not None:
+            info.update({
+                'id': brain.getPath(),
+                'uid': brain.UID,
+                'url': brain.getURL(),
+                'name': brain.Title,
+                'status': brain.review_state,
+                'customer': brain.customer,
+                'priority': brain.priority
+            })
+        else:
+            pw = self.tools['portal_workflow']
+            status = pw.getStatusOf("project_workflow", project)
+            info.update({
+                'id': '/'.join(project.getPhysicalPath()),
+                'name': project.title_or_id(),
+                'status': status['review_state'],
+                'customer': project.customer,
+                'priority': project.priority
+            })
+        info.update({
+            'people': self._get_operatives(project),
+            'effort': str(project.compass_effort),
+            'notes': project.compass_notes,
+            'active': project.active
+        })
+        return info
+
+    @staticmethod
+    def _get_operatives(project):
+        people = []
+        if project.operatives is not None:
+            for operative in project.operatives:
+                if operative.active:
+                    people.append({
+                        'id': operative.user_id,
+                        'role': operative.role,
+                        'effort': str(operative.compass_effort)
+                    })
+        return people
+
+
+class History(api.views.Traversable, CompassMixIn):
 
     STEP = 20  # Used for pagination/infinite scroll
 
@@ -34,8 +105,82 @@ class History(api.views.Traversable):
         self.data = None
 
     def get_data(self):
-        data = self.data.copy()
-        data['plan_end'] = api.date.format(data['plan_end'])
+        data = deepcopy(self.data)
+
+        portal = plone.api.portal.get()
+        portal_url = portal.absolute_url()
+        start = data['plan_start']
+        end = data['plan_end']
+        data['plan_end'] = api.date.format(end)
+        data['plan_start'] = api.date.format(start)
+
+        bookings = get_bookings(start, end)
+
+        for prj in data['projects']:
+            if 'uid' in prj:
+                prj_uid = prj['uid']
+                project = uuidToObject(prj['uid'])
+            else:
+                try:
+                    project = portal.restrictedTraverse(prj['id'].encode())
+                except AttributeError:
+                    continue
+                prj_uid = IUUID(project)
+
+            prj_bookings = bookings.pop(prj_uid, {})
+            prj['url'] = '{0}/report?month={1}&tab=synoptic&year={2}'.format(
+                project.absolute_url(),
+                start.month,
+                start.year
+            )
+            for employee in prj['people']:
+                b = prj_bookings.pop(employee['id'], 0)
+                employee['booking'] = FORMAT_BOOKING_VALUE(b)
+                employee['url'] = "{0}/dashboard?employee={1}".format(
+                    portal_url,
+                    employee['id']
+                )
+
+            if prj_bookings:
+                # Add extra employee
+                for k, v in prj_bookings.items():
+                    prj['people'].append({
+                        'booking': v,
+                        'effort': u'0',
+                        'id': k,
+                        'is_critical': False,
+                        'is_free': False,
+                        'role': u''
+                    })
+        if bookings:
+            # add extra projects
+            for k, v in bookings.items():
+                obj = uuidToObject(k)
+                new_prj = self._get_project_info(obj)
+                new_prj['css_class'] = 'status-indicator state-{}'.format(
+                    new_prj['status']
+                )
+                new_prj['url'] = '{0}/report?month={1}&tab=synoptic&year={2}'.format(
+                    obj.absolute_url(),
+                    start.month,
+                    start.year
+                )
+
+                for username, value in v.items():
+                    new_prj['people'].append({
+                        'booking': FORMAT_BOOKING_VALUE(value),
+                        'effort': u'0',
+                        'id': username,
+                        'is_critical': False,
+                        'is_free': False,
+                        'role': u'',
+                        'url': "{0}/dashboard?employee={1}".format(
+                            portal_url,
+                            username
+                        )
+                    })
+
+            data['projects'].append(new_prj)
         return data
 
     def get_effort_classes(self, person_data):
@@ -146,7 +291,7 @@ class History(api.views.Traversable):
                 request=self.request
             )
         else:
-            self.request.response.redirect(self.base_url()+str(self.key))
+            self.request.response.redirect(self.base_url() + str(self.key))
             plone.api.portal.show_message(
                 message=_(u"Deletion has been cancelled"),
                 request=self.request
@@ -167,15 +312,15 @@ class History(api.views.Traversable):
             portal_compass = self.tools['portal_compass']
             max_key = portal_compass.max_key()
             if max_key is not None:
-                self.request.response.redirect(self.base_url()+str(max_key))
+                self.request.response.redirect(self.base_url() + str(max_key))
                 return u''
 
         return super(History, self).__call__()
 
 
-class Compass(api.views.Traversable):
+class Compass(api.views.Traversable, CompassMixIn):
 
-    STEP = 20 # Used for pagination/infinite scroll
+    STEP = 20  # Used for pagination/infinite scroll
 
     def __init__(self, context, request):
         super(Compass, self).__init__(context, request)
@@ -330,35 +475,6 @@ class Compass(api.views.Traversable):
         project.reindexObject()
         return self._get_project_info(project)
 
-    def _get_project_info(self, project, brain=None):
-        info = {}
-        if brain is not None:
-            info.update({
-                'id': brain.getPath(),
-                'url': brain.getURL(),
-                'name': brain.Title,
-                'status': brain.review_state,
-                'customer': brain.customer,
-                'priority': brain.priority
-            })
-        else:
-            pw = self.tools['portal_workflow']
-            status = pw.getStatusOf("project_workflow", project)
-            info.update({
-                'id': '/'.join(project.getPhysicalPath()),
-                'name': project.title_or_id(),
-                'status': status['review_state'],
-                'customer': project.customer,
-                'priority': project.priority
-            })
-        info.update({
-            'people': self._get_operatives(project),
-            'effort': str(project.compass_effort),
-            'notes': project.compass_notes,
-            'active': project.active
-        })
-        return info
-
     @api.jsonutils.jsonmethod()
     def do_set_priority(self):
         pu = self.tools['portal_url']
@@ -371,19 +487,6 @@ class Compass(api.views.Traversable):
             project.reindexObject('priority')
             return_value[project_id] = project.priority
         return return_value
-
-    @staticmethod
-    def _get_operatives(project):
-        people = []
-        if project.operatives is not None:
-            for operative in project.operatives:
-                if operative.active:
-                    people.append({
-                        'id': operative.user_id,
-                        'role': operative.role,
-                        'effort': str(operative.compass_effort)
-                    })
-        return people
 
     @api.jsonutils.jsonmethod()
     def do_get_projects(self):

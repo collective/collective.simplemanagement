@@ -117,6 +117,7 @@
         var i, l, item;
         this.app = app;
         this.id = ko.observable(data.id);
+        this.uid = ko.observable(data.uid);
         this.url = ko.observable(data.url);
         this.name = ko.observable(data.name);
         this.status = ko.observable(data.status);
@@ -265,6 +266,7 @@
         toJSON: function() {
             var i, l, people, data = {
                 id: this.id(),
+                uid: this.uid(),
                 url: this.url(),
                 name: this.name(),
                 status: this.status(),

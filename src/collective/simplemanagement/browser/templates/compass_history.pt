@@ -21,7 +21,7 @@
         <h1 class="documentFirstHeading" i18n:translate="">Compass</h1>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
-        <tal:data condition="view/data">
+        <tal:data condition="data">
         <div id="deletePopup" class="overlay"
              tal:condition="view/can_edit">
           <div class="close">
@@ -125,7 +125,9 @@
                       <span tal:content="repeat/project/number">X</span>
                     </div>
                     <div class="info">
-                      <div><h3 class="title" tal:content="project/name"></h3></div>
+                      <div><h3 class="title"><a
+                          tal:attributes="href project/url"
+                          tal:content="project/name"/></h3></div>
                       <div><div class="notes"
                                 tal:content="structure python:view.html_notes(project['notes'])"></div></div>
                       <div class="effort">
@@ -138,14 +140,19 @@
                     </div>
                     <div class="people">
                       <tal:person repeat="person project/people">
-                        <div class="thumbnail thumbnail-small person"
-                             tal:define="person_data python:view.augment_user_data(person)"
-                             tal:attributes="title person_data/name;
-                                             style string:background-image:url('${person_data/avatar}');;">
-                          <span tal:attributes="class python:view.get_effort_classes(person_data)"
-                                tal:content="person_data/effort"></span>
-                          <span class="title" tal:content="person_data/role"></span>
-                        </div>
+                        <a class="thumbnail thumbnail-small person"
+                           tal:define="person_data python:view.augment_user_data(person)"
+                           tal:attributes="title person_data/name;
+                                           style string:background-image:url('${person_data/avatar}');
+                                           href person_data/url">
+                          <span tal:attributes="class python:view.get_effort_classes(person_data)">
+                            <span tal:replace="person_data/effort"></span>/
+                            <span tal:replace="person_data/booking"></span>
+                          </span>
+                          <span class="title"
+                                tal:condition="person_data/role"
+                                tal:content="person_data/role"></span>
+                        </a>
                       </tal:person>
                     </div>
                   </div>
@@ -181,7 +188,7 @@
           </div>
         </div>
         </tal:data>
-        <tal:nodata condition="not:view/data">
+        <tal:nodata condition="not:data">
           <div id="content-core">
             <p i18n:translate="">There are no saved compass plans.</p>
           </div>

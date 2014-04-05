@@ -13,6 +13,7 @@ DOCUMENTS_ID = 'documents'
 DECIMAL_QUANT = Decimal("1.00")
 ONE_DAY = timedelta(days=1)
 ONE_WEEK = timedelta(days=7)
+DAY_HOURS = 8
 
 
 class Settings(object):
