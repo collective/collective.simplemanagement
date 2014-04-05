@@ -24,8 +24,9 @@ from .. import messageFactory as _
 # Validate both on the server and client side,
 # using z3c.form on the client se in a less stressful way
 
-FORMAT_BOOKING_VALUE = lambda x: round(x / DAY_HOURS, 1)
-
+format_booking_value = lambda x: round(x / DAY_HOURS, 1)
+PRJ_URL_TEMPLATE = "{0}/report?month={1}&tab=synoptic&year={2}"
+USR_URL_TEMPLATE = "{0}/dashboard?employee={1}"
 
 def get_bookings(start, end):
     end = DateTime(end.year, end.month, end.day, 23, 59, 59)
@@ -36,60 +37,17 @@ def get_bookings(start, end):
         obj = item.getObject()
         project = api.content.get_project(obj)
         uid = IUUID(project)
-        if not project in results:
-            prj_dict = {}
-            results[uid] = prj_dict
+        if not uid in results:
+            results[uid] = {}
         creator = item.Creator
-        if creator not in prj_dict:
-            prj_dict[creator] = 0
-        prj_dict[creator] += item.time
+        if creator not in results[uid]:
+            results[uid][creator] = 0
+        results[uid][creator] += item.time
     return results
 
 
 class CompassMixIn(object):
-
-    def _get_project_info(self, project, brain=None):
-        info = {}
-        if brain is not None:
-            info.update({
-                'id': brain.getPath(),
-                'uid': brain.UID,
-                'url': brain.getURL(),
-                'name': brain.Title,
-                'status': brain.review_state,
-                'customer': brain.customer,
-                'priority': brain.priority
-            })
-        else:
-            pw = self.tools['portal_workflow']
-            status = pw.getStatusOf("project_workflow", project)
-            info.update({
-                'id': '/'.join(project.getPhysicalPath()),
-                'name': project.title_or_id(),
-                'status': status['review_state'],
-                'customer': project.customer,
-                'priority': project.priority
-            })
-        info.update({
-            'people': self._get_operatives(project),
-            'effort': str(project.compass_effort),
-            'notes': project.compass_notes,
-            'active': project.active
-        })
-        return info
-
-    @staticmethod
-    def _get_operatives(project):
-        people = []
-        if project.operatives is not None:
-            for operative in project.operatives:
-                if operative.active:
-                    people.append({
-                        'id': operative.user_id,
-                        'role': operative.role,
-                        'effort': str(operative.compass_effort)
-                    })
-        return people
+    pass
 
 
 class History(api.views.Traversable, CompassMixIn):
@@ -117,8 +75,9 @@ class History(api.views.Traversable, CompassMixIn):
         data['plan_start'] = api.date.format(start)
 
         bookings = get_bookings(start, end)
-
+        i = 1
         for prj in data['projects']:
+            i += 1
             if 'uid' in prj:
                 prj_uid = prj['uid']
                 project = uuidToObject(prj['uid'])
@@ -128,17 +87,16 @@ class History(api.views.Traversable, CompassMixIn):
                 except:
                     continue
                 prj_uid = IUUID(project)
-
             prj_bookings = bookings.pop(prj_uid, {})
-            prj['url'] = '{0}/report?month={1}&tab=synoptic&year={2}'.format(
+            prj['url'] = PRJ_URL_TEMPLATE.format(
                 project.absolute_url(),
                 start.month,
                 start.year
             )
             for employee in prj['people']:
                 b = prj_bookings.pop(employee['id'], 0)
-                employee['booking'] = FORMAT_BOOKING_VALUE(b)
-                employee['url'] = "{0}/dashboard?employee={1}".format(
+                employee['booking'] = format_booking_value(b)
+                employee['url'] = USR_URL_TEMPLATE.format(
                     portal_url,
                     employee['id']
                 )
@@ -147,7 +105,7 @@ class History(api.views.Traversable, CompassMixIn):
                 # Add extra employee
                 for k, v in prj_bookings.items():
                     prj['people'].append({
-                        'booking': v,
+                        'booking': format_booking_value(v),
                         'effort': u'0',
                         'id': k,
                         'is_critical': False,
@@ -156,33 +114,44 @@ class History(api.views.Traversable, CompassMixIn):
                     })
         if bookings:
             # add extra projects
-            for k, v in bookings.items():
+            for k, people in bookings.items():
                 obj = uuidToObject(k)
-                new_prj = self._get_project_info(obj)
-                new_prj['css_class'] = 'status-indicator state-{}'.format(
-                    new_prj['status']
-                )
-                new_prj['url'] = '{0}/report?month={1}&tab=synoptic&year={2}'.format(
-                    obj.absolute_url(),
-                    start.month,
-                    start.year
-                )
+                pw = self.tools['portal_workflow']
+                status = pw.getStatusOf("project_workflow", obj)
+                new_prj = {
+                    'id': '/'.join(obj.getPhysicalPath()),
+                    'name': obj.title_or_id(),
+                    'status': status['review_state'],
+                    'customer': obj.customer,
+                    'priority': obj.priority,
+                    'css_class': 'status-indicator state-{}'.format(
+                        status['review_state']),
+                    'url': PRJ_URL_TEMPLATE.format(
+                        obj.absolute_url(),
+                        start.month,
+                        start.year
+                    ),
+                    'notes': '',
+                    'effort': 0,
+                    'active': False,
+                    'people': []
+                }
 
-                for username, value in v.items():
+                for username, value in people.items():
                     new_prj['people'].append({
-                        'booking': FORMAT_BOOKING_VALUE(value),
+                        'booking': format_booking_value(value),
                         'effort': u'0',
                         'id': username,
                         'is_critical': False,
                         'is_free': False,
                         'role': u'',
-                        'url': "{0}/dashboard?employee={1}".format(
+                        'url': USR_URL_TEMPLATE.format(
                             portal_url,
                             username
                         )
                     })
+                data['projects'].append(new_prj)
 
-            data['projects'].append(new_prj)
         return data
 
     def get_effort_classes(self, person_data):
@@ -414,6 +383,49 @@ class Compass(api.views.Traversable, CompassMixIn):
         if last is not None:
             return '{0}history/{1}'.format(self.base_url(), last)
         return ''
+
+    def _get_project_info(self, project, brain=None):
+        info = {}
+        if brain is not None:
+            info.update({
+                'id': brain.getPath(),
+                'uid': brain.UID,
+                'url': brain.getURL(),
+                'name': brain.Title,
+                'status': brain.review_state,
+                'customer': brain.customer,
+                'priority': brain.priority
+            })
+        else:
+            pw = self.tools['portal_workflow']
+            status = pw.getStatusOf("project_workflow", project)
+            info.update({
+                'id': '/'.join(project.getPhysicalPath()),
+                'name': project.title_or_id(),
+                'status': status['review_state'],
+                'customer': project.customer,
+                'priority': project.priority
+            })
+        info.update({
+            'people': self._get_operatives(project),
+            'effort': str(project.compass_effort),
+            'notes': project.compass_notes,
+            'active': project.active
+        })
+        return info
+
+    @staticmethod
+    def _get_operatives(project):
+        people = []
+        if project.operatives is not None:
+            for operative in project.operatives:
+                if operative.active:
+                    people.append({
+                        'id': operative.user_id,
+                        'role': operative.role,
+                        'effort': str(operative.compass_effort)
+                    })
+        return people
 
     @staticmethod
     def _add_operative(user_id, role, effort, operatives):
