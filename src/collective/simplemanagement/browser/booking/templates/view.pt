@@ -21,7 +21,7 @@
       <dd tal:content="structure python: view.render_text(booking)"></dd>
     </dl>
 
-    <ul tal:condition="not: booking">
+    <ol tal:condition="not: booking">
       <li tal:repeat="booking view/bookings">
         <!-- <tal:text replace="structure python: view.render_text(booking)" /> -->
         <a tal:attributes="href python: view.view_url(booking)">
@@ -29,7 +29,7 @@
           <tal:text replace="structure python: view.render_text(booking)" />
         </a>
       </li>
-    </ul>
+    </ol>
 
   </div>
 

@@ -35,13 +35,13 @@ ELECTRIC_CHARS = {
 VALID_CHARS = '[\\w\\.\\-]'
 
 REGEXP = re.compile(
-    '({electric})({id})'.format(
+    '({electric})({id}+)'.format(
         electric='|'.join(ELECTRIC_CHARS.keys()),
         id=VALID_CHARS
     )
 )
 
-TEMPLATE = '<a href="{url}" target="_blank">{tag}<a>'
+TEMPLATE = '<a class="ref-link {class}" href="{url}" target="_blank">{tag}<a>'
 
 
 def format_text(booking, context=None):

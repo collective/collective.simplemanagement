@@ -36,7 +36,7 @@ class View(BrowserView):
             # engine needs unicode
             # TODO: booking transform text
             'url': view_url(booking),
-            'text': safe_unicode(book_widget.format_text(booking.text)),
+            'text': safe_unicode(book_widget.format_text(booking)),
             'time': booking.time,
             'date': self.context.toLocalizedTime(booking.date.isoformat()),
             'creator': safe_unicode(user_details)

@@ -28,6 +28,8 @@ e altre cose persistenti del vecchio booking
 * settings.off_duty_reasons e altri settings in registry ci sono ancora?
 * update translations
 * upgrade steps pulizia metadata `date` e index `booking_date`
+* format text booking: nascondere links a seconda del context (tipo: non mostriamo link a storia e progetto se siamo nella vista della storia)
+*
 
 * test pack d.fs:
 
