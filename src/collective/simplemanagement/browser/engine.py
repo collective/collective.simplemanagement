@@ -1,4 +1,4 @@
-#-*- coding: utf8 -*-
+#-*- coding: utf-8 -*-
 
 # taken from https://pypi.python.org/pypi/anthill.tal.macrorenderer/
 # and updated

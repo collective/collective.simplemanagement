@@ -19,6 +19,7 @@ from Products.CMFCore.utils import getToolByName
 from plone.app.uuid.utils import uuidToObject
 from plone import api
 
+from ... import _
 from ...api.content import get_project
 from ...api.content import BreadcrumbGetter
 from .interfaces import IBookWidget
@@ -41,7 +42,8 @@ REGEXP = re.compile(
     )
 )
 
-TEMPLATE = '<a class="ref-link {class}" href="{url}" target="_blank">{tag}<a>'
+TEMPLATE = ('<a class="ref-link portaltype-{class_}" '
+            'href="{url}" target="_blank">{tag}</a>')
 
 
 def format_text(booking, context=None):
@@ -56,6 +58,7 @@ def format_text(booking, context=None):
 
     def format_tag(m):
         tag = m.group(0)
+        css_class = 'none'
         if ELECTRIC_CHARS[m.group(1)] is None:
             # BBB: actually decide what to do
             #url = '/url/for/{tag}'.format(tag=m.group(2))
@@ -65,12 +68,17 @@ def format_text(booking, context=None):
                 url = context.absolute_url()
         else:
             try:
-                object_ = uuidToObject(references.pop(0)[1])
-                url = object_.absolute_url()
+                ref = references.pop(0)
             except IndexError:
-                url = ''
-        return TEMPLATE.format(url=url, tag=tag)
-    return REGEXP.sub(format_tag, booking.text)
+                css_class = 'missing'
+                url = u'javascript:alert('+_(u"Missing reference!")+u');'
+            else:
+                object_ = uuidToObject(ref[1])
+                css_class = ref[0].lower()
+                url = object_.absolute_url()
+        return TEMPLATE.format(url=url, tag=tag, class_=css_class)
+    result = REGEXP.sub(format_tag, booking.text)
+    return result
 
 
 class BookWidget(HTMLTextInputWidget, Widget):
@@ -83,6 +91,12 @@ class BookWidget(HTMLTextInputWidget, Widget):
     references_field = None
     tags_field = None
     valid_chars = VALID_CHARS
+
+    js_messages = {
+        'no_completions': _(u"No completions"),
+        'broken_message': _(u"We found broken references "
+                            u"and your booking has been invalidated")
+    }
 
     @property
     def autocomplete_url(self):
@@ -160,7 +174,12 @@ class ReferencesConverter(BaseDataConverter):
         if value:
             value = json.loads(value)
             for item in value:
-                field_value.append((item['portal_type'], item['uuid']))
+                field_value.append(
+                    (
+                        item['portal_type'].encode('utf-8'),
+                        item['uuid'].encode('utf-8')
+                    )
+                )
         return field_value
 
 

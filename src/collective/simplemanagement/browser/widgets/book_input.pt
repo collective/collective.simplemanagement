@@ -12,9 +12,10 @@
            data-tags=""
            data-valid-chars=""
            placeholder="activity @project @story !ticket #tag"
-           data-novalues="No completions"
+           data-novalues=""
+           data-broken-message=""
            autocomplete="off"
-           i18n:attributes="placeholder data-novalues"
+           i18n:attributes="placeholder"
            tal:attributes="id view/id;
                            name view/name;
                            class view/klass;
@@ -47,5 +48,7 @@
                            data-autocomplete-url view/autocomplete_url;
                            data-references view/references_selector;
                            data-tags view/tags_selector;
-                           data-valid-chars view/valid_chars" />
+                           data-valid-chars view/valid_chars;
+                           data-novalues view/js_messages/no_completions;
+                           data-broken-message view/js_messages/broken_message" />
 </html>

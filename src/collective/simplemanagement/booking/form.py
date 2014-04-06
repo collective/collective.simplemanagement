@@ -1,8 +1,12 @@
+from datetime import date
 from z3c.form import form, field, interfaces
+from plone.uuid.interfaces import IUUID
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from .. import api
 from ..interfaces import IBooking
+from ..interfaces import IStory
+from ..interfaces import IProject
 from ..browser.widgets.time_widget import TimeFieldWidget
 from ..browser.widgets.book_widget import BookFieldWidget
 from ..browser.widgets.book_widget import ReferencesFieldWidget
@@ -42,7 +46,34 @@ class BookingForm(form.AddForm):
 
     def updateWidgets(self):
         super(BookingForm, self).updateWidgets()
+        defaults = {
+            'date': date.today()
+        }
+        if IStory.providedBy(self.context):
+            project = api.content.get_project(self.context)
+            defaults.update({
+                'text': '@{project} @{story}'.format(
+                    project=project.getId(),
+                    story=self.context.getId()
+                ),
+                'references': [
+                    ('Project', IUUID(project)),
+                    ('Story', IUUID(self.context))
+                ]
+            })
+        elif IProject.providedBy(self.context):
+            defaults.update({
+                'text': '@{project}'.format(
+                    project=self.context.getId()
+                ),
+                'references': [
+                    ('Project', IUUID(self.context))
+                ]
+            })
         for name, widget in self.widgets.items():
+            if name in defaults:
+                converter = interfaces.IDataConverter(widget)
+                widget.value = converter.toWidgetValue(defaults[name])
             if name == 'text':
                 widget.references_field = self.widgets['references'].name
                 widget.tags_field = self.widgets['tags'].name

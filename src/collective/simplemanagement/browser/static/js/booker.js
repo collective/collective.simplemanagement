@@ -53,13 +53,15 @@
                     item = tags.shift();
                     self.stream.push({
                         portal_type: null,
-                        uuid: m[1],
+                        uuid: m[2],
+                        id: m[2],
                         start: m.index,
                         end: m.index + m[0].length
                     });
                 }
                 else {
                     item = references.shift();
+                    item.id = m[2];
                     item.start = m.index;
                     item.end = m.index + m[0].length;
                     self.stream.push(item);
@@ -68,21 +70,11 @@
         },
         add: function(item) {
             var i, l, replace = null, value = this.$root.val();
-            for(i=0, l=this.stream.length; i<l; i++) {
-                if((this.token[2] >= this.stream[i].start &&
-                        this.token[2] < this.stream[i].end) ||
-                   (this.token[3] >= this.stream[i].start &&
-                        this.token[3] < this.stream[i].end) ||
-                   (this.token[2] <= this.stream[i].start &&
-                        this.token[3] >= this.stream[i].end))
-                {
-                    replace = i;
-                }
-            }
             if(replace !== null)
                 this.stream.splice(replace, {
                     portal_type: item.portal_type,
                     uuid: item.uuid,
+                    id: item.id,
                     start: this.token[2],
                     end: this.token[3]
                 });
@@ -90,6 +82,7 @@
                 this.stream.push({
                     portal_type: item.portal_type,
                     uuid: item.uuid,
+                    id: item.id,
                     start: this.token[2],
                     end: this.token[3]
                 });
@@ -146,8 +139,14 @@
             }
         },
         autocomplete: function(method) {
-            var value, selected, values, values_length, selection,
-                offset = this.$root.offsetParent(), self = this;
+            var value, selected, values, values_length, selection, offset,
+                offsetParent, self = this;
+            offsetParent = this.$root.offsetParent().offset();
+            offset = this.$root.offset();
+            offset = {
+                top: offset.top - offsetParent.top,
+                left: offset.left - offsetParent.left
+            };
             value = this.$root.val();
             selected = this.autocomplete_selected;
             values = this.autocomplete_values;
@@ -183,9 +182,10 @@
                     this.autocomplete_selected = 0;
                     if(!this.$dropdown.is(':visible')) {
                         this.$dropdown.css({
-                            top: (offset.top + this.$root.height()) + 'px',
-                            left: (offset.left +
-                                   (this.token[2] * this.font_size)) + 'px'
+                            'top': (offset.top +
+                                    this.$root.outerHeight()) + 'px',
+                            'left': (offset.left +
+                                     (this.token[2] * this.font_size)) + 'px'
                         });
                         this.$dropdown.show();
                     }
@@ -241,17 +241,36 @@
             e = i;
             return [electric_char, token, s, e];
         },
-        cleanup: function() {
-            var i, l, item, regex, stream = [], self = this;
+        cleanup: function(force) {
+            var i, l, item, regex, found, stream = [], broken = false,
+                value = this.$root.val(), self = this;
             regex = this.get_regex();
-            XRegExp.forEach(this.$root.val(), regex, function(m) {
+            XRegExp.forEach(value, regex, function(m) {
+                found = false;
                 for(i=0, l=self.stream.length; i<l; i++) {
-                    if(self.stream[i].id == m[1])
-                        stream.push(self.stream[i]);
+                    item = self.stream[i];
+                    if(item.id === m[2]) {
+                        found = true;
+                        item.start = m.index;
+                        item.end = m.index + m[0].length;
+                        stream.push(item);
+                    }
+                }
+                if(!found && force) {
+                    broken = true;
                 }
             });
+            if(force && broken) {
+                this.$root.val('');
+                stream = [];
+            }
             this.stream = stream;
             this.save_related();
+            if(force && broken)
+                sm.messages.addMessage({
+                    type: 'warning',
+                    message: this.$root.attr('data-broken-message')
+                }, false);
         },
         init: function() {
             var self = this;
@@ -294,7 +313,7 @@
                 }
             });
             this.$root.keypress(function(e) {
-                self.cleanup();
+                self.cleanup(false);
                 if(e.which) {
                     var ch;
                     var position = self.$root.caret();
@@ -318,8 +337,9 @@
             });
             this.$root.blur(function() {
                 self.autocomplete('close');
-                self.cleanup();
+                self.cleanup(true);
             });
+            this.$root.caret(this.$root.val().length);
         }
     };
 
