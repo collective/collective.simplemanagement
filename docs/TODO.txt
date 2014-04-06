@@ -1,10 +1,6 @@
 [ok]* Oggetto Booking(Persistent)
-[ok]* Storage booking (LOBTree):
-  - tutti i metodi tranne query
-  - catalogo con zope.catalog e metodo query
-  - indicizzare date, owner
-  - indicizzare il campo references (con Simo)
-
+[ok]* Storage booking + catalog
+* indicizzazione campo references -> se viene passata solo la storia indicizzare anche il progetto
 
 [ok]* Upgrade step migrazione booking esistenti
 * Traverse per booking object
