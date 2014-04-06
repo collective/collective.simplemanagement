@@ -28,6 +28,9 @@ class TestBooking(unittest.TestCase):
                                   'test-project-2',
                                   title=u"Test project 2")
         self.project2 = self.portal['test-project-2']
+        for i in xrange(1, 4):
+            self.project1.invokeFactory('Story', 'story-%d' % i,
+                                        title=(u"Test story %d" % i))
         login(self.portal, TEST_USER_NAME)
         # self.setup_bookings()
         self.bookings = []
@@ -81,6 +84,20 @@ class TestBooking(unittest.TestCase):
         storage = api.booking.get_booking_storage()
         self.assertTrue(booking.uid in storage)
         self.assertEqual(booking, storage[booking.uid])
+
+        # default for project
+        values = {
+            'text': 'Booking now!',
+            'time': 2,
+            'references': [
+                # unicode string gets converted!
+                (u'story', self.project1['story-1'].UID()),
+            ],
+        }
+        booking = api.booking.create_booking(**values)
+        self.assertEqual(booking.references_dict['project'],
+                         self.project1.UID())
+        self.assertTrue(isinstance(booking.date, date))
 
     def test_get_bookings(self):
         dates = [

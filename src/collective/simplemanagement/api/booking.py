@@ -1,8 +1,10 @@
+#-*- coding: utf-8 -*-
+
 from datetime import date
 from decimal import Decimal
 from zope.component import getUtility
 
-from z3c.relationfield.relation import create_relation
+from plone.app.uuid.utils import uuidToObject
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
@@ -12,6 +14,7 @@ from ..interfaces import IProject
 from ..interfaces import IStory
 from ..interfaces import IBookingStorage
 from ..utils import quantize
+from .content import get_project
 
 
 def to_utf8(x):
@@ -30,7 +33,29 @@ convert_funcs = {
     'text': safe_unicode,
     'references': to_references,
     'tags': lambda x: set([safe_unicode(y) for y in x]),
-    'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
+}
+
+
+def to_project(**kw):
+    prj = None
+    ref = kw.get('references', [])
+    ref_dict = dict(ref)
+    if 'story' in ref_dict.keys() and not 'project' in ref_dict.keys():
+        story = uuidToObject(ref_dict.get('story'))
+        prj = story and get_project(story)
+        if prj:
+            ref.insert(0, ('project', prj.UID()))
+    return ref
+
+
+def to_date(**kw):
+    return kw.get('date', date.today())
+
+
+default_funcs = {
+    # we always want a project if a story is provided
+    'references': to_project,
+    'date': to_date,
 }
 
 
@@ -42,11 +67,11 @@ def create_booking(**values):
     """ create booking.
         `values` must contains booking params.
     """
-    if not 'date' in values.keys():
-        values['date'] = date.today()
     for k, v in values.iteritems():
         if v and k in convert_funcs:
             values[k] = convert_funcs[k](v)
+    for k in default_funcs.iterkeys():
+        values[k] = default_funcs[k](**values)
     storage = get_booking_storage()
     return storage.create(**values)
 
