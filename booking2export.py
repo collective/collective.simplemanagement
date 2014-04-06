@@ -123,9 +123,10 @@ def export_bookings(site):
         }
         # get references
 
+        # We use the portal type, so it needs to be capitalized.
         references = [
-            ('project', proj.UID()),
-            ('story', story.UID()),
+            ('Project', proj.UID()),
+            ('Story', story.UID()),
         ]
         item['references'] = references
         if obj.getRelatedItems():

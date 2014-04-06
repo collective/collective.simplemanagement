@@ -4,7 +4,10 @@ from persistent import Persistent
 
 from zope.interface import implementer
 from zope.schema.fieldproperty import FieldProperty
+from plone.uuid.interfaces import IUUID
+from plone.app.uuid.utils import uuidToObject
 
+from .. import api
 from ..interfaces import IBooking
 
 
@@ -33,8 +36,13 @@ class Booking(Persistent):
         self.tags = set(sorted(tags or []))
 
     def index_references(self):
+        references = self.references_dict
+        uuids = set(references.values())
+        if 'Project' not in references and 'Story' in references:
+            story = uuidToObject(references['Story'])
+            uuids.add(IUUID(api.content.get_project(story)))
         # we indexes only the uid of the references
-        return [x[1] for x in self.references]
+        return [ u for u in uuids ]
 
     @property
     def references_dict(self):

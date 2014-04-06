@@ -69,7 +69,7 @@ class TestBooking(unittest.TestCase):
             'time': 2,
             'references': [
                 # unicode string gets converted!
-                (u'project', self.project1.UID()),
+                (u'Project', self.project1.UID()),
             ],
             'tags': set(sorted(['foo', 'bar', 'baz'])),
         }
@@ -96,19 +96,19 @@ class TestBooking(unittest.TestCase):
         ]
         user1 = u'johndoe'
         user1_refs = [
-            ('project', self.project1.UID()),
-            ('story', self.project1['test-story-1'].UID()),
+            ('Project', self.project1.UID()),
+            ('Story', self.project1['test-story-1'].UID()),
         ]
         user1_tags = ['boo', 'baz']
         user2 = u'popeye'
         user2_refs = [
-            ('project', self.project1.UID()),
-            ('story', self.project1['test-story-2'].UID()),
+            ('Project', self.project1.UID()),
+            ('Story', self.project1['test-story-2'].UID()),
         ]
         user2_tags = ['foo', 'baz']
         user3 = 'goofy'
         user3_refs = [
-            ('project', self.project2.UID()),
+            ('Project', self.project2.UID()),
         ]
         user3_tags = ['boo', 'foo']
         self.setup_bookings(dates[:4], owner=user1,
