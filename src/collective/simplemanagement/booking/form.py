@@ -28,10 +28,10 @@ class BookingForm(form.AddForm):
     name = 'booking_form'
 
     def create(self, data):
-        return api.booking.create_booking(self.context, data, reindex=False)
+        return api.booking.create_booking(**data)
 
     def add(self, obj):
-        obj.reindexObject()
+        pass
 
     def nextURL(self):
         return self.context.absolute_url()

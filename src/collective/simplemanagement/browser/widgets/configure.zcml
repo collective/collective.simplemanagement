@@ -82,13 +82,13 @@
 
   <adapter
     factory=".book_widget.ReferencesConverter"
-    for="zope.schema.interfaces.IDecimal
+    for="zope.schema.interfaces.IList
          .interfaces.IReferencesWidget"
     />
 
   <adapter
     factory=".book_widget.TagsConverter"
-    for="zope.schema.interfaces.IDecimal
+    for="zope.schema.interfaces.ISet
          .interfaces.ITagsWidget"
     />
 
@@ -112,6 +112,50 @@
     layer="z3c.form.interfaces.IFormLayer"
     widget=".interfaces.IBookWidget"
     />
+
+  <configure package="z3c.form">
+    <z3c:widgetTemplate
+        mode="display"
+        template="browser/text_display.pt"
+        layer="z3c.form.interfaces.IFormLayer"
+        widget="collective.simplemanagement.browser.widgets.interfaces.IReferencesWidget"
+        />
+
+    <z3c:widgetTemplate
+        mode="input"
+        template="browser/text_input.pt"
+        layer="z3c.form.interfaces.IFormLayer"
+        widget="collective.simplemanagement.browser.widgets.interfaces.IReferencesWidget"
+        />
+
+    <z3c:widgetTemplate
+        mode="hidden"
+        template="browser/text_hidden.pt"
+        layer="z3c.form.interfaces.IFormLayer"
+        widget="collective.simplemanagement.browser.widgets.interfaces.IReferencesWidget"
+        />
+
+    <z3c:widgetTemplate
+        mode="display"
+        template="browser/text_display.pt"
+        layer="z3c.form.interfaces.IFormLayer"
+        widget="collective.simplemanagement.browser.widgets.interfaces.ITagsWidget"
+        />
+
+    <z3c:widgetTemplate
+        mode="input"
+        template="browser/text_input.pt"
+        layer="z3c.form.interfaces.IFormLayer"
+        widget="collective.simplemanagement.browser.widgets.interfaces.ITagsWidget"
+        />
+
+    <z3c:widgetTemplate
+        mode="hidden"
+        template="browser/text_hidden.pt"
+        layer="z3c.form.interfaces.IFormLayer"
+        widget="collective.simplemanagement.browser.widgets.interfaces.ITagsWidget"
+        />
+  </configure>
 
   <browser:page
     for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"

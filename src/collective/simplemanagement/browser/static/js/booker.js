@@ -246,7 +246,7 @@
             regex = this.get_regex();
             XRegExp.forEach(this.$root.val(), regex, function(m) {
                 for(i=0, l=self.stream.length; i<l; i++) {
-                    if(self.stream[i].start == m.index)
+                    if(self.stream[i].id == m[1])
                         stream.push(self.stream[i]);
                 }
             });

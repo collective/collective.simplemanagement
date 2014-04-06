@@ -158,7 +158,7 @@ class ReferencesConverter(BaseDataConverter):
     def toFieldValue(self, value):
         field_value = []
         if value:
-            value = json.load(value)
+            value = json.loads(value)
             for item in value:
                 field_value.append((item['portal_type'], item['uuid']))
         return field_value
@@ -177,7 +177,7 @@ class TagsConverter(BaseDataConverter):
     def toFieldValue(self, value):
         field_value = set()
         if value:
-            field_value = set(json.load(value))
+            field_value = set(json.loads(value))
         return field_value
 
 
