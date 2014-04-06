@@ -24,10 +24,15 @@ e altre cose persistenti del vecchio booking
 * settings.off_duty_reasons e altri settings in registry ci sono ancora?
 * update translations
 * upgrade steps pulizia metadata `date` e index `booking_date`
-* format text booking: nascondere links a seconda del context (tipo: non mostriamo link a storia e progetto se siamo nella vista della storia)
-*
+* format text booking
+  * nascondere links a seconda del context (tipo: non mostriamo link a storia e progetto se siamo nella vista della storia)
+  * verificare markup generato, ci sono link vuoti o inutili come sul testo:
+    <a target="_blank" href="http://localhost:8080/simplemanagement/progetti/unibo-internal">@unibo-internal</a>
+    <a> </a>
+    <a target="_blank" href="http://localhost:8080/simplemanagement/progetti/unibo-internal/rendicontazione/7-giugno-28-giugno">@7-giugno-28-giugno</a>
+    <a> chiusura iterazione </a>
 
-* test pack d.fs:
+* [simahawk] test pack d.fs, forse corrotto nel mio setup locale dopo copia da stage:
 
 CorruptedError: /home/simahawk/dev/plone/p4py27/simplemgmt/var/filestorage/Data.fs:328569969:invalid previous pointer: 863407617
 2014-04-06 00:06:55 ERROR Zope.SiteErrorLog 1396735615.150.936418614102 http://localhost:8080/Control_Panel/Database/main/manage_pack
