@@ -1,16 +1,10 @@
 New booking
 -----------
 
- * pulizia totale booking holes dalle viste [WIP]
- * Sistemare conteggi (grep get_bookings) [WIP]
- * Sistemare i listing [WIP]
- * Indicizzazione campo references
-     (se viene passata solo la storia indicizzare anche il progetto) [WIP]
  * Traverse per booking object
  * Fix loadcontent profile that still creates dexterity object for booking
  * Sistemare form a caso in giro per l'universo (tipo dashboard)
- * Sistemare conteggi (grep get_bookings)
- * settings.off_duty_reasons e altri settings in registry ci sono ancora?
+ * settings.off_duty_reasons e altri settings in registry ci sono ancora? No
  * update translations
  * upgrade steps pulizia metadata `date` e index `booking_date`
  * form su vista view della storia si rompe per colpa di MacroRenderer
