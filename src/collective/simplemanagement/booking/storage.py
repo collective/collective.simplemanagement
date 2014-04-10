@@ -55,8 +55,7 @@ class BookingStorage(Persistent):
         if not booking.uid:
             # maybe we are not using `create` method
             booking.uid = self._get_next_uid()
-            catalog_id = self._get_next_cat_id()
-            booking.cat_id = catalog_id
+            booking.cat_id = self._get_next_cat_id()
 
         self.bookings[booking.uid] = booking
         self.index(booking)
@@ -111,7 +110,7 @@ class BookingStorage(Persistent):
         return weight, merged
 
     def _query(self, query, start=0, limit=None):
-        results = None
+        results = []
         query = prepare_query(self.catalog, query)
 
         multiple_query = []
@@ -153,8 +152,9 @@ class BookingStorage(Persistent):
             _results = _results.items()
             get_id = lambda x: x[0]
 
+        limit = limit or len(_results)
         results = [self._catalog_id_to_object(get_id(item))
-                   for item in _results]
+                   for item in _results][start:limit]
 
         return results
 
