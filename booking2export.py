@@ -96,12 +96,12 @@ def export_bookings(site):
     catalog = site.portal_catalog
 
     all_bookings = catalog(portal_type='Booking')
-
-    print 'FOUND', len(all_bookings), 'bookings'
+    total = len(all_bookings)
+    print 'FOUND', total, 'bookings'
     print 'EXPORTED STARTED'
 
     for i, brain in enumerate(all_bookings):
-        print 'PROCESSING', brain.getPath()
+        print i + 1, '/', total, ') PROCESSING:', brain.getPath()
         obj = brain.getObject()
 
         proj = api.content.get_project(obj)
@@ -153,13 +153,15 @@ bookings = export_bookings(site)
 with open(FNAME, 'w') as output:
     output.write(json.dumps(bookings, cls=ExtendedJSONEncoder))
 
+print 'REBUILDING CATALOG...'
+site.portal_catalog.clearFindAndRebuild()
+print 'CATALOG REBUILD DONE'
+
 remove_utility(site)
 
+transaction.commit()
 stop = builtin_time.time()
-
 
 print '### EXPORT BOOKING FINISHED ###'
 print 'Took ', stop - start, 'seconds, aka ', (stop - start) / 60, 'minutes.'
 print 'EXPORTED to "', FNAME, '" and DELETED', len(bookings), 'bookings.'
-
-transaction.commit()

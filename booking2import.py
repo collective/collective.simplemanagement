@@ -67,8 +67,8 @@ with open(fname, 'r') as jsonfile:
 
 import_bookings(bookings)
 
-stop = time.time()
 transaction.commit()
+stop = time.time()
 
 print '### IMPORT BOOKING FINISHED ###'
 print 'Took ', stop - start, 'seconds, aka ', (stop - start) / 60, 'minutes.'
