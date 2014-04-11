@@ -27,4 +27,20 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <gs:importStep
+      name="collective.simplemanagement.booking.install"
+      title="Install SimpleManagement booking"
+      description="Creates the booking utility"
+      handler=".booking.utils.install_utility">
+    <depends name="componentregistry"/>
+  </gs:importStep>
+
+  <gs:importStep
+      name="collective.simplemanagement.booking.uninstall"
+      title="Uninstall SimpleManagement booking"
+      description="Deletes the booking utility and your booking!"
+      handler=".booking.utils.remove_utility">
+    <depends name="componentregistry"/>
+  </gs:importStep>
+
 </configure>
