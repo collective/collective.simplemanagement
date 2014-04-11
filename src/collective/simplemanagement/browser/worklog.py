@@ -138,14 +138,11 @@ class WorklogBackend(WorklogBase):
         )
 
     def get_bookings(self, date_, resource):
-        booking_date = DateTime(date_.strftime("%Y-%m-%d"))
-
         bookings = api.booking.get_bookings(
             project=self.context,
             userid=resource,
-            date=booking_date
+            date=date_
         )
-
         return bookings
 
     def monthly_bookings(self):

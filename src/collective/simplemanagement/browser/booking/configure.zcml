@@ -9,7 +9,7 @@
     name="booking"
     layer="...interfaces.IBrowserLayer"
     class=".view.View"
-    permission="zope2.View"
+    permission="simplemanagement.ManageProject"
     template="templates/view.pt"
     />
 

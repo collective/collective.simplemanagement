@@ -20,6 +20,7 @@ class Booking(Persistent):
     uid = None
     # define getter/setter of attributes using zope schema for validation
     date = FieldProperty(IBooking['date'])
+    time = FieldProperty(IBooking['time'])
     text = FieldProperty(IBooking['text'])
     owner = FieldProperty(IBooking['owner'])
     references = FieldProperty(IBooking['references'])

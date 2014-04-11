@@ -10,6 +10,7 @@ import sys
 import json
 import time
 import datetime
+import decimal
 
 from zope.component.hooks import setSite
 
@@ -33,10 +34,25 @@ setSite(site)
 
 start = time.time()
 
+def ___wipe(site):
+    """
+    **************************************
+    ***** USE THIS AT YOUR OWN RISK! *****
+    **************************************
+    """
+    util = get_utility(site)
+    util.bookings.clear()
+    util.mapping.clear()
+    util.catalog.clear()
+
+
+def get_utility(site):
+    sm = site.getSiteManager()
+    return sm.queryUtility(IBookingStorage)
+
 
 def register_storage(site):
-    sm = site.getSiteManager()
-    utility = sm.queryUtility(IBookingStorage)
+    utility = get_utility(site)
     if utility is None:
         utility = BookingStorage()
         sm.registerUtility(utility, IBookingStorage)
@@ -50,20 +66,21 @@ def convert_date(dt):
 
 
 def import_bookings(bookings):
+    total = len(bookings)
     for i, item in enumerate(bookings):
-        print i
+        print i, '/', total
         item['date'] = convert_date(item['date'])
         api.booking.create_booking(**item)
         if not i % 1000:
             transaction.savepoint(optimistic=True)
 
-
+import pdb;pdb.set_trace()
 register_storage(site)
 
 
 bookings = []
 with open(fname, 'r') as jsonfile:
-    bookings = json.loads(jsonfile.read())
+    bookings = json.loads(jsonfile.read(), parse_float=decimal.Decimal)
 
 import_bookings(bookings)
 

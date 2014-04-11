@@ -99,6 +99,8 @@ def get_bookings(owner=None, references=None,
     ``date`` datetime object or tuple of datetime objects to query a range.
     ``sort`` disable sorting.
     """
+    # if kwargs.get('userid') == 's.orsi':
+    #     import pdb;pdb.set_trace()
     query = {}
     if owner or kwargs.get('userid'):
         query['owner'] = owner or kwargs.get('userid')
@@ -108,7 +110,8 @@ def get_bookings(owner=None, references=None,
     if project:
         if IProject.providedBy(project):
             project = project.UID()
-        references.append(project)
+        if isinstance(project, basestring):
+            references.append(project)
 
     if references:
         if not isinstance(references, (list, tuple)):
