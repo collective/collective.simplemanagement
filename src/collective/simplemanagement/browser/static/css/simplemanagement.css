@@ -168,6 +168,8 @@ table.listing tbody tr td.stories-container .actions {
     font-size: 85%;
     width: 100%;
 }
+body.portaltype-story .booking .listing .ref-link{ display: none }
+
 .booking .listing .booking-details .label{ font-size: 95% }
 .booking .listing .booking-details .description{ display: none }
 
