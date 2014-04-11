@@ -1,0 +1,15 @@
+SM BOOKING 2 UPGRADE STEPS
+
+- BACKUP FIRST!
+- on sm master: pull (to get the export script)
+- cd to buildout dir and run export script
+- bin/instance run src/collective.simplemanagement/booking2export.py $PLONESITE
+- back to src/collective.simplemanagement
+- checkout sm booking-2 branch
+- rm `find -name *.pyc` <- DO THIS!
+- back to buildout dir
+- run buildout
+- run import script
+- bin/instance run src/collective.simplemanagement/booking2import.py $PLONESITE
+- run instance
+- ZMI -> portal_setup -> import upgrade step "New booking"
