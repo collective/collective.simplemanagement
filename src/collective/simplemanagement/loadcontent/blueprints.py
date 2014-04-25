@@ -4,9 +4,11 @@ from datetime import date, timedelta
 
 from zope.interface import directlyProvides
 from zope.interface import implementer
+from zope.component import getUtility
 
 from collective.transmogrifier.interfaces import ISectionBlueprint
 from collective.transmogrifier.interfaces import ISection
+from collective.simplemanagement.interfaces import IBookingStorage
 
 from ..structures import Resource
 from ..structures import Environment
@@ -29,6 +31,23 @@ class SetElementsMixIn(object):
 
     def transform(self, value):
         raise NotImplementedError
+
+    def __iter__(self):
+        for item in self.previous:
+            if not item.get(self._key):
+                yield item
+                continue
+
+            item[self._key] = self.transform(item[self._key])
+            yield item
+
+
+@implementer(ISection)
+class BookingConstructor(object):
+
+    def __init__(self, transmogrifier, name, options, previous):
+        self.previous = previous
+        self.storage = getUtiity(IBookingStorage)
 
     def __iter__(self):
         for item in self.previous:

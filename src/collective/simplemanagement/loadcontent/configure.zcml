@@ -23,4 +23,7 @@
     <utility component=".blueprints.ConvertDate"
       name="simplemanagement.convert_date" />
 
+    <utility component=".blueprints.BookingConstructor"
+      name="simplemanagement.booking_constructor" />
+
 </configure>
