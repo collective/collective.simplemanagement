@@ -91,11 +91,11 @@ class TestBooking(unittest.TestCase):
             'time': 2,
             'references': [
                 # unicode string gets converted!
-                (u'story', self.project1['story-1'].UID()),
+                (u'Story', self.project1['story-1'].UID()),
             ],
         }
         booking = api.booking.create_booking(**values)
-        self.assertEqual(booking.references_dict['project'],
+        self.assertEqual(booking.references_dict['Project'],
                          self.project1.UID())
         self.assertTrue(isinstance(booking.date, date))
 

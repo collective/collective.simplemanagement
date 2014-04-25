@@ -14,7 +14,7 @@ from ..interfaces import IProject
 from ..interfaces import IStory
 from ..interfaces import IBookingStorage
 from ..utils import quantize
-from .content import get_project
+from .content import get_project as get_project_from_context
 
 
 def to_utf8(x):
@@ -28,10 +28,15 @@ def to_references(x):
             for y in x]
 
 
+def to_time(x):
+    return Decimal(x)
+
+
 convert_funcs = {
     'owner': to_utf8,
     'text': safe_unicode,
     'references': to_references,
+    'time': to_time,
     'tags': lambda x: set([safe_unicode(y) for y in x]),
 }
 
@@ -40,11 +45,11 @@ def to_project(**kw):
     prj = None
     ref = kw.get('references', [])
     ref_dict = dict(ref)
-    if 'story' in ref_dict.keys() and not 'project' in ref_dict.keys():
-        story = uuidToObject(ref_dict.get('story'))
-        prj = story and get_project(story)
+    if 'Story' in ref_dict.keys() and not 'Project' in ref_dict.keys():
+        story = uuidToObject(ref_dict.get('Story'))
+        prj = story and get_project_from_context(story)
         if prj:
-            ref.insert(0, ('project', prj.UID()))
+            ref.append(('Project', prj.UID()))
     return ref
 
 
@@ -99,8 +104,6 @@ def get_bookings(owner=None, references=None,
     ``date`` datetime object or tuple of datetime objects to query a range.
     ``sort`` disable sorting.
     """
-    # if kwargs.get('userid') == 's.orsi':
-    #     import pdb;pdb.set_trace()
     query = {}
     if owner or kwargs.get('userid'):
         query['owner'] = owner or kwargs.get('userid')

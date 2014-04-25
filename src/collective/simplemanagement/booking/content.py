@@ -39,13 +39,8 @@ class Booking(Persistent):
     def index_references(self):
         references = self.references_dict
         uuids = set(references.values())
-        if 'Project' not in references and 'Story' in references:
-            # XXX: do we still need this?
-            # we set default project on creation.
-            story = uuidToObject(references['Story'])
-            uuids.add(IUUID(api.content.get_project(story)))
         # we indexes only the uid of the references
-        return [ u for u in uuids ]
+        return list(uuids)
 
     @property
     def references_dict(self):
@@ -53,11 +48,11 @@ class Booking(Persistent):
 
     @property
     def project(self):
-        return self.references_dict.get('project')
+        return self.references_dict.get('Project')
 
     @property
     def story(self):
-        return self.references_dict.get('story')
+        return self.references_dict.get('Story')
 
     @property
     def ticket(self):

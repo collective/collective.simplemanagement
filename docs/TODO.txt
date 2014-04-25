@@ -9,7 +9,7 @@ New booking
  * update translations
  * upgrade steps pulizia metadata `date` e index `booking_date`
  * form su vista view della storia si rompe per colpa di MacroRenderer
- * nascondere links a seconda del context
+ [ok 4 story]* nascondere links a seconda del context
      (tipo: non mostriamo link a storia e progetto
       se siamo nella vista della storia)
 

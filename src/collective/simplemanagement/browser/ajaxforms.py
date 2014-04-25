@@ -99,7 +99,6 @@ class ReloadBooking(Mixin):
         template = PageTemplateFile("templates/macros.pt")
 
         bookings = view.get_booking()
-        import pdb; pdb.set_trace() # XXX: pdb breakpoint
         renderer = MacroRenderer(template,
                                  'booking-list',
                                  context=self.context)
