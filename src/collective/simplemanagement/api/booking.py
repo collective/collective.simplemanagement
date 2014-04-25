@@ -163,3 +163,11 @@ def get_timings(context, portal_catalog=None):
         'difference': quantize(difference),
         'time_status': get_difference_class(estimate, hours)
     }
+
+
+def get_project(booking):
+    return uuidToObject(booking.project)
+
+
+def get_story(booking):
+    return uuidToObject(booking.story)

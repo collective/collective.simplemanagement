@@ -40,6 +40,8 @@ class Booking(Persistent):
         references = self.references_dict
         uuids = set(references.values())
         if 'Project' not in references and 'Story' in references:
+            # XXX: do we still need this?
+            # we set default project on creation.
             story = uuidToObject(references['Story'])
             uuids.add(IUUID(api.content.get_project(story)))
         # we indexes only the uid of the references

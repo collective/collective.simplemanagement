@@ -221,12 +221,11 @@ class WorklogBackend(WorklogBase):
         )
         booking_details = []
         for booking in bookings_:
-            booking = booking.getObject()
             booking_details.append({
                 'type': 'booking',
-                'project': api.content.get_project(booking).title,
-                'story': api.content.get_story(booking).title,
-                'booking': booking.Title(),
+                'project': api.booking.get_project(booking).title,
+                'story': api.booking.get_story(booking).title,
+                'booking': booking.text,
                 'hours': str(quantize(booking.time))
             })
         return json.dumps(booking_details)
