@@ -1,7 +1,6 @@
 New booking
 -----------
 
- * I booking non persistono
  * Tag devo leggerle dallo storage
  * Traverse per booking object
  * Sistemare form a caso in giro per l'universo (tipo dashboard)
@@ -9,7 +8,4 @@ New booking
  * update translations
  * upgrade steps pulizia metadata `date` e index `booking_date`
  * form su vista view della storia si rompe per colpa di MacroRenderer
- [ok 4 story]* nascondere links a seconda del context
-     (tipo: non mostriamo link a storia e progetto
-      se siamo nella vista della storia)
 

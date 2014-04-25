@@ -4,6 +4,7 @@ from datetime import date
 from decimal import Decimal
 from zope.component import getUtility
 
+from plone.uuid.interfaces import IUUID
 from plone.app.uuid.utils import uuidToObject
 
 from Products.CMFCore.utils import getToolByName
@@ -157,7 +158,7 @@ def get_timings(context, portal_catalog=None):
             'portal_type': 'Story'
         })
         estimate = sum([s.estimate for s in stories], Decimal("0.00"))
-    bookings = get_bookings(project=context)
+    bookings = get_bookings(references=IUUID(context))
     hours = sum([b.time for b in bookings if b.time], Decimal("0.00"))
     difference = estimate - hours
     return {
