@@ -36,6 +36,11 @@ start = time.time()
 
 def ___wipe(site):
     """
+    Wipes sites bookings.
+    Use this
+    (via pdb in this script for instance)
+    if you need to drop all bookings
+    to start with a fresh new import.
     **************************************
     ***** USE THIS AT YOUR OWN RISK! *****
     **************************************
@@ -44,6 +49,7 @@ def ___wipe(site):
     util.bookings.clear()
     util.mapping.clear()
     util.catalog.clear()
+    print '*** BOOKING STORAGE WIPED OUT! ***'
 
 
 def get_utility(site):
@@ -74,9 +80,7 @@ def import_bookings(bookings):
         if not i % 1000:
             transaction.savepoint(optimistic=True)
 
-import pdb;pdb.set_trace()
 register_storage(site)
-
 
 bookings = []
 with open(fname, 'r') as jsonfile:
