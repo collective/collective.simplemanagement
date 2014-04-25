@@ -1,15 +1,20 @@
 import logging
 import re
+from decimal import Decimal
 from datetime import date, timedelta
 
 from zope.interface import directlyProvides
 from zope.interface import implementer
-from zope.component import getUtility
+
+from plone.uuid.interfaces import IUUID
+
+from Products.CMFCore.utils import getToolByName
 
 from collective.transmogrifier.interfaces import ISectionBlueprint
 from collective.transmogrifier.interfaces import ISection
-from collective.simplemanagement.interfaces import IBookingStorage
+from collective.transmogrifier.utils import Condition
 
+from .. import api
 from ..structures import Resource
 from ..structures import Environment
 from ..structures import Milestone
@@ -46,17 +51,50 @@ class SetElementsMixIn(object):
 class BookingConstructor(object):
 
     def __init__(self, transmogrifier, name, options, previous):
+        self.context = transmogrifier.context
+        self.portal_url = getToolByName(self.context, 'portal_url')
         self.previous = previous
-        self.storage = getUtiity(IBookingStorage)
+        self.condition = None
+        if 'condition' in options:
+            self.condition = Condition(
+                options['condition'], transmogrifier, name, options
+            )
 
     def __iter__(self):
         for item in self.previous:
-            if not item.get(self._key):
-                yield item
+            if self.condition and self.condition(item):
+                data = {
+                    'owner': item['creators'],
+                    'date': item['date'],
+                    'time': Decimal(item['time']),
+                    'text': item['description']
+                }
+                path = '/'.join(
+                    self.portal_url.getPortalObject().getPhysicalPath()
+                ) + item['_path']
+                story_path = path.rsplit('/', 1)[0]
+                story = self.context.unrestrictedTraverse(story_path, None)
+                if story is not None:
+                    data['text'] = u'@{id} {text}'.format(
+                        id=story.getId(),
+                        text=data['text']
+                    )
+                    data['references'] = [('Story', IUUID(story))]
+                    project = api.content.get_project(story)
+                    if project is not None:
+                        data['text'] = u'@{id} {text}'.format(
+                            id=project.getId(),
+                            text=data['text']
+                        )
+                        data['references'].insert(
+                            0,
+                            ('Project', IUUID(project))
+                        )
+                api.booking.create_booking(**data)
                 continue
-
-            item[self._key] = self.transform(item[self._key])
             yield item
+
+directlyProvides(BookingConstructor, ISectionBlueprint)
 
 
 class SetOperatives(SetElementsMixIn):

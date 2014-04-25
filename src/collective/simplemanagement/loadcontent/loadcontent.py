@@ -102,5 +102,6 @@ def load_content(context):
     if HAS_TRANSMOGRIFIER:
         transmogrifier = Transmogrifier(portal)
         transmogrifier(u'loadcontent')
+        transmogrifier(u'loadbookings')
         return 'Imported content types...'
     return 'Please install collective.transmogrifier to use this import step'
