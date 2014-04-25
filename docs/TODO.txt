@@ -1,7 +1,7 @@
 New booking
 -----------
 
- * Fix loadcontent profile that still creates dexterity object for booking
+ * I booking non persistono
  * Tag devo leggerle dallo storage
  * Traverse per booking object
  * Sistemare form a caso in giro per l'universo (tipo dashboard)
