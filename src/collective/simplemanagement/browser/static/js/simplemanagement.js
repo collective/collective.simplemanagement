@@ -14,8 +14,9 @@
             './reload-booking',
             function(data) {
                 if (data.success === true) {
-                    $(sel).html(data.bookings_html);
-                    $('table.timing').html(data.timing_html);
+                    // $(sel).html(data.bookings_html);
+                    // $('table.timing').html(data.timing_html);
+                    window.location.reload();
                 } else {
                     alert(data.error);
                 }

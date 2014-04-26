@@ -1,15 +1,13 @@
 #-*- coding: utf-8 -*-
 import json
 
-from zope.pagetemplate.pagetemplatefile import PageTemplateFile
-
 from Products.Five.browser import BrowserView
 
 from .. import logger
 from .story.view import View as StoryView
 from ..booking import BookingForm
 from .. import _
-from .engine import MacroRenderer
+from .. import api
 
 
 class Mixin(BrowserView):
@@ -40,7 +38,7 @@ class Mixin(BrowserView):
                 'error': self.error_msg + '\n' + str(e)
             }
         self.request.response.setHeader("Content-type", "application/json")
-        return json.dumps(result)
+        return json.dumps(result, cls=api.jsonutils.ExtendedJSONEncoder)
 
     def process(self):
         FormKlass = getattr(self, 'FormKlass')
@@ -96,23 +94,12 @@ class ReloadBooking(Mixin):
 
     def process(self):
         view = self.context.restrictedTraverse('view')
-        template = PageTemplateFile("templates/macros.pt")
-
-        bookings = view.get_booking()
-        renderer = MacroRenderer(template,
-                                 'booking-list',
-                                 context=self.context)
-        bookings_html = renderer(**dict(booking_list=bookings))
-
+        bookings = view.get_booking()[:5]
         timing = view.timing()
-        renderer = MacroRenderer(template,
-                                 'story-timing',
-                                 context=self.context)
-        timing_html = renderer(**dict(timing=timing))
 
         self.success.update({
-            'bookings_html': bookings_html,
-            'timing_html': timing_html
+            'bookings': bookings,
+            'timing': timing
         })
         return self.success
 
