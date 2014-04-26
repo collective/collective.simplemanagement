@@ -1,11 +1,10 @@
 #-*- coding: utf-8 -*-
 
+import json
 from persistent import Persistent
 
 from zope.interface import implementer
 from zope.schema.fieldproperty import FieldProperty
-from plone.uuid.interfaces import IUUID
-from plone.app.uuid.utils import uuidToObject
 
 from .. import api
 from ..interfaces import IBooking
@@ -57,3 +56,24 @@ class Booking(Persistent):
     @property
     def ticket(self):
         return self.references_dict.get('ticket')
+
+    _json_fields = (
+        'uid',
+        'date',
+        'time',
+        'text',
+        'owner',
+        'references_dict',
+        'tags',
+    )
+
+    def as_dict(self):
+        data = {}
+        for k in self._json_fields:
+            data[k] = getattr(self, k)
+        data['references'] = data.pop('references_dict')
+        return data
+
+    def as_json(self):
+        return json.dumps(self.as_dict(),
+                          cls=api.jsonutils.ExtendedJSONEncoder)
