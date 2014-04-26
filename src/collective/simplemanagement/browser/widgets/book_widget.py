@@ -22,6 +22,7 @@ from plone import api
 from ... import _
 from ...api.content import get_project
 from ...api.content import BreadcrumbGetter
+from ...api.booking import get_booking_storage
 from .interfaces import IBookWidget
 from .interfaces import IReferencesWidget
 from .interfaces import ITagsWidget
@@ -216,13 +217,8 @@ class Autocomplete(BrowserView):
         return value
 
     def search_tags(self, query, results):
-        # BBB: use real values
-        tags = [
-            'foo',
-            'bar',
-            'spam',
-            'eggs'
-        ]
+        storage = get_booking_storage()
+        tags = storage.vocabulary('tags')
         for tag in tags:
             if query in tag:
                 results.append({

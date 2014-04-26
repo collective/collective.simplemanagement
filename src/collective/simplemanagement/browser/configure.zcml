@@ -117,7 +117,7 @@
      name="create_booking"
      layer="..interfaces.IBrowserLayer"
      permission="simplemanagement.AddBooking"
-     class=".dashboard.AddBooking"
+     class=".ajaxforms.AddBooking"
    />
 
 

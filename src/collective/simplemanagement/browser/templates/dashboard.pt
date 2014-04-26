@@ -50,6 +50,9 @@
                   class="pane"
                   tal:define="projects view/projects">
 
+                <div id="booking-form"
+                     tal:content="structure view/add_booking_form" />
+
                 <div id="projects"
                   tal:condition="not: projects">
                   <span class="label"
@@ -85,9 +88,6 @@
                             colspan="2">Story</th>
                           <th i18n:translate="">Estimate</th>
                           <th i18n:translate="">Done</th>
-                          <th i18n:translate=""
-                            class="dashboard-actions"
-                            tal:condition="not: employee_details">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -101,14 +101,6 @@
                               fill-slot="extra-info" />
 
                             <metal:after-columns fill-slot="after-columns">
-                              <td tal:condition="not: employee_details">
-                                <a i18n:translate=""
-                                   class="bookform btn"
-                                   title="Add Booking"
-                                   i18n:attributes="title"
-                                   tal:attributes="rel string:${story/url}/create_booking;
-                                                   id string:bookform-${story/UID}">Book time</a>
-                              </td>
                             </metal:after-columns>
                           </metal:stories>
                         </tal:stories>
@@ -173,8 +165,7 @@
                       <th i18n:translate="">Date</th>
                       <th i18n:translate="">Hours</th>
                       <th i18n:translate="">Title</th>
-                      <th i18n:translate="">Projects</th>
-                      <th i18n:translate="">Story</th>
+                      <th></th>
                     </tr>
                   </thead>
                    <tbody>
@@ -185,12 +176,11 @@
                             tal:content="book/date2" />)
                       </td>
                       <td tal:content="book/time">3.0</td>
-                      <td><a tal:attributes="href book/url"
-                             tal:content="book/title">closed ticket #1</a></td>
-                      <td><a tal:content="book/project/title"
-                             tal:attributes="href book/project/url">Project 1</a></td>
-                      <td><a tal:content="book/story/title"
-                             tal:attributes="href book/story/url">Story 1</a></td>
+                      <td tal:content="structure book/title">closed ticket #1</td>
+                      <td>
+                        <a href="" tal:attributes="href book/url"
+                           i18n:translate="">view</a>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -200,9 +190,6 @@
             </div>
           </div>
         </div>
-
-        <div id="booking-tooltip-form"
-             tal:content="structure view/add_booking_form" />
 
         <div tal:replace="structure provider:plone.belowcontentbody" />
       </metal:main>

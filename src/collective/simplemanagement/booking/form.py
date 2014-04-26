@@ -3,6 +3,7 @@ from z3c.form import form, field, interfaces
 from plone.uuid.interfaces import IUUID
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from plone import api as plone_api
 from .. import api
 from ..interfaces import IBooking
 from ..interfaces import IStory
@@ -32,6 +33,10 @@ class BookingForm(form.AddForm):
     name = 'booking_form'
 
     def create(self, data):
+        # Trims to the right as suggested by Giorgio
+        data['text'] = data['text'].rstrip()
+        if 'owner' not in data and not plone_api.user.is_anonymous():
+            data['owner'] = plone_api.user.get_current().id
         return api.booking.create_booking(**data)
 
     def add(self, obj):
@@ -52,7 +57,7 @@ class BookingForm(form.AddForm):
         if IStory.providedBy(self.context):
             project = api.content.get_project(self.context)
             defaults.update({
-                'text': '@{project} @{story}'.format(
+                'text': '@{project} @{story} '.format(
                     project=project.getId(),
                     story=self.context.getId()
                 ),
@@ -63,7 +68,7 @@ class BookingForm(form.AddForm):
             })
         elif IProject.providedBy(self.context):
             defaults.update({
-                'text': '@{project}'.format(
+                'text': '@{project} '.format(
                     project=self.context.getId()
                 ),
                 'references': [

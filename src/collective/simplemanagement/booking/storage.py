@@ -171,3 +171,6 @@ class BookingStorage(Persistent):
     def vocabulary(self, name):
         """Returns the list of values for the given index.
         """
+        # pylint: disable=protected-access
+        return self.catalog[name]._fwd_index.keys()
+

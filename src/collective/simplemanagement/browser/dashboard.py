@@ -9,61 +9,19 @@ from z3c.form.interfaces import IFormLayer
 
 from plone.memoize.instance import memoize as instance_memoize
 from plone.z3cform import z2
-from plone.z3cform.layout import wrap_form
 from plone.uuid.interfaces import IUUID
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from .. import messageFactory as _
 from ..configure import Settings
 from ..interfaces import IUserStoriesListing
 from ..interfaces import IProject
-from ..interfaces import IQuickForm
-from ..interfaces import IBooking
 from ..utils import AttrDict
 from .. import api
-from .widgets.date_widget import BookingDateFieldWidget
-from .widgets.time_widget import TimeFieldWidget
-
-
-# XXX 2013-06-17: we already have a booking form defined
-# into ..booking. Use that!!!
-
-class BookingForm(form.AddForm):
-    template = ViewPageTemplateFile("templates/booking_form.pt")
-    fields = field.Fields(IQuickForm).select('title') + \
-        field.Fields(IBooking).omit('related')
-    fields['date'].widgetFactory = BookingDateFieldWidget
-    fields['time'].widgetFactory = TimeFieldWidget
-
-    def create(self, data):
-        return api.booking.create_booking(self.context, data, reindex=0)
-
-    def add(self, obj):
-        obj.reindexObject()
-
-    def nextURL(self):
-        return self.context.absolute_url()
-
-    @button.buttonAndHandler(_('Book time'), name='add')
-    def handleAdd(self, __):
-        data, errors = self.extractData()
-        if errors:
-            self.status = self.formErrorsMessage
-            return
-        obj = self.createAndAdd(data)
-        if obj is not None:
-            # mark only as finished if we get the new object
-            self._finishedAdd = True
-
-    @button.buttonAndHandler(_(u'Cancel'), name='cancel')
-    def handleCancel(self, __):
-        pass
-
-
-AddBooking = wrap_form(BookingForm)
+from ..booking import BookingForm
+from .widgets import book_widget
+from .booking.view import view_url
 
 
 class DashboardMixin(BrowserView):
@@ -246,15 +204,6 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         projects.sort(key=lambda x: x['priority'])
         return projects
 
-    # @view_memoize
-    def _bookings(self, userid, from_date, to_date):
-        bookings = api.booking.get_bookings(
-            owner=userid,
-            from_date=from_date,
-            to_date=to_date
-        )
-        return bookings
-
     def bookings(self):
         user_id = self._get_employee_filter()
         project = None
@@ -270,24 +219,11 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         )
         results = []
         for booking in _bookings:
-            story = booking.getObject().__parent__
-            if not is_project_context:
-                project = api.content.get_project(story)
-
             results.append({
                 'date': self.context.toLocalizedTime(booking.date.isoformat()),
                 'date2': api.date.timeago(booking.date),
                 'time': booking.time,
-                'url': booking.getURL(),
-                'title': booking.Title,
-                'project': {
-                    'title': project.Title(),
-                    'url': project.absolute_url()
-                },
-                'story': {
-                    'title': story.Title(),
-                    'url': story.absolute_url()
-                },
-
+                'url': view_url(booking),
+                'title': book_widget.format_text(booking)
             })
         return results

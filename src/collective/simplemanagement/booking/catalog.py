@@ -40,7 +40,7 @@ def setup_catalog():
         IBooking,
         False
     )
-    catalog['owner'] = TextIndex(
+    catalog['owner'] = FieldIndex(
         'owner',
         IBooking,
         False

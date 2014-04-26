@@ -34,9 +34,9 @@
     eggs =
       collective.simplemanagement [loadcontent]
    -->
-<!--   <configure zcml:condition="installed collective.transmogrifier">
+  <configure zcml:condition="installed collective.transmogrifier">
     <include file="loadcontent.zcml" />
-  </configure> -->
+  </configure>
   <!--
     Extra generic setup profile for using Mozilla TogetherJS
     It depends on:
