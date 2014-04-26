@@ -97,7 +97,7 @@ def get_difference_class(a, b, settings=None):
 
 def get_bookings(owner=None, references=None,
                  date=None, project=None,
-                 sort=True, **kwargs):
+                 sort_on='date', reverse=True, **kwargs):
     """ returns bookings.
     ``owner`` limits results to objs belonging to that user.
     ``project`` project object or uid.
@@ -131,15 +131,8 @@ def get_bookings(owner=None, references=None,
     if any(dates):
         query['date'] = tuple(dates)
 
-    # sorting = None
-    # if sort:
-    #     sorting = {
-    #         'sort_on': 'date',
-    #         'sort_order': 'descending',
-    #     }
-
     storage = get_booking_storage()
-    return storage.query(query)
+    return storage.query(query, sort_on=sort_on, reverse=reverse)
 
 
 def get_timings(context, portal_catalog=None):

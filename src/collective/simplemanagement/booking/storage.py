@@ -110,7 +110,7 @@ class BookingStorage(Persistent):
             weight, merged = op(merged, set_)
         return weight, merged
 
-    def _query(self, query, start=0, limit=None):
+    def _query(self, query):
         results = []
         query = prepare_query(self.catalog, query)
 
@@ -128,7 +128,8 @@ class BookingStorage(Persistent):
             results = self.catalog.apply(query)
         return results
 
-    def query(self, query=None, start=0, limit=None):
+    def query(self, query=None, start=0, limit=None,
+              sort_on=None, reverse=False):
         """Searches for bookings.
 
         Returns an ordered set of ``IBooking`` objects, which match ``query``.
@@ -140,24 +141,31 @@ class BookingStorage(Persistent):
 
         ``start`` and ``limit`` can be used to slice the result set.
         """
-        if not query:
+        if query:
+            _results = self._query(query)
+
+            get_id = lambda x: x  # results = IFSet([1, 2, 3, 4, 5, 6])
+            if hasattr(_results, 'items'):
+                # results = IFBucket([(10, 1.0), (11, 1.0), (12, 1.0)])
+                _results = _results.items()
+                get_id = lambda x: x[0]
+
+            limit = limit or len(_results)
+
+            results = [self._catalog_id_to_object(get_id(item))
+                       for item in _results]
+        else:
             # the catalog does not like empty query
             # and returns None :S
-            return self.bookings.values()
+            results = self.bookings.values()
 
-        _results = self._query(query, start=start, limit=limit)
+        if sort_on:
+            results = sorted(results,
+                             key=lambda x: getattr(x, sort_on))
+        if reverse:
+            results.reverse()
 
-        get_id = lambda x: x  # results = IFSet([1, 2, 3, 4, 5, 6])
-        if hasattr(_results, 'items'):
-            # results = IFBucket([(10, 1.0), (11, 1.0), (12, 1.0)])
-            _results = _results.items()
-            get_id = lambda x: x[0]
-
-        limit = limit or len(_results)
-        results = [self._catalog_id_to_object(get_id(item))
-                   for item in _results][start:limit]
-
-        return results
+        return results[start:limit]
 
     def vocabulary(self, name):
         """Returns the list of values for the given index.

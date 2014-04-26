@@ -192,6 +192,20 @@ class TestBooking(unittest.TestCase):
         expected = [x for x in self.bookings if x.date <= dates[0]]
         self.assertEqual(len(bookings), len(expected))
 
+        # test sorting
+        # we sort on date by default (only sorting index ATM)
+        bookings = api.booking.get_bookings()
+        first_date = date(2014, 1, 1)
+        last_date = date(2014, 1, 4)
+        self.assertEqual(bookings[0].date, first_date)
+        self.assertEqual(bookings[-1].date, last_date)
+        # reverse
+        bookings = api.booking.get_bookings(reverse=1)
+        first_date = date(2014, 1, 4)
+        last_date = date(2014, 1, 1)
+        self.assertEqual(bookings[0].date, first_date)
+        self.assertEqual(bookings[-1].date, last_date)
+
 
 def test_suite():
     suite = unittest.TestSuite()
