@@ -158,6 +158,7 @@ class BookingStorage(Persistent):
             # the catalog does not like empty query
             # and returns None :S
             results = self.bookings.values()
+            limit = limit or len(results)
 
         if sort_on:
             results = sorted(results,

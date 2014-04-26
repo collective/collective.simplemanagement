@@ -13,4 +13,11 @@
     template="templates/view.pt"
     />
 
+  <browser:page
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    name="json_bookings"
+    layer="...interfaces.IBrowserLayer"
+    class=".jsonview.Main"
+    permission="zope2.View" />
+
 </configure>

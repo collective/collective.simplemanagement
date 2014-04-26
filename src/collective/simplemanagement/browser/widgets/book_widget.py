@@ -67,15 +67,19 @@ def format_text(booking, context=None):
             else:
                 url = context.absolute_url()
         else:
+            object_ = None
             try:
                 ref = references.pop(0)
-            except IndexError:
-                css_class = 'missing'
-                url = u'javascript:alert('+_(u"Missing reference!")+u');'
-            else:
                 object_ = uuidToObject(ref[1])
-                css_class = ref[0].lower()
-                url = object_.absolute_url()
+            except IndexError:
+                pass
+            finally:
+                if object_ is None:
+                    css_class = 'missing'
+                    url = u'javascript:alert('+_(u"Missing reference!")+u');'
+                else:
+                    css_class = ref[0].lower()
+                    url = object_.absolute_url()
         return TEMPLATE.format(url=url, tag=tag, class_=css_class)
     result = REGEXP.sub(format_tag, booking.text)
     return result

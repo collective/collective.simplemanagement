@@ -24,6 +24,8 @@ class ExtendedJSONEncoder(json.JSONEncoder):
             )
         elif isinstance(obj, Decimal):
             return float(obj)
+        elif isinstance(obj, set):
+            return list(obj)
         return json.JSONEncoder.default(self, obj)
 
 
