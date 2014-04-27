@@ -2,8 +2,5 @@ New booking
 -----------
 
  * Traverse per booking object [simahawk]
- * Sistemare form a caso in giro per l'universo (tipo dashboard)
- * settings.off_duty_reasons e altri settings in registry ci sono ancora? No
  * update translations
- * upgrade steps pulizia metadata `date` e index `booking_date`
 

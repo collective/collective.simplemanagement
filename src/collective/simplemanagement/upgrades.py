@@ -166,3 +166,14 @@ def upgrade_to_1010(context, logger=None):
     logger = getLogger(logger)
     logger.info("Reloading javascript registry")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'jsregistry')
+    logger.info("Reloading catalog definition")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'catalog')
+    logger.info("Cleaning up configuration registry")
+    registry = getUtility(IRegistry)
+    prefix = 'collective.simplemanagement.interfaces.settings.ISettings.'
+    del registry.records[prefix+'booking_check_delta_days_start']
+    del registry.records[prefix+'booking_check_delta_days_end']
+    del registry.records[prefix+'off_duty_reasons']
+    logger.info("Rebuilding catalog")
+    portal_catalog = getToolByName(context, 'portal_catalog')
+    portal_catalog.clearFindAndRebuild()
