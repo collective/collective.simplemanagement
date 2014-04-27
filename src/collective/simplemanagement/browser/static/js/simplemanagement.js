@@ -114,64 +114,6 @@
             });
         });
 
-        // Booking form in dashboard
-        sm.booking_form = $('#booking-tooltip-form').detach();
-        $(".bookform").each(function () {
-            var trigger = $(this),
-                setupForm;
-            setupForm = function(form, api) {
-                form.attr('action', trigger.attr('rel'));
-                form.find('.datepicker').each(function() {
-                    var div = $(this);
-                    var widget_id = /([a-z\-]+)-picker/.exec(
-                        div.attr('id')
-                    )[1];
-                    div.datepicker({
-                        altField: '#' + widget_id,
-                        altFormat: div.attr('data-format'),
-                        dateFormat: div.attr('data-format')
-                    });
-                });
-                form.find('input[name="form.buttons.cancel"]').click(
-                    function(e) {
-                        e.preventDefault();
-                        api.hide();
-                    }
-                );
-                var parent = form.parent();
-                var options = {
-                    success: function (response, status, xhr, form) {
-                        response = response.replace(/<script(.|\s)*?\/script>/gi, "");
-                        var new_html = $('<div />').append(
-                            response
-                        ).find('form#form');
-                        if (new_html.length > 0) {
-                            parent.find('form#form').remove();
-                            parent.append(new_html);
-                            form = parent.find('form#form');
-                            setupForm(form, api);
-                        } else {
-                            api.hide();
-                            window.location.reload();
-                        }
-                    }
-                };
-                form.ajaxForm(options);
-            };
-            trigger.drawer({
-                group: '.bookform',
-                css_class: 'tooltip booking-form',
-                position: "left",
-                offset: [0, -10],
-                content: function(callback, drawer) {
-                    var content = $(sm.booking_form.html()),
-                        form = content.find('form');
-                    setupForm(form, drawer);
-                    callback(content);
-                }
-            });
-        });
-
         // ajax submit
         // TODO: prevent unload protection!
         $('#booking_form').ajaxForm({

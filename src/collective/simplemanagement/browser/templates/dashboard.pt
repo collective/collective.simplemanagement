@@ -30,6 +30,10 @@
         <div tal:replace="structure provider:plone.abovecontentbody" />
         <div id="content-core">
 
+          <div id="booking-form"
+               class="clearfix inline-form"
+               tal:content="structure view/add_booking_form" />
+
           <tal:pm condition="view/user_can_manage_project">
             <metal:form
               use-macro="context/simpemanagement-macros/employee-form" />
@@ -49,9 +53,6 @@
               <div id="stories-wrapper"
                   class="pane"
                   tal:define="projects view/projects">
-
-                <div id="booking-form"
-                     tal:content="structure view/add_booking_form" />
 
                 <div id="projects"
                   tal:condition="not: projects">

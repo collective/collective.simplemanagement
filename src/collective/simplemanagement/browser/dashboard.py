@@ -19,9 +19,18 @@ from ..interfaces import IUserStoriesListing
 from ..interfaces import IProject
 from ..utils import AttrDict
 from .. import api
-from ..booking import BookingForm
+from ..booking.form import BookingForm
 from .widgets import book_widget
 from .booking.view import view_url
+
+
+class DashboardBookingForm(BookingForm):
+
+    name = 'dashboard_booking_form'
+
+    def nextURL(self):
+        next_url = super(DashboardBookingForm, self).nextURL()
+        return next_url + '/@@dashboard'
 
 
 class DashboardMixin(BrowserView):
@@ -175,12 +184,6 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         if not self.is_project:
             request.set('disable_border', 1)
 
-    def add_booking_form(self):
-        z2.switch_on(self, request_layer=IFormLayer)
-        addform = BookingForm(aq_inner(self.context), self.request)
-        addform.update()
-        return addform.render()
-
     def projects(self):
         projects = {}
         project_states = ['development', 'maintenance']
@@ -227,3 +230,10 @@ class DashboardView(DashboardMixin, TicketsMixIn):
                 'title': book_widget.format_text(booking)
             })
         return results
+
+    def __call__(self):
+        z2.switch_on(self, request_layer=IFormLayer)
+        addform = DashboardBookingForm(aq_inner(self.context), self.request)
+        addform.update()
+        self.add_booking_form = addform.render()
+        return super(DashboardView, self).__call__()
