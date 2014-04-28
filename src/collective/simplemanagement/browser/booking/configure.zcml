@@ -6,18 +6,58 @@
 
   <browser:page
     for="*"
-    name="booking"
+    name="test-booking"
+    layer="...interfaces.IBrowserLayer"
+    class=".test_view.View"
+    permission="simplemanagement.ManageProject"
+    template="templates/test_view.pt"
+    />
+
+  <browser:page
+    for="...interfaces.IBooking"
+    name="view"
     layer="...interfaces.IBrowserLayer"
     class=".view.View"
     permission="simplemanagement.ManageProject"
     template="templates/view.pt"
     />
 
+  <browser:defaultView
+    for="...interfaces.IBooking"
+    name="view"
+    />
+
   <browser:page
-    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    name="json_bookings"
+    for="...interfaces.IBooking"
+    name="edit"
+    class=".view.View"
     layer="...interfaces.IBrowserLayer"
-    class=".jsonview.Main"
-    permission="zope2.View" />
+    permission="simplemanagement.ManageProject"
+    />
+
+  <adapter factory=".traverse.BookingTraverser" />
+
+  <browser:page
+    for=".traverse.IBookingContainer"
+    name="view"
+    class=".view.ListingView"
+    permission="simplemanagement.ManageProject"
+    template="templates/list.pt"
+    layer="...interfaces.IBrowserLayer"
+    />
+
+  <browser:defaultView
+    for=".traverse.IBookingContainer"
+    name="view"
+    />
+
+  <browser:page
+    for="...interfaces.IBooking"
+    name="helpers"
+    layer="...interfaces.IBrowserLayer"
+    class=".view.Helpers"
+    permission="simplemanagement.ManageProject"
+    allowed_interface=".view.IHelpers"
+    />
 
 </configure>

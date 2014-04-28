@@ -3,8 +3,8 @@ import datetime
 from Acquisition import aq_inner
 
 from zope.security import checkPermission
+from zope.component import getMultiAdapter
 
-from z3c.form import form, field, button
 from z3c.form.interfaces import IFormLayer
 
 from plone.memoize.instance import memoize as instance_memoize
@@ -20,8 +20,6 @@ from ..interfaces import IProject
 from ..utils import AttrDict
 from .. import api
 from ..booking.form import BookingForm
-from .widgets import book_widget
-from .booking.view import view_url
 
 
 class DashboardBookingForm(BookingForm):
@@ -222,13 +220,8 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         )
         results = []
         for booking in _bookings:
-            results.append({
-                'date': self.context.toLocalizedTime(booking.date.isoformat()),
-                'date2': api.date.timeago(booking.date),
-                'time': booking.time,
-                'url': view_url(booking),
-                'title': book_widget.format_text(booking)
-            })
+            helpers = getMultiAdapter((booking, self.request), name='helpers')
+            results.append(helpers.info)
         return results
 
     def __call__(self):

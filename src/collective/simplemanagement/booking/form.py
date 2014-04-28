@@ -1,9 +1,17 @@
+#-*- coding: utf-8 -*-
+
 from datetime import date
-from z3c.form import form, field, interfaces
+
+from z3c.form import form
+from z3c.form import button
+from z3c.form import field
+from z3c.form import interfaces
+
 from plone.uuid.interfaces import IUUID
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone import api as plone_api
+from .. import _
 from .. import api
 from ..interfaces import IBooking
 from ..interfaces import IStory
@@ -84,3 +92,37 @@ class BookingForm(form.AddForm):
                 widget.tags_field = self.widgets['tags'].name
             if name in ['references', 'tags']:
                 widget.mode = interfaces.HIDDEN_MODE
+
+
+class EditForm(form.EditForm):
+    name = 'booking-edit-form'
+    fields = field.Fields(IBooking)
+
+    noChangesMessage = _(u"No changes were applied.")
+    successMessage = _(u'Data successfully updated.')
+
+    def redirect(self):
+        self.request.response.redirect(
+            location=self.context.absolute_url()
+        )
+
+    @button.buttonAndHandler(_(u'Save'), name='save')
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+
+        changes = self.applyChanges(data)
+        if changes:
+            self.status = self.successMessage
+        else:
+            self.status = self.noChangesMessage
+
+        plone_api.portal.show_message(message=self.status)
+        self.redirect()
+
+    @button.buttonAndHandler(_(u'Cancel'), name='cancel')
+    def handleCancel(self, action):
+        plone_api.portal.show_message(message=self.status)
+        self.redirect()

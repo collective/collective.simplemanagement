@@ -8,45 +8,12 @@
 <body>
 
 <metal:content-core fill-slot="main">
-  <div id="booking-view"
-       tal:define="booking view/booking_item">
 
-    <h1>XXX: Test view for bookings</h1>
-    <p class="no-booking" tal:condition="not: booking">single booking not found</p>
-    <dl tal:condition="booking">
-      <dt i18n:translate="">Date</dt>
-      <dd tal:content="python:context.toLocalizedTime(booking.date.isoformat())"></dd>
-      <dt i18n:translate="">Time</dt>
-      <dd tal:content="booking/time"></dd>
-      <dt i18n:translate="">Time</dt>
-      <dd tal:content="structure python: view.render_text(booking)"></dd>
-    </dl>
+  <div id="booking-view" tal:define="info view/info;">
 
-    <div id="all-bookings"
-         tal:condition="not: booking"
-         tal:define="all_bookings       view/bookings;
-                     total              python: len(all_bookings);
-                     Batch              python: modules['Products.CMFPlone'].Batch;
-                     b_size             python:20;
-                     b_start            python:0;
-                     b_start            request/b_start | b_start;
-                     batch              python: Batch(all_bookings or [], b_size, int(b_start), orphan=1);">
-      <p>Found <span tal:replace="total"/> bookings.</p>
-      <ul tal:condition="not: booking">
-
-        <li tal:repeat="booking batch">
-          <tal:text replace="structure python: view.render_text(booking)" />
-          <a tal:attributes="href python: view.view_url(booking)">
-            view
-          </a>
-        </li>
-      </ul>
-
-      <div metal:use-macro="here/batch_macros/macros/navigation" />
-    </div>
+    <h1 tal:replace="info/text" />
 
   </div>
-
 
 </metal:content-core>
 

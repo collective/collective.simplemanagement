@@ -1,6 +1,4 @@
-from datetime import date
-from zope.interface import implements
-from zope import component
+#-*- coding: utf-8 -*-
 
 from ..interfaces import IBookingStorage
 from .storage import BookingStorage

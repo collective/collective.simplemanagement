@@ -50,6 +50,10 @@ class BookingStorage(Persistent):
     def __getitem__(self, uid):
         return self.bookings[uid]
 
+    def __iter__(self):
+        for x in self.bookings.values():
+            yield x
+
     def add(self, booking):
         assert IBooking.providedBy(booking)
         if not booking.uid:

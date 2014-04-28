@@ -168,3 +168,4 @@ def get_project(booking):
 
 def get_story(booking):
     return uuidToObject(booking.story)
+

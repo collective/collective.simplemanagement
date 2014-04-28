@@ -2,9 +2,12 @@
 
 import json
 from persistent import Persistent
+from Acquisition import ImplicitAcquisitionWrapper
 
 from zope.interface import implementer
 from zope.schema.fieldproperty import FieldProperty
+
+import plone.api
 
 from .. import api
 from ..interfaces import IBooking
@@ -34,6 +37,9 @@ class Booking(Persistent):
         self.owner = owner
         self.references = list(references or [])
         self.tags = set(sorted(tags or []))
+
+    def __of__(self, parent):
+        return ImplicitAcquisitionWrapper(self, parent)
 
     def index_references(self):
         references = self.references_dict
