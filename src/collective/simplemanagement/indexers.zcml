@@ -12,5 +12,6 @@
              factory=".indexers.SearchableText_iteration" />
   <adapter name="SearchableText"
              factory=".indexers.SearchableText_story" />
-
+  <adapter name="SearchableText"
+             factory=".indexers.SearchableText_epic" />
 </configure>
