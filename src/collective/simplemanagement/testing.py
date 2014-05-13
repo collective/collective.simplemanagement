@@ -11,6 +11,17 @@ from plone.app.testing import login
 from plone.app.testing import setRoles
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
 
+from .booking.storage import BookingStorage
+from .interfaces import IBookingStorage
+
+
+def register_booking_storage(site):
+    sm = site.getSiteManager()
+    utility = sm.queryUtility(IBookingStorage)
+    if utility is None:
+        utility = BookingStorage()
+        sm.registerUtility(utility, IBookingStorage)
+
 
 class BaseLayer(PloneSandboxLayer):
 
@@ -35,6 +46,7 @@ class BaseLayer(PloneSandboxLayer):
             stories.append(test_project['test-story-%d' % i])
             stories[-1].estimate = Decimal(10 * i)
         setRoles(portal, TEST_USER_ID, ['Member'])
+        register_booking_storage(portal)
 
 
 BASE = BaseLayer()

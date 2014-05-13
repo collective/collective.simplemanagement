@@ -11,6 +11,12 @@
          configuration="loadcontent.cfg"
          />
 
+    <transmogrifier:registerConfig
+         name="loadbookings"
+         title="Load bookings"
+         configuration="loadbookings.cfg"
+         />
+
     <utility component=".blueprints.SetOperatives"
       name="simplemanagement.set_operatives" />
 
@@ -22,5 +28,8 @@
 
     <utility component=".blueprints.ConvertDate"
       name="simplemanagement.convert_date" />
+
+    <utility component=".blueprints.BookingConstructor"
+      name="simplemanagement.booking_constructor" />
 
 </configure>

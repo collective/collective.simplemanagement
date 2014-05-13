@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 from DateTime import DateTime
 from plone.indexer.decorator import indexer
 
@@ -7,7 +9,6 @@ from .interfaces import IIteration
 from .interfaces import IEpic
 from .interfaces import IStory
 from .interfaces import IProject
-from .interfaces import IBooking
 from .interfaces import IOrderNumber
 
 
@@ -19,11 +20,6 @@ def start(obj):
 @indexer(IIteration)
 def end(obj):
     return DateTime(obj.end.isoformat())
-
-
-@indexer(IBooking)
-def date(obj):
-    return DateTime(obj.date.isoformat())
 
 
 def SearchableText(obj, text=False):

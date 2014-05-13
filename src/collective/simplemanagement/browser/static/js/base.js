@@ -207,9 +207,15 @@
                 filter: common_content_filter,
                 formselector: 'form#booking_form',
                 width: '80%',
+                height: '90%',
                 config: {
                     onClose: function(el) {
                         value.model.load();
+                    },
+                    onBeforeLoad: function() {
+                        var $overlay = this.getOverlay();
+                        $overlay.height($(window).height() * 0.8);
+                        $overlay.find('.pb-ajax').css('height', '100%');
                     },
                     onLoad: function() {
                         sm.init_widgets();

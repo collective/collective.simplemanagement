@@ -5,12 +5,19 @@
     i18n_domain="collective.simplemanagement">
 
   <browser:page
-    for="...interfaces.IBooking"
-    name="view"
+    for="*"
+    name="booking"
     layer="...interfaces.IBrowserLayer"
     class=".view.View"
-    permission="zope2.View"
+    permission="simplemanagement.ManageProject"
     template="templates/view.pt"
-  />
+    />
+
+  <browser:page
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    name="json_bookings"
+    layer="...interfaces.IBrowserLayer"
+    class=".jsonview.Main"
+    permission="zope2.View" />
 
 </configure>

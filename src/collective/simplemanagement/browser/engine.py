@@ -1,4 +1,4 @@
-#-*- coding: utf8 -*-
+#-*- coding: utf-8 -*-
 
 # taken from https://pypi.python.org/pypi/anthill.tal.macrorenderer/
 # and updated
@@ -41,30 +41,6 @@ class MacroRenderer(object):
             # self.pt = self.pt.__of__(_act)
             self.pt.context = _act
 
-    # def _patch(self):
-    #     """ Fixing http://mail.zope.org/pipermail/zope3-dev/2007-April/022266.html """
-
-    #     from zope.tal.talinterpreter import TALInterpreter
-
-    #     def _insertHTMLStructure(self, text, repldict):
-    #         from zope.tal.htmltalparser import HTMLTALParser
-    #         from zope.tal.talinterpreter import AltTALGenerator
-
-    #         gen = AltTALGenerator(repldict, self.engine._engine, 0)
-    #         p = HTMLTALParser(gen)
-    #         p.parseString(text)
-    #         program, macros = p.getCode()
-    #         self.interpret(program)
-
-    #     TALInterpreter._old_insertHTMLStructure = TALInterpreter.insertHTMLStructure
-    #     TALInterpreter.insertHTMLStructure = _insertHTMLStructure
-    #     del TALInterpreter
-
-    # def _unpatch(self):
-    #     from zope.tal.talinterpreter import TALInterpreter
-    #     TALInterpreter.insertHTMLStructure = TALInterpreter._old_insertHTMLStructure
-    #     del TALInterpreter
-
     def __call__(self, **kw):
         """ Returns rendered macro data. You can pass options. """
 
@@ -79,7 +55,6 @@ class MacroRenderer(object):
         # context['options'] = kw
         context.update(kw)
 
-        # self._patch()
         TALInterpreter(
             self.m_program,
             None,
@@ -94,5 +69,4 @@ class MacroRenderer(object):
             buflist.append(i)
         output.buflist = buflist
 
-        # self._unpatch()
         return output.getvalue()

@@ -25,12 +25,6 @@ class ISettings(Interface):
         title=_(u"Working week days"),
         description=_(u"The number of days worked in a week")
     )
-    booking_check_delta_days_start = schema.Int(
-        title=_(u"Booking check days delta start")
-    )
-    booking_check_delta_days_end = schema.Int(
-        title=_(u"Booking check days delta end")
-    )
     statuses = schema.List(
         title=_(u"Project statuses"),
         value_type=schema.TextLine()
@@ -41,10 +35,6 @@ class ISettings(Interface):
     )
     resource_roles = schema.List(
         title=_(u"Resource roles"),
-        value_type=schema.TextLine()
-    )
-    off_duty_reasons = schema.List(
-        title=_(u"Possible reasons to be off duty"),
         value_type=schema.TextLine()
     )
     employees_group = schema.TextLine(

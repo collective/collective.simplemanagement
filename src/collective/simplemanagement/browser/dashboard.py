@@ -6,68 +6,31 @@ from zope.security import checkPermission
 
 from z3c.form import form, field, button
 from z3c.form.interfaces import IFormLayer
-from z3c.form.browser import text
-from z3c.relationfield.relation import create_relation
 
 from plone.memoize.instance import memoize as instance_memoize
-from plone.memoize.view import memoize as view_memoize
 from plone.z3cform import z2
-from plone.z3cform.layout import wrap_form
 from plone.uuid.interfaces import IUUID
-from plone.dexterity.utils import createContentInContainer
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from .. import messageFactory as _
 from ..configure import Settings
 from ..interfaces import IUserStoriesListing
 from ..interfaces import IProject
-from ..interfaces import IQuickForm
-from ..interfaces import IBooking
 from ..utils import AttrDict
 from .. import api
-from .widgets.date_widget import BookingDateFieldWidget
-from .widgets.time_widget import TimeFieldWidget
+from ..booking.form import BookingForm
+from .widgets import book_widget
+from .booking.view import view_url
 
 
-# XXX 2013-06-17: we already have a booking form defined
-# into ..booking. Use that!!!
+class DashboardBookingForm(BookingForm):
 
-class BookingForm(form.AddForm):
-    template = ViewPageTemplateFile("templates/booking_form.pt")
-    fields = field.Fields(IQuickForm).select('title') + \
-        field.Fields(IBooking).omit('related')
-    fields['date'].widgetFactory = BookingDateFieldWidget
-    fields['time'].widgetFactory = TimeFieldWidget
-
-    def create(self, data):
-        return api.booking.create_booking(self.context, data, reindex=0)
-
-    def add(self, obj):
-        obj.reindexObject()
+    name = 'dashboard_booking_form'
 
     def nextURL(self):
-        return self.context.absolute_url()
-
-    @button.buttonAndHandler(_('Book time'), name='add')
-    def handleAdd(self, __):
-        data, errors = self.extractData()
-        if errors:
-            self.status = self.formErrorsMessage
-            return
-        obj = self.createAndAdd(data)
-        if obj is not None:
-            # mark only as finished if we get the new object
-            self._finishedAdd = True
-
-    @button.buttonAndHandler(_(u'Cancel'), name='cancel')
-    def handleCancel(self, __):
-        pass
-
-
-AddBooking = wrap_form(BookingForm)
+        next_url = super(DashboardBookingForm, self).nextURL()
+        return next_url + '/@@dashboard'
 
 
 class DashboardMixin(BrowserView):
@@ -221,12 +184,6 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         if not self.is_project:
             request.set('disable_border', 1)
 
-    def add_booking_form(self):
-        z2.switch_on(self, request_layer=IFormLayer)
-        addform = BookingForm(aq_inner(self.context), self.request)
-        addform.update()
-        return addform.render()
-
     def projects(self):
         projects = {}
         project_states = ['development', 'maintenance']
@@ -250,36 +207,6 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         projects.sort(key=lambda x: x['priority'])
         return projects
 
-    @property
-    def hole_reasons(self):
-        return self.settings.off_duty_reasons
-
-    @property
-    @view_memoize
-    def hole_settings(self):
-        start_delta = self.settings.booking_check_delta_days_start
-        end_delta = self.settings.booking_check_delta_days_end
-        today = datetime.date.today()
-        from_date = today - datetime.timedelta(start_delta)
-        to_date = today - datetime.timedelta(end_delta)
-        return AttrDict({
-            'from_date': from_date,
-            'to_date': to_date,
-            'warning_delta_percent': self.settings.warning_delta_percent,
-            'man_day_hours': self.settings.man_day_hours,
-        })
-
-    # @view_memoize
-    def _bookings(self, userid, from_date, to_date):
-        cat = self.tools.portal_catalog
-        bookings = api.booking.get_bookings(
-            userid=userid,
-            portal_catalog=cat,
-            from_date=from_date,
-            to_date=to_date
-        )
-        return bookings
-
     def bookings(self):
         user_id = self._get_employee_filter()
         project = None
@@ -295,41 +222,18 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         )
         results = []
         for booking in _bookings:
-            story = booking.getObject().__parent__
-            if not is_project_context:
-                project = api.content.get_project(story)
-
             results.append({
                 'date': self.context.toLocalizedTime(booking.date.isoformat()),
                 'date2': api.date.timeago(booking.date),
                 'time': booking.time,
-                'url': booking.getURL(),
-                'title': booking.Title,
-                'project': {
-                    'title': project.Title(),
-                    'url': project.absolute_url()
-                },
-                'story': {
-                    'title': story.Title(),
-                    'url': story.absolute_url()
-                },
-
+                'url': view_url(booking),
+                'title': book_widget.format_text(booking)
             })
         return results
 
-    def booking_holes(self):
-        userid = self.user.getId()
-        hole_settings = self.hole_settings
-        man_day_hours = hole_settings.man_day_hours
-        expected_working_time = man_day_hours - \
-            (man_day_hours * hole_settings.warning_delta_percent)
-        from_date = hole_settings.from_date
-        to_date = hole_settings.to_date
-        bookings = self._bookings(userid, from_date, to_date)
-        holes = api.booking.get_booking_holes(
-            userid, bookings,
-            expected_working_time=expected_working_time,
-            man_day_hours=man_day_hours,
-            from_date=from_date, to_date=to_date
-        )
-        return holes
+    def __call__(self):
+        z2.switch_on(self, request_layer=IFormLayer)
+        addform = DashboardBookingForm(aq_inner(self.context), self.request)
+        addform.update()
+        self.add_booking_form = addform.render()
+        return super(DashboardView, self).__call__()

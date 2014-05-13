@@ -1,0 +1,16 @@
+<configure xmlns="http://namespaces.zope.org/zope">
+
+  <include package="Products.CMFPlone" />
+  <include package="plone.app.collection" />
+  <include package="plone.app.dexterity" />
+  <include package="plone.app.relationfield" />
+  <include package="plone.autoform" />
+  <include package="plone.formwidget.contenttree" />
+  <include package="plone.namedfile" />
+  <include package="Products.Poi" />
+  <include package="collective.select2" />
+  <include package="collective.js.jqueryui" />
+  <include package="collective.prettydate" />
+  <include package="z3c.jbot" />
+
+</configure>

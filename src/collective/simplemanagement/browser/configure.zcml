@@ -92,40 +92,7 @@
     template="templates/compass.pt"
   />
 
-  <!-- Booking and hole management -->
-  <browser:page
-    for="*"
-    name="create-hole"
-    class=".ajaxforms.CreateHole"
-    layer="..interfaces.IBrowserLayer"
-    permission="zope2.View"
-  />
-
-
-  <browser:page
-    for="*"
-    name="holes-mgmt"
-    class=".holes_helpers.HolesMgmt"
-    layer="..interfaces.IBrowserLayer"
-    template="templates/holes_mgmt.pt"
-    permission="cmf.ManagePortal"
-    />
-
-  <!--
-  *****************************************************
-  THIS VIEW IS POTENTIALLY DANGEROUS SINCE IT CAN FLUSH
-  ALL THE BOOKING HOLES OF YOUR INSTANCE.
-  UNCOMMENT THIS ONLY IF YOU REALLY NEED THIS!
-  *****************************************************
-  <browser:page
-    for="*"
-    name="flush-holes"
-    class=".holes_helpers.FlushHoles"
-    layer="..interfaces.IBrowserLayer"
-    permission="cmf.ManagePortal"
-    />
-  -->
-
+  <!-- Booking -->
 
   <browser:page
     for="*"
@@ -150,7 +117,7 @@
      name="create_booking"
      layer="..interfaces.IBrowserLayer"
      permission="simplemanagement.AddBooking"
-     class=".dashboard.AddBooking"
+     class=".ajaxforms.AddBooking"
    />
 
 

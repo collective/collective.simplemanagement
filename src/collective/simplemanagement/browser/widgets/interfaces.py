@@ -41,3 +41,19 @@ class ITimeWidget(IWidget):
         title=_(u"Hour stop"),
         default=8
     )
+
+
+class IBookWidget(IWidget):
+    """Booking widget
+    """
+
+
+class IReferencesWidget(IWidget):
+    """References widget
+    """
+
+
+class ITagsWidget(IWidget):
+    """Tags widget
+    """
+

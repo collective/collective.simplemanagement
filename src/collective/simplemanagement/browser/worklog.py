@@ -1,10 +1,9 @@
 import json
 import calendar
 from decimal import Decimal
-from datetime import datetime, date, time, timedelta
+from datetime import datetime, date, timedelta
 
 from zope.interface import implements
-from zope.component import getUtility
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from zope.publisher.interfaces import IPublishTraverse, NotFound
@@ -13,7 +12,7 @@ from plone.memoize.instance import memoize as instance_memoize
 
 from .. import api
 from .. import messageFactory as _
-from ..interfaces import IBookingHoles, IProject
+from ..interfaces import IProject
 from ..configure import ONE_DAY, ONE_WEEK, Settings
 
 from ..utils import AttrDict, quantize
@@ -126,10 +125,11 @@ class WorklogBackend(WorklogBase):
             next_year = year + 1
         month_start, month_length = calendar.monthrange(year, month)
         start = date(year, month, 1) - timedelta(days=month_start)
-        start = start - timedelta(days=((settings.monthly_weeks_before-1)*7))
+        start = start - \
+            timedelta(days=((settings.monthly_weeks_before - 1) * 7))
         month_end = date(year, month, 1) + timedelta(days=month_length)
-        end = month_end + timedelta(days=(7-month_end.weekday()))
-        end = end + timedelta(days=((settings.monthly_weeks_after-1)*7))
+        end = month_end + timedelta(days=(7 - month_end.weekday()))
+        end = end + timedelta(days=((settings.monthly_weeks_after - 1) * 7))
         return (
             (start, end),
             (previous_year, previous_month),
@@ -137,59 +137,46 @@ class WorklogBackend(WorklogBase):
             (next_year, next_month)
         )
 
-    def get_bookings_and_holes(self, date_, resource):
-        booking_date = DateTime(date_.strftime("%Y-%m-%d"))
-
+    def get_bookings(self, date_, resource):
         bookings = api.booking.get_bookings(
             project=self.context,
             userid=resource,
-            booking_date=booking_date
+            date=date_
         )
-
-        holes = api.booking.get_booking_holes(
-            resource,
-            bookings,
-            from_date=date_,
-            to_date=date_ + ONE_DAY
-        )
-        return (bookings, holes)
+        return bookings
 
     def monthly_bookings(self):
         settings = Settings()
         resources = self.request.get(
             'resources',
-            [ r['user_id'] for r in self.resources() ]
+            [r['user_id'] for r in self.resources()]
         )
         if isinstance(resources, str):
-            resources = [ resources ]
+            resources = [resources]
         (start, end), previous, current, next = self.get_month_data(settings)
         total_hours = []
         _translate = lambda x: self.context.translate(x)
-        for week_start, week_end in api.date.datetimerange(start, end, ONE_WEEK):
+        drange = api.date.datetimerange(start, end, ONE_WEEK)
+        for week_start, week_end in drange:
             week_identifier = u'<i>%d %s</i> &mdash; <i>%d %s</i>' % (
                 week_start.day,
-                _translate(MONTHS[week_start.month-1]),
-                (week_end-ONE_DAY).day,
-                _translate(MONTHS[(week_end-ONE_DAY).month-1])
+                _translate(MONTHS[week_start.month - 1]),
+                (week_end - ONE_DAY).day,
+                _translate(MONTHS[(week_end - ONE_DAY).month - 1])
             )
             week_hours = []
             for resource in resources:
                 day_hours = []
-                for date_, __ in api.date.datetimerange(week_start, week_end, ONE_DAY):
-                    bookings_, holes = self.get_bookings_and_holes(
-                        date_,
-                        resource,
-                    )
+                drange = api.date.datetimerange(week_start,
+                                                week_end,
+                                                ONE_DAY)
+                for date_, __ in drange:
+                    bookings_ = self.get_bookings(date_, resource)
 
                     total = reduce(
                         lambda x, y: x + y,
-                        [ b.time for b in bookings_ ],
+                        [b.time for b in bookings_],
                         Decimal("0.00")
-                    )
-                    total = reduce(
-                        lambda x, y: x + y,
-                        [ h.hours for h in holes ],
-                        total
                     )
                     day_hours.append({
                         'total': str(quantize(total)),
@@ -212,40 +199,35 @@ class WorklogBackend(WorklogBase):
         return json.dumps({
             'previous': {
                 'value': '%s-%s' % previous,
-                'title': u'%s %d' % (_translate(MONTHS[previous[1]-1]), previous[0])
+                'title': u'%s %d' % (_translate(MONTHS[previous[1] - 1]),
+                                     previous[0])
             },
             'current': {
                 'value': '%s-%s' % current,
-                'title': u'%s <small>%d</small>' % (_translate(MONTHS[current[1]-1]),
+                'title': u'%s <small>%d</small>' % (_translate(MONTHS[current[1] - 1]),
                                                     current[0])
             },
             'next': {
                 'value': '%s-%s' % next,
-                'title': u'%s %d' % (_translate(MONTHS[next[1]-1]), next[0])
+                'title': u'%s %d' % (_translate(MONTHS[next[1] - 1]), next[0])
             },
             'total_hours': total_hours
         })
 
     def booking_details(self):
-        bookings_, holes = self.get_bookings_and_holes(
+        bookings_ = self.get_bookings(
             self.date,
             self.resource_id
         )
         booking_details = []
         for booking in bookings_:
-            booking = booking.getObject()
             booking_details.append({
                 'type': 'booking',
-                'project': api.content.get_project(booking).title,
-                'story': api.content.get_story(booking).title,
-                'booking': booking.Title(),
+                'project': api.booking.get_project(booking).title,
+                'story': api.booking.get_story(booking).title,
+                'booking': booking.text,
                 'hours': str(quantize(booking.time))
             })
-        holes = [{'type': 'hole',
-                  'reason': h.reason,
-                  'hours': str(quantize(h.hours))}
-                 for h in holes]
-        booking_details.extend(holes)
         return json.dumps(booking_details)
 
     def __call__(self):

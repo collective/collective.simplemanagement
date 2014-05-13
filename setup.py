@@ -32,7 +32,6 @@ setup(
     install_requires=[
         'setuptools',
         'lxml',
-        'plone.tiles',
         'Products.CMFPlone',
         'plone.app.collection',
         'plone.app.dexterity [relations]',
@@ -40,14 +39,14 @@ setup(
         'plone.autoform >= 1.4',
         'plone.formwidget.contenttree',
         'plone.namedfile [blobs]',
-        'plone.app.blocks',
-        'plone.app.tiles',
         'plone.api>=1.1.0',
         'Products.Poi',
         'collective.select2',
         'collective.js.jqueryui > 1.8.16.9',
         'collective.prettydate',
         'z3c.jbot',
+        'zope.catalog',
+        'zope.index',
     ],
     extras_require={
         'test': [

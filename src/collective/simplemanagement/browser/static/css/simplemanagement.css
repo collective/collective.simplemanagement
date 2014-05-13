@@ -168,6 +168,8 @@ table.listing tbody tr td.stories-container .actions {
     font-size: 85%;
     width: 100%;
 }
+body.portaltype-story .booking .listing .ref-link{ display: none }
+
 .booking .listing .booking-details .label{ font-size: 95% }
 .booking .listing .booking-details .description{ display: none }
 
@@ -767,19 +769,6 @@ td.data.warning {
     margin: 0 auto;
     margin-bottom: 30px;
 }
-.template-dashboard #missed-bookings .booking-hole{
-    font-size:120%;
-}
-.template-dashboard #missed-bookings .booking-hole .booking-date{
-    font-weight: bold;
-}
-.template-dashboard #missed-bookings .booking-hole *{
-    vertical-align: middle;
-}
-/*.template-dashboard #missed-bookings{
-    overflow: hidden;
-    width: 50%;
-}*/
 .alert-top{
     border: 2px solid #00008D;
     border-radius: 10px;
@@ -1729,4 +1718,59 @@ input.effort {
 /* make spinner visible when overlay is opened */
 #ajax-spinner {
     z-index: 100000;
+}
+
+.booker-dropdown {
+    background: #fff;
+    border: 1px solid #333;
+    padding: 0px;
+    z-index: 200;
+    min-width: 350px;
+}
+
+.booker-dropdown .no-results {
+    color: #777;
+    font-weight: bold;
+}
+
+#content .booker-dropdown .item {
+    padding: 0.5em;
+    line-height: 1.2em;
+}
+
+.booker-dropdown .item {
+    padding: 0.5em;
+    line-height: 1.2em;
+}
+
+#content .booker-dropdown .item p {
+    margin-bottom: 0px;
+}
+
+.booker-dropdown .item p {
+    margin-bottom: 0px;
+}
+
+.booker-dropdown .item .breadcrumb {
+    font-size: 85%;
+    font-style: italic;
+    margin: 0px;
+    padding: 0px;
+}
+
+.booker-dropdown .item .breadcrumb .sep {
+    color: #999;
+}
+
+.booker-dropdown .item .breadcrumb:before {
+    content: "(";
+}
+
+.booker-dropdown .item .breadcrumb:after {
+    content: ")";
+}
+
+.booker-dropdown .item.selected {
+    background-color: #336bca;
+    color: #fff;
 }

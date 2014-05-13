@@ -132,7 +132,7 @@ class ReportView(DashboardMixin):
                 'title': booking.Title,
                 'user': api.users.get_user_details(
                     self.context,
-                    booking.Creator,
+                    booking.owner,
                     **self.tools)
             }))
             total += booking.time

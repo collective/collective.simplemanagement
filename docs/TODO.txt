@@ -1,0 +1,6 @@
+New booking
+-----------
+
+ * Traverse per booking object [simahawk]
+ * update translations
+

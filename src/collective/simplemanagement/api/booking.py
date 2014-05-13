@@ -1,54 +1,85 @@
+#-*- coding: utf-8 -*-
+
 from datetime import date
 from decimal import Decimal
 from zope.component import getUtility
-from zope.component.hooks import getSite
 
-from z3c.relationfield.relation import create_relation
-from plone.dexterity.utils import createContentInContainer
+from plone.uuid.interfaces import IUUID
+from plone.app.uuid.utils import uuidToObject
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 
 from ..configure import Settings
-from ..configure import DECIMAL_QUANT
+from ..interfaces import IProject
 from ..interfaces import IStory
-from ..interfaces import IBookingHoles
-from ..bookingholes import BookingHole
-from ..utils import AttrDict, quantize
-from .date import datetimerange
+from ..interfaces import IBookingStorage
+from ..utils import quantize
+from .content import get_project as get_project_from_context
+
+
+def to_utf8(x):
+    if isinstance(x, unicode):
+        return x.encode('utf-8')
+    return x
+
+
+def to_references(x):
+    return [(to_utf8(y[0]), to_utf8(y[1]))
+            for y in x]
+
+
+def to_time(x):
+    return Decimal(x)
 
 
 convert_funcs = {
-    'related': lambda x: create_relation('/'.join(x.getPhysicalPath()))
+    'owner': to_utf8,
+    'text': safe_unicode,
+    'references': to_references,
+    'time': to_time,
+    'tags': lambda x: set([safe_unicode(y) for y in x]),
 }
 
 
-def create_booking(context, data, reindex=True):
-    """ create booking in given `context`.
-        `data` must contains booking params.
-        `reindex` switches on/off new item reindexing.
+def to_project(**kw):
+    prj = None
+    ref = kw.get('references', [])
+    ref_dict = dict(ref)
+    if 'Story' in ref_dict.keys() and not 'Project' in ref_dict.keys():
+        story = uuidToObject(ref_dict.get('Story'))
+        prj = story and get_project_from_context(story)
+        if prj:
+            ref.append(('Project', prj.UID()))
+    return ref
+
+
+def to_date(**kw):
+    return kw.get('date', date.today())
+
+
+default_funcs = {
+    # we always want a project if a story is provided
+    'references': to_project,
+    'date': to_date,
+}
+
+
+def get_booking_storage():
+    return getUtility(IBookingStorage)
+
+
+def create_booking(**values):
+    """ create booking.
+        `values` must contains booking params.
     """
-    assert 'title' in data.keys()
-    item = createContentInContainer(
-        context,
-        'Booking',
-        title=data.pop('title')
-    )
-    if not 'date' in data.keys():
-        data['date'] = date.today()
-    for k, v in data.items():
+    for k, v in values.iteritems():
         if v and k in convert_funcs:
-            v = convert_funcs[k](v)
-        setattr(item, k, v)
-    if reindex:
-        item.reindexObject()
-    return item
-
-
-def create_hole(day, hours, user_id, reason=""):
-    hole = BookingHole(day, hours, user_id, reason)
-    util = getUtility(IBookingHoles)
-    util.add(hole)
-    return hole
+            values[k] = convert_funcs[k](v)
+    for k in default_funcs.iterkeys():
+        values[k] = default_funcs[k](**values)
+    storage = get_booking_storage()
+    return storage.create(**values)
 
 
 def get_difference_class(a, b, settings=None):
@@ -64,89 +95,44 @@ def get_difference_class(a, b, settings=None):
     return 'success'
 
 
-def get_bookings(userid=None, project=None, portal_catalog=None,
-                 from_date=None, to_date=None, booking_date=None,
-                 sort=True):
+def get_bookings(owner=None, references=None,
+                 date=None, project=None,
+                 sort_on='date', reverse=True, **kwargs):
     """ returns bookings.
-    ``userid`` limits results to objs belonging to that user.
-    ``project`` a project obj. If given, results will be limited to that proj.
-    ``from_date`` lower date limit
-    ``to_date`` upper date limit
-    ``sort`` disable sorting
+    ``owner`` limits results to objs belonging to that user.
+    ``project`` project object or uid.
+    ``references`` uid or list of uids to referenced objects.
+    ``date`` datetime object or tuple of datetime objects to query a range.
+    ``sort`` disable sorting.
     """
-    if portal_catalog is None:
-        context = project or getSite()
-        pc = getToolByName(context, 'portal_catalog')
-    else:
-        pc = portal_catalog
-    query = {
-        'portal_type': 'Booking',
-    }
-    if userid:
-        query['Creator'] = userid
+    query = {}
+    if owner or kwargs.get('userid'):
+        query['owner'] = owner or kwargs.get('userid')
+
+    # get references
+    references = references or []
     if project:
-        query['path'] = '/'.join(project.getPhysicalPath())
-    if from_date and not to_date:
-        query['booking_date'] = {'query': from_date, 'range': 'min'}
-    elif to_date and not from_date:
-        query['booking_date'] = {'query': to_date, 'range': 'max'}
-    elif from_date and to_date:
-        query['booking_date'] = {'query': [from_date, to_date],
-                                 'range': 'min:max'}
-    if booking_date:
-        query['booking_date'] = booking_date
-    if sort:
-        # XXX: this is not working in tests (???)
-        query['sort_on'] = 'booking_date'
-        query['sort_order'] = 'descending'
+        if IProject.providedBy(project):
+            project = project.UID()
+        if isinstance(project, basestring):
+            references.append(project)
 
-    return pc.searchResults(query)
+    if references:
+        if not isinstance(references, (list, tuple)):
+            references = (references, )
+        query['references'] = references
 
+    if date:
+        query['date'] = date
 
-def get_booking_holes(userid, bookings, expected_working_time=None,
-                      man_day_hours=None, from_date=None, to_date=None):
-    """ given a user and a list of bookings returns booking holes
-    ``expected_working_time`` minimal expected working hours per day
-    ``man_day_hours`` amount of working hours per day
-    ``from_date`` and ``to_date`` limit the range of dates to check upon
-    """
-    # TODO: get settings from global settings if not passed
-    _missing = {}
-    for booking in bookings:
-        if booking.time >= expected_working_time:
-            # let's skip this if already have sufficient hours
-            continue
-        # let's check for a hole matching this booking
-        if _missing.get(booking.date):
-            _missing[booking.date] += booking.time
-        else:
-            _missing[booking.date] = booking.time
+    dates = []
+    for k in ('from_date', 'to_date'):
+        dates.append(kwargs.get(k))
+    if any(dates):
+        query['date'] = tuple(dates)
 
-    # look up for entire-day hole
-    for adate, __ in datetimerange(from_date, to_date, exclude_weekend=1):
-        if not adate in _missing:
-            _missing[adate] = Decimal('0.0')
-
-    # then we check that total time matches our constraints
-    holes_utility = getUtility(IBookingHoles)
-    holes = tuple(holes_utility.iter_user(userid, from_date, to_date))
-    missing = []
-    for dt, tm in sorted(_missing.items()):
-        if tm >= expected_working_time:
-            # drop it if time is enough
-            continue
-        the_hole = [x for x in holes if dt == x.day]
-        if the_hole and \
-                (the_hole[0].hours + tm) >= expected_working_time:
-            # if we have a hole matching our booking date
-            # and hole hours + booked time matches our constraint
-            # we are ok with this booking
-            continue
-        missing.append(AttrDict({
-            'date': dt,
-            'time': tm,
-        }))
-    return missing
+    storage = get_booking_storage()
+    return storage.query(query, sort_on=sort_on, reverse=reverse)
 
 
 def get_timings(context, portal_catalog=None):
@@ -165,7 +151,7 @@ def get_timings(context, portal_catalog=None):
             'portal_type': 'Story'
         })
         estimate = sum([s.estimate for s in stories], Decimal("0.00"))
-    bookings = get_bookings(project=context)
+    bookings = get_bookings(references=IUUID(context))
     hours = sum([b.time for b in bookings if b.time], Decimal("0.00"))
     difference = estimate - hours
     return {
@@ -174,3 +160,11 @@ def get_timings(context, portal_catalog=None):
         'difference': quantize(difference),
         'time_status': get_difference_class(estimate, hours)
     }
+
+
+def get_project(booking):
+    return uuidToObject(booking.project)
+
+
+def get_story(booking):
+    return uuidToObject(booking.story)

@@ -30,6 +30,10 @@
         <div tal:replace="structure provider:plone.abovecontentbody" />
         <div id="content-core">
 
+          <div id="booking-form"
+               class="clearfix inline-form"
+               tal:content="structure view/add_booking_form" />
+
           <tal:pm condition="view/user_can_manage_project">
             <metal:form
               use-macro="context/simpemanagement-macros/employee-form" />
@@ -48,60 +52,7 @@
               <!-- Stories pane -->
               <div id="stories-wrapper"
                   class="pane"
-                  tal:define="booking_holes view/booking_holes;
-                             projects view/projects">
-                <div id="missed-bookings"
-                  class="pat-expose alert alert-top alert-booking"
-                  data-expose-triggers="hover"
-                  tal:condition="python: booking_holes and not employee_details">
-                  <h2 i18n:translate="">Please complete your booking</h2>
-                  <p class="claim"
-                    i18n:translate="">You seem to have missing bookings
-                    for the following days:</p>
-                  <div class="listing">
-                    <tal:row repeat="hole booking_holes">
-                      <div tal:define="css_class string:row booking-hole;
-                                       odd repeat/hole/odd;"
-                           tal:attributes="class python:css_class + (odd and ' odd' or ' even')">
-                        <div class="cell position-0 column-3">
-                          <span class="booking-date"
-                                tal:content="python:helpers.timeago(hole.date)" />
-                        </div>
-                        <div class="cell position-3 column-2">
-                          <span class="booking-time"
-                                i18n:translate="">
-                            (<span i18n:name="time"
-                                  tal:omit-tag=""
-                                  tal:content="hole/time" />
-                            hours booked)
-                          </span>
-                        </div>
-                        <div class="cell position-6 column-4">
-                          <div class="actions">
-                            <span class="take-it-easy"
-                                  i18n:translate="">It's okay, I</span>
-                            <select class="hole-reasons"
-                                    tal:attributes="name string:reason-${repeat/hole/number}">
-                              <option i18n:translate="">- select reason -</option>
-                              <option
-                                tal:repeat="reason view/hole_reasons"
-                                tal:attributes="value python:reason[0]"
-                                tal:content="python:reason[1]" />
-                            </select>
-                            <button
-                              disabled="disabled"
-                              tal:attributes="data-time python:str(hole.time);
-                                              data-date python:hole.date.strftime('%Y-%m-%d')"
-                              class="create-hole"
-                              i18n:translate="">
-                              Fill it!
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </tal:row>
-                  </div>
-                </div>
+                  tal:define="projects view/projects">
 
                 <div id="projects"
                   tal:condition="not: projects">
@@ -138,9 +89,6 @@
                             colspan="2">Story</th>
                           <th i18n:translate="">Estimate</th>
                           <th i18n:translate="">Done</th>
-                          <th i18n:translate=""
-                            class="dashboard-actions"
-                            tal:condition="not: employee_details">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -154,14 +102,6 @@
                               fill-slot="extra-info" />
 
                             <metal:after-columns fill-slot="after-columns">
-                              <td tal:condition="not: employee_details">
-                                <a i18n:translate=""
-                                   class="bookform btn"
-                                   title="Add Booking"
-                                   i18n:attributes="title"
-                                   tal:attributes="rel string:${story/url}/create_booking;
-                                                   id string:bookform-${story/UID}">Book time</a>
-                              </td>
                             </metal:after-columns>
                           </metal:stories>
                         </tal:stories>
@@ -226,8 +166,7 @@
                       <th i18n:translate="">Date</th>
                       <th i18n:translate="">Hours</th>
                       <th i18n:translate="">Title</th>
-                      <th i18n:translate="">Projects</th>
-                      <th i18n:translate="">Story</th>
+                      <th></th>
                     </tr>
                   </thead>
                    <tbody>
@@ -238,12 +177,11 @@
                             tal:content="book/date2" />)
                       </td>
                       <td tal:content="book/time">3.0</td>
-                      <td><a tal:attributes="href book/url"
-                             tal:content="book/title">closed ticket #1</a></td>
-                      <td><a tal:content="book/project/title"
-                             tal:attributes="href book/project/url">Project 1</a></td>
-                      <td><a tal:content="book/story/title"
-                             tal:attributes="href book/story/url">Story 1</a></td>
+                      <td tal:content="structure book/title">closed ticket #1</td>
+                      <td>
+                        <a href="" tal:attributes="href book/url"
+                           i18n:translate="">view</a>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -253,9 +191,6 @@
             </div>
           </div>
         </div>
-
-        <div id="booking-tooltip-form"
-             tal:content="structure view/add_booking_form" />
 
         <div tal:replace="structure provider:plone.belowcontentbody" />
       </metal:main>
