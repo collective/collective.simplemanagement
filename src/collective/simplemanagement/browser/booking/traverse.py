@@ -55,6 +55,10 @@ class BaseContainer(SimpleItem):
             else:
                 raise NotFound(self, obj_id, request)
 
+    def absolute_url(self):
+        return '{0}/{1}'.format(self.__parent__.absolute_url(),
+                                self.id)
+
 
 class IBookingContainer(Interface):
     """

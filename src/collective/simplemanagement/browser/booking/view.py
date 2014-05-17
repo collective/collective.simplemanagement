@@ -17,6 +17,7 @@ from Products.CMFPlone.utils import safe_unicode
 from ... import api
 from ...booking.form import EditForm
 from ..widgets import book_widget
+from .traverse import IBookingContainer
 
 
 class View(BrowserView):
@@ -66,16 +67,24 @@ class Helpers(BrowserView):
         return True
 
     @property
-    @view.memoize_contextless
-    def purl(self):
+    def parent_url(self):
+        # this should be the /bookings traverser in the context
+        # XXX: any better way to get this?
+        parent = self.request.PARENTS[0]
+        if IBookingContainer.providedBy(parent):
+            return parent.absolute_url()
         portal = plone.api.portal.get()
-        return portal.absolute_url()
+        return portal.absolute_url() + '/bookings'
 
+    @view.memoize
     def view_url(self):
-        return '{0}/bookings/{1}/view'.format(self.purl, self.context.uid)
+        return '{0}/{1}/view'.format(self.parent_url,
+                                     self.context.uid)
 
+    @view.memoize
     def edit_url(self):
-        return '{0}/bookings/{1}/edit'.format(self.purl, self.context.uid)
+        return '{0}/{1}/edit'.format(self.parent_url,
+                                     self.context.uid)
 
     def format_text(self):
         return safe_unicode(book_widget.format_text(self.context))

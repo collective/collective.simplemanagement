@@ -12,7 +12,7 @@
 
     <h1>Booking listing</h1>
 
-     <div id="all-bookings"
+     <div id="all-bookings" class="booking"
          tal:define="all_bookings       context/bookings;
                      total              python: len(all_bookings);
                      Batch              python: modules['Products.CMFPlone'].Batch;
@@ -21,7 +21,7 @@
                      b_start            request/b_start | b_start;
                      batch              python: Batch(all_bookings or [], b_size, int(b_start), orphan=1);">
       <p>Found <span tal:replace="total"/> bookings.</p>
-      <ul tal:condition="all_bookings">
+      <ul class="listing" tal:condition="all_bookings">
 
         <li tal:repeat="booking batch">
           <tal:def define="helpers booking/@@helpers;

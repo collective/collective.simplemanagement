@@ -43,7 +43,7 @@ REGEXP = re.compile(
     )
 )
 
-TEMPLATE = ('<a class="ref-link portaltype-{class_}" '
+TEMPLATE = ('<a class="booking-text ref-link portaltype-{class_}" '
             'href="{url}" target="_blank">{tag}</a>')
 
 
