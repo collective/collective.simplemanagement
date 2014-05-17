@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from OFS.SimpleItem import SimpleItem
+
 from ZPublisher.BaseRequest import DefaultPublishTraverse
 
 from zope.interface import implementer
@@ -11,10 +12,15 @@ from zope.publisher.interfaces import IPublishTraverse
 from zope.publisher.interfaces import NotFound
 from zope.publisher.interfaces import IRequest
 
+from plone.uuid.interfaces import IUUID
+
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 
 from ... import _
+from ... import api
 from ...interfaces import IBookingStorage
+from ...interfaces import IProject
+from ...interfaces import IStory
 
 
 @implementer(IPublishTraverse)
@@ -61,24 +67,46 @@ class BookingContainer(BaseContainer):
     id = 'bookings'
     title = _(u"Bookings")
     utility_interface = IBookingStorage
+    references = ()
 
     def get_object(self, uid):
         return self.utility[uid]
 
+    def bookings(self, **kw):
+        return api.booking.get_bookings(references=self.references)
 
-class BookingTraverser(DefaultPublishTraverse):
-    """Traversal adapter for IUserFolder
+
+class SiteBookingTraverser(DefaultPublishTraverse):
+    """Traversal adapter for bookings
     """
     adapts(IPloneSiteRoot, IRequest)
+    references = ()
 
     def fallback(self, request, name):
-        return super(BookingTraverser, self).publishTraverse(request, name)
+        return super(SiteBookingTraverser, self).publishTraverse(request, name)
 
     def publishTraverse(self, request, name):
         if name == BookingContainer.id:
             container = BookingContainer()
             container.__name__ = BookingContainer.id
             container.__parent__ = self.context
+            container.references = self.references
             container = container.__of__(self.context)
             return container
         return self.fallback(request, name)
+
+
+class ProjectBookingTraverser(SiteBookingTraverser):
+    """Traversal adapter for bookings on projects
+    """
+    adapts(IProject, IRequest)
+
+    @property
+    def references(self):
+        return (IUUID(self.context), )
+
+
+class StoryBookingTraverser(ProjectBookingTraverser):
+    """Traversal adapter for bookings on projects
+    """
+    adapts(IStory, IRequest)

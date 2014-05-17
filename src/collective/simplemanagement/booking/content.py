@@ -7,8 +7,6 @@ from Acquisition import ImplicitAcquisitionWrapper
 from zope.interface import implementer
 from zope.schema.fieldproperty import FieldProperty
 
-import plone.api
-
 from .. import api
 from ..interfaces import IBooking
 
@@ -37,6 +35,26 @@ class Booking(Persistent):
         self.owner = owner
         self.references = list(references or [])
         self.tags = set(sorted(tags or []))
+
+    # volatile attributes for acquisition
+    _v_name = None
+    _v_parent = None
+
+    @property
+    def __name__(self):
+        return self._v_name
+
+    @__name__.setter
+    def __name__(self, value):
+        self._v_name = value
+
+    @property
+    def __parent__(self):
+        return self._v_parent
+
+    @__parent__.setter
+    def __parent__(self, value):
+        self._v_parent = value
 
     def __of__(self, parent):
         return ImplicitAcquisitionWrapper(self, parent)

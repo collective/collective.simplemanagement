@@ -30,12 +30,14 @@
   <browser:page
     for="...interfaces.IBooking"
     name="edit"
-    class=".view.View"
+    class=".view.EditView"
     layer="...interfaces.IBrowserLayer"
     permission="simplemanagement.ManageProject"
     />
 
-  <adapter factory=".traverse.BookingTraverser" />
+  <adapter factory=".traverse.SiteBookingTraverser" />
+  <adapter factory=".traverse.ProjectBookingTraverser" />
+  <adapter factory=".traverse.StoryBookingTraverser" />
 
   <browser:page
     for=".traverse.IBookingContainer"
@@ -50,6 +52,15 @@
     for=".traverse.IBookingContainer"
     name="view"
     />
+<!--
+  <browser:page
+    for="*"
+    name="bookings"
+    class=".view.BookingsView"
+    permission="simplemanagement.ManageProject"
+    template="templates/list.pt"
+    layer="...interfaces.IBrowserLayer"
+    /> -->
 
   <browser:page
     for="...interfaces.IBooking"

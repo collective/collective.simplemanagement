@@ -2,6 +2,8 @@
 
 from datetime import date
 
+from zope.component import getMultiAdapter
+
 from z3c.form import form
 from z3c.form import button
 from z3c.form import field
@@ -25,6 +27,8 @@ from ..browser.widgets.book_widget import TagsFieldWidget
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("../browser/templates/quick_form.pt")
 
+    name = 'booking_form'
+
     @property
     def fields(self):
         fields = field.Fields(IBooking).select('text') + \
@@ -37,8 +41,6 @@ class BookingForm(form.AddForm):
         fields['references'].widgetFactory = ReferencesFieldWidget
         fields['tags'].widgetFactory = TagsFieldWidget
         return fields
-
-    name = 'booking_form'
 
     def create(self, data):
         # Trims to the right as suggested by Giorgio
@@ -95,16 +97,38 @@ class BookingForm(form.AddForm):
 
 
 class EditForm(form.EditForm):
-    name = 'booking-edit-form'
-    fields = field.Fields(IBooking)
+
+    name = 'booking_edit_form'
 
     noChangesMessage = _(u"No changes were applied.")
     successMessage = _(u'Data successfully updated.')
 
+    @property
+    def fields(self):
+        fields = field.Fields(IBooking).select('text') + \
+            field.Fields(IBooking).select('time') + \
+            field.Fields(IBooking).select('date') + \
+            field.Fields(IBooking).select('references') + \
+            field.Fields(IBooking).select('tags')
+        fields['time'].widgetFactory = TimeFieldWidget
+        fields['text'].widgetFactory = BookFieldWidget
+        fields['references'].widgetFactory = ReferencesFieldWidget
+        fields['tags'].widgetFactory = TagsFieldWidget
+        return fields
+
+    def updateWidgets(self):
+        super(EditForm, self).updateWidgets()
+        for name, widget in self.widgets.items():
+            if name == 'text':
+                widget.references_field = self.widgets['references'].name
+                widget.tags_field = self.widgets['tags'].name
+            if name in ['references', 'tags']:
+                widget.mode = interfaces.HIDDEN_MODE
+
     def redirect(self):
-        self.request.response.redirect(
-            location=self.context.absolute_url()
-        )
+        helpers = getMultiAdapter((self.context, self.request),
+                                  name='helpers')
+        self.request.response.redirect(helpers.view_url())
 
     @button.buttonAndHandler(_(u'Save'), name='save')
     def handleApply(self, action):
@@ -124,5 +148,6 @@ class EditForm(form.EditForm):
 
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')
     def handleCancel(self, action):
-        plone_api.portal.show_message(message=self.status)
+        plone_api.portal.show_message(message=self.status,
+                                      request=self.request)
         self.redirect()

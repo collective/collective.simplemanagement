@@ -1,20 +1,21 @@
 #-*- coding: utf-8 -*-
 
-import plone.api
 
 from zope.interface import implementer
 from zope.interface import Interface
 from zope.component import getMultiAdapter
-# from zope.publisher.interfaces import IPublishTraverse
 # from zope.publisher.interfaces import NotFound
 # from zope.security import checkPermission
 
+import plone.api
 from plone.memoize import view
+from plone.z3cform.layout import wrap_form
 
 from Products.Five.browser import BrowserView
 from Products.CMFPlone.utils import safe_unicode
 
 from ... import api
+from ...booking.form import EditForm
 from ..widgets import book_widget
 
 
@@ -27,27 +28,9 @@ class View(BrowserView):
                                   name="helpers")
         return helpers.info
 
-# this view fails like this
-#     2014-04-28 23:36:00 ERROR Zope.SiteErrorLog 1398720960.620.0422080793786 http://localhost:8180/simplemanagement/bookings/5acaa0f6cf1611e3854f0024d7c8e78c/edit
-# Traceback (innermost last):
-#   Module ZPublisher.Publish, line 134, in publish
-#   Module Zope2.App.startup, line 301, in commit
-#   Module transaction._manager, line 89, in commit
-#   Module transaction._transaction, line 329, in commit
-#   Module transaction._transaction, line 443, in _commitResources
-#   Module ZODB.Connection, line 567, in commit
-#   Module ZODB.Connection, line 623, in _commit
-#   Module ZODB.Connection, line 658, in _store_objects
-#   Module ZODB.serialize, line 422, in serialize
-# TypeError: Can't pickle objects in acquisition wrappers.
-
 
 class ListingView(BrowserView):
     """IBooking listing View"""
-
-    def bookings(self):
-        storage = api.booking.get_booking_storage()
-        return storage.query()
 
 
 class IHelpers(Interface):
@@ -71,6 +54,8 @@ class IHelpers(Interface):
     def info():
         """ booking info for view rendering
         """
+
+EditView = wrap_form(EditForm)
 
 
 @implementer(IHelpers)
@@ -106,7 +91,11 @@ class Helpers(BrowserView):
             'time': self.context.time,
             'date': context.toLocalizedTime(self.context.date.isoformat()),
             'date2': api.date.timeago(self.context.date),
-            'creator': safe_unicode(user_details),
+            'creator': user_details,
             'can_edit': self.can_edit(),
+            'project': api.booking.get_project(self.context),
+            'story': api.booking.get_story(self.context),
         }
         return booking
+
+

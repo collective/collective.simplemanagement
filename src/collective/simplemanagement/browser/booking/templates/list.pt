@@ -13,7 +13,7 @@
     <h1>Booking listing</h1>
 
      <div id="all-bookings"
-         tal:define="all_bookings       view/bookings;
+         tal:define="all_bookings       context/bookings;
                      total              python: len(all_bookings);
                      Batch              python: modules['Products.CMFPlone'].Batch;
                      b_size             python:20;
