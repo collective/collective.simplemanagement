@@ -59,6 +59,27 @@ table.listing tbody tr td.stories-container .actions {
     width: 100px
 }
 
+table.listing tfoot {
+    background-color: #ddd;
+    color: #333;
+    border-top: 1px solid #ccc;
+}
+
+#content table.listing.booking-list td.actions {
+    width: 30px;
+}
+
+#content table.listing.booking-list td.booking-date {
+    width: 80px;
+}
+
+#content table.listing.booking-list td.actual_hours {
+    width: 25px;
+}
+
+#content table.listing.booking-list td.creator {
+    width: 90px;
+}
 
 #content-core td.stories-container table.listing {
     margin:0;
@@ -406,7 +427,9 @@ ul.stories .actions {
 #content a.iteration,
 #content a.quickedit,
 #content a.quick-booking,
-#content a.story-quickview {
+#content a.story-quickview,
+#content a.view-booking,
+#content a.edit-booking {
     background: transparent url('../img/pencil.png') no-repeat;
     border: 0 none !important;
     display: block;
@@ -439,7 +462,8 @@ ul.stories .actions {
     background-image: url('../img/show-stories.png');
 }
 
-#content a.story-quickview {
+#content a.story-quickview,
+#content a.view-booking {
     background-image: url('../img/magnifier.png');
 }
 
@@ -461,7 +485,9 @@ ul.stories .actions {
 #content a.iteration span,
 #content a.story-quickview span,
 #content a.quick-booking span,
-#content a.quickedit span {
+#content a.quickedit span,
+#content a.view-booking span,
+#content a.edit-booking span {
     padding: 20px;
 }
 

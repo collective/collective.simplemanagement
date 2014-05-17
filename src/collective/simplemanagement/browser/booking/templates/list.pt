@@ -14,32 +14,44 @@
 
      <div id="all-bookings" class="booking"
          tal:define="all_bookings       context/bookings;
+                     sm_macros          nocall:context/@@simpemanagement-macros;
                      total              python: len(all_bookings);
                      Batch              python: modules['Products.CMFPlone'].Batch;
                      b_size             python:20;
                      b_start            python:0;
                      b_start            request/b_start | b_start;
-                     batch              python: Batch(all_bookings or [], b_size, int(b_start), orphan=1);">
-      <p>Found <span tal:replace="total"/> bookings.</p>
-      <ul class="listing" tal:condition="all_bookings">
-
-        <li tal:repeat="booking batch">
-          <tal:def define="helpers booking/@@helpers;
-                           info helpers/info">
-
-            <tal:text replace="structure info/text" />
-            <a tal:attributes="href info/url">
-              view
-            </a>|
-            <a tal:attributes="href info/edit_url">
-              edit
-            </a>
-
-          </tal:def>
-        </li>
-      </ul>
-
-      <div metal:use-macro="here/batch_macros/macros/navigation" />
+                     batch              python: Batch(all_bookings or [], b_size, int(b_start), orphan=1);
+                     booking_list       batch">
+       <table class="listing booking-list"
+              tal:condition="booking_list">
+         <thead>
+           <tr>
+             <th>&nbsp;</th>
+             <th i18n:translate="">Date</th>
+             <th i18n:translate="">Text</th>
+             <th i18n:translate="">Time</th>
+             <th i18n:translate="">Assignee</th>
+           </tr>
+         </thead>
+         <tfoot>
+           <tr>
+             <td colspan="4"
+                 i18n:translate="">Total found</td>
+             <td tal:content="total"></td>
+           </tr>
+         </tfoot>
+         <tbody>
+           <tal:row repeat="booking_obj booking_list">
+             <tal:wrapper define="booking python: view.info_for(booking_obj)">
+               <tr tal:define="odd repeat/booking_obj/odd"
+                   tal:attributes="class python: odd and 'odd' or 'even'">
+                 <metal:bookings use-macro="sm_macros/booking-list-element" />
+               </tr>
+             </tal:wrapper>
+           </tal:row>
+         </tbody>
+       </table>
+       <div metal:use-macro="here/batch_macros/macros/navigation" />
     </div>
 
   </div>

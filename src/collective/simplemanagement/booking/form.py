@@ -143,7 +143,8 @@ class EditForm(form.EditForm):
         else:
             self.status = self.noChangesMessage
 
-        plone_api.portal.show_message(message=self.status)
+        plone_api.portal.show_message(message=self.status,
+                                      request=self.request)
         self.redirect()
 
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')

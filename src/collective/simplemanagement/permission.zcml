@@ -30,4 +30,12 @@
       id="simplemanagement.EditCompass"
       title="Simplemanagement: Edit compass" />
 
+  <permission
+      id="simplemanagement.ViewBooking"
+      title="Simplemanagement: View booking" />
+
+  <permission
+      id="simplemanagement.EditBooking"
+      title="Simplemanagement: Edit booking" />
+
 </configure>

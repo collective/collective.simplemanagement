@@ -12,6 +12,7 @@ from zope.publisher.interfaces import IPublishTraverse
 from zope.publisher.interfaces import NotFound
 from zope.publisher.interfaces import IRequest
 
+import plone.api
 from plone.uuid.interfaces import IUUID
 
 from Products.CMFPlone.interfaces import IPloneSiteRoot
@@ -72,6 +73,19 @@ class BookingContainer(BaseContainer):
     title = _(u"Bookings")
     utility_interface = IBookingStorage
     references = ()
+
+    @property
+    def __ac_local_roles__(self):
+        parent = self.__parent__
+        if parent is None:
+            parent = plone.api.portal.get()
+        local_roles = {}
+        if hasattr(parent, '__ac_local_roles__'):
+            if callable(parent.__ac_local_roles__):
+                local_roles = parent.__ac_local_roles__()
+            else:
+                local_roles = parent.__ac_local_roles__
+        return local_roles
 
     def get_object(self, uid):
         return self.utility[uid]

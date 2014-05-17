@@ -7,6 +7,8 @@ from Acquisition import ImplicitAcquisitionWrapper
 from zope.interface import implementer
 from zope.schema.fieldproperty import FieldProperty
 
+import plone.api
+
 from .. import api
 from ..interfaces import IBooking
 
@@ -58,6 +60,23 @@ class Booking(Persistent):
 
     def __of__(self, parent):
         return ImplicitAcquisitionWrapper(self, parent)
+
+    @property
+    def __ac_local_roles__(self):
+        parent = self.__parent__
+        if parent is None:
+            parent = plone.api.portal.get()
+        local_roles = {}
+        if hasattr(parent, '__ac_local_roles__'):
+            if callable(parent.__ac_local_roles__):
+                local_roles = parent.__ac_local_roles__()
+            else:
+                local_roles = parent.__ac_local_roles__
+        for roles in local_roles.values():
+            if 'Owner' in roles:
+                roles.remove('Owner')
+        local_roles.setdefault(self.owner, []).append('Owner')
+        return local_roles
 
     def index_references(self):
         references = self.references_dict

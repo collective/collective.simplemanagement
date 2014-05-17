@@ -5,7 +5,7 @@ from zope.interface import implementer
 from zope.interface import Interface
 from zope.component import getMultiAdapter
 # from zope.publisher.interfaces import NotFound
-# from zope.security import checkPermission
+from zope.security import checkPermission
 
 import plone.api
 from plone.memoize import view
@@ -32,6 +32,13 @@ class View(BrowserView):
 
 class ListingView(BrowserView):
     """IBooking listing View"""
+
+    def info_for(self, booking):
+        helpers = getMultiAdapter(
+            (booking, self.request),
+            name="helpers"
+        )
+        return helpers.info
 
 
 class IHelpers(Interface):
@@ -63,8 +70,7 @@ EditView = wrap_form(EditForm)
 class Helpers(BrowserView):
 
     def can_edit(self):
-        # TODO
-        return True
+        return checkPermission('simplemanagement.EditBooking', self.context)
 
     @property
     def parent_url(self):

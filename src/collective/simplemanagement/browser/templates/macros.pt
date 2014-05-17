@@ -255,10 +255,11 @@
 
   <!-- used in story view -->
   <metal:booking define-macro="booking-list">
-    <table class="listing"
+    <table class="listing booking-list"
            tal:condition="booking_list">
       <thead>
         <tr>
+          <th>&nbsp;</th>
           <th i18n:translate="">Date</th>
           <th i18n:translate="">Text</th>
           <th i18n:translate="">Time</th>
@@ -269,13 +270,31 @@
         <tal:row repeat="booking booking_list">
           <tr tal:define="odd repeat/booking/odd"
               tal:attributes="class python: odd and 'odd' or 'even'">
-            <td tal:content="booking/date" />
+          <metal:booking-list-element define-macro="booking-list-element">
+            <td class="actions">
+              <a href=""
+                 class="view-booking"
+                 target="_blank"
+                 tal:attributes="href booking/url">
+                <span i18n:translate="">View</span>
+              </a>
+              <a href=""
+                 class="edit-booking"
+                 target="_blank"
+                 tal:condition="booking/can_edit"
+                 tal:attributes="href booking/edit_url">
+                 <span i18n:translate="">Edit</span>
+              </a>
+            </td>
+            <td class="booking-date" tal:content="booking/date" />
             <td class="booking-details">
               <span tal:replace="structure booking/text" />
             </td>
             <td class="actual_hours" tal:content="booking/time" />
-            <td><a tal:attributes="href booking/creator/href"
+            <td class="creator"><a tal:attributes="href booking/creator/href"
               tal:content="booking/creator/fullname" />
+            </td>
+          </metal:booking-list-element>
           </tr>
         </tal:row>
       </tbody>

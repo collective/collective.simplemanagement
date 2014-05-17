@@ -12,7 +12,7 @@
 
 <metal:content-core fill-slot="main">
 
-  <div id="booking-view" tal:define="info view/info;">
+  <div id="booking-view" tal:define="info view/info">
 
     <h1>
         <span i18n:translate="">Project:</span>
@@ -48,6 +48,7 @@
     <p tal:content="structure info/text" />
 
     <a class="button btn"
+       tal:condition="info/can_edit"
        tal:attributes="href info/edit_url"
        i18n:translate="">Edit</a>
 

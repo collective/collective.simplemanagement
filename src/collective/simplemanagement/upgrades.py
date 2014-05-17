@@ -164,6 +164,8 @@ def upgrade_to_1009(context, logger=None):
 
 def upgrade_to_1010(context, logger=None):
     logger = getLogger(logger)
+    logger.info("Reloading rolemap")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'rolemap')
     logger.info("Reloading javascript registry")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'jsregistry')
     logger.info("Reloading catalog definition")

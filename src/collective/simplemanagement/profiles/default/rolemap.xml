@@ -6,6 +6,13 @@
     <role name="PM"/>
   </roles>
   <permissions>
+    <permission name="Portlets: View dashboard" acquire="True">
+      <role name="Manager"/>
+      <role name="Site Administrator"/>
+      <role name="PM"/>
+      <role name="Employee"/>
+    </permission>
+
     <permission name="Simplemanagement: Manage project" acquire="False">
       <role name="Manager"/>
       <role name="PM"/>
@@ -17,6 +24,19 @@
       <!-- <role name="PM"/> -->
       <role name="Employee"/>
       <role name="Site Administrator"/>
+    </permission>
+
+    <permission name="Simplemanagement: View booking" acquire="True">
+      <role name="Manager"/>
+      <role name="Site Administrator"/>
+      <role name="PM"/>
+      <role name="Employee"/>
+    </permission>
+
+    <permission name="Simplemanagement: Edit booking" acquire="True">
+      <role name="Manager"/>
+      <role name="Site Administrator"/>
+      <role name="Owner"/>
     </permission>
 
     <permission name="Simplemanagement: Add project" acquire="False">

@@ -18,7 +18,7 @@
     name="view"
     layer="...interfaces.IBrowserLayer"
     class=".view.View"
-    permission="simplemanagement.ManageProject"
+    permission="simplemanagement.ViewBooking"
     template="templates/view.pt"
     />
 
@@ -32,7 +32,7 @@
     name="edit"
     class=".view.EditView"
     layer="...interfaces.IBrowserLayer"
-    permission="simplemanagement.ManageProject"
+    permission="simplemanagement.EditBooking"
     />
 
   <adapter factory=".traverse.SiteBookingTraverser" />
@@ -43,7 +43,7 @@
     for=".traverse.IBookingContainer"
     name="view"
     class=".view.ListingView"
-    permission="simplemanagement.ManageProject"
+    permission="simplemanagement.ViewBooking"
     template="templates/list.pt"
     layer="...interfaces.IBrowserLayer"
     />
