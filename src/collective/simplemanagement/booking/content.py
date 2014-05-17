@@ -78,6 +78,18 @@ class Booking(Persistent):
         local_roles.setdefault(self.owner, []).append('Owner')
         return local_roles
 
+    # Without this, the cache of borg.localrole gets confused
+    # when we inherit the physical path from the container,
+    # therefore gets all the cached values of the container.
+    # Normally this does not happen (say on edit form)
+    # because the cache stores in the request,
+    # and doesn't calcuate local roles for parent.
+    def getPhysicalPath(self):
+        if self.__parent__ is not None:
+            return self.__parent__.getPhysicalPath() + (self.uid,)
+        # Yeah, we need this.
+        raise AttributeError('getPhysicalPath')
+
     def index_references(self):
         references = self.references_dict
         uuids = set(references.values())

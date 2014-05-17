@@ -34,6 +34,7 @@ class ListingView(BrowserView):
     """IBooking listing View"""
 
     def info_for(self, booking):
+        booking = self.context.publishTraverse(self.request, booking.uid)
         helpers = getMultiAdapter(
             (booking, self.request),
             name="helpers"
