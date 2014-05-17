@@ -127,9 +127,6 @@ class BookWidget(HTMLTextInputWidget, Widget):
         super(BookWidget, self).update()
         addFieldClass(self)
 
-    def extract(self, default=""):
-        return self.request.get(self.name, default)
-
 
 @adapter(IField, IFormLayer)
 @implementer(IFieldWidget)

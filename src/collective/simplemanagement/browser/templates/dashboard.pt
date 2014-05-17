@@ -171,13 +171,10 @@
                   </thead>
                    <tbody>
                     <tr tal:repeat="book bookings">
-                      <td><span
-                          tal:content="book/date">today</span>
-                           (<span class="discreet"
-                            tal:content="book/date2" />)
+                      <td><span tal:content="book/date">today</span>
                       </td>
                       <td tal:content="book/time">3.0</td>
-                      <td tal:content="structure book/title">closed ticket #1</td>
+                      <td tal:content="structure book/text">closed ticket #1</td>
                       <td>
                         <a href="" tal:attributes="href book/url"
                            i18n:translate="">view</a>
