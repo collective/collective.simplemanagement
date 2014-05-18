@@ -51,6 +51,10 @@ class ProjectInfo(base.ViewletBase):
                 'title': _(u'Dashboard')
             },
             {
+                'url': "%s/bookings" % info['project_url'],
+                'title': _(u'Bookings')
+            },
+            {
                 'url': "%s/@@backlog" % info['project_url'],
                 'title': _(u'Backlog')
             },

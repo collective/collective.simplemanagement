@@ -102,6 +102,7 @@ class EditForm(form.EditForm):
 
     noChangesMessage = _(u"No changes were applied.")
     successMessage = _(u'Data successfully updated.')
+    deleteMessage = _(u'Booking succesfully deleted.')
 
     @property
     def fields(self):
@@ -151,6 +152,18 @@ class EditForm(form.EditForm):
 
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')
     def handleCancel(self, action):
-        plone_api.portal.show_message(message=self.status,
+        plone_api.portal.show_message(message=self.noChangesMessage,
                                       request=self.request)
         self.redirect()
+
+    @button.buttonAndHandler(_(u'Delete booking'), name='delete-booking')
+    def handleDelete(self, action):
+        helpers = getMultiAdapter((self.context, self.request),
+                                  name='helpers')
+        parent_url = helpers.parent_url
+        storage = api.booking.get_storage()
+        storage.delete(self.context.uid)
+        plone_api.portal.show_message(message=self.deleteMessage,
+                                      request=self.request)
+        self.request.response.redirect(parent_url)
+

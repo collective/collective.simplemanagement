@@ -90,6 +90,13 @@ class Booking(Persistent):
         # Yeah, we need this.
         raise AttributeError('getPhysicalPath')
 
+    @property
+    def title(self):
+        return self.text
+
+    def Title(self):
+        return self.title
+
     def index_references(self):
         references = self.references_dict
         uuids = set(references.values())

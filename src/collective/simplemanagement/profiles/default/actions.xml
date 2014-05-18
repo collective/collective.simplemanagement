@@ -28,6 +28,19 @@
       </property>
       <property name="visible">True</property>
     </object>
+    <object name="bookings" meta_type="CMF Action" insert-after="compass"
+            i18n:domain="collective.simplemanagement">
+      <property name="title" i18n:translate="">Bookings</property>
+      <property name="description" i18n:translate=""/>
+      <property name="url_expr">string:${portal_url}/bookings</property>
+      <property name="link_target"/>
+      <property name="icon_expr"/>
+      <property name="available_expr"/>
+      <property name="permissions">
+        <element value="Simplemanagement: Manage project"/>
+      </property>
+      <property name="visible">True</property>
+    </object>
   </object>
   <object name="simplemanagement_actions" meta_type="CMF Action Category">
     <property name="title"></property>
@@ -67,6 +80,19 @@
      <property name="available_expr"></property>
      <property name="permissions">
       <element value="Simplemanagement: Manage project"/>
+     </property>
+     <property name="visible">True</property>
+    </object>
+    <object name="bookings" meta_type="CMF Action"
+       i18n:domain="collective.simplemanagement">
+     <property name="title" i18n:translate="">Bookings</property>
+     <property name="description" i18n:translate=""></property>
+     <property name="url_expr">string:bookings</property>
+     <property name="link_target"></property>
+     <property name="icon_expr"></property>
+     <property name="available_expr"></property>
+     <property name="permissions">
+      <element value="Simplemanagement: View booking"/>
      </property>
      <property name="visible">True</property>
     </object>

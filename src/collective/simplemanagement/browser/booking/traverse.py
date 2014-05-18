@@ -70,15 +70,18 @@ class IBookingContainer(Interface):
 class BookingContainer(BaseContainer):
 
     id = 'bookings'
-    title = _(u"Bookings")
     utility_interface = IBookingStorage
     references = ()
 
-    @property
-    def __ac_local_roles__(self):
+    def _get_parent(self):
         parent = self.__parent__
         if parent is None:
             parent = plone.api.portal.get()
+        return parent
+
+    @property
+    def __ac_local_roles__(self):
+        parent = self._get_parent()
         local_roles = {}
         if hasattr(parent, '__ac_local_roles__'):
             if callable(parent.__ac_local_roles__):
@@ -92,6 +95,25 @@ class BookingContainer(BaseContainer):
 
     def bookings(self, **kw):
         return api.booking.get_bookings(references=self.references)
+
+    @property
+    def title(self):
+        parent = self._get_parent()
+        parent_title_attr = None
+        if hasattr(parent, 'title_or_id'):
+            parent_title_attr = 'title_or_id'
+        elif hasattr(parent, 'Title'):
+            parent_title_attr = 'Title'
+        if parent_title_attr is None:
+            return _(u"Bookings")
+        parent_title = getattr(parent, parent_title_attr)
+        return _(u"%(parent)s's bookings") % {
+            'parent': parent_title() if callable(parent_title) \
+                else parent_title
+        }
+
+    def Title(self):
+        return self.title
 
 
 class SiteBookingTraverser(DefaultPublishTraverse):

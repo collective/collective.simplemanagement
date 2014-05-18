@@ -168,6 +168,8 @@ def upgrade_to_1010(context, logger=None):
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'rolemap')
     logger.info("Reloading javascript registry")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'jsregistry')
+    logger.info("Adding actions")
+    context.runImportStepFromProfile(DEFAULT_PROFILE, 'actions')
     logger.info("Reloading catalog definition")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'catalog')
     logger.info("Cleaning up configuration registry")

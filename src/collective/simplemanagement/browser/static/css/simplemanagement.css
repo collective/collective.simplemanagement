@@ -67,6 +67,7 @@ table.listing tfoot {
 
 #content table.listing.booking-list td.actions {
     width: 15px;
+    padding: 8px 5px;
 }
 
 #content table.listing.booking-list td.booking-date {
@@ -189,11 +190,19 @@ table.listing tfoot {
     font-size: 85%;
     width: 100%;
 }
-body.portaltype-story .booking-text.ref-link{ display: none }
-body.portaltype-project .booking-text.ref-link.portaltype-project{ display: none }
-
-.booking .listing .booking-details .label{ font-size: 95% }
-.booking .listing .booking-details .description{ display: none }
+body.portaltype-story .booking-text.ref-link.portaltype-project,
+body.portaltype-story .booking-text.ref-link.portaltype-story {
+    display: none;
+}
+body.portaltype-project .booking-text.ref-link.portaltype-project{
+    display: none;
+}
+.booking .listing .booking-details .label {
+    font-size: 95%;
+}
+.booking .listing .booking-details .description {
+    display: none;
+}
 
 .booking .listing h4 {
     font-size: 110%;
@@ -488,7 +497,7 @@ ul.stories .actions {
 #content a.quickedit span,
 #content a.view-booking span,
 #content a.edit-booking span {
-    padding: 20px;
+    display: none;
 }
 
 .iteration-actions {
@@ -1800,4 +1809,8 @@ input.effort {
 .booker-dropdown .item.selected {
     background-color: #336bca;
     color: #fff;
+}
+
+#form-buttons-delete-booking {
+    float: right;
 }
