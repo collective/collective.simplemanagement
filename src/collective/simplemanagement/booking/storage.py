@@ -100,6 +100,10 @@ class BookingStorage(Persistent):
         self.mapping.pop(booking.cat_id)
         booking.cat_id = None
 
+    def reindex(self, booking):
+        self.catalog.unindex_doc(booking.cat_id)
+        self.catalog.index_doc(booking.cat_id, booking)
+
     def reindex_catalog(self):
         self.mapping.clear()
         self.catalog.clear()

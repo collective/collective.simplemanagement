@@ -145,6 +145,8 @@ class EditForm(form.EditForm):
 
         plone_api.portal.show_message(message=self.status,
                                       request=self.request)
+        storage = api.booking.get_storage()
+        storage.reindex(self.context)
         self.redirect()
 
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')

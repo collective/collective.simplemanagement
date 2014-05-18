@@ -119,6 +119,10 @@ class IBookingStorage(Interface):
         """Unindexes a booking object.
         """
 
+    def reindex(booking):
+        """Re-ndexes a booking object.
+        """
+
     def reindex_catalog():
         """Flushes catalog values and reindexes all bookings.
         """
