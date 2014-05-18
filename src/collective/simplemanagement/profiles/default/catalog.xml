@@ -16,6 +16,9 @@
     <index name="active" meta_type="FieldIndex">
       <indexed_attr value="active"/>
     </index>
+    <index name="short_uuid" meta_type="FieldIndex">
+      <indexed_attr value="short_uuid"/>
+    </index>
 
     <!-- metadata -->
     <column value="assigned_to"/>
@@ -24,6 +27,7 @@
     <column value="order_number" />
     <column value="priority"/>
     <column value="customer"/>
+    <column value="short_uuid"/>
 
 </object>
 

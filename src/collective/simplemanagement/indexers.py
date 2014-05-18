@@ -2,8 +2,10 @@
 
 from DateTime import DateTime
 from plone.indexer.decorator import indexer
+from plone.uuid.interfaces import IUUID
 
 from Products.CMFCore.interfaces import IContentish
+from Products.CMFCore.utils import getToolByName
 
 from .interfaces import IIteration
 from .interfaces import IEpic
@@ -77,3 +79,23 @@ def order_number(obj):
             order_n = order_n.lower()
         return order_n
     raise AttributeError
+
+
+@indexer(IContentish)
+def short_uuid(obj):
+    uuid = IUUID(obj, None)
+    if uuid is not None:
+        portal_catalog = getToolByName(obj, 'portal_catalog')
+        short_uuids = portal_catalog.uniqueValuesFor('short_uuid')
+        uuid = uuid.replace('-', '')
+        for i in xrange(0, 32):
+            short_uuid_ = uuid[:i]
+            if short_uuid_ in short_uuids:
+                same_short = portal_catalog.searchResults(
+                    short_uuid=short_uuid_
+                )
+                if same_short[0]['UID'] == uuid:
+                    return short_uuid_
+            else:
+                return short_uuid_
+    return uuid

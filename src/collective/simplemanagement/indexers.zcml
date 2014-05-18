@@ -13,4 +13,6 @@
              factory=".indexers.SearchableText_story" />
   <adapter name="SearchableText"
              factory=".indexers.SearchableText_epic" />
+  <adapter name="short_uuid"
+             factory=".indexers.short_uuid" />
 </configure>
