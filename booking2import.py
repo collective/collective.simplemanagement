@@ -61,6 +61,7 @@ def register_storage(site):
     utility = get_utility(site)
     if utility is None:
         utility = BookingStorage()
+        sm = site.getSiteManager()
         sm.registerUtility(utility, IBookingStorage)
         transaction.commit()
         print 'REGISTERED UTILITY'
