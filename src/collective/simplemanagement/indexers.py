@@ -3,7 +3,6 @@
 from DateTime import DateTime
 from plone.indexer.decorator import indexer
 from plone.uuid.interfaces import IUUID
-from plone.app.contenttypes.indexers import SearchableText
 
 from Products.CMFCore.interfaces import IContentish
 from Products.CMFCore.utils import getToolByName
@@ -29,6 +28,10 @@ def end(obj):
 def _to_index_value(parts):
     return ''.join([safe_unicode(x).encode('utf-8')
                     for x in parts])
+
+
+def SearchableText(obj, text=False):
+    return [obj.id, obj.title, obj.description, ]
 
 
 @indexer(IProject)
