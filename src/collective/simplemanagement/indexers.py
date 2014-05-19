@@ -26,7 +26,7 @@ def end(obj):
 
 
 def _to_index_value(parts):
-    return ''.join([safe_unicode(x).encode('utf-8')
+    return ' '.join([safe_unicode(x).encode('utf-8')
                     for x in parts])
 
 
@@ -37,7 +37,7 @@ def SearchableText(obj, text=False):
 @indexer(IProject)
 def SearchableText_project(obj):
     searchable = SearchableText(obj)
-    if obj.notes is not None or obj.notes.output is None:
+    if obj.notes and obj.notes.output:
         searchable.append(obj.notes.output)
 
     if obj.customer is not None:
