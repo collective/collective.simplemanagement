@@ -3,9 +3,11 @@
 from DateTime import DateTime
 from plone.indexer.decorator import indexer
 from plone.uuid.interfaces import IUUID
+from plone.app.contenttypes.indexers import SearchableText
 
 from Products.CMFCore.interfaces import IContentish
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 
 from .interfaces import IIteration
 from .interfaces import IEpic
@@ -24,12 +26,9 @@ def end(obj):
     return DateTime(obj.end.isoformat())
 
 
-def SearchableText(obj, text=False):
-    text = [obj.getId(), obj.Title()]
-    description = obj.Description()
-    if description:
-        text.append(description)
-    return text
+def _to_index_value(parts):
+    return ''.join([safe_unicode(x).encode('utf-8')
+                    for x in parts])
 
 
 @indexer(IProject)
@@ -44,13 +43,13 @@ def SearchableText_project(obj):
     if obj.classifiers:
         searchable.append(' '.join(obj.classifiers))
 
-    return ' '.join(searchable)
+    return _to_index_value(searchable)
 
 
 @indexer(IIteration)
 def SearchableText_iteration(obj):
     searchable = SearchableText(obj)
-    return ' '.join(searchable)
+    return _to_index_value(searchable)
 
 
 @indexer(IStory)
@@ -58,7 +57,7 @@ def SearchableText_story(obj):
     searchable = SearchableText(obj)
     if obj.text is not None:
         searchable.append(obj.text)
-    return ' '.join(searchable)
+    return _to_index_value(searchable)
 
 
 @indexer(IEpic)
@@ -67,7 +66,7 @@ def SearchableText_epic(obj):
     text = obj.get_text()
     if text is not None:
         searchable.append(text)
-    return ' '.join(searchable)
+    return _to_index_value(searchable)
 
 
 @indexer(IContentish)
