@@ -161,7 +161,7 @@ class EditForm(form.EditForm):
         helpers = getMultiAdapter((self.context, self.request),
                                   name='helpers')
         parent_url = helpers.parent_url
-        storage = api.booking.get_storage()
+        storage = api.booking.get_booking_storage()
         storage.delete(self.context.uid)
         plone_api.portal.show_message(message=self.deleteMessage,
                                       request=self.request)
