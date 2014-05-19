@@ -5,6 +5,14 @@
     i18n_domain="collective.simplemanagement">
 
   <browser:page
+      name="plone_context_state"
+      for="...interfaces.IBooking"
+      permission="zope.Public"
+      class=".view.BookingContextState"
+      allowed_interface="plone.app.layout.globals.interfaces.IContextState"
+      />
+
+  <browser:page
     for="*"
     name="test-booking"
     layer="...interfaces.IBrowserLayer"
@@ -70,5 +78,14 @@
     permission="simplemanagement.ManageProject"
     allowed_interface=".view.IHelpers"
     />
+
+  <browser:viewlet
+      for="...interfaces.IBooking"
+      name="plone.belowcontenttitle.documentbyline"
+      manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
+      class=".view.DocumentBylineViewlet"
+      permission="zope2.View"
+      />
+
 
 </configure>

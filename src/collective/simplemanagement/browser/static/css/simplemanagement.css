@@ -1813,4 +1813,9 @@ input.effort {
 
 #form-buttons-delete-booking {
     float: right;
+    color: #c33;
+}
+
+body.portaltype-booking #plone-contentmenu-actions {
+    display: none;
 }

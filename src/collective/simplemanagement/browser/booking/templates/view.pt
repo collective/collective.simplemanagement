@@ -6,53 +6,44 @@
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="collective.simplemanagement">
 
-  <metal:block fill-slot="top_slot"
-               tal:define="dummy python:request.set('disable_border',1)" />
 <body>
 
-<metal:content-core fill-slot="main">
+<metal:title fill-slot="content-title"
+             tal:define="info view/info">
+  <h1 class="documentFirstHeading" tal:content="structure info/text">Banners</h1>
+</metal:title>
 
-  <div id="booking-view" tal:define="info view/info">
+<metal:description fill-slot="content-description">
+</metal:description>
 
-    <h1>
-        <span i18n:translate="">Project:</span>
-        <a tal:attributes="href info/project/absolute_url"
-           tal:content="info/project/Title">
-           Project
-        </a>
-    </h1>
 
-    <h2>
-        <span i18n:translate="">Story:</span>
-        <a tal:attributes="href info/story/absolute_url"
-           tal:content="info/story/Title">
-           Story
-        </a>
-    </h2>
+<metal:content-core fill-slot="content-core"
+                    tal:define="info view/info">
 
-    <p>
-        <span class="label" i18n:translate="">Creator:</span>
-        <span tal:content="info/creator/fullname" />
-    </p>
-
-    <p>
-        <span class="label" i18n:translate="">Time:</span>
-        <span tal:content="info/time" />
-    </p>
-
-    <p>
-        <span class="label" i18n:translate="">Date:</span>
-        <span tal:content="info/date" />
-    </p>
-
-    <p tal:content="structure info/text" />
-
-    <a class="button btn"
-       tal:condition="info/can_edit"
-       tal:attributes="href info/edit_url"
-       i18n:translate="">Edit</a>
-
-  </div>
+  <dl>
+    <dt i18n:translate="">Project</dt>
+    <dd>
+      <a tal:attributes="href info/project/absolute_url"
+         tal:content="info/project/Title">
+        Project
+      </a>
+    </dd>
+    <dt i18n:translate="">Story</dt>
+    <dd>
+      <a tal:attributes="href info/story/absolute_url"
+         tal:content="info/story/Title">
+        Story
+      </a>
+    </dd>
+    <dt i18n:translate="">Date</dt>
+    <dd>
+      <span tal:content="info/date" />
+    </dd>
+    <dt i18n:translate="">Time</dt>
+    <dd>
+      <span tal:content="info/time" />
+    </dd>
+  </dl>
 
 </metal:content-core>
 

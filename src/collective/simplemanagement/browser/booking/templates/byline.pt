@@ -1,0 +1,11 @@
+<div class="documentByLine"
+     id="plone-document-byline"
+     i18n:domain="collective.simplemanagement">
+  <span class="documentAuthor"
+        tal:define="creator view/creator">
+    <tal:u i18n:translate="">by</tal:u>
+    <a href="#"
+       tal:attributes="href creator/href"
+       tal:content="creator/fullname">Author</a>
+  </span>
+</div>

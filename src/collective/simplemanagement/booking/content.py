@@ -13,11 +13,23 @@ from .. import api
 from ..interfaces import IBooking
 
 
+class FakeFTI(object):
+
+    def getId(self):
+        return 'Booking'
+
+    def queryMethodID(self, url, default=''):
+        if not url:
+            return default
+        return url.split('/')[-1]
+
+
 @implementer(IBooking)
 class Booking(Persistent):
     """ a Booking object.
     """
 
+    portal_type = 'booking'
     cat_id = None
     uid = None
     # define getter/setter of attributes using zope schema for validation
@@ -89,6 +101,15 @@ class Booking(Persistent):
             return self.__parent__.getPhysicalPath() + (self.uid,)
         # Yeah, we need this.
         raise AttributeError('getPhysicalPath')
+
+    def absolute_url(self):
+        if self.__parent__ is not None:
+            return self.__parent__.absolute_url() + '/' + self.uid
+        return self.uid
+
+    def getTypeInfo(self):
+        # Returns a fake FTI
+        return FakeFTI()
 
     @property
     def title(self):

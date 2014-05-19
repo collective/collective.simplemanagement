@@ -10,14 +10,75 @@ from zope.security import checkPermission
 import plone.api
 from plone.memoize import view
 from plone.z3cform.layout import wrap_form
+from plone.app.layout.globals.context import ContextState
+from plone.app.layout.viewlets import ViewletBase
 
 from Products.Five.browser import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.utils import safe_unicode
 
+from ... import _
 from ... import api
 from ...booking.form import EditForm
 from ..widgets import book_widget
 from .traverse import IBookingContainer
+
+
+class DocumentBylineViewlet(ViewletBase):
+
+    index = ViewPageTemplateFile('templates/byline.pt')
+
+    def creator(self):
+        helpers = getMultiAdapter(
+            (self.context, self.request),
+            name="helpers"
+        )
+        return helpers.info['creator']
+
+
+class BookingContextState(ContextState):
+
+    @view.memoize
+    def actions(self, category=None, max=-1):
+        if category == 'object':
+            helpers = getMultiAdapter(
+                (self.context, self.request),
+                name="helpers"
+            )
+            actions = [
+                {
+                    'category': 'object',
+                    'available': True,
+                    'description': u'',
+                    'icon': '',
+                    'title': _(u'View'),
+                    'url': helpers.view_url(),
+                    'visible': True,
+                    'allowed': True,
+                    'link_target': None,
+                    'id': 'view'
+                }
+            ]
+            if helpers.can_edit():
+                actions.append({
+                    'category': 'object',
+                    'available': True,
+                    'description': u'',
+                    'icon': '',
+                    'title': _(u'Edit'),
+                    'url': helpers.edit_url(),
+                    'visible': True,
+                    'allowed': True,
+                    'link_target': None,
+                    'id': 'edit'
+                })
+        elif category == 'object_buttons':
+            return []
+        else:
+            actions = super(BookingContextState, self).actions(
+                category=category,
+                max=max)
+        return actions
 
 
 class View(BrowserView):
