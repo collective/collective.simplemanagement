@@ -65,7 +65,7 @@ default_funcs = {
 }
 
 
-def get_booking_storage():
+def get_storage():
     return getUtility(IBookingStorage)
 
 
@@ -78,7 +78,7 @@ def create_booking(**values):
             values[k] = convert_funcs[k](v)
     for k in default_funcs.iterkeys():
         values[k] = default_funcs[k](**values)
-    storage = get_booking_storage()
+    storage = get_storage()
     return storage.create(**values)
 
 
@@ -131,7 +131,7 @@ def get_bookings(owner=None, references=None,
     if any(dates):
         query['date'] = tuple(dates)
 
-    storage = get_booking_storage()
+    storage = get_storage()
     return storage.query(query, sort_on=sort_on, reverse=reverse)
 
 

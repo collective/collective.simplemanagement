@@ -43,7 +43,7 @@ class TestBooking(unittest.TestCase):
         del self.portal[self.project2.id]
 
     def reset_storage(self):
-        util = api.booking.get_booking_storage()
+        util = api.booking.get_storage()
         util.bookings.clear()
         util.mapping.clear()
         util.catalog.clear()
@@ -62,7 +62,7 @@ class TestBooking(unittest.TestCase):
             self.bookings.append(bkng)
 
     def test_get_storage(self):
-        util = api.booking.get_booking_storage()
+        util = api.booking.get_storage()
         self.assertTrue(verifyObject(IBookingStorage, util))
 
     def test_create_booking(self):
@@ -81,7 +81,7 @@ class TestBooking(unittest.TestCase):
         for k, v in values.iteritems():
             self.assertEqual(getattr(booking, k), v)
         # retrieve booking via storage
-        storage = api.booking.get_booking_storage()
+        storage = api.booking.get_storage()
         self.assertTrue(booking.uid in storage)
         self.assertEqual(booking, storage[booking.uid])
 

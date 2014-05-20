@@ -16,7 +16,7 @@ class View(BrowserView):
         booking = None
         uid = self.request.get('uid')
         if uid:
-            storage = api.booking.get_booking_storage()
+            storage = api.booking.get_storage()
             try:
                 booking = storage[uid]
             except KeyError:
@@ -25,7 +25,7 @@ class View(BrowserView):
 
     def bookings(self):
         # XXX: do not use me
-        storage = api.booking.get_booking_storage()
+        storage = api.booking.get_storage()
         return storage.query()
 
     def render_text(self, booking):
