@@ -99,13 +99,15 @@ class Booking(Persistent):
     def getPhysicalPath(self):
         if self.__parent__ is not None:
             return self.__parent__.getPhysicalPath() + (self.uid,)
-        # Yeah, we need this.
-        raise AttributeError('getPhysicalPath')
+        return plone.api.portal.get().getPhysicalPath() + (
+            'bookings',
+            self.uid
+        )
 
     def absolute_url(self):
         if self.__parent__ is not None:
             return self.__parent__.absolute_url() + '/' + self.uid
-        return self.uid
+        return plone.api.portal.get() + '/bookings/' + self.uid
 
     def getTypeInfo(self):
         # Returns a fake FTI

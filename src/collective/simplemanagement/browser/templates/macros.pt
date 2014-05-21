@@ -274,16 +274,8 @@
             <td class="actions">
               <a href=""
                  class="view-booking"
-                 target="_blank"
                  tal:attributes="href booking/url">
                 <span i18n:translate="">View</span>
-              </a>
-              <a href=""
-                 class="edit-booking"
-                 target="_blank"
-                 tal:condition="booking/can_edit"
-                 tal:attributes="href booking/edit_url">
-                 <span i18n:translate="">Edit</span>
               </a>
             </td>
             <td class="booking-date" tal:content="booking/date" />
