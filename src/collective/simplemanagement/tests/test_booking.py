@@ -152,7 +152,7 @@ class TestBooking(unittest.TestCase):
         # get booking by project
         # project 1 (we can query via project object)
         p1_bookings = api.booking.get_bookings(project=self.project1)
-        self.assertEqual(len(p1_bookings), len(u1_bookings + u2_bookings))
+        self.assertEqual(len(p1_bookings), len(u1_bookings) + len(u2_bookings))
         # project 2 (we can query via project UID)
         p2_bookings = api.booking.get_bookings(project=self.project2.UID())
         self.assertEqual(len(p2_bookings), len(u3_bookings))
@@ -193,18 +193,126 @@ class TestBooking(unittest.TestCase):
         self.assertEqual(len(bookings), len(expected))
 
         # test sorting
-        # we sort on date by default (only sorting index ATM)
+        # we sort on reverse date by default (only sorting index ATM)
         bookings = api.booking.get_bookings()
-        first_date = date(2014, 1, 1)
-        last_date = date(2014, 1, 4)
-        self.assertEqual(bookings[0].date, first_date)
-        self.assertEqual(bookings[-1].date, last_date)
-        # reverse
-        bookings = api.booking.get_bookings(reverse=1)
         first_date = date(2014, 1, 4)
         last_date = date(2014, 1, 1)
         self.assertEqual(bookings[0].date, first_date)
         self.assertEqual(bookings[-1].date, last_date)
+        # reverse (normal date sorting)
+        bookings = api.booking.get_bookings(reverse=False)
+        first_date = date(2014, 1, 1)
+        last_date = date(2014, 1, 4)
+        self.assertEqual(bookings[0].date, first_date)
+        self.assertEqual(bookings[-1].date, last_date)
+
+    def test_storage(self):
+        dates = [
+            # (date, worked hours)
+            (date(2014, 1, 1), 4),
+            (date(2014, 1, 2), 2),
+            (date(2014, 1, 3), 3),
+            (date(2014, 1, 4), 7),
+            (date(2014, 1, 5), 3),
+            (date(2014, 1, 6), 1),
+            (date(2014, 1, 7), 2),
+            (date(2014, 1, 8), 2),
+        ]
+        self.setup_bookings(
+            dates,
+            owner='johndoe',
+            references=('Project', self.project2.UID()),
+            tags=['foo', 'bar']
+        )
+        storage = api.booking.get_storage()
+        all_ = storage.query(None)
+        self.assertEqual(len(all_), 8)
+        self.assertEqual(
+            [ i.date.day for i in all_ ],
+            [1, 2, 3, 4, 5, 6, 7, 8]
+        )
+        self.assertEqual(
+            [ i.date.day for i in all_[2:6] ],
+            [3, 4, 5, 6]
+        )
+        self.assertEqual(
+            [ i.date.day for i in all_[:-2] ],
+            [1, 2, 3, 4, 5, 6]
+        )
+        self.assertEqual(
+            [ i.date.day for i in all_[2:] ],
+            [3, 4, 5, 6, 7, 8]
+        )
+        self.assertEqual(
+            [ i.date.day for i in all_[2:6:2] ],
+            [3, 5]
+        )
+        limit_ = storage.query(None, limit=6)
+        self.assertEqual(len(limit_), 6)
+        self.assertEqual(
+            [ i.date.day for i in limit_ ],
+            [1, 2, 3, 4, 5, 6]
+        )
+        self.assertEqual(
+            [ i.date.day for i in limit_[1:5] ],
+            [2, 3, 4, 5]
+        )
+        self.assertEqual(
+            [ i.date.day for i in limit_[:-2] ],
+            [1, 2, 3, 4]
+        )
+        self.assertEqual(
+            [ i.date.day for i in limit_[2:] ],
+            [3, 4, 5, 6]
+        )
+        self.assertEqual(
+            [ i.date.day for i in limit_[1:5:2] ],
+            [2, 4]
+        )
+        start_ = storage.query(None, start=2)
+        self.assertEqual(len(start_), 6)
+        self.assertEqual(
+            [ i.date.day for i in start_ ],
+            [3, 4, 5, 6, 7, 8]
+        )
+        self.assertEqual(
+            [ i.date.day for i in start_[1:5] ],
+            [4, 5, 6, 7]
+        )
+        self.assertEqual(
+            [ i.date.day for i in start_[:-2] ],
+            [3, 4, 5, 6]
+        )
+        self.assertEqual(
+            [ i.date.day for i in start_[2:] ],
+            [5, 6, 7, 8]
+        )
+        self.assertEqual(
+            [ i.date.day for i in start_[1:5:2] ],
+            [4, 6]
+        )
+        start_limit = storage.query(None, start=1, limit=7)
+        self.assertEqual(len(start_limit), 6)
+        self.assertEqual(
+            [ i.date.day for i in start_limit ],
+            [2, 3, 4, 5, 6, 7]
+        )
+        self.assertEqual(
+            [ i.date.day for i in start_limit[1:5] ],
+            [3, 4, 5, 6]
+        )
+        self.assertEqual(
+            [ i.date.day for i in start_limit[:-2] ],
+            [2, 3, 4, 5]
+        )
+        self.assertEqual(
+            [ i.date.day for i in start_limit[2:] ],
+            [4, 5, 6, 7]
+        )
+        self.assertEqual(
+            [ i.date.day for i in start_limit[1:5:2] ],
+            [3, 5]
+        )
 
 
 def test_suite():

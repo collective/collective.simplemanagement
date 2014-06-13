@@ -90,7 +90,7 @@ class IBookingStorage(Interface):
         """Return next id for a new catalog doc
         """
 
-    def _catalog_id_to_object(cat_id):
+    def catalog_id_to_object(cat_id):
         """Return next booking object by catalog id
         """
 
