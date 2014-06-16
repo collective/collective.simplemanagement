@@ -113,7 +113,7 @@ class BookWidget(HTMLTextInputWidget, Widget):
     def electric_chars(self):
         return json.dumps({
             k: v for k, v in self.base_electric_chars.items()
-                if v is not None and len(v) > 0
+                if v is None or len(v) > 0
         })
 
     @property
