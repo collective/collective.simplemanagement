@@ -21,6 +21,7 @@
                     tal:define="info view/info">
 
   <dl>
+    <tal:c condition="info/project">
     <dt i18n:translate="">Project</dt>
     <dd>
       <a tal:attributes="href info/project/absolute_url"
@@ -28,6 +29,8 @@
         Project
       </a>
     </dd>
+    </tal:c>
+    <tal:c condition="info/story">
     <dt i18n:translate="">Story</dt>
     <dd>
       <a tal:attributes="href info/story/absolute_url"
@@ -35,6 +38,7 @@
         Story
       </a>
     </dd>
+    </tal:c>
     <dt i18n:translate="">Date</dt>
     <dd>
       <span tal:content="info/date" />

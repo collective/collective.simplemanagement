@@ -31,6 +31,7 @@
         this.autocomplete_values = [];
         this.autocomplete_selected = 0;
         this.stream = [];
+        this.frozen_references = [];
         this.token = null;
         this.init();
     };
@@ -44,9 +45,17 @@
             return regex;
         },
         parse: function() {
-            var references, tags, item, regex, self = this;
+            var references, raw_references, tags, item, i, l, regex,
+                self = this;
             regex = this.get_regex();
-            references = $.parseJSON(this.$references.val() || '[]');
+            raw_references = $.parseJSON(this.$references.val() || '[]');
+            references = [];
+            for(i=0, l=raw_references.length; i<l; i++) {
+                if(raw_references[i].frozen)
+                    this.frozen_references.push(raw_references[i]);
+                else
+                    references.push(raw_references[i]);
+            }
             tags = $.parseJSON(this.$tags.val() || '[]');
             XRegExp.forEach(this.$root.val(), regex, function(m) {
                 if(self.electric_chars[m[1]] === null) {
@@ -100,6 +109,9 @@
         },
         save_related: function() {
             var i, l, references_values = [], tags_values = [];
+            for(i=0, l=this.frozen_references.length; i<l; i++) {
+                references_values.push(this.frozen_references[i]);
+            }
             for(i=0, l=this.stream.length; i<l; i++) {
                 if(this.stream[i].portal_type)
                     references_values.push({
@@ -195,7 +207,8 @@
                             this.token[0],
                             this.token[1]
                         ]),
-                        filter_context: JSON.stringify(this.stream)
+                        filter_context: JSON.stringify(this.stream),
+                        frozen_refs: JSON.stringify(this.frozen_references)
                     },
                     function(data) {
                         self.autocomplete_values = data;

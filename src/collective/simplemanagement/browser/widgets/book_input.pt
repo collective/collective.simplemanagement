@@ -11,11 +11,10 @@
            data-references=""
            data-tags=""
            data-valid-chars=""
-           placeholder="activity @project @story !ticket #tag"
+           placeholder=""
            data-novalues=""
            data-broken-message=""
            autocomplete="off"
-           i18n:attributes="placeholder"
            tal:attributes="id view/id;
                            name view/name;
                            class view/klass;
@@ -44,6 +43,7 @@
                            onselect view/onselect;
                            size view/size;
                            maxlength view/maxlength;
+                           placeholder view/placeholder;
                            data-electric-chars view/electric_chars;
                            data-autocomplete-url view/autocomplete_url;
                            data-references view/references_selector;

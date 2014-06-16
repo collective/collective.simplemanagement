@@ -32,7 +32,7 @@
         <div tal:content="structure view/form_contents" />
       </div>
 
-      <div class="booking"
+      <div class="booking story-bookings"
         tal:define="booking_list view/get_booking">
         <metal:assignes
           use-macro="context/simpemanagement-macros/booking-list" />

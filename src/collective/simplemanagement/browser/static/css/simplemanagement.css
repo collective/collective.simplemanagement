@@ -191,7 +191,8 @@ table.listing tfoot {
     width: 100%;
 }
 body.portaltype-story .booking-text.ref-link.portaltype-project,
-body.portaltype-story .booking-text.ref-link.portaltype-story {
+body.portaltype-story .booking-text.ref-link.portaltype-story,
+.booking.story-bookings .booking-text.ref-link.portaltype-story {
     display: none;
 }
 body.portaltype-project .booking-text.ref-link.portaltype-project{
@@ -1812,7 +1813,6 @@ input.effort {
 }
 
 #form-buttons-delete-booking {
-    float: right;
     color: #c33;
 }
 

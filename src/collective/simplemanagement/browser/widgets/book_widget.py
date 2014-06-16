@@ -96,6 +96,8 @@ class BookWidget(HTMLTextInputWidget, Widget):
     references_field = None
     tags_field = None
     valid_chars = VALID_CHARS
+    base_electric_chars = ELECTRIC_CHARS
+    placeholder = _(u'@project @story !ticket #tag activity')
 
     js_messages = {
         'no_completions': _(u"No completions"),
@@ -109,7 +111,10 @@ class BookWidget(HTMLTextInputWidget, Widget):
 
     @property
     def electric_chars(self):
-        return json.dumps(ELECTRIC_CHARS)
+        return json.dumps({
+            k: v for k, v in self.base_electric_chars.items()
+                if v is not None and len(v) > 0
+        })
 
     @property
     def references_selector(self):
@@ -165,10 +170,13 @@ class ReferencesConverter(BaseDataConverter):
         widget_value = []
         if isinstance(value, (list, tuple)):
             for item in value:
-                widget_value.append({
+                item_value = {
                     'portal_type': item[0],
                     'uuid': item[1]
-                })
+                }
+                if len(item) > 2:
+                    item_value['frozen'] = bool(item[2])
+                widget_value.append(item_value)
         return json.dumps(widget_value)
 
     def toFieldValue(self, value):
@@ -241,8 +249,14 @@ class Autocomplete(BrowserView):
             'portal_type': portal_type
         }
         filter_context = self.request.form.get('filter_context')
-        if filter_context:
-            filter_context = json.loads(filter_context)
+        frozen_refs = self.request.form.get('frozen_refs')
+        if filter_context or frozen_refs:
+            if filter_context:
+                filter_context = json.loads(filter_context)
+            else:
+                filter_context = []
+            if frozen_refs:
+                filter_context += json.loads(frozen_refs)
             project = None
             for item in filter_context:
                 if item['portal_type'] == 'Project':

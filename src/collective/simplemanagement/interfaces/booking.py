@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-
+from decimal import Decimal
 from zope import schema
 from zope.interface import Interface
 
@@ -27,7 +27,8 @@ class IBooking(Interface):
 
     time = schema.Decimal(
         title=_(u"Hours"),
-        required=True
+        required=True,
+        min=Decimal('0.1')
     )
 
     text = schema.TextLine(

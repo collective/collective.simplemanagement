@@ -24,6 +24,17 @@ from ..browser.widgets.book_widget import ReferencesFieldWidget
 from ..browser.widgets.book_widget import TagsFieldWidget
 
 
+def elchar_strip(electric_chars, *ptypes):
+    for key, value in electric_chars.items():
+        if value is not None:
+            value = list(value)
+            for ptype in ptypes:
+                if ptype in value:
+                    value.remove(ptype)
+                    electric_chars[key] = value
+    return electric_chars
+
+
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("../browser/templates/quick_form.pt")
 
@@ -47,6 +58,16 @@ class BookingForm(form.AddForm):
         data['text'] = data['text'].rstrip()
         if 'owner' not in data and not plone_api.user.is_anonymous():
             data['owner'] = plone_api.user.get_current().id
+        if IStory.providedBy(self.context):
+            project = api.content.get_project(self.context)
+            data['text'] = '@{project} @{story} '.format(
+                project=project.getId(),
+                story=self.context.getId()
+            ) + data['text']
+        elif IProject.providedBy(self.context):
+            data['text'] = '@{project} '.format(
+                project=self.context.getId()
+            ) + data['text']
         return api.booking.create_booking(**data)
 
     def add(self, obj):
@@ -64,27 +85,35 @@ class BookingForm(form.AddForm):
         defaults = {
             'date': date.today()
         }
+        text_widget = self.widgets['text']
+        electric_chars = {
+            k: v for k, v in text_widget.base_electric_chars.items()
+        }
         if IStory.providedBy(self.context):
+            text_widget.base_electric_chars = elchar_strip(
+                electric_chars,
+                'Project',
+                'Story'
+            )
             project = api.content.get_project(self.context)
             defaults.update({
-                'text': '@{project} @{story} '.format(
-                    project=project.getId(),
-                    story=self.context.getId()
-                ),
                 'references': [
-                    ('Project', IUUID(project)),
-                    ('Story', IUUID(self.context))
+                    ('Project', IUUID(project), True),
+                    ('Story', IUUID(self.context), True)
                 ]
             })
+            text_widget.placeholder = _(u"!ticket #tag activity")
         elif IProject.providedBy(self.context):
+            text_widget.base_electric_chars = elchar_strip(
+                electric_chars,
+                'Story'
+            )
             defaults.update({
-                'text': '@{project} '.format(
-                    project=self.context.getId()
-                ),
                 'references': [
-                    ('Project', IUUID(self.context))
+                    ('Project', IUUID(self.context), True)
                 ]
             })
+            text_widget.placeholder = _(u"@story !ticket #tag activity")
         for name, widget in self.widgets.items():
             if name in defaults:
                 converter = interfaces.IDataConverter(widget)
