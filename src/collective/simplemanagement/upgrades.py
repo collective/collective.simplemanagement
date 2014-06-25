@@ -164,6 +164,11 @@ def upgrade_to_1009(context, logger=None):
 
 def upgrade_to_1010(context, logger=None):
     logger = getLogger(logger)
+    logger.info("Installing utility")
+    context.runImportStepFromProfile(
+        DEFAULT_PROFILE,
+        'collective.simplemanagement.booking.install'
+    )
     logger.info("Reloading rolemap")
     context.runImportStepFromProfile(DEFAULT_PROFILE, 'rolemap')
     logger.info("Reloading javascript registry")
@@ -181,3 +186,4 @@ def upgrade_to_1010(context, logger=None):
     logger.info("Rebuilding catalog")
     portal_catalog = getToolByName(context, 'portal_catalog')
     portal_catalog.clearFindAndRebuild()
+
