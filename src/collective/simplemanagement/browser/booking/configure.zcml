@@ -87,5 +87,14 @@
       permission="zope2.View"
       />
 
+  <browser:page
+      for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
+      name="booking_bar"
+      class=".booking_bar.BookingBarView"
+      permission="simplemanagement.AddBooking"
+      layer="...interfaces.IBrowserLayer"
+      />
+
+
 
 </configure>

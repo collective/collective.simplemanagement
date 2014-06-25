@@ -1,5 +1,6 @@
 import re
 import json
+from urllib import urlencode
 
 from zope.interface import implementsOnly, implementer
 from zope.component import adapter
@@ -34,6 +35,8 @@ ELECTRIC_CHARS = {
     '#': None
 }
 
+FORCE_VALIDATION_CHARS = ('@', '!')
+
 VALID_CHARS = '[\\w\\.\\-]'
 
 REGEXP = re.compile(
@@ -45,6 +48,7 @@ REGEXP = re.compile(
 
 TEMPLATE = ('<a class="booking-text ref-link portaltype-{class_}" '
             'href="{url}" target="_blank">{tag}</a>')
+TEMPLATE_NOTFOUND = ('<em>{tag}</em>')
 
 
 def format_text(booking, context=None):
@@ -59,14 +63,15 @@ def format_text(booking, context=None):
 
     def format_tag(m):
         tag = m.group(0)
+        url = None
         css_class = 'none'
+        ref = None
         if ELECTRIC_CHARS[m.group(1)] is None:
-            # BBB: actually decide what to do
-            #url = '/url/for/{tag}'.format(tag=m.group(2))
-            if context is None:
-                url = '/'
-            else:
-                url = context.absolute_url()
+            # TODO: decide if we want instead to go also on the context bookings
+            portal = api.portal.get()
+            url = portal.absolute_url() + '/bookings/?' + urlencode({
+                'tags:list': [m.group(2)]
+            }, True)
         else:
             object_ = None
             try:
@@ -76,12 +81,14 @@ def format_text(booking, context=None):
                 pass
             finally:
                 if object_ is None:
-                    css_class = 'missing'
-                    url = u'javascript:alert('+_(u"Missing reference!")+u');'
+                    if ref is not None:
+                        references.insert(0, ref)
                 else:
                     css_class = ref[0].lower()
                     url = object_.absolute_url()
-        return TEMPLATE.format(url=url, tag=tag, class_=css_class)
+        if url:
+            return TEMPLATE.format(url=url, tag=tag, class_=css_class)
+        return TEMPLATE_NOTFOUND.format(tag=tag)
     result = REGEXP.sub(format_tag, booking.text)
     return result
 
@@ -92,17 +99,18 @@ class BookWidget(HTMLTextInputWidget, Widget):
     klass = u"book-widget"
     css = u'text'
     value = u''
-    size = 35
+    size = 55
     references_field = None
     tags_field = None
     valid_chars = VALID_CHARS
     base_electric_chars = ELECTRIC_CHARS
+    _force_validation_chars = FORCE_VALIDATION_CHARS
     placeholder = _(u'@project @story !ticket #tag activity')
 
     js_messages = {
         'no_completions': _(u"No completions"),
-        'broken_message': _(u"We found broken references "
-                            u"and your booking has been invalidated")
+        'broken_message': _(u"We found broken references. "
+                            u"Please recheck your booking before submit.")
     }
 
     @property
@@ -115,6 +123,10 @@ class BookWidget(HTMLTextInputWidget, Widget):
             k: v for k, v in self.base_electric_chars.items()
                 if v is None or len(v) > 0
         })
+
+    @property
+    def force_validation_chars(self):
+        return json.dumps(self._force_validation_chars)
 
     @property
     def references_selector(self):

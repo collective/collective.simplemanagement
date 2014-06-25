@@ -131,6 +131,9 @@ def get_bookings(owner=None, references=None,
     if any(dates):
         query['date'] = tuple(dates)
 
+    if 'tags' in kwargs:
+        query['tags'] = tuple(kwargs['tags'])
+
     storage = get_storage()
     return storage.query(query, sort_on=sort_on, reverse=reverse)
 

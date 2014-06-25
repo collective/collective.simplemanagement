@@ -9,21 +9,6 @@
 
     var sm = window.simplemanagement;
 
-    sm.reload_booking = function (sel) {
-        $.getJSON(
-            './reload-booking',
-            function(data) {
-                if (data.success === true) {
-                    // $(sel).html(data.bookings_html);
-                    // $('table.timing').html(data.timing_html);
-                    window.location.reload();
-                } else {
-                    alert(data.error);
-                }
-            }
-        );
-    };
-
     sm.booking_tooltip = function() {
         $('.listing .show-more').drawer({
             group: '.show-more',
@@ -51,6 +36,27 @@
     };
 
     $(document).ready(function() {
+
+        $('.sm-booking-form-link').prepOverlay({
+            subtype: 'ajax',
+            filter: common_content_filter,
+            formselector: 'form#booking_form',
+            width: '80%',
+            height: '90%',
+            config: {
+                onClose: function(el) {
+                    value.model.load();
+                },
+                onBeforeLoad: function() {
+                    var $overlay = this.getOverlay();
+                    $overlay.height($(window).height() * 0.8);
+                    $overlay.find('.pb-ajax').css('height', '100%');
+                },
+                onLoad: function() {
+                    sm.init_widgets();
+                }
+            }
+        });
 
         // select2 init
         $("select#language").select2();
@@ -114,57 +120,16 @@
             });
         });
 
-        // ajax submit
-        // TODO: prevent unload protection!
-        $('#booking_form').ajaxForm({
-            /* ajaxify booking form */
-            type: 'POST',
-            dataType: 'json',
-            url: './ajax-create_booking',
-            data: $(this).serialize(),
-            success: function(result) {
-                var $form = $('#booking_form'),
-                    to_exit = true,
-                    $target,
-                    $errwrapper,
-                    item;
-                // flush errors
-                $form.siblings('.errors').remove();
-                if (result.success && !result.error) {
-                    // update booking
-                    $target = $('div.booking');
-                    if (!$target.length) {
-                        $target = $('<div class="booking" />');
-                        $(this).after($target);
-                    }
-                    sm.reload_booking($target);
-                    /* XXX 2013-06-13:
-                    /  do not reload the form because the calendar widget
-                    /  from plone.formwidget.datetime cannot be rebound
-                    /  since it has a lot of inline JS */
-                    // reload_booking_form($('#booking_form'));
-                    // debugger;
-                    to_exit = false;
-                } else if (result.success && result.error) {
-                    // show errors
-                    // XXX 2013-06-13: we can do better?
-                    $errwrapper = $('<div class="errors" />');
-                    $form.after($errwrapper);
-                    $.each(result.errors, function() {
-                        item = '<div class="error">';
-                        item += '<span class="label">' + this.label + ':</span>';
-                        item += '<span class="message">' + this.message + '</span>';
-                        item += '</div>';
-                        $errwrapper.append(item);
-                    });
-                    to_exit = false;
-                } else {
-                    alert(result.error);
+        var init_dash_bk_form = function() {
+            $('.template-dashboard #booking_form').ajaxForm({
+                target: '#booking-form',
+                success: function() {
+                    init_dash_bk_form();
+                    sm.init_widgets();
                 }
-                return to_exit;
-            }
-        });
-
+            });
+        };
+        init_dash_bk_form();
 
         // Show animated spinner while AJAX is loading.
         // See: kss-bbb.js

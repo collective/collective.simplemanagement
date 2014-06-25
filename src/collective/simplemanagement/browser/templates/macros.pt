@@ -266,6 +266,7 @@
           <th i18n:translate="">Assignee</th>
         </tr>
       </thead>
+      <metal:tfoot define-slot="table-foot" />
       <tbody>
         <tal:row repeat="booking booking_list">
           <tr tal:define="odd repeat/booking/odd"

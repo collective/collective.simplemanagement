@@ -19,16 +19,6 @@ from ..interfaces import IUserStoriesListing
 from ..interfaces import IProject
 from ..utils import AttrDict
 from .. import api
-from ..booking.form import BookingForm
-
-
-class DashboardBookingForm(BookingForm):
-
-    name = 'dashboard_booking_form'
-
-    def nextURL(self):
-        next_url = super(DashboardBookingForm, self).nextURL()
-        return next_url + '/@@dashboard'
 
 
 class DashboardMixin(BrowserView):
@@ -223,10 +213,3 @@ class DashboardView(DashboardMixin, TicketsMixIn):
             helpers = getMultiAdapter((booking, self.request), name='helpers')
             results.append(helpers.info)
         return results
-
-    def __call__(self):
-        z2.switch_on(self, request_layer=IFormLayer)
-        addform = DashboardBookingForm(aq_inner(self.context), self.request)
-        addform.update()
-        self.add_booking_form = addform.render()
-        return super(DashboardView, self).__call__()

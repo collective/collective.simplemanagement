@@ -5,15 +5,28 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="collective.simplemanagement">
+
+<metal:block fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border',1)" />
+
 <body>
 
 <metal:content-core fill-slot="main">
-  <div id="booking-view">
+  <div id="booking-view"
+       tal:define="tags python:request.get('tags', [])">
 
-    <h1>Booking listing</h1>
+    <h1 i18n:translate="">Booking listing</h1>
+    <tal:tags condition="tags">
+      <p class="documentByLine">
+        <tal:u i18n:translate="">filtered by:</tal:u>
+        <tal:tags repeat="tag tags">
+          <em tal:content="tag"></em><tal:c condition="not:repeat/tag/end">,</tal:c>
+        </tal:tags>
+      </p>
+    </tal:tags>
 
      <div id="all-bookings" class="booking"
-         tal:define="all_bookings       context/bookings;
+         tal:define="all_bookings       python:context.bookings(tags=tags);
                      sm_macros          nocall:context/@@simpemanagement-macros;
                      total              python: len(all_bookings);
                      Batch              python: modules['Products.CMFPlone'].Batch;

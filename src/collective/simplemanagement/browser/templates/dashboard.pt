@@ -30,14 +30,13 @@
         <div tal:replace="structure provider:plone.abovecontentbody" />
         <div id="content-core">
 
-          <div id="booking-form"
-               class="clearfix inline-form"
-               tal:content="structure view/add_booking_form" />
-
           <tal:pm condition="view/user_can_manage_project">
             <metal:form
               use-macro="context/simpemanagement-macros/employee-form" />
           </tal:pm>
+
+          <div id="booking-form" class="clearfix inline-form"
+               tal:content="structure context/@@booking_bar"></div>
 
           <div id="overview">
             <ul class="tabs">
@@ -89,6 +88,7 @@
                             colspan="2">Story</th>
                           <th i18n:translate="">Estimate</th>
                           <th i18n:translate="">Done</th>
+                          <th i18n:translate="">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -102,6 +102,15 @@
                               fill-slot="extra-info" />
 
                             <metal:after-columns fill-slot="after-columns">
+                              <td>
+                                <a title="Insert bookings"
+                                   style="cursor: pointer;"
+                                   class="sm-booking-form-link"
+                                   i18n:attributes="title"
+                                   tal:attributes="href story/url">
+                                  <span i18n:translate="">Book time</span>
+                                </a>
+                              </td>
                             </metal:after-columns>
                           </metal:stories>
                         </tal:stories>

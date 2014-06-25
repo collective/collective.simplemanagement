@@ -26,6 +26,8 @@
             this.$root.attr('data-electric-chars'));
         this._valid_chars = this.$root.attr('data-valid-chars');
         this.valid_chars = new RegExp(this._valid_chars);
+        this.force_validation_chars = $.parseJSON(
+            this.$root.attr('data-force-validation-chars'));
         this.autocomplete_url = this.$root.attr('data-autocomplete-url');
         this.autocomplete_cache = {};
         this.autocomplete_values = [];
@@ -33,10 +35,20 @@
         this.stream = [];
         this.frozen_references = [];
         this.token = null;
+        this.broken = false;
         this.init();
     };
 
     sm.Booker.prototype = {
+        setBroken: function(value) {
+            this.broken = value;
+            if(value)
+                this.$root.parents('form').find('input[type="submit"]').
+                    attr('disabled', 'disabled');
+            else
+                this.$root.parents('form').find('input[type="submit"]').
+                    removeAttr('disabled');
+        },
         get_regex: function() {
             var c, elchars = [], regex;
             for(c in this.electric_chars) elchars.push(c);
@@ -173,12 +185,6 @@
                                 selection = values[0];
                             this.add(selection);
                         }
-                        else {
-                            this.$root.val(
-                                value.substr(0, this.token[2]) +
-                                    value.substr(this.token[3], value.length));
-                            this.$root.caret(this.token[2]);
-                        }
                         this.token = null;
                     }
                     this.autocomplete_values = [];
@@ -269,14 +275,26 @@
                         stream.push(item);
                     }
                 }
-                if(!found && force) {
-                    broken = true;
+                if(!found) {
+                    if(self.force_validation_chars.indexOf(m[1]) == -1) {
+                        // BBB: this hack is the only way to support the
+                        // "do not autocomplete tags" thingie
+                        // but will break if we change FORCE_VALIDATION_CHARS
+                        stream.push({
+                            portal_type: null,
+                            uuid: m[2],
+                            id: m[2],
+                            start: m.index,
+                            end: m.index + m[0].length
+                        });
+                        found = true;
+                    }
+                    if(!found && force) {
+                        broken = true;
+                    }
                 }
             });
-            if(force && broken) {
-                this.$root.val('');
-                stream = [];
-            }
+            this.setBroken(broken);
             this.stream = stream;
             this.save_related();
             if(force && broken)
@@ -317,6 +335,10 @@
                         self.autocomplete('close');
                         break;
                     }
+                    case 32: { // space
+                        self.autocomplete('close');
+                        break;
+                    }
                     case 9: { // tab
                         break;
                     }
@@ -331,13 +353,17 @@
                     var ch;
                     var position = self.$root.caret();
                     var value = self.$root.val();
-                    if(e.which === 8) {
-                        value = value.substr(0, value.length-1);
-                        position = position - 2;
-                    }
-                    else {
-                        ch = String.fromCharCode(e.which);
-                        value = value + ch;
+                    switch(e.which) {
+                        case 8: { // backspace
+                            value = value.substr(0, value.length-1);
+                            position = position - 2;
+                            break;
+                        }
+                        default: {
+                            ch = String.fromCharCode(e.which);
+                            value = value + ch;
+                            break;
+                        }
                     }
                     self.token = self.tokenize(value, position);
                     if((self.valid_chars.exec(ch) !== null ||
@@ -353,6 +379,13 @@
                 self.cleanup(true);
             });
             this.$root.caret(this.$root.val().length);
+            this.$root.parents('form').submit(function(e) {
+                if(self.broken) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                }
+            });
         }
     };
 

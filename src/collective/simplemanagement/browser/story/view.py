@@ -15,6 +15,8 @@ from ... import api
 
 class View(BrowserView):
 
+    booking_limit = 10
+
     def user_can_booking(self):
         if self.request.get('nobook'):
             return False
@@ -30,13 +32,13 @@ class View(BrowserView):
         return api.users.get_assignees_details(self.context)
 
     def get_booking(self):
-        get_bookings = api.booking.get_bookings
+        bookings = api.booking.get_bookings(references=self.context.UID())
+        bookings = bookings[:self.booking_limit]
 
         def get_info(booking):
             return getMultiAdapter((booking, self.request),
                                    name="helpers").info
-        return [get_info(el)
-                for el in get_bookings(references=self.context.UID())]
+        return [ get_info(el) for el in bookings ]
 
     def form_contents(self):
         z2.switch_on(self, request_layer=IFormLayer)

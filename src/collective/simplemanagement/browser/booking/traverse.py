@@ -94,7 +94,13 @@ class BookingContainer(BaseContainer):
         return self.utility[uid]
 
     def bookings(self, **kw):
-        return api.booking.get_bookings(references=self.references)
+        kwargs = {
+            'references': self.references
+        }
+        tags = kw.get('tags', [])
+        if len(tags) > 0:
+            kwargs['tags'] = tags
+        return api.booking.get_bookings(**kwargs)
 
     @property
     def title(self):

@@ -34,8 +34,25 @@
 
       <div class="booking story-bookings"
         tal:define="booking_list view/get_booking">
-        <metal:assignes
-          use-macro="context/simpemanagement-macros/booking-list" />
+        <metal:bookings
+           use-macro="context/simpemanagement-macros/booking-list">
+          <metal:tfoot fill-slot="table-foot">
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  &nbsp;
+                </td>
+                <td>
+                  <a href=""
+                     title="View all bookings"
+                     tal:attributes="href string:${context/absolute_url}/bookings"
+                     i18n:attributes="title"
+                     i18n:translate="">View all bookings...</a>
+                </td>
+              </tr>
+            </tfoot>
+          </metal:tfoot>
+        </metal:bookings>
       </div>
     </metal:block>
 </metal:content-core>

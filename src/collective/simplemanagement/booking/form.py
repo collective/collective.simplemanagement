@@ -22,6 +22,33 @@ from ..browser.widgets.time_widget import TimeFieldWidget
 from ..browser.widgets.book_widget import BookFieldWidget
 from ..browser.widgets.book_widget import ReferencesFieldWidget
 from ..browser.widgets.book_widget import TagsFieldWidget
+from ..browser.widgets.book_widget import REGEXP
+from ..browser.widgets.book_widget import ELECTRIC_CHARS
+from ..browser.widgets.book_widget import FORCE_VALIDATION_CHARS
+
+
+class ParseActor(object):
+    """The poor man's adapter for acting upon parsed data.
+
+    Calls the appropriate do_ method
+    """
+
+    def do_none(self, value, data):
+        if 'tags' in data:
+            data['tags'].add(value)
+
+    def __call__(self, ptypes, value, data):
+        if ptypes is None:
+            mname = 'do_none'
+        else:
+            mname = 'do_' + '_or_'.join(ptypes)
+        if hasattr(self, mname):
+            m = getattr(self, mname)
+            if callable(m):
+                m(value, data)
+
+
+actor = ParseActor()
 
 
 def elchar_strip(electric_chars, *ptypes):
@@ -31,14 +58,31 @@ def elchar_strip(electric_chars, *ptypes):
             for ptype in ptypes:
                 if ptype in value:
                     value.remove(ptype)
-                    electric_chars[key] = value
+                    if len(value) > 0:
+                        electric_chars[key] = value
+                    else:
+                        del electric_chars[key]
     return electric_chars
+
+
+def parseAndFix(data, errors):
+    if 'text' in data:
+        tokens = REGEXP.findall(data['text'])
+        for char, token in tokens:
+            if char not in FORCE_VALIDATION_CHARS:
+                actor(ELECTRIC_CHARS[char], token, data)
+    return (data, errors)
 
 
 class BookingForm(form.AddForm):
     template = ViewPageTemplateFile("../browser/templates/quick_form.pt")
 
     name = 'booking_form'
+
+    def extractData(self, setErrors=True):
+        return parseAndFix(*super(BookingForm, self).extractData(
+            setErrors=setErrors
+        ))
 
     @property
     def fields(self):
@@ -132,6 +176,11 @@ class EditForm(form.EditForm):
     noChangesMessage = _(u"No changes were applied.")
     successMessage = _(u'Data successfully updated.')
     deleteMessage = _(u'Booking succesfully deleted.')
+
+    def extractData(self, setErrors=True):
+        return parseAndFix(*super(EditForm, self).extractData(
+            setErrors=setErrors
+        ))
 
     @property
     def fields(self):
