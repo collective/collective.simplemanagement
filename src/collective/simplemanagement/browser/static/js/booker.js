@@ -173,6 +173,10 @@
         autocomplete: function(method) {
             var value, selected, values, values_length, selection, offset,
                 offsetParent, self = this;
+            var autocomplete_action = function(data) {
+                self.autocomplete_values = data;
+                self.render_autocomplete();
+            };
             offsetParent = this.$root.offsetParent().offset();
             offset = this.$root.offset();
             offset = {
@@ -216,18 +220,20 @@
                         this.$dropdown.show();
                     }
                     this.render_autocomplete();
-                    this.autocomplete_get({
-                        filter: JSON.stringify([
-                            this.token[0],
-                            this.token[1]
-                        ]),
-                        filter_context: JSON.stringify(this.stream),
-                        frozen_refs: JSON.stringify(this.frozen_references)
-                    },
-                    function(data) {
-                        self.autocomplete_values = data;
-                        self.render_autocomplete();
-                    });
+                    if(this.token[1].length > 1) {
+                        this.autocomplete_get({
+                            filter: JSON.stringify([
+                                this.token[0],
+                                this.token[1]
+                            ]),
+                            filter_context: JSON.stringify(this.stream),
+                            frozen_refs: JSON.stringify(this.frozen_references)
+                        },
+                        autocomplete_action);
+                    }
+                    else {
+                        autocomplete_action([]);
+                    }
                     break;
                 }
                 default:
