@@ -548,6 +548,12 @@ ul.stories .actions {
     display: none;
 }
 
+.book-widget.loading {
+    background-image: url('../../spinner.gif');
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
 .iteration-actions {
     float: left;
     line-height: 20px;

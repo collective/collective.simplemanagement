@@ -253,11 +253,13 @@
                 this.request = window.setTimeout(
                     function() {
                         self.request = null;
+                        self.$root.toggleClass('loading');
                         $.getJSON(
                             self.autocomplete_url,
                             data,
                             function(data, status, request) {
                                 self.autocomplete_cache[key] = data;
+                                self.$root.toggleClass('loading');
                                 callback(data);
                             }
                         );
