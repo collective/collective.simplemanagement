@@ -47,7 +47,7 @@ REGEXP = re.compile(
 )
 
 TEMPLATE = ('<a class="booking-text ref-link portaltype-{class_}" '
-            'href="{url}" target="_blank">{tag}</a>')
+            'href="{url}">{tag}</a>')
 TEMPLATE_NOTFOUND = ('<em>{tag}</em>')
 
 
