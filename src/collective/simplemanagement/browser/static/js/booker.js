@@ -8,6 +8,14 @@
 
     var sm = window.simplemanagement;
 
+    sm.regex_escape = function(c) {
+        var hex = c.charCodeAt(0).toString(16);
+        while(hex.length < 4) {
+            hex = "0" + hex;
+        }
+        return "\u" + hex;
+    };
+
     sm.Booker = function(element) {
         this.$root = $(element);
         this.$root.parent().css({ position: 'relative' });
@@ -51,7 +59,7 @@
         },
         get_regex: function() {
             var c, elchars = [], regex;
-            for(c in this.electric_chars) elchars.push(c);
+            for(c in this.electric_chars) elchars.push(sm.regex_escape(c));
             regex = new RegExp('('+elchars.join('|')+')('+
                                this._valid_chars+'+)', 'g');
             return regex;

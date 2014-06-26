@@ -41,7 +41,7 @@ VALID_CHARS = '[\\w\\.\\-]'
 
 REGEXP = re.compile(
     '({electric})({id}+)'.format(
-        electric='|'.join(ELECTRIC_CHARS.keys()),
+        electric='|'.join(re.escape(c) for c in ELECTRIC_CHARS),
         id=VALID_CHARS
     )
 )
