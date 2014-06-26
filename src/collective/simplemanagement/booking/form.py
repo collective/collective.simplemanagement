@@ -146,7 +146,7 @@ class BookingForm(form.AddForm):
                     ('Story', IUUID(self.context), True)
                 ]
             })
-            text_widget.placeholder = _(u"!ticket #tag activity")
+            text_widget.placeholder = _(u"*ticket #tag activity")
         elif IProject.providedBy(self.context):
             text_widget.base_electric_chars = elchar_strip(
                 electric_chars,
@@ -157,7 +157,7 @@ class BookingForm(form.AddForm):
                     ('Project', IUUID(self.context), True)
                 ]
             })
-            text_widget.placeholder = _(u"@story !ticket #tag activity")
+            text_widget.placeholder = _(u"@story *ticket #tag activity")
         for name, widget in self.widgets.items():
             if name in defaults:
                 converter = interfaces.IDataConverter(widget)

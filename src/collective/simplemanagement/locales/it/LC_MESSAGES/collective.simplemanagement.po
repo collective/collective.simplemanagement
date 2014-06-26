@@ -5,25 +5,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2014-06-16 11:20+0000\n"
-"PO-Revision-Date: 2014-06-16 13:30+0200\n"
+"POT-Creation-Date: 2014-06-26 12:06+0000\n"
+"PO-Revision-Date: 2014-06-26 14:10+0200\n"
 "Last-Translator: Simone Deponti <simone.deponti@abstract.it>\n"
 "Language-Team: Italian <info@abstract.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: it\n"
 "Language-Code: it\n"
 "Language-Name: Italian\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.simplemanagement\n"
+"Language: it\n"
 "X-Is-Fallback-For: it-it it-ch it-sm it-hr it-si\n"
 "X-Generator: Gtranslator 2.91.6\n"
-
-#: ../booking/form.py:105
-msgid "!ticket #tag activity"
-msgstr "!ticket #tag attività"
 
 #: ../browser/project/templates/overview.pt:162
 msgid "${budget} man days"
@@ -57,11 +53,11 @@ msgstr "${story} spostata in ${iteration}"
 msgid "${username} dashboard"
 msgstr "Dashboard di ${username}"
 
-#: ../browser/templates/dashboard.pt:151
+#: ../browser/templates/dashboard.pt:160
 msgid "${username} have no bookings yet"
 msgstr "${username} non ha alcun booking al momento"
 
-#: ../browser/booking/traverse.py:110
+#: ../browser/booking/traverse.py:116
 msgid "%(parent)s's bookings"
 msgstr "Booking di %(parent)s"
 
@@ -77,6 +73,10 @@ msgstr "(doppio click per azzerare selezione)"
 msgid "(double click to select)"
 msgstr "(doppio click per selezionare)"
 
+#: ../booking/form.py:149
+msgid "*ticket #tag activity"
+msgstr "*ticket #tag attività"
+
 #: ../subscribers.py:30
 msgid ""
 "<p>Here are collected all the issues relative to the project <em>"
@@ -88,16 +88,16 @@ msgstr ""
 "un qualcisasi problema, segnalalo qui cliccando sul pulsante <em>Genera una "
 "nuova richiesta</em>.</p>"
 
-#: ../browser/widgets/book_widget.py:100
-msgid "@project @story !ticket #tag activity"
-msgstr "@progetto @storia !ticket #tag attività"
+#: ../browser/widgets/book_widget.py:109
+msgid "@project @story *ticket #tag activity"
+msgstr "@progetto @storia *ticket #tag attività"
 
-#: ../booking/form.py:116
-msgid "@story !ticket #tag activity"
-msgstr "@storia !ticket #tag attività"
+#: ../booking/form.py:160
+msgid "@story *ticket #tag activity"
+msgstr "@storia *ticket #tag attività"
 
 #: ../browser/iteration/templates/macros.pt:76
-#: ../browser/templates/macros.pt:168
+#: ../browser/templates/dashboard.pt:91 ../browser/templates/macros.pt:168
 msgid "Actions"
 msgstr "Azioni"
 
@@ -160,7 +160,7 @@ msgstr "Aprile"
 msgid "Are you sure you want to delete this snapshot?"
 msgstr "Sei sicuro di voler cancellare questo snapshot?"
 
-#: ../browser/booking/templates/list.pt:33 ../browser/templates/macros.pt:266
+#: ../browser/booking/templates/list.pt:54 ../browser/templates/macros.pt:266
 msgid "Assignee"
 msgstr "Assegnatario"
 
@@ -182,16 +182,28 @@ msgstr "Agosto"
 msgid "Backlog"
 msgstr "Backlog"
 
-#: ../browser/templates/dashboard.pt:48 ../browser/templates/macros.pt:67
+#: ../browser/templates/dashboard.pt:111
+msgid "Book time"
+msgstr "Fai booking"
+
+#: ../browser/templates/dashboard.pt:47 ../browser/templates/macros.pt:67
 #: ../profiles/default/types/Booking.xml
 msgid "Booking"
 msgstr "Booking"
 
-#: ../booking/form.py:134
+#: ../browser/booking/templates/list.pt:18
+msgid "Booking listing"
+msgstr "Lista booking"
+
+#: ../booking/form.py:178
 msgid "Booking succesfully deleted."
 msgstr "Il booking è stato cancellato"
 
-#: ../browser/booking/traverse.py:108 ../profiles/default/actions.xml
+#: ../browser/booking/booking_bar.py:21
+msgid "Booking was succesfully added!"
+msgstr "Il booking è stato aggiunto!"
+
+#: ../browser/booking/traverse.py:114 ../profiles/default/actions.xml
 #: ../viewlets/projectinfo.py:55
 msgid "Bookings"
 msgstr "Booking"
@@ -204,7 +216,7 @@ msgstr "Budget"
 msgid "Budget (man days)"
 msgstr "Budget (in giorni uomo)"
 
-#: ../booking/form.py:182 ../browser/forms/quickform.py:79
+#: ../booking/form.py:231 ../browser/forms/quickform.py:79
 #: ../browser/templates/compass_history.pt:50
 msgid "Cancel"
 msgstr "Annulla"
@@ -243,10 +255,6 @@ msgstr "Epic correlate"
 msgid "Create or activate a project"
 msgstr "Crea o attiva un progetto"
 
-#: ../browser/ajaxforms.py:24
-msgid "Created:"
-msgstr "Creato:"
-
 #: ../browser/templates/compass.pt:205
 #: ../browser/templates/compass_history.pt:178
 msgid "Critical resources"
@@ -265,11 +273,11 @@ msgstr "Cliente"
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: ../booking/form.py:133 ../browser/forms/quickform.py:55
+#: ../booking/form.py:177 ../browser/forms/quickform.py:55
 msgid "Data successfully updated."
 msgstr "Dati modificati"
 
-#: ../browser/booking/templates/list.pt:30
+#: ../browser/booking/templates/list.pt:51
 #: ../browser/booking/templates/test_view.pt:17
 #: ../browser/booking/templates/view.pt:42
 msgid "Date"
@@ -287,7 +295,7 @@ msgstr "Dicembre"
 msgid "Delete"
 msgstr "Cancella"
 
-#: ../booking/form.py:188
+#: ../booking/form.py:237
 msgid "Delete booking"
 msgstr "Elimina booking"
 
@@ -333,7 +341,7 @@ msgid "Documents folder"
 msgstr "Cartella documentazione"
 
 #: ../browser/iteration/templates/macros.pt:81
-#: ../browser/templates/dashboard.pt:91 ../browser/templates/macros.pt:173
+#: ../browser/templates/dashboard.pt:90 ../browser/templates/macros.pt:173
 msgid "Done"
 msgstr "Fatto"
 
@@ -429,7 +437,7 @@ msgstr "Febbraio"
 msgid "Filter by name..."
 msgstr "Filtra per nome..."
 
-#: ../browser/templates/macros.pt:402
+#: ../browser/templates/macros.pt:403
 msgid "Filter results by employee"
 msgstr "Filtra i risultati per impiegato"
 
@@ -437,7 +445,7 @@ msgstr "Filtra i risultati per impiegato"
 msgid "Folder where projects will be creted"
 msgstr "Cartella dove saranno creati i progetti"
 
-#: ../browser/templates/dashboard.pt:122
+#: ../browser/templates/dashboard.pt:131
 msgid "Found ${n_ticket} ticket/s"
 msgstr "Trovato/i ${n_ticket} ticket"
 
@@ -499,7 +507,7 @@ msgstr "Ora inizio"
 msgid "Hour stop"
 msgstr "Ora fine"
 
-#: ../browser/templates/dashboard.pt:167
+#: ../browser/templates/dashboard.pt:176
 #: ../browser/templates/project_report.pt:243
 #: ../browser/templates/worklog.pt:61
 msgid "Hours"
@@ -512,6 +520,10 @@ msgstr "Identificativo del gruppo che contiene tutti gli impiegati"
 #: ../browser/epic/templates/view.pt:37
 msgid "Initial estimate"
 msgstr "Stima iniziale"
+
+#: ../browser/templates/dashboard.pt:106
+msgid "Insert bookings"
+msgstr "Inserici booking"
 
 #: ../browser/project/templates/planning.pt:38
 #: ../profiles/default/types/Iteration.xml
@@ -588,10 +600,6 @@ msgstr ""
 msgid "Minimum plan length"
 msgstr "Lunghezza minima del piano"
 
-#: ../browser/widgets/book_widget.py:80
-msgid "Missing reference!"
-msgstr "Reference mancante :)"
-
 #: ../browser/templates/ticketsmacros.pt:14
 msgid "Modified"
 msgstr "Ultima modifica"
@@ -612,11 +620,11 @@ msgstr "Nuovo progetto"
 msgid "No active projects."
 msgstr "Nessun progetto attivo."
 
-#: ../booking/form.py:132 ../browser/forms/quickform.py:54
+#: ../booking/form.py:176 ../browser/forms/quickform.py:54
 msgid "No changes were applied."
 msgstr "Nessuna modifica effettuata."
 
-#: ../browser/widgets/book_widget.py:103
+#: ../browser/widgets/book_widget.py:112
 msgid "No completions"
 msgstr "Nessun completamento trovato."
 
@@ -636,7 +644,7 @@ msgstr ""
 "Non è stata trovata alcuna storia. Aggiungine una nuova o ripianifica le "
 "iterazioni."
 
-#: ../browser/templates/macros.pt:358
+#: ../browser/templates/macros.pt:359
 msgid ""
 "No stories in this iteration. Add a new one or bring them in via the "
 "iteration planner."
@@ -749,7 +757,7 @@ msgstr "Report"
 msgid "Repositories"
 msgstr "Repository"
 
-#: ../browser/templates/macros.pt:423
+#: ../browser/templates/macros.pt:424
 msgid "Reset filter"
 msgstr "Azzera i filtri"
 
@@ -781,7 +789,7 @@ msgstr "SM strumenti personali"
 msgid "Sat"
 msgstr "Sab"
 
-#: ../booking/form.py:163 ../browser/forms/quickform.py:62
+#: ../booking/form.py:212 ../browser/forms/quickform.py:62
 #: ../browser/templates/compass.pt:49
 msgid "Save"
 msgstr "Salva"
@@ -794,7 +802,7 @@ msgstr "Ricerca un progetto..."
 msgid "Select"
 msgstr "Seleziona"
 
-#: ../browser/templates/macros.pt:404
+#: ../browser/templates/macros.pt:405
 msgid "Select an employee"
 msgstr "Seleziona un impiegato"
 
@@ -846,13 +854,13 @@ msgstr "Stato"
 msgid "Status changed"
 msgstr "Stato cambiato"
 
-#: ../browser/epic/templates/view.pt:65 ../browser/templates/dashboard.pt:44
+#: ../browser/epic/templates/view.pt:65 ../browser/templates/dashboard.pt:43
 msgid "Stories"
 msgstr "Storie"
 
 #: ../browser/booking/templates/view.pt:34
 #: ../browser/iteration/templates/macros.pt:78
-#: ../browser/templates/dashboard.pt:88
+#: ../browser/templates/dashboard.pt:87
 msgid "Story"
 msgstr "Storia"
 
@@ -868,7 +876,7 @@ msgstr "Dom"
 msgid "Tags"
 msgstr "Tags"
 
-#: ../browser/booking/templates/list.pt:31 ../browser/templates/macros.pt:264
+#: ../browser/booking/templates/list.pt:52 ../browser/templates/macros.pt:264
 #: ../interfaces/booking.py:35
 msgid "Text"
 msgstr "Testo"
@@ -1013,11 +1021,11 @@ msgstr "Non ci sono iterazioni passate."
 msgid "There are no saved compass plans."
 msgstr "Non esistono pianificazioni compass salvate."
 
-#: ../browser/templates/dashboard.pt:63
+#: ../browser/templates/dashboard.pt:62
 msgid "There are not stories assigned to ${username}"
 msgstr "Non ci sono storie assegnate a ${username}"
 
-#: ../browser/templates/dashboard.pt:66
+#: ../browser/templates/dashboard.pt:65
 msgid "There are not stories assigned to you."
 msgstr "Non ci sono storie assegnate a te."
 
@@ -1037,7 +1045,7 @@ msgstr ""
 msgid "This field is required"
 msgstr "Questo campo è obbligatorio"
 
-#: ../browser/templates/dashboard.pt:74
+#: ../browser/templates/dashboard.pt:73
 msgid "This is a complete list of active stories in active projects."
 msgstr ""
 "Questa è la lista completa delle storie attive all'interno dei progetti "
@@ -1051,11 +1059,11 @@ msgstr "Il progetto non contiene nessun documento"
 msgid "Thu"
 msgstr "Gio"
 
-#: ../browser/templates/dashboard.pt:46
+#: ../browser/templates/dashboard.pt:45
 msgid "Tickets"
 msgstr "Ticket"
 
-#: ../browser/booking/templates/list.pt:32
+#: ../browser/booking/templates/list.pt:53
 #: ../browser/booking/templates/test_view.pt:19
 #: ../browser/booking/templates/view.pt:46
 msgid "Time"
@@ -1065,7 +1073,7 @@ msgstr "Ora"
 msgid "Time spent"
 msgstr "Ore spese"
 
-#: ../browser/templates/dashboard.pt:168
+#: ../browser/templates/dashboard.pt:177
 #: ../browser/templates/ticketsmacros.pt:13 ../interfaces/quickform.py:9
 msgid "Title"
 msgstr "Titolo"
@@ -1079,7 +1087,7 @@ msgstr "Totale"
 msgid "Total compass"
 msgstr "Totale del compass"
 
-#: ../browser/booking/templates/list.pt:38
+#: ../browser/booking/templates/list.pt:59
 msgid "Total found"
 msgstr "Totale trovati"
 
@@ -1134,9 +1142,17 @@ msgid "Value (man hours)"
 msgstr "Valore (in giorni uomo)"
 
 #: ../browser/booking/view.py:54 ../browser/templates/compass.pt:116
-#: ../browser/templates/macros.pt:278
+#: ../browser/templates/macros.pt:279
 msgid "View"
 msgstr "Visualizza"
+
+#: ../browser/story/templates/view.pt:46
+msgid "View all bookings"
+msgstr "Vedi tutti i bookings"
+
+#: ../browser/story/templates/view.pt:46
+msgid "View all bookings..."
+msgstr "Vedi tutti i bookings..."
 
 #: ../browser/templates/macros.pt:61
 msgid "View details"
@@ -1146,11 +1162,11 @@ msgstr "Visualizza i dettagli"
 msgid "Warning delta"
 msgstr "Warning delta"
 
-#: ../browser/widgets/book_widget.py:104
-msgid "We found broken references and your booking has been invalidated"
+#: ../browser/widgets/book_widget.py:113
+msgid "We found broken references. Please recheck your booking before submit."
 msgstr ""
-"Abbiamo trovato delle referenze a oggetti inesistenti ed abbiamo invalidato "
-"il booking"
+"Abbiamo trovato delle referenze non risolte. Ti preghiamo di controllare e "
+"sistemare il booking prima di procedere."
 
 #: ../browser/templates/worklog.pt:96
 msgid "Wed"
@@ -1177,7 +1193,7 @@ msgstr "Giorni lavorativi a settimana"
 msgid "Worklog"
 msgstr "Worklog"
 
-#: ../browser/templates/dashboard.pt:156
+#: ../browser/templates/dashboard.pt:165
 #: ../browser/templates/project_report.pt:230
 msgid "You have no bookings yet"
 msgstr "Non hai alcun booking al momento"
@@ -1229,6 +1245,10 @@ msgstr "es.: 'Dominazione del mondo'"
 msgid "estimate_label"
 msgstr "Stima <small>iniziale, effettuata dal project manager:</small>"
 
+#: ../browser/booking/templates/list.pt:21
+msgid "filtered by:"
+msgstr "filtrato per:"
+
 #: ../browser/templates/compass.pt:151
 msgid "in this project"
 msgstr "in questo progetto"
@@ -1259,7 +1279,7 @@ msgstr "a"
 msgid "to be done before"
 msgstr "da fare entro"
 
-#: ../browser/templates/dashboard.pt:179
+#: ../browser/templates/dashboard.pt:188
 msgid "view"
 msgstr "mostra"
 

@@ -31,11 +31,11 @@ from .interfaces import ITagsWidget
 
 ELECTRIC_CHARS = {
     '@': ('Project', 'Story'),
-    '!': ('PoiIssue',),
+    '*': ('PoiIssue',),
     '#': None
 }
 
-FORCE_VALIDATION_CHARS = ('@', '!')
+FORCE_VALIDATION_CHARS = ('@', '*')
 
 VALID_CHARS = '[\\w\\.\\-]'
 
@@ -106,7 +106,7 @@ class BookWidget(HTMLTextInputWidget, Widget):
     valid_chars = VALID_CHARS
     base_electric_chars = ELECTRIC_CHARS
     _force_validation_chars = FORCE_VALIDATION_CHARS
-    placeholder = _(u'@project @story !ticket #tag activity')
+    placeholder = _(u'@project @story *ticket #tag activity')
 
     js_messages = {
         'no_completions': _(u"No completions"),
