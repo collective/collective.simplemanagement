@@ -287,7 +287,7 @@ body.portaltype-project .booking-text.ref-link.portaltype-project{
     position: relative;
     padding-left: 5px;
     padding-right: 5px;
-    min-height: 2em;
+    height: 2em;
     display: inline-block;
     margin-bottom: 0px;
     padding-bottom: 3px;

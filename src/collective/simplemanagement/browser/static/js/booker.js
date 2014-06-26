@@ -1,4 +1,4 @@
-/*global window, jQuery, document, String, XRegExp */
+/*global window, jQuery, document, String */
 (function ($) {
     "use strict";
 
@@ -37,6 +37,7 @@
         this.force_validation_chars = $.parseJSON(
             this.$root.attr('data-force-validation-chars'));
         this.autocomplete_url = this.$root.attr('data-autocomplete-url');
+        this.autocomplete_state = 0; // 0: closed, 1: opened
         this.autocomplete_cache = {};
         this.autocomplete_values = [];
         this.autocomplete_selected = 0;
@@ -47,6 +48,7 @@
         this.request = null;
         this.request_delay = 200; // We delay ajax calls enough
                                   // to let the user keep writing
+        this.parse_regex = this.get_regex();
         this.init();
     };
 
@@ -68,9 +70,9 @@
             return regex;
         },
         parse: function() {
-            var references, raw_references, tags, item, i, l, regex,
-                self = this;
-            regex = this.get_regex();
+            var references, raw_references, tags, item, i, l, regex, m,
+                value;
+            regex = this.parse_regex;
             raw_references = $.parseJSON(this.$references.val() || '[]');
             references = [];
             for(i=0, l=raw_references.length; i<l; i++) {
@@ -80,10 +82,11 @@
                     references.push(raw_references[i]);
             }
             tags = $.parseJSON(this.$tags.val() || '[]');
-            XRegExp.forEach(this.$root.val(), regex, function(m) {
-                if(self.electric_chars[m[1]] === null) {
+            value = this.$root.val();
+            while((m = regex.exec(value)) !== null) {
+                if(this.electric_chars[m[1]] === null) {
                     item = tags.shift();
-                    self.stream.push({
+                    this.stream.push({
                         portal_type: null,
                         uuid: m[2],
                         id: m[2],
@@ -96,28 +99,19 @@
                     item.id = m[2];
                     item.start = m.index;
                     item.end = m.index + m[0].length;
-                    self.stream.push(item);
+                    this.stream.push(item);
                 }
-            });
+            }
         },
         add: function(item) {
-            var i, l, replace = null, value = this.$root.val();
-            if(replace !== null)
-                this.stream.splice(replace, {
-                    portal_type: item.portal_type,
-                    uuid: item.uuid,
-                    id: item.id,
-                    start: this.token[2],
-                    end: this.token[3]
-                });
-            else
-                this.stream.push({
-                    portal_type: item.portal_type,
-                    uuid: item.uuid,
-                    id: item.id,
-                    start: this.token[2],
-                    end: this.token[3]
-                });
+            var i, l, cur_caret, new_caret, value = this.$root.val();
+            this.stream.push({
+                portal_type: item.portal_type,
+                uuid: item.uuid,
+                id: item.id,
+                start: this.token[2],
+                end: this.token[3]
+            });
             this.stream.sort(function(a, b) {
                 if(a.start < b.start) return -1;
                 if(a.start > b.start) return 1;
@@ -128,7 +122,10 @@
                 value.substr(0, this.token[2]) +
                     this.token[0] + item.id +
                     value.substr(this.token[3], value.length));
-            this.$root.caret(this.token[2] + item.id.length + 1);
+            cur_caret = this.$root.caret();
+            new_caret = this.token[2] + item.id.length + 1;
+            if(cur_caret > new_caret)
+                this.$root.caret(new_caret);
         },
         save_related: function() {
             var i, l, references_values = [], tags_values = [];
@@ -192,26 +189,32 @@
             values_length = this.autocomplete_values.length;
             switch(method) {
                 case 'close': {
-                    if(this.token !== null && this.token[0] !== null) {
-                        if(values_length > 0) {
-                            if(selected < values_length)
-                                selection = values[selected];
-                            else
-                                selection = values[0];
-                            this.add(selection);
+                    if(this.autocomplete_state === 1) {
+                        this.autocomplete_state = 0;
+                        if(this.token !== null && this.token[0] !== null) {
+                            if(values_length > 0) {
+                                if(selected < values_length)
+                                    selection = values[selected];
+                                else
+                                    selection = values[0];
+                                this.add(selection);
+                            }
+                            this.token = null;
                         }
-                        this.token = null;
+                        this.autocomplete_values = [];
+                        this.autocomplete_selected = 0;
+                        this.$dropdown.hide();
                     }
-                    this.autocomplete_values = [];
-                    this.autocomplete_selected = 0;
-                    this.$dropdown.hide();
                     break;
                 }
                 case 'refresh': {
-                    this.render_autocomplete();
+                    if(this.autocomplete_state === 1) {
+                        this.render_autocomplete();
+                    }
                     break;
                 }
                 case 'reload': {
+                    this.autocomplete_state = 1;
                     this.autocomplete_selected = 0;
                     if(!this.$dropdown.is(':visible')) {
                         this.$dropdown.css({
@@ -287,13 +290,13 @@
             return [electric_char, token, s, e];
         },
         cleanup: function(force) {
-            var i, l, item, regex, found, stream = [], broken = false,
+            var i, l, item, regex, found, stream = [], m, broken = false,
                 value = this.$root.val(), self = this;
-            regex = this.get_regex();
-            XRegExp.forEach(value, regex, function(m) {
+            regex = this.parse_regex;
+            while((m = regex.exec(value)) !== null) {
                 found = false;
-                for(i=0, l=self.stream.length; i<l; i++) {
-                    item = self.stream[i];
+                for(i=0, l=this.stream.length; i<l; i++) {
+                    item = this.stream[i];
                     if(item.id === m[2]) {
                         found = true;
                         item.start = m.index;
@@ -302,7 +305,7 @@
                     }
                 }
                 if(!found) {
-                    if(self.force_validation_chars.indexOf(m[1]) == -1) {
+                    if(this.force_validation_chars.indexOf(m[1]) == -1) {
                         // BBB: this hack is the only way to support the
                         // "do not autocomplete tags" thingie
                         // but will break if we change FORCE_VALIDATION_CHARS
@@ -319,7 +322,7 @@
                         broken = true;
                     }
                 }
-            });
+            }
             this.setBroken(broken);
             this.stream = stream;
             this.save_related();
@@ -334,6 +337,10 @@
             this.parse();
             this.$root.keydown(function(e) {
                 switch(e.keyCode) {
+                    case 16: // shift
+                    case 17: // control
+                    case 18: // alt
+                    case 32: // space
                     case 37: // arrow back
                     case 39: { // arrow forward
                         self.autocomplete('close');
@@ -358,10 +365,6 @@
                     }
                     case 13: { // enter
                         e.preventDefault();
-                        self.autocomplete('close');
-                        break;
-                    }
-                    case 32: { // space
                         self.autocomplete('close');
                         break;
                     }

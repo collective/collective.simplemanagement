@@ -187,3 +187,12 @@ def upgrade_to_1010(context, logger=None):
     portal_catalog = getToolByName(context, 'portal_catalog')
     portal_catalog.clearFindAndRebuild()
 
+
+def upgrade_to_1011(context, logger=None):
+    logger = getLogger(logger)
+    logger.info('Removing xregexp js')
+    portal_javascripts = getToolByName(context, 'portal_javascripts')
+    portal_javascripts.unregisterResource(
+        '++resource++simplemanagement/js/xregexp.js'
+    )
+
