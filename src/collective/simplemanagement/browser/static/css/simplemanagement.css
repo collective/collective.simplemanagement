@@ -196,7 +196,8 @@ table.listing tfoot {
 }
 body.portaltype-story .booking-text.ref-link.portaltype-project,
 body.portaltype-story .booking-text.ref-link.portaltype-story,
-.booking.story-bookings .booking-text.ref-link.portaltype-story {
+.booking.story-bookings .booking-text.ref-link.portaltype-story,
+.booking.story-bookings .booking-text.ref-link.portaltype-project {
     display: none;
 }
 body.portaltype-project .booking-text.ref-link.portaltype-project{
