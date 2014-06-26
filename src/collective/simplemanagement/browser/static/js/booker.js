@@ -13,7 +13,7 @@
         while(hex.length < 4) {
             hex = "0" + hex;
         }
-        return "\u" + hex;
+        return "\\u" + hex;
     };
 
     sm.Booker = function(element) {
