@@ -37,7 +37,7 @@ class View(BrowserView):
 
         def get_info(booking):
             return getMultiAdapter((booking, self.request),
-                                   name="helpers").info
+                                   name="helpers").info(self.context)
         return [ get_info(el) for el in bookings ]
 
     def form_contents(self):

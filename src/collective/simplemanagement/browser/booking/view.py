@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-
+from urllib import urlencode
 
 from zope.interface import implementer
 from zope.interface import Interface
@@ -33,7 +33,7 @@ class DocumentBylineViewlet(ViewletBase):
             (self.context, self.request),
             name="helpers"
         )
-        return helpers.info['creator']
+        return helpers.info()['creator']
 
 
 class BookingContextState(ContextState):
@@ -88,11 +88,32 @@ class View(BrowserView):
     def info(self):
         helpers = getMultiAdapter((self.context, self.request),
                                   name="helpers")
-        return helpers.info
+        return helpers.info()
 
 
 class ListingView(BrowserView):
     """IBooking listing View"""
+
+    def form_action(self):
+        return self.context.absolute_url()
+
+    def tags(self):
+        tags = self.request.form.get('tags', [])
+        result = []
+        for tag in tags:
+            result.append({
+                'tag': tag,
+                'clear_url': self.clear_url_for(tag, tags)
+            })
+        return result
+
+    def clear_url_for(self, tag, tags):
+        new = [ t for t in tags if t != tag ]
+        rq  = {
+            f: v for f, v in self.request.form.items() if f != 'tags'
+        }
+        rq['tags:list'] = new
+        return self.form_action() + '?' +  urlencode(rq, doseq=True)
 
     def info_for(self, booking):
         booking = self.context.publishTraverse(self.request, booking.uid)
@@ -100,7 +121,10 @@ class ListingView(BrowserView):
             (booking, self.request),
             name="helpers"
         )
-        return helpers.info
+        return helpers.info(self.context.__parent__)
+
+    def bookings(self):
+        return self.context.bookings(tags=self.request.get('tags', []))
 
 
 class IHelpers(Interface):
@@ -117,11 +141,11 @@ class IHelpers(Interface):
         """ return edit url for viewing booking
         """
 
-    def format_text():
+    def format_text(context=None):
         """ formatted text for booking
         """
 
-    def info():
+    def info(context=None):
         """ booking info for view rendering
         """
 
@@ -154,17 +178,20 @@ class Helpers(BrowserView):
         return '{0}/{1}/edit'.format(self.parent_url,
                                      self.context.uid)
 
-    def format_text(self):
-        return safe_unicode(book_widget.format_text(self.context))
+    def format_text(self, context=None):
+        return safe_unicode(
+            book_widget.format_text(self.context, context=context)
+        )
 
-    @property
-    def info(self):
+    def info(self, context=None):
         context = plone.api.portal.get()
         user_details = api.users.get_user_details(context, self.context.owner)
         booking = {
             'url': self.view_url(),
             'edit_url': self.edit_url(),
-            'text': safe_unicode(book_widget.format_text(self.context)),
+            'text': safe_unicode(
+                book_widget.format_text(self.context, context=context)
+            ),
             'time': self.context.time,
             'date': context.toLocalizedTime(self.context.date.isoformat()),
             'date2': api.date.timeago(self.context.date),

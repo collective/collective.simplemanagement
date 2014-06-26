@@ -1866,3 +1866,67 @@ input.effort {
 body.portaltype-booking #plone-contentmenu-actions {
     display: none;
 }
+
+#content .sm-tags-form {
+    float: right;
+    margin-bottom: 1.5em;
+}
+
+#content #all-bookings {
+    clear: both;
+}
+
+#content .sm-tags-form span.tag {
+    display: inline-block;
+    height: 1.6em;
+    padding: 0px;
+    background-color: #ddd;
+    color: #555;
+    vertical-align: middle;
+    border-radius: 3px;
+}
+
+#content .sm-tags-form span.tag > * {
+    padding: 2px 3px 2px 7px;
+}
+
+#content .sm-tags-form span.tag a,
+#content .sm-tags-form span.tag a:hover,
+#content .sm-tags-form span.tag a:visited {
+    color: #555 !important;
+    text-decoration: none;
+    border-bottom: 0px transparent;
+    padding: 3px 5px;
+    border-left: 1px solid #fff;
+    color: #555 !important;
+}
+
+#content .sm-tags-form span.input-group {
+    font-weight: bold;
+    background-color: #fff;
+    border: 1px solid #CCC;
+}
+
+#content .sm-tags-form span.input-group > * {
+    padding: 0px;
+}
+
+#content .sm-tags-form span.input-group span {
+    padding-left: 5px;
+}
+
+#content .sm-tags-form span.input-group input {
+    border: 0px none;
+    background-color: transparent;
+    width: 2em;
+    display: inline;
+    line-height: 1em;
+}
+
+#content .sm-tags-form span.input-group button {
+    border: 0px none;
+    background-color: transparent;
+    line-height: 1em;
+    display: inline;
+    padding-right: 3px;
+}

@@ -13,20 +13,28 @@
 
 <metal:content-core fill-slot="main">
   <div id="booking-view"
-       tal:define="tags python:request.get('tags', [])">
+       tal:define="tags view/tags">
 
     <h1 i18n:translate="">Booking listing</h1>
-    <tal:tags condition="tags">
-      <p class="documentByLine">
-        <tal:u i18n:translate="">filtered by:</tal:u>
-        <tal:tags repeat="tag tags">
-          <em tal:content="tag"></em><tal:c condition="not:repeat/tag/end">,</tal:c>
-        </tal:tags>
-      </p>
-    </tal:tags>
+    <form action="" method="get" class="documentByLine sm-tags-form"
+          tal:attributes="action view/form_action">
+      <tal:u i18n:translate="">filtered by:</tal:u>
+      <tal:tags repeat="tag tags">
+        <span class="tag">
+        <input type="hidden" name="tags:list"
+               tal:attributes="value tag/tag" />
+        <strong>#<tal:t tal:content="tag/tag"></tal:t></strong>
+        <a href="" tal:attributes="href tag/clear_url">&times;</a></span>,
+      </tal:tags>
+      <span class="tag input-group">
+        <span>#</span>
+        <input type="text" name="tags:list" value="" placeholder="tag"/>
+        <button type="submit">+</button>
+      </span>
+    </form>
 
      <div id="all-bookings" class="booking"
-         tal:define="all_bookings       python:context.bookings(tags=tags);
+         tal:define="all_bookings       view/bookings;
                      sm_macros          nocall:context/@@simpemanagement-macros;
                      total              python: len(all_bookings);
                      Batch              python: modules['Products.CMFPlone'].Batch;

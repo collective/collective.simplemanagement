@@ -211,5 +211,5 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         results = []
         for booking in _bookings:
             helpers = getMultiAdapter((booking, self.request), name='helpers')
-            results.append(helpers.info)
+            results.append(helpers.info())
         return results

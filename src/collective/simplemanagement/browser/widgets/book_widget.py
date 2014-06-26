@@ -66,10 +66,11 @@ def format_text(booking, context=None):
         url = None
         css_class = 'none'
         ref = None
+        bookings_context = context
         if ELECTRIC_CHARS[m.group(1)] is None:
-            # TODO: decide if we want instead to go also on the context bookings
-            portal = api.portal.get()
-            url = portal.absolute_url() + '/bookings/?' + urlencode({
+            if bookings_context is None:
+                bookings_context = api.portal.get()
+            url = bookings_context.absolute_url() + '/bookings/?' + urlencode({
                 'tags:list': [m.group(2)]
             }, True)
         else:
