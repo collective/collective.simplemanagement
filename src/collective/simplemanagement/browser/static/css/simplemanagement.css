@@ -1923,6 +1923,10 @@ body.portaltype-booking #plone-contentmenu-actions {
     line-height: 1em;
 }
 
+#content .sm-tags-form span.input-group input:focus {
+    width: 10em;
+}
+
 #content .sm-tags-form span.input-group button {
     border: 0px none;
     background-color: transparent;
