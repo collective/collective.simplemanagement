@@ -44,6 +44,9 @@
         this.frozen_references = [];
         this.token = null;
         this.broken = false;
+        this.request = null;
+        this.request_delay = 200; // We delay ajax calls enough
+                                  // to let the user keep writing
         this.init();
     };
 
@@ -245,14 +248,21 @@
             if(this.autocomplete_cache[key] !== undefined)
                 callback(this.autocomplete_cache[key]);
             else {
-                $.getJSON(
-                    this.autocomplete_url,
-                    data,
-                    function(data, status, request) {
-                        self.autocomplete_cache[key] = data;
-                        callback(data);
-                    }
-                );
+                if(this.request !== null)
+                    window.clearTimeout(this.request);
+                this.request = window.setTimeout(
+                    function() {
+                        self.request = null;
+                        $.getJSON(
+                            self.autocomplete_url,
+                            data,
+                            function(data, status, request) {
+                                self.autocomplete_cache[key] = data;
+                                callback(data);
+                            }
+                        );
+                    },
+                    this.request_delay);
             }
         },
         tokenize: function(value, position) {
