@@ -34,8 +34,6 @@
             this.$root.attr('data-electric-chars'));
         this._valid_chars = this.$root.attr('data-valid-chars');
         this.valid_chars = new RegExp(this._valid_chars);
-        this.force_validation_chars = $.parseJSON(
-            this.$root.attr('data-force-validation-chars'));
         this.autocomplete_url = this.$root.attr('data-autocomplete-url');
         this.autocomplete_state = 0; // 0: closed, 1: opened
         this.autocomplete_cache = {};
@@ -44,7 +42,6 @@
         this.stream = [];
         this.frozen_references = [];
         this.token = null;
-        this.broken = false;
         this.request = null;
         this.request_delay = 200; // We delay ajax calls enough
                                   // to let the user keep writing
@@ -53,15 +50,6 @@
     };
 
     sm.Booker.prototype = {
-        setBroken: function(value) {
-            this.broken = value;
-            if(value)
-                this.$root.parents('form').find('input[type="submit"]').
-                    attr('disabled', 'disabled');
-            else
-                this.$root.parents('form').find('input[type="submit"]').
-                    removeAttr('disabled');
-        },
         get_regex: function() {
             var c, elchars = [], regex;
             for(c in this.electric_chars) elchars.push(sm.regex_escape(c));
@@ -290,7 +278,7 @@
             return [electric_char, token, s, e];
         },
         cleanup: function(force) {
-            var i, l, item, regex, found, stream = [], m, broken = false,
+            var i, l, item, regex, found, stream = [], m,
                 value = this.$root.val(), self = this;
             regex = this.parse_regex;
             while((m = regex.exec(value)) !== null) {
@@ -304,33 +292,9 @@
                         stream.push(item);
                     }
                 }
-                if(!found) {
-                    if(this.force_validation_chars.indexOf(m[1]) == -1) {
-                        // BBB: this hack is the only way to support the
-                        // "do not autocomplete tags" thingie
-                        // but will break if we change FORCE_VALIDATION_CHARS
-                        stream.push({
-                            portal_type: null,
-                            uuid: m[2],
-                            id: m[2],
-                            start: m.index,
-                            end: m.index + m[0].length
-                        });
-                        found = true;
-                    }
-                    if(!found && force) {
-                        broken = true;
-                    }
-                }
             }
-            this.setBroken(broken);
             this.stream = stream;
             this.save_related();
-            if(force && broken)
-                sm.messages.addMessage({
-                    type: 'warning',
-                    message: this.$root.attr('data-broken-message')
-                }, false);
         },
         init: function() {
             var self = this;
@@ -408,13 +372,6 @@
                 self.cleanup(true);
             });
             this.$root.caret(this.$root.val().length);
-            this.$root.parents('form').submit(function(e) {
-                if(self.broken) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    e.stopImmediatePropagation();
-                }
-            });
         }
     };
 

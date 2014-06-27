@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-06-26 13:58+0000\n"
+"POT-Creation-Date: 2014-06-27 15:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,7 +69,7 @@ msgstr ""
 msgid "(double click to select)"
 msgstr ""
 
-#: ../booking/form.py:149
+#: ../booking/form.py:375
 msgid "*ticket #tag activity"
 msgstr ""
 
@@ -77,11 +77,11 @@ msgstr ""
 msgid "<p>Here are collected all the issues relative to the project <em>${project_name}</em>.</p><p>If you found any problems, please report it here by clicking <em>New issue</em>.</p>"
 msgstr ""
 
-#: ../browser/widgets/book_widget.py:109
+#: ../browser/widgets/book_widget.py:112
 msgid "@project @story *ticket #tag activity"
 msgstr ""
 
-#: ../booking/form.py:160
+#: ../booking/form.py:386
 msgid "@story *ticket #tag activity"
 msgstr ""
 
@@ -122,6 +122,14 @@ msgstr ""
 
 #: ../browser/templates/project_report.pt:56
 msgid "All"
+msgstr ""
+
+#: ../booking/form.py:120
+msgid "Ambiguous reference \"%s\""
+msgstr ""
+
+#: ../booking/form.py:153
+msgid "Ambiguous references: \"%s\", \"%s\""
 msgstr ""
 
 #: ../browser/compass.py:306
@@ -187,7 +195,7 @@ msgstr ""
 msgid "Booking listing"
 msgstr ""
 
-#: ../booking/form.py:178
+#: ../booking/form.py:404
 msgid "Booking succesfully deleted."
 msgstr ""
 
@@ -209,7 +217,7 @@ msgstr ""
 msgid "Budget (man days)"
 msgstr ""
 
-#: ../booking/form.py:231
+#: ../booking/form.py:458
 #: ../browser/forms/quickform.py:79
 #: ../browser/templates/compass_history.pt:50
 msgid "Cancel"
@@ -269,7 +277,7 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: ../booking/form.py:177
+#: ../booking/form.py:403
 #: ../browser/forms/quickform.py:55
 msgid "Data successfully updated."
 msgstr ""
@@ -292,7 +300,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: ../booking/form.py:237
+#: ../booking/form.py:464
 msgid "Delete booking"
 msgstr ""
 
@@ -591,12 +599,24 @@ msgstr ""
 msgid "Minimum plan length"
 msgstr ""
 
+#: ../booking/form.py:122
+msgid "Missing reference \"%s\""
+msgstr ""
+
+#: ../booking/form.py:160
+msgid "Missing references: \"%s\", \"%s\""
+msgstr ""
+
 #: ../browser/templates/ticketsmacros.pt:14
 msgid "Modified"
 msgstr ""
 
 #: ../browser/templates/worklog.pt:92
 msgid "Mon"
+msgstr ""
+
+#: ../booking/form.py:184
+msgid "Multiple conflicting '@' references"
 msgstr ""
 
 #: ../browser/templates/compass.pt:250
@@ -612,12 +632,12 @@ msgstr ""
 msgid "No active projects."
 msgstr ""
 
-#: ../booking/form.py:176
+#: ../booking/form.py:402
 #: ../browser/forms/quickform.py:54
 msgid "No changes were applied."
 msgstr ""
 
-#: ../browser/widgets/book_widget.py:112
+#: ../browser/widgets/book_widget.py:115
 msgid "No completions"
 msgstr ""
 
@@ -781,7 +801,7 @@ msgstr ""
 msgid "Sat"
 msgstr ""
 
-#: ../booking/form.py:212
+#: ../booking/form.py:439
 #: ../browser/forms/quickform.py:62
 #: ../browser/templates/compass.pt:49
 msgid "Save"
@@ -1116,7 +1136,7 @@ msgstr ""
 msgid "Warning delta"
 msgstr ""
 
-#: ../browser/widgets/book_widget.py:113
+#: ../browser/widgets/book_widget.py:116
 msgid "We found broken references. Please recheck your booking before submit."
 msgstr ""
 

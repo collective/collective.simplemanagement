@@ -35,7 +35,11 @@ ELECTRIC_CHARS = {
     '#': None
 }
 
-FORCE_VALIDATION_CHARS = ('@', '*')
+ELECTRIC_CHARS_FIELD = {
+    '@': 'references',
+    '*': 'references',
+    '#': 'tags'
+}
 
 VALID_CHARS = '[\\w\\.\\-]'
 
@@ -105,7 +109,6 @@ class BookWidget(HTMLTextInputWidget, Widget):
     tags_field = None
     valid_chars = VALID_CHARS
     base_electric_chars = ELECTRIC_CHARS
-    _force_validation_chars = FORCE_VALIDATION_CHARS
     placeholder = _(u'@project @story *ticket #tag activity')
 
     js_messages = {
@@ -124,10 +127,6 @@ class BookWidget(HTMLTextInputWidget, Widget):
             k: v for k, v in self.base_electric_chars.items()
                 if v is None or len(v) > 0
         })
-
-    @property
-    def force_validation_chars(self):
-        return json.dumps(self._force_validation_chars)
 
     @property
     def references_selector(self):

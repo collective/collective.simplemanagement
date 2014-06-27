@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2014-06-26 13:58+0000\n"
-"PO-Revision-Date: 2014-06-26 14:10+0200\n"
+"POT-Creation-Date: 2014-06-27 15:03+0000\n"
+"PO-Revision-Date: 2014-06-27 17:05+0200\n"
 "Last-Translator: Simone Deponti <simone.deponti@abstract.it>\n"
 "Language-Team: Italian <info@abstract.it>\n"
 "MIME-Version: 1.0\n"
@@ -73,25 +73,31 @@ msgstr "(doppio click per azzerare selezione)"
 msgid "(double click to select)"
 msgstr "(doppio click per selezionare)"
 
-#: ../booking/form.py:149
+#: ../booking/form.py:375
 msgid "*ticket #tag activity"
 msgstr "*ticket #tag attività"
 
 #: ../subscribers.py:30
-msgid "<p>Here are collected all the issues relative to the project <em>${project_name}</em>.</p><p>If you found any problems, please report it here by clicking <em>New issue</em>.</p>"
-msgstr "<p>Qui sono conservate tutte le richieste e le segnalazioni dei problemi di funzionamento relativi al progetto <em>${project_name}</em> </p><p>Se trovi un qualcisasi problema, segnalalo qui cliccando sul pulsante <em>Genera una nuova richiesta</em>.</p>"
+msgid ""
+"<p>Here are collected all the issues relative to the project <em>"
+"${project_name}</em>.</p><p>If you found any problems, please report it here "
+"by clicking <em>New issue</em>.</p>"
+msgstr ""
+"<p>Qui sono conservate tutte le richieste e le segnalazioni dei problemi di "
+"funzionamento relativi al progetto <em>${project_name}</em> </p><p>Se trovi "
+"un qualcisasi problema, segnalalo qui cliccando sul pulsante <em>Genera una "
+"nuova richiesta</em>.</p>"
 
-#: ../browser/widgets/book_widget.py:109
+#: ../browser/widgets/book_widget.py:112
 msgid "@project @story *ticket #tag activity"
 msgstr "@progetto @storia *ticket #tag attività"
 
-#: ../booking/form.py:160
+#: ../booking/form.py:386
 msgid "@story *ticket #tag activity"
 msgstr "@storia *ticket #tag attività"
 
 #: ../browser/iteration/templates/macros.pt:76
-#: ../browser/templates/dashboard.pt:91
-#: ../browser/templates/macros.pt:168
+#: ../browser/templates/dashboard.pt:91 ../browser/templates/macros.pt:168
 msgid "Actions"
 msgstr "Azioni"
 
@@ -107,8 +113,7 @@ msgstr "Progetti attivi"
 msgid "Active projects at"
 msgstr "Progetti attivi il "
 
-#: ../browser/project/templates/view.pt:25
-#: ../browser/templates/macros.pt:243
+#: ../browser/project/templates/view.pt:25 ../browser/templates/macros.pt:243
 msgid "Actual hours"
 msgstr "Effettuate"
 
@@ -128,9 +133,20 @@ msgstr "Aggiungi progetto"
 msgid "All"
 msgstr "Tutti"
 
+#: ../booking/form.py:120
+msgid "Ambiguous reference \"%s\""
+msgstr "Referenza ambigua: \"%s\""
+
+#: ../booking/form.py:153
+msgid "Ambiguous references: \"%s\", \"%s\""
+msgstr "Referenze ambigue: \"%s\", \"%s\""
+
 #: ../browser/compass.py:306
-msgid "An error has occurred, please <a href=\"{url}\">reload the page clicking here</a>"
-msgstr "È esploso qualcosa. <a href=\"{url}\">Ricarica la pagina cliccando qui</a>"
+msgid ""
+"An error has occurred, please <a href=\"{url}\">reload the page clicking "
+"here</a>"
+msgstr ""
+"È esploso qualcosa. <a href=\"{url}\">Ricarica la pagina cliccando qui</a>"
 
 #: ../services/base.py:85
 msgid "An error occurred on change status"
@@ -152,14 +168,12 @@ msgstr "Aprile"
 msgid "Are you sure you want to delete this snapshot?"
 msgstr "Sei sicuro di voler cancellare questo snapshot?"
 
-#: ../browser/booking/templates/list.pt:54
-#: ../browser/templates/macros.pt:266
+#: ../browser/booking/templates/list.pt:54 ../browser/templates/macros.pt:266
 msgid "Assignee"
 msgstr "Assegnatario"
 
 #: ../browser/iteration/templates/macros.pt:79
-#: ../browser/templates/macros.pt:171
-#: ../interfaces/story.py:57
+#: ../browser/templates/macros.pt:171 ../interfaces/story.py:57
 msgid "Assignees"
 msgstr "Assegnatari"
 
@@ -172,8 +186,7 @@ msgid "August"
 msgstr "Agosto"
 
 #: ../browser/project/planning.py:23
-#: ../browser/project/templates/backlog.pt:11
-#: ../viewlets/projectinfo.py:59
+#: ../browser/project/templates/backlog.pt:11 ../viewlets/projectinfo.py:59
 msgid "Backlog"
 msgstr "Backlog"
 
@@ -181,8 +194,7 @@ msgstr "Backlog"
 msgid "Book time"
 msgstr "Fai booking"
 
-#: ../browser/templates/dashboard.pt:47
-#: ../browser/templates/macros.pt:67
+#: ../browser/templates/dashboard.pt:47 ../browser/templates/macros.pt:67
 #: ../profiles/default/types/Booking.xml
 msgid "Booking"
 msgstr "Booking"
@@ -191,7 +203,7 @@ msgstr "Booking"
 msgid "Booking listing"
 msgstr "Lista booking"
 
-#: ../booking/form.py:178
+#: ../booking/form.py:404
 msgid "Booking succesfully deleted."
 msgstr "Il booking è stato cancellato"
 
@@ -199,8 +211,7 @@ msgstr "Il booking è stato cancellato"
 msgid "Booking was succesfully added!"
 msgstr "Il booking è stato aggiunto!"
 
-#: ../browser/booking/traverse.py:114
-#: ../profiles/default/actions.xml
+#: ../browser/booking/traverse.py:114 ../profiles/default/actions.xml
 #: ../viewlets/projectinfo.py:55
 msgid "Bookings"
 msgstr "Booking"
@@ -213,8 +224,7 @@ msgstr "Budget"
 msgid "Budget (man days)"
 msgstr "Budget (in giorni uomo)"
 
-#: ../booking/form.py:231
-#: ../browser/forms/quickform.py:79
+#: ../booking/form.py:458 ../browser/forms/quickform.py:79
 #: ../browser/templates/compass_history.pt:50
 msgid "Cancel"
 msgstr "Annulla"
@@ -241,8 +251,7 @@ msgid "Close this box"
 msgstr "Chiudi"
 
 #: ../browser/templates/compass.pt:20
-#: ../browser/templates/compass_history.pt:21
-#: ../profiles/default/actions.xml
+#: ../browser/templates/compass_history.pt:21 ../profiles/default/actions.xml
 msgid "Compass"
 msgstr "Compass"
 
@@ -264,8 +273,7 @@ msgid "Current revision saved by"
 msgstr "Revisione corrente salvata da"
 
 #: ../browser/project/templates/overview.pt:178
-#: ../browser/templates/compass.pt:264
-#: ../interfaces/project.py:70
+#: ../browser/templates/compass.pt:264 ../interfaces/project.py:70
 msgid "Customer"
 msgstr "Cliente"
 
@@ -273,8 +281,7 @@ msgstr "Cliente"
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: ../booking/form.py:177
-#: ../browser/forms/quickform.py:55
+#: ../booking/form.py:403 ../browser/forms/quickform.py:55
 msgid "Data successfully updated."
 msgstr "Dati modificati"
 
@@ -296,7 +303,7 @@ msgstr "Dicembre"
 msgid "Delete"
 msgstr "Cancella"
 
-#: ../booking/form.py:237
+#: ../booking/form.py:464
 msgid "Delete booking"
 msgstr "Elimina booking"
 
@@ -312,8 +319,7 @@ msgstr "Cancella questo snapshot"
 msgid "Deletion has been cancelled"
 msgstr "Cancellazione annullata"
 
-#: ../browser/templates/macros.pt:66
-#: ../browser/templates/project_report.pt:46
+#: ../browser/templates/macros.pt:66 ../browser/templates/project_report.pt:46
 #: ../browser/templates/worklog.pt:117
 msgid "Details"
 msgstr "Dettagli"
@@ -322,8 +328,7 @@ msgstr "Dettagli"
 msgid "Diff:"
 msgstr "Diff:"
 
-#: ../browser/project/templates/view.pt:26
-#: ../browser/templates/macros.pt:244
+#: ../browser/project/templates/view.pt:26 ../browser/templates/macros.pt:244
 msgid "Difference"
 msgstr "Differenza"
 
@@ -331,8 +336,7 @@ msgstr "Differenza"
 msgid "Difference from initial"
 msgstr "Differenza dalla stima iniziale"
 
-#: ../browser/project/templates/overview.pt:12
-#: ../viewlets/projectinfo.py:42
+#: ../browser/project/templates/overview.pt:12 ../viewlets/projectinfo.py:42
 msgid "Documentation"
 msgstr "Documentazione"
 
@@ -345,13 +349,11 @@ msgid "Documents folder"
 msgstr "Cartella documentazione"
 
 #: ../browser/iteration/templates/macros.pt:81
-#: ../browser/templates/dashboard.pt:90
-#: ../browser/templates/macros.pt:173
+#: ../browser/templates/dashboard.pt:90 ../browser/templates/macros.pt:173
 msgid "Done"
 msgstr "Fatto"
 
-#: ../browser/booking/view.py:68
-#: ../browser/project/templates/macros.pt:24
+#: ../browser/booking/view.py:68 ../browser/project/templates/macros.pt:24
 #: ../browser/templates/macros.pt:79
 msgid "Edit"
 msgstr "Modifica"
@@ -364,8 +366,7 @@ msgstr "Modifica storia"
 msgid "Effort (in man days)"
 msgstr "Effort (in giorni uomo)"
 
-#: ../browser/templates/project_report.pt:242
-#: ../sharing.py:14
+#: ../browser/templates/project_report.pt:242 ../sharing.py:14
 msgid "Employee"
 msgstr "Impiegato"
 
@@ -401,8 +402,7 @@ msgstr "Tipologia ambienti"
 msgid "Environments"
 msgstr "Ambienti"
 
-#: ../browser/epic/templates/view.pt:88
-#: ../browser/templates/macros.pt:229
+#: ../browser/epic/templates/view.pt:88 ../browser/templates/macros.pt:229
 #: ../interfaces/story.py:70
 msgid "Epic"
 msgstr "Epic"
@@ -413,8 +413,7 @@ msgstr "Epic"
 msgid "Estimate"
 msgstr "Stima"
 
-#: ../interfaces/project.py:78
-#: ../interfaces/story.py:25
+#: ../interfaces/project.py:78 ../interfaces/story.py:25
 msgid "Estimate (man days)"
 msgstr "Stima (in giorni uomo)"
 
@@ -487,8 +486,18 @@ msgid "Go to working copy"
 msgstr "Vai alla copia di lavoro"
 
 #: ../browser/project/templates/planning.pt:18
-msgid "Here you can plan your iterations: choose a destination iteration on the right panel and drag stories from the backlog to it, or the other way around, or select two iterations to move stories between them. If you wish to create a copy of the story, instead of moving it, keep Ctrl pressed while dragging."
-msgstr "Qui puoi pianificare le iterazioni: scegli una iterazione di destinazione nella colonna di destra e trascina le storie dal backlog (a destra) sino alla colonna di sinistra. Puoi inoltre selezionare due differenti iterazioni e spostare le storie tra di esse. Se vuoi invece creare una copia della storia, al posto di spostarla, tieni premuto il tasto CTRL mentre la sposti."
+msgid ""
+"Here you can plan your iterations: choose a destination iteration on the "
+"right panel and drag stories from the backlog to it, or the other way "
+"around, or select two iterations to move stories between them. If you wish "
+"to create a copy of the story, instead of moving it, keep Ctrl pressed while "
+"dragging."
+msgstr ""
+"Qui puoi pianificare le iterazioni: scegli una iterazione di destinazione "
+"nella colonna di destra e trascina le storie dal backlog (a destra) sino "
+"alla colonna di sinistra. Puoi inoltre selezionare due differenti iterazioni "
+"e spostare le storie tra di esse. Se vuoi invece creare una copia della "
+"storia, al posto di spostarla, tieni premuto il tasto CTRL mentre la sposti."
 
 #: ../browser/project/templates/macros.pt:16
 msgid "Hide/Show stories"
@@ -577,23 +586,35 @@ msgstr "Lunghezza massima del piano"
 msgid "May"
 msgstr "Maggio"
 
-#: ../interfaces/project.py:129
-#: ../interfaces/story.py:77
+#: ../interfaces/project.py:129 ../interfaces/story.py:77
 msgid "Milestone"
 msgstr "Milestone"
 
-#: ../browser/project/templates/overview.pt:197
-#: ../interfaces/project.py:124
+#: ../browser/project/templates/overview.pt:197 ../interfaces/project.py:124
 msgid "Milestones"
 msgstr "Milestone"
 
 #: ../interfaces/project.py:125
-msgid "Milestones are the different phases of the project. Each milestone should formally define a self-sufficient deliverable, that can then be put into production."
-msgstr "Le milestone sono le differenti fasi del progetto. Ogni milestone dovrebbe definire una serie di deliverable auto sufficienti che possono essere messi in produzione."
+msgid ""
+"Milestones are the different phases of the project. Each milestone should "
+"formally define a self-sufficient deliverable, that can then be put into "
+"production."
+msgstr ""
+"Le milestone sono le differenti fasi del progetto. Ogni milestone dovrebbe "
+"definire una serie di deliverable auto sufficienti che possono essere messi "
+"in produzione."
 
 #: ../interfaces/compass.py:17
 msgid "Minimum plan length"
 msgstr "Lunghezza minima del piano"
+
+#: ../booking/form.py:122
+msgid "Missing reference \"%s\""
+msgstr "Referenza non trovata: \"%s\""
+
+#: ../booking/form.py:160
+msgid "Missing references: \"%s\", \"%s\""
+msgstr "Referenze non trovate: \"%s\", \"%s\""
 
 #: ../browser/templates/ticketsmacros.pt:14
 msgid "Modified"
@@ -603,8 +624,11 @@ msgstr "Ultima modifica"
 msgid "Mon"
 msgstr "Lun"
 
-#: ../browser/templates/compass.pt:250
-#: ../interfaces/project.py:46
+#: ../booking/form.py:184
+msgid "Multiple conflicting '@' references"
+msgstr "Referenze '@' multiple e conflittuali"
+
+#: ../browser/templates/compass.pt:250 ../interfaces/project.py:46
 msgid "Name"
 msgstr "Nome"
 
@@ -616,12 +640,11 @@ msgstr "Nuovo progetto"
 msgid "No active projects."
 msgstr "Nessun progetto attivo."
 
-#: ../booking/form.py:176
-#: ../browser/forms/quickform.py:54
+#: ../booking/form.py:402 ../browser/forms/quickform.py:54
 msgid "No changes were applied."
 msgstr "Nessuna modifica effettuata."
 
-#: ../browser/widgets/book_widget.py:112
+#: ../browser/widgets/book_widget.py:115
 msgid "No completions"
 msgstr "Nessun completamento trovato."
 
@@ -635,15 +658,21 @@ msgstr "Nessuna storia associata"
 
 #: ../browser/iteration/templates/macros.pt:147
 #: ../browser/templates/macros.pt:199
-msgid "No stories found. Add a new one or bring them in via the iteration planner."
-msgstr "Non è stata trovata alcuna storia. Aggiungine una nuova o ripianifica le iterazioni."
+msgid ""
+"No stories found. Add a new one or bring them in via the iteration planner."
+msgstr ""
+"Non è stata trovata alcuna storia. Aggiungine una nuova o ripianifica le "
+"iterazioni."
 
 #: ../browser/templates/macros.pt:359
-msgid "No stories in this iteration. Add a new one or bring them in via the iteration planner."
-msgstr "Non esistono storie in questa iterazione. Aggiungine una nuova o includine una attraverso l'iteration planner."
+msgid ""
+"No stories in this iteration. Add a new one or bring them in via the "
+"iteration planner."
+msgstr ""
+"Non esistono storie in questa iterazione. Aggiungine una nuova o includine "
+"una attraverso l'iteration planner."
 
-#: ../browser/project/templates/overview.pt:15
-#: ../interfaces/project.py:135
+#: ../browser/project/templates/overview.pt:15 ../interfaces/project.py:135
 msgid "Notes"
 msgstr "Note"
 
@@ -663,8 +692,7 @@ msgstr "Numero di settimane prima dell'inizio del mese corrente"
 msgid "October"
 msgstr "Ottobre"
 
-#: ../browser/project/templates/overview.pt:180
-#: ../interfaces/project.py:165
+#: ../browser/project/templates/overview.pt:180 ../interfaces/project.py:165
 msgid "Operatives"
 msgstr "Risorse di riferimento"
 
@@ -688,8 +716,7 @@ msgstr "Persone"
 msgid "Plan from"
 msgstr "Piano da"
 
-#: ../profiles/default/actions.xml
-#: ../viewlets/projectinfo.py:67
+#: ../profiles/default/actions.xml ../viewlets/projectinfo.py:67
 msgid "Planning"
 msgstr "Pianificazione"
 
@@ -701,8 +728,7 @@ msgstr "Priorità"
 msgid "Priority updated"
 msgstr "Priorità aggiornata"
 
-#: ../browser/booking/templates/view.pt:25
-#: ../browser/templates/worklog.pt:57
+#: ../browser/booking/templates/view.pt:25 ../browser/templates/worklog.pt:57
 #: ../portlets/project.pt:5
 msgid "Project"
 msgstr "Progetto"
@@ -711,8 +737,7 @@ msgstr "Progetto"
 msgid "Project Info"
 msgstr "Info progetto"
 
-#: ../browser/project/templates/overview.pt:208
-#: ../interfaces/project.py:98
+#: ../browser/project/templates/overview.pt:208 ../interfaces/project.py:98
 msgid "Project classifiers"
 msgstr "Tipologia"
 
@@ -748,8 +773,7 @@ msgstr "Rimuovi"
 msgid "Report"
 msgstr "Report"
 
-#: ../browser/project/templates/overview.pt:84
-#: ../interfaces/project.py:109
+#: ../browser/project/templates/overview.pt:84 ../interfaces/project.py:109
 msgid "Repositories"
 msgstr "Repository"
 
@@ -785,8 +809,7 @@ msgstr "SM strumenti personali"
 msgid "Sat"
 msgstr "Sab"
 
-#: ../booking/form.py:212
-#: ../browser/forms/quickform.py:62
+#: ../booking/form.py:439 ../browser/forms/quickform.py:62
 #: ../browser/templates/compass.pt:49
 msgid "Save"
 msgstr "Salva"
@@ -843,8 +866,7 @@ msgstr "Data di inizio"
 msgid "Start date:"
 msgstr "Data di inizio:"
 
-#: ../browser/templates/ticketsmacros.pt:16
-#: ../interfaces/project.py:58
+#: ../browser/templates/ticketsmacros.pt:16 ../interfaces/project.py:58
 msgid "Status"
 msgstr "Stato"
 
@@ -852,8 +874,7 @@ msgstr "Stato"
 msgid "Status changed"
 msgstr "Stato cambiato"
 
-#: ../browser/epic/templates/view.pt:65
-#: ../browser/templates/dashboard.pt:43
+#: ../browser/epic/templates/view.pt:65 ../browser/templates/dashboard.pt:43
 msgid "Stories"
 msgstr "Storie"
 
@@ -875,15 +896,18 @@ msgstr "Dom"
 msgid "Tags"
 msgstr "Tags"
 
-#: ../browser/booking/templates/list.pt:52
-#: ../browser/templates/macros.pt:264
+#: ../browser/booking/templates/list.pt:52 ../browser/templates/macros.pt:264
 #: ../interfaces/booking.py:35
 msgid "Text"
 msgstr "Testo"
 
 #: ../interfaces/project.py:110
-msgid "The HTTP URLs of the repositories (e.g. https://github.com/company/my.repository/)"
-msgstr "Inserisci gli URL dei repository (es. https://github.com/company/my.repository/)"
+msgid ""
+"The HTTP URLs of the repositories (e.g. https://github.com/company/my."
+"repository/)"
+msgstr ""
+"Inserisci gli URL dei repository (es. https://github.com/company/my."
+"repository/)"
 
 #: ../interfaces/project.py:117
 msgid "The URLs of the various online environments (staging, production)"
@@ -891,7 +915,8 @@ msgstr "Inserisci gli URL dei vari ambienti online (staging, produzione ecc.)"
 
 #: ../browser/project/templates/backlog.pt:18
 msgid "The backlog contains all the stories that haven't been planned yet."
-msgstr "Il backlog contiene tutte le storie non ancora pianificate in un'iterazione."
+msgstr ""
+"Il backlog contiene tutte le storie non ancora pianificate in un'iterazione."
 
 #: ../interfaces/compass.py:32
 msgid "The compass will create projects in the specified path"
@@ -899,7 +924,9 @@ msgstr "Il compass creerà i progetti nel path specificato"
 
 #: ../subscribers.py:58
 msgid "The documents that have been gathered for ${project_name}"
-msgstr "Questa cartella contiene tutti i documenti relativi al progetto ${project_name}"
+msgstr ""
+"Questa cartella contiene tutti i documenti relativi al progetto "
+"${project_name}"
 
 #: ../interfaces/story.py:71
 msgid "The epic the story belongs to"
@@ -910,8 +937,12 @@ msgid "The issues relative to ${project_name}"
 msgstr "Tutti i ticket relativi a ${project_name}"
 
 #: ../interfaces/project.py:79
-msgid "The man days required for completion, as initially estimated by the project manager"
-msgstr "I giorni uomo richiesti per il completamento dell'attività stimati dal project manager"
+msgid ""
+"The man days required for completion, as initially estimated by the project "
+"manager"
+msgstr ""
+"I giorni uomo richiesti per il completamento dell'attività stimati dal "
+"project manager"
 
 #: ../interfaces/project.py:75
 msgid "The man days that this project is paid for"
@@ -919,11 +950,13 @@ msgstr "I giorni uomo disponibili per questo progetto"
 
 #: ../interfaces/compass.py:25
 msgid "The maximum number of weeks that the compass plan can span"
-msgstr "Il numero massimo di settimane sulle quali si sviluppa il piano del compass"
+msgstr ""
+"Il numero massimo di settimane sulle quali si sviluppa il piano del compass"
 
 #: ../interfaces/compass.py:18
 msgid "The minimum number of weeks that the compass plan can span"
-msgstr "Il numero minimo di settimane sulle quali si sviluppa il piano del compass"
+msgstr ""
+"Il numero minimo di settimane sulle quali si sviluppa il piano del compass"
 
 #: ../interfaces/settings.py:26
 msgid "The number of days worked in a week"
@@ -934,20 +967,35 @@ msgid "The number of hours a person works in a day"
 msgstr "Il numero di ore che una persona è tenuta a lavorare in un giorno"
 
 #: ../interfaces/compass.py:11
-msgid "The number of weeks that the compass plan will span (barring exceptions)"
-msgstr "Il numero di settimane sulle quali si sviluppa il piano del compass (escludendo eccezioni)"
+msgid ""
+"The number of weeks that the compass plan will span (barring exceptions)"
+msgstr ""
+"Il numero di settimane sulle quali si sviluppa il piano del compass "
+"(escludendo eccezioni)"
 
 #: ../interfaces/settings.py:51
-msgid "The number of weeks to show in monthly views that actually fall in the next month"
-msgstr "Numero di settimane da visualizzare nelle viste mensili che cadrebbero nel mese successivo"
+msgid ""
+"The number of weeks to show in monthly views that actually fall in the next "
+"month"
+msgstr ""
+"Numero di settimane da visualizzare nelle viste mensili che cadrebbero nel "
+"mese successivo"
 
 #: ../interfaces/settings.py:46
-msgid "The number of weeks to show in monthly views that actually fall in the previous month"
-msgstr "Numero di settimane da visualizzare nelle viste mensili che cadrebbero nel mese precedente"
+msgid ""
+"The number of weeks to show in monthly views that actually fall in the "
+"previous month"
+msgstr ""
+"Numero di settimane da visualizzare nelle viste mensili che cadrebbero nel "
+"mese precedente"
 
 #: ../interfaces/settings.py:15
-msgid "The percentage (between 0 and 1) after which a deviation needs to be highlighted"
-msgstr "La percentuale (tra 0 e 1) dopo la quale la deviazione dal pianificato dev'essere evidenziata"
+msgid ""
+"The percentage (between 0 and 1) after which a deviation needs to be "
+"highlighted"
+msgstr ""
+"La percentuale (tra 0 e 1) dopo la quale la deviazione dal pianificato "
+"dev'essere evidenziata"
 
 #: ../browser/compass.py:325
 msgid "The situation has been saved"
@@ -958,16 +1006,28 @@ msgid "The user IDs of the people that are responsible to act on this story"
 msgstr "I nomi utente delle persone che parteciperanno a questa storia"
 
 #: ../interfaces/project.py:166
-msgid "The user IDs of those that have operative roles in this project (coders, designers, project managers, accounts etc.). Customers should not be included in this list.Adding someone here will add them automatically as managers to the default tracker."
-msgstr "I nomi utente di chi ha un ruolo operativo in questo progetto (sviluppatori, grafici, project manager, account ecc.). I Clienti non devono essere inclusi in questa lista. Le persone aggiunte in questo elenco saranno assegnate come manager del tracker."
+msgid ""
+"The user IDs of those that have operative roles in this project (coders, "
+"designers, project managers, accounts etc.). Customers should not be "
+"included in this list.Adding someone here will add them automatically as "
+"managers to the default tracker."
+msgstr ""
+"I nomi utente di chi ha un ruolo operativo in questo progetto (sviluppatori, "
+"grafici, project manager, account ecc.). I Clienti non devono essere inclusi "
+"in questa lista. Le persone aggiunte in questo elenco saranno assegnate come "
+"manager del tracker."
 
 #: ../browser/project/templates/view.pt:64
 msgid "There are no current iterations."
 msgstr "Non ci sono iterazioni correnti"
 
 #: ../browser/project/templates/overview.pt:40
-msgid "There are no documents in this project because the designated area is missing. We suggest to create it."
-msgstr "Non ci sono documenti per questo progetto poiché non esiste l'apposita area. Ti suggerisco di crearla."
+msgid ""
+"There are no documents in this project because the designated area is "
+"missing. We suggest to create it."
+msgstr ""
+"Non ci sono documenti per questo progetto poiché non esiste l'apposita area. "
+"Ti suggerisco di crearla."
 
 #: ../browser/project/templates/view.pt:90
 msgid "There are no future iterations."
@@ -994,8 +1054,12 @@ msgid "There is no tracker in this project: we suggest to create it."
 msgstr "Non c'è un tracker per questo progetto: sarebbe meglio crearne uno."
 
 #: ../browser/templates/compass_history.pt:41
-msgid "This action cannot be undone. If you wish to proceed, click \"Delete\", else click \"Cancel\""
-msgstr "Questa azione non potrà essere annullata. Se vuoi procedere clicca su \"Cancella\" altrimenti clicca su \"Annulla\""
+msgid ""
+"This action cannot be undone. If you wish to proceed, click \"Delete\", else "
+"click \"Cancel\""
+msgstr ""
+"Questa azione non potrà essere annullata. Se vuoi procedere clicca su "
+"\"Cancella\" altrimenti clicca su \"Annulla\""
 
 #: ../browser/compass.py:318
 msgid "This field is required"
@@ -1003,7 +1067,9 @@ msgstr "Questo campo è obbligatorio"
 
 #: ../browser/templates/dashboard.pt:73
 msgid "This is a complete list of active stories in active projects."
-msgstr "Questa è la lista completa delle storie attive all'interno dei progetti attivi."
+msgstr ""
+"Questa è la lista completa delle storie attive all'interno dei progetti "
+"attivi."
 
 #: ../browser/project/templates/overview.pt:24
 msgid "This project doesn't contain any documents"
@@ -1028,8 +1094,7 @@ msgid "Time spent"
 msgstr "Ore spese"
 
 #: ../browser/templates/dashboard.pt:177
-#: ../browser/templates/ticketsmacros.pt:13
-#: ../interfaces/quickform.py:9
+#: ../browser/templates/ticketsmacros.pt:13 ../interfaces/quickform.py:9
 msgid "Title"
 msgstr "Titolo"
 
@@ -1063,8 +1128,7 @@ msgstr "Tracciamento"
 msgid "Tue"
 msgstr "Mar"
 
-#: ../browser/epic/templates/view.pt:27
-#: ../interfaces/project.py:48
+#: ../browser/epic/templates/view.pt:27 ../interfaces/project.py:48
 msgid "Type"
 msgstr "Tipo"
 
@@ -1085,8 +1149,7 @@ msgstr "URL"
 msgid "Unassigned"
 msgstr "Non assegnato"
 
-#: ../interfaces/project.py:28
-#: ../interfaces/story.py:62
+#: ../interfaces/project.py:28 ../interfaces/story.py:62
 msgid "User ID"
 msgstr "Nome utente"
 
@@ -1098,8 +1161,7 @@ msgstr "Lunghezza standard della pianificazione"
 msgid "Value (man hours)"
 msgstr "Valore (in giorni uomo)"
 
-#: ../browser/booking/view.py:54
-#: ../browser/templates/compass.pt:116
+#: ../browser/booking/view.py:54 ../browser/templates/compass.pt:116
 #: ../browser/templates/macros.pt:279
 msgid "View"
 msgstr "Visualizza"
@@ -1120,9 +1182,11 @@ msgstr "Visualizza i dettagli"
 msgid "Warning delta"
 msgstr "Warning delta"
 
-#: ../browser/widgets/book_widget.py:113
+#: ../browser/widgets/book_widget.py:116
 msgid "We found broken references. Please recheck your booking before submit."
-msgstr "Abbiamo trovato delle referenze non risolte. Ti preghiamo di controllare e sistemare il booking prima di procedere."
+msgstr ""
+"Abbiamo trovato delle referenze non risolte. Ti preghiamo di controllare e "
+"sistemare il booking prima di procedere."
 
 #: ../browser/templates/worklog.pt:96
 msgid "Wed"
@@ -1144,8 +1208,7 @@ msgstr "Riassunto del lavoro"
 msgid "Working week days"
 msgstr "Giorni lavorativi a settimana"
 
-#: ../browser/templates/worklog.pt:18
-#: ../profiles/default/actions.xml
+#: ../browser/templates/worklog.pt:18 ../profiles/default/actions.xml
 #: ../viewlets/projectinfo.py:63
 msgid "Worklog"
 msgstr "Worklog"
@@ -1287,4 +1350,3 @@ msgstr "{week} settimana"
 #: ../browser/compass.py:303
 msgid "{week} weeks"
 msgstr "{week} settimane"
-

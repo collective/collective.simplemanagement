@@ -45,7 +45,6 @@
                            maxlength view/maxlength;
                            placeholder view/placeholder;
                            data-electric-chars view/electric_chars;
-                           data-force-validation-chars view/force_validation_chars;
                            data-autocomplete-url view/autocomplete_url;
                            data-references view/references_selector;
                            data-tags view/tags_selector;
