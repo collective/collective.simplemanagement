@@ -92,7 +92,14 @@
             }
         },
         add: function(item) {
-            var i, l, cur_caret, new_caret, value = this.$root.val();
+            var i, l, cur_caret, new_caret, replace = null,
+                value = this.$root.val();
+            for(i=0, l=this.stream.length; i<l; i++) {
+                if(this.stream[i].uuid === item.uuid)
+                    replace = i;
+            }
+            if(replace !== null)
+                this.stream.splice(replace, 1);
             this.stream.push({
                 portal_type: item.portal_type,
                 uuid: item.uuid,
