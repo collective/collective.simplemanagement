@@ -262,6 +262,7 @@ class Autocomplete(BrowserView):
         }
         filter_context = self.request.form.get('filter_context')
         frozen_refs = self.request.form.get('frozen_refs')
+        exclude_uuids = set()
         if filter_context or frozen_refs:
             if filter_context:
                 filter_context = json.loads(filter_context)
@@ -271,6 +272,7 @@ class Autocomplete(BrowserView):
                 filter_context += json.loads(frozen_refs)
             project = None
             for item in filter_context:
+                exclude_uuids.add(item['uuid'])
                 if item['portal_type'] == 'Project':
                     project = uuidToObject(item['uuid'])
                     break
@@ -278,6 +280,7 @@ class Autocomplete(BrowserView):
                     story = uuidToObject(item['uuid'])
                     project = get_project(story)
             if project is not None:
+                kwargs['portal_type'] = ('Story',)
                 kwargs['path'] = {
                     'query': '/'.join(project.getPhysicalPath())
                 }
@@ -286,13 +289,14 @@ class Autocomplete(BrowserView):
         brains = catalog.searchResults(**kwargs)
         brains = brains[:self.MAX_RESULTS]
         for brain in brains:
-            results.append({
-                'portal_type': brain['portal_type'],
-                'uuid': brain['UID'],
-                'title': brain['Title'].decode('utf-8'),
-                'id': brain['id'],
-                'breadcrumb': get_breadcrumb(brain)
-            })
+            if brain['UID'] not in exclude_uuids:
+                results.append({
+                    'portal_type': brain['portal_type'],
+                    'uuid': brain['UID'],
+                    'title': brain['Title'].decode('utf-8'),
+                    'id': brain['id'],
+                    'breadcrumb': get_breadcrumb(brain)
+                })
 
     def __call__(self):
         # filter=['#', '12']
