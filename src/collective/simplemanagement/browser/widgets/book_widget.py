@@ -236,16 +236,21 @@ class Autocomplete(BrowserView):
     def search_tags(self, query, results):
         storage = get_storage()
         tags = storage.vocabulary('tags')
-        for tag in tags:
-            if query in tag:
-                results.append({
-                    'portal_type': None,
-                    'uuid': tag,
-                    'title': tag,
-                    'id': tag,
-                    'breadcrumb': None
-                })
-        if query not in [ r['id'] for r in results ]:
+        found = False
+        for tag in sorted(tags):
+            result = {
+                'portal_type': None,
+                'uuid': tag,
+                'title': tag,
+                'id': tag,
+                'breadcrumb': None
+            }
+            if query.lower() == tag.lower():
+                found = True
+                results.insert(0, result)
+            elif query.lower().startswith(tag.lower()):
+                results.append(result)
+        if not found:
             results.append({
                 'portal_type': None,
                 'uuid': query,
