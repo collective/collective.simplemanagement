@@ -258,7 +258,8 @@ class Autocomplete(BrowserView):
         kwargs = {
             'getId': { 'query': (query, self.next_query(query)),
                        'range': 'min:max' },
-            'portal_type': portal_type
+            'portal_type': portal_type,
+            'sort_on': 'id'
         }
         filter_context = self.request.form.get('filter_context')
         frozen_refs = self.request.form.get('frozen_refs')
