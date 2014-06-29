@@ -94,6 +94,9 @@ class View(BrowserView):
 class ListingView(BrowserView):
     """IBooking listing View"""
 
+    def can_manage(self):
+        return checkPermission('simplemanagement.ManageProject', self.context)
+
     def form_action(self):
         return self.context.absolute_url()
 
@@ -198,7 +201,7 @@ class Helpers(BrowserView):
             'creator': user_details,
             'can_edit': self.can_edit(),
             'project': api.booking.get_project(self.context),
-            'story': api.booking.get_story(self.context),
+            'story': api.booking.get_story(self.context)
         }
         return booking
 

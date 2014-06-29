@@ -196,3 +196,13 @@ def upgrade_to_1011(context, logger=None):
         '++resource++simplemanagement/js/xregexp.js'
     )
 
+
+def upgrade_to_1012(context, logger=None):
+    logger = getLogger(logger)
+    logger.info('Disabling jQueryUI autocomplete')
+    # jQueryUI autocomplete destroys the autocomplete used by contenttree
+    registry = getUtility(IRegistry)
+    key = (
+        'collective.js.jqueryui.controlpanel.IJQueryUIPlugins.ui_autocomplete'
+    )
+    registry[key] = False

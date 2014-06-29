@@ -43,35 +43,63 @@
                      b_start            request/b_start | b_start;
                      batch              python: Batch(all_bookings or [], b_size, int(b_start), orphan=1);
                      booking_list       batch">
-       <table class="listing booking-list"
-              tal:condition="booking_list">
-         <thead>
-           <tr>
-             <th>&nbsp;</th>
-             <th i18n:translate="">Date</th>
-             <th i18n:translate="">Text</th>
-             <th i18n:translate="">Time</th>
-             <th i18n:translate="">Assignee</th>
-           </tr>
-         </thead>
-         <tfoot>
-           <tr>
-             <td colspan="4"
-                 i18n:translate="">Total found</td>
-             <td tal:content="total"></td>
-           </tr>
-         </tfoot>
-         <tbody>
-           <tal:row repeat="booking_obj booking_list">
-             <tal:wrapper define="booking python: view.info_for(booking_obj)">
-               <tr tal:define="odd repeat/booking_obj/odd"
-                   tal:attributes="class python: odd and 'odd' or 'even'">
-                 <metal:bookings use-macro="sm_macros/booking-list-element" />
-               </tr>
-             </tal:wrapper>
-           </tal:row>
-         </tbody>
-       </table>
+       <form method="post" action="./bookings/@@batch-intermediate"
+             tal:omit-tag="not:view/can_manage">
+         <table class="listing booking-list"
+                tal:condition="booking_list">
+           <thead>
+             <tr>
+               <th i18n:translate="">Actions</th>
+               <th i18n:translate="">Date</th>
+               <th i18n:translate="">Text</th>
+               <th i18n:translate="">Time</th>
+               <th i18n:translate="">Assignee</th>
+             </tr>
+           </thead>
+           <tfoot>
+             <tr>
+               <td colspan="3">
+                 <tal:void condition="not:view/can_manage">
+                   &nbsp;
+                 </tal:void>
+                 <tal:manage condition="view/can_manage">
+                   <input type="submit" name="transfer_to"
+                          value="Move to project or story"
+                          i18n:attributes="value" />
+                   <input type="submit" name="replace_tags"
+                          value="Replace tags"
+                          i18n:attributes="value" />
+                 </tal:manage>
+               </td>
+               <td i18n:translate="">Total found</td>
+               <td tal:content="total"></td>
+             </tr>
+           </tfoot>
+           <tbody>
+             <tal:row repeat="booking_obj booking_list">
+               <tal:wrapper define="booking python: view.info_for(booking_obj)">
+                 <tr tal:define="odd repeat/booking_obj/odd"
+                     tal:attributes="class python: odd and 'odd' or 'even'">
+                   <metal:bookings use-macro="sm_macros/booking-list-element">
+                     <metal:booking-list-element-actions
+                        fill-slot="booking-list-element-actions">
+                       <input type="checkbox" name="bookings:list"
+                              value=""
+                              tal:condition="view/can_manage"
+                              tal:attributes="value booking_obj/uid"/>
+                       <a href=""
+                          class="view-booking"
+                          tal:attributes="href booking/url">
+                         <span i18n:translate="">View</span>
+                       </a>
+                     </metal:booking-list-element-actions>
+                   </metal:bookings>
+                 </tr>
+               </tal:wrapper>
+             </tal:row>
+           </tbody>
+         </table>
+       </form>
        <div metal:use-macro="here/batch_macros/macros/navigation" />
     </div>
 

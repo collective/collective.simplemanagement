@@ -36,7 +36,8 @@
     </tal:opt>
   </select>
 
-  <input tal:condition="view/hour_free_input"
+  <input type="text"
+         tal:condition="view/hour_free_input"
          tal:attributes="name string:${view/name}-hour;
                          value view/current_hour"
          />

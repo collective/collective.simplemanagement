@@ -94,6 +94,7 @@
         add: function(item) {
             var i, l, cur_caret, new_caret, replace = null,
                 value = this.$root.val();
+            // We remove eventual items with duplicate UIDs from stream
             for(i=0, l=this.stream.length; i<l; i++) {
                 if(this.stream[i].uuid === item.uuid)
                     replace = i;

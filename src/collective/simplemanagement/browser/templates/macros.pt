@@ -273,11 +273,14 @@
               tal:attributes="class python: odd and 'odd' or 'even'">
           <metal:booking-list-element define-macro="booking-list-element">
             <td class="actions">
+            <metal:booking-list-element-actions
+               define-slot="booking-list-element-actions">
               <a href=""
                  class="view-booking"
                  tal:attributes="href booking/url">
                 <span i18n:translate="">View</span>
               </a>
+            </metal:booking-list-element-actions>
             </td>
             <td class="booking-date" tal:content="booking/date" />
             <td class="booking-details">

@@ -140,6 +140,10 @@
             $(document).ajaxStop(function() { spinner.hide(); });
         }
 
+        $(document).on("click", ".inline-form .fieldErrorBox", function() {
+            $(this).remove();
+        });
+
     });
 
 }(jQuery));

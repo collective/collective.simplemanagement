@@ -115,4 +115,14 @@
       profile="collective.simplemanagement:default"
       />
 
+  <genericsetup:upgradeStep
+      title="Re-enable reference widget"
+      description=""
+      source="1011"
+      destination="1012"
+      handler=".upgrades.upgrade_to_1012"
+      sortkey="1"
+      profile="collective.simplemanagement:default"
+      />
+
 </configure>

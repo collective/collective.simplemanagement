@@ -35,8 +35,9 @@
               use-macro="context/simpemanagement-macros/employee-form" />
           </tal:pm>
 
-          <div id="booking-form" class="clearfix inline-form"
-               tal:content="structure context/@@booking_bar"></div>
+          <div id="booking-form" class="clearfix inline-form">
+            <tal:booking_bar tal:content="structure context/@@booking_bar" />
+          </div>
 
           <div id="overview">
             <ul class="tabs">
@@ -104,8 +105,7 @@
                             <metal:after-columns fill-slot="after-columns">
                               <td>
                                 <a title="Insert bookings"
-                                   style="cursor: pointer;"
-                                   class="sm-booking-form-link"
+                                   class="sm-booking-form-link btn"
                                    i18n:attributes="title"
                                    tal:attributes="href story/url">
                                   <span i18n:translate="">Book time</span>

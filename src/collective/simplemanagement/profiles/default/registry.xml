@@ -37,4 +37,8 @@
     <value key="maximum_plan_length">4</value>
     <value key="projects_folder">/projects</value>
   </records>
+
+  <record name="collective.js.jqueryui.controlpanel.IJQueryUIPlugins.ui_autocomplete">
+    <value>False</value>
+  </record>
 </registry>

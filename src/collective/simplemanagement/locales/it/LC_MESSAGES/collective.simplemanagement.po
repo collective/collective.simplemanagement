@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2014-06-27 15:03+0000\n"
-"PO-Revision-Date: 2014-06-27 17:05+0200\n"
+"POT-Creation-Date: 2014-06-29 11:36+0000\n"
+"PO-Revision-Date: 2014-06-29 13:38+0200\n"
 "Last-Translator: Simone Deponti <simone.deponti@abstract.it>\n"
 "Language-Team: Italian <info@abstract.it>\n"
 "MIME-Version: 1.0\n"
@@ -96,8 +96,9 @@ msgstr "@progetto @storia *ticket #tag attività"
 msgid "@story *ticket #tag activity"
 msgstr "@storia *ticket #tag attività"
 
+#: ../browser/booking/templates/list.pt:52
 #: ../browser/iteration/templates/macros.pt:76
-#: ../browser/templates/dashboard.pt:91 ../browser/templates/macros.pt:168
+#: ../browser/templates/dashboard.pt:92
 msgid "Actions"
 msgstr "Azioni"
 
@@ -168,7 +169,7 @@ msgstr "Aprile"
 msgid "Are you sure you want to delete this snapshot?"
 msgstr "Sei sicuro di voler cancellare questo snapshot?"
 
-#: ../browser/booking/templates/list.pt:54 ../browser/templates/macros.pt:266
+#: ../browser/booking/templates/list.pt:56 ../browser/templates/macros.pt:266
 msgid "Assignee"
 msgstr "Assegnatario"
 
@@ -194,7 +195,7 @@ msgstr "Backlog"
 msgid "Book time"
 msgstr "Fai booking"
 
-#: ../browser/templates/dashboard.pt:47 ../browser/templates/macros.pt:67
+#: ../browser/templates/dashboard.pt:48 ../browser/templates/macros.pt:67
 #: ../profiles/default/types/Booking.xml
 msgid "Booking"
 msgstr "Booking"
@@ -215,6 +216,10 @@ msgstr "Il booking è stato aggiunto!"
 #: ../viewlets/projectinfo.py:55
 msgid "Bookings"
 msgstr "Booking"
+
+#: ../browser/booking/batch.py:128
+msgid "Bookings transferred"
+msgstr "Booking trasferiti in nuova storia o progetto"
 
 #: ../browser/templates/compass.pt:278
 msgid "Budget"
@@ -285,7 +290,7 @@ msgstr "Dashboard"
 msgid "Data successfully updated."
 msgstr "Dati modificati"
 
-#: ../browser/booking/templates/list.pt:51
+#: ../browser/booking/templates/list.pt:53
 #: ../browser/booking/templates/test_view.pt:17
 #: ../browser/booking/templates/view.pt:42
 msgid "Date"
@@ -349,7 +354,7 @@ msgid "Documents folder"
 msgstr "Cartella documentazione"
 
 #: ../browser/iteration/templates/macros.pt:81
-#: ../browser/templates/dashboard.pt:90 ../browser/templates/macros.pt:173
+#: ../browser/templates/dashboard.pt:91 ../browser/templates/macros.pt:173
 msgid "Done"
 msgstr "Fatto"
 
@@ -445,7 +450,7 @@ msgstr "Febbraio"
 msgid "Filter by name..."
 msgstr "Filtra per nome..."
 
-#: ../browser/templates/macros.pt:403
+#: ../browser/templates/macros.pt:406
 msgid "Filter results by employee"
 msgstr "Filtra i risultati per impiegato"
 
@@ -460,6 +465,10 @@ msgstr "Trovato/i ${n_ticket} ticket"
 #: ../browser/templates/worklog.pt:100
 msgid "Fri"
 msgstr "Ven"
+
+#: ../browser/booking/batch.py:141
+msgid "From"
+msgstr "Da"
 
 #: ../viewlets/projectinfo.py:78
 msgid "Go to Project"
@@ -529,7 +538,7 @@ msgstr "Identificativo del gruppo che contiene tutti gli impiegati"
 msgid "Initial estimate"
 msgstr "Stima iniziale"
 
-#: ../browser/templates/dashboard.pt:106
+#: ../browser/templates/dashboard.pt:107
 msgid "Insert bookings"
 msgstr "Inserici booking"
 
@@ -624,6 +633,10 @@ msgstr "Ultima modifica"
 msgid "Mon"
 msgstr "Lun"
 
+#: ../browser/booking/templates/list.pt:66
+msgid "Move to project or story"
+msgstr "Sposta in progetto o storia"
+
 #: ../booking/form.py:184
 msgid "Multiple conflicting '@' references"
 msgstr "Referenze '@' multiple e conflittuali"
@@ -636,9 +649,17 @@ msgstr "Nome"
 msgid "New project"
 msgstr "Nuovo progetto"
 
+#: ../browser/booking/batch.py:189
+msgid "No action was selected!"
+msgstr "Nessuna azione è stata selezionata!"
+
 #: ../browser/templates/compass_history.pt:164
 msgid "No active projects."
 msgstr "Nessun progetto attivo."
+
+#: ../browser/booking/batch.py:198
+msgid "No bookings were selected!"
+msgstr "Nessun booking è stato selezionato!"
 
 #: ../booking/form.py:402 ../browser/forms/quickform.py:54
 msgid "No changes were applied."
@@ -664,7 +685,7 @@ msgstr ""
 "Non è stata trovata alcuna storia. Aggiungine una nuova o ripianifica le "
 "iterazioni."
 
-#: ../browser/templates/macros.pt:359
+#: ../browser/templates/macros.pt:362
 msgid ""
 "No stories in this iteration. Add a new one or bring them in via the "
 "iteration planner."
@@ -745,6 +766,14 @@ msgstr "Tipologia"
 msgid "Project managers"
 msgstr "Project manager"
 
+#: ../browser/booking/batch.py:109
+msgid "Project or story"
+msgstr "Progetto o storia"
+
+#: ../browser/booking/batch.py:110
+msgid "Project or story where to transfer the booking"
+msgstr "Progetto o storia in cui trasferire i booking"
+
 #: ../profiles/default/portlets.xml
 msgid "Project portlet"
 msgstr "Portlet progetto"
@@ -769,6 +798,10 @@ msgstr "Oggetti correlati"
 msgid "Remove"
 msgstr "Rimuovi"
 
+#: ../browser/booking/templates/list.pt:69
+msgid "Replace tags"
+msgstr "Sostituisci tag"
+
 #: ../viewlets/projectinfo.py:71
 msgid "Report"
 msgstr "Report"
@@ -777,7 +810,7 @@ msgstr "Report"
 msgid "Repositories"
 msgstr "Repository"
 
-#: ../browser/templates/macros.pt:424
+#: ../browser/templates/macros.pt:427
 msgid "Reset filter"
 msgstr "Azzera i filtri"
 
@@ -822,7 +855,7 @@ msgstr "Ricerca un progetto..."
 msgid "Select"
 msgstr "Seleziona"
 
-#: ../browser/templates/macros.pt:405
+#: ../browser/templates/macros.pt:408
 msgid "Select an employee"
 msgstr "Seleziona un impiegato"
 
@@ -874,13 +907,13 @@ msgstr "Stato"
 msgid "Status changed"
 msgstr "Stato cambiato"
 
-#: ../browser/epic/templates/view.pt:65 ../browser/templates/dashboard.pt:43
+#: ../browser/epic/templates/view.pt:65 ../browser/templates/dashboard.pt:44
 msgid "Stories"
 msgstr "Storie"
 
 #: ../browser/booking/templates/view.pt:34
 #: ../browser/iteration/templates/macros.pt:78
-#: ../browser/templates/dashboard.pt:87
+#: ../browser/templates/dashboard.pt:88
 msgid "Story"
 msgstr "Storia"
 
@@ -896,7 +929,11 @@ msgstr "Dom"
 msgid "Tags"
 msgstr "Tags"
 
-#: ../browser/booking/templates/list.pt:52 ../browser/templates/macros.pt:264
+#: ../browser/booking/batch.py:167
+msgid "Tags replaced"
+msgstr "Tags sostituite!"
+
+#: ../browser/booking/templates/list.pt:54 ../browser/templates/macros.pt:264
 #: ../interfaces/booking.py:35
 msgid "Text"
 msgstr "Testo"
@@ -1001,6 +1038,14 @@ msgstr ""
 msgid "The situation has been saved"
 msgstr "La situazione è stata salvata"
 
+#: ../browser/booking/batch.py:142
+msgid "The tag that has to be replaced"
+msgstr "La tag da sostituire"
+
+#: ../browser/booking/batch.py:147
+msgid "The tag you are going to replace it with"
+msgstr "La tag che verrà inserita al posto della precedente"
+
 #: ../interfaces/story.py:58
 msgid "The user IDs of the people that are responsible to act on this story"
 msgstr "I nomi utente delle persone che parteciperanno a questa storia"
@@ -1041,11 +1086,11 @@ msgstr "Non ci sono iterazioni passate."
 msgid "There are no saved compass plans."
 msgstr "Non esistono pianificazioni compass salvate."
 
-#: ../browser/templates/dashboard.pt:62
+#: ../browser/templates/dashboard.pt:63
 msgid "There are not stories assigned to ${username}"
 msgstr "Non ci sono storie assegnate a ${username}"
 
-#: ../browser/templates/dashboard.pt:65
+#: ../browser/templates/dashboard.pt:66
 msgid "There are not stories assigned to you."
 msgstr "Non ci sono storie assegnate a te."
 
@@ -1065,7 +1110,7 @@ msgstr ""
 msgid "This field is required"
 msgstr "Questo campo è obbligatorio"
 
-#: ../browser/templates/dashboard.pt:73
+#: ../browser/templates/dashboard.pt:74
 msgid "This is a complete list of active stories in active projects."
 msgstr ""
 "Questa è la lista completa delle storie attive all'interno dei progetti "
@@ -1079,11 +1124,11 @@ msgstr "Il progetto non contiene nessun documento"
 msgid "Thu"
 msgstr "Gio"
 
-#: ../browser/templates/dashboard.pt:45
+#: ../browser/templates/dashboard.pt:46
 msgid "Tickets"
 msgstr "Ticket"
 
-#: ../browser/booking/templates/list.pt:53
+#: ../browser/booking/templates/list.pt:55
 #: ../browser/booking/templates/test_view.pt:19
 #: ../browser/booking/templates/view.pt:46
 msgid "Time"
@@ -1098,6 +1143,10 @@ msgstr "Ore spese"
 msgid "Title"
 msgstr "Titolo"
 
+#: ../browser/booking/batch.py:146
+msgid "To"
+msgstr "A"
+
 #: ../browser/templates/project_report.pt:267
 msgid "Total"
 msgstr "Totale"
@@ -1107,7 +1156,7 @@ msgstr "Totale"
 msgid "Total compass"
 msgstr "Totale del compass"
 
-#: ../browser/booking/templates/list.pt:59
+#: ../browser/booking/templates/list.pt:74
 msgid "Total found"
 msgstr "Totale trovati"
 
@@ -1161,8 +1210,8 @@ msgstr "Lunghezza standard della pianificazione"
 msgid "Value (man hours)"
 msgstr "Valore (in giorni uomo)"
 
-#: ../browser/booking/view.py:54 ../browser/templates/compass.pt:116
-#: ../browser/templates/macros.pt:279
+#: ../browser/booking/templates/list.pt:93 ../browser/booking/view.py:54
+#: ../browser/templates/compass.pt:116
 msgid "View"
 msgstr "Visualizza"
 
