@@ -379,6 +379,15 @@
                 self.autocomplete('close');
                 self.cleanup(true);
             });
+            this.$root.bind('focus click', function() {
+                var value = self.$root.val();
+                if(value) {
+                    var position = self.$root.caret();
+                    self.token = self.tokenize(value, position);
+                    if(self.token[0] !== null)
+                        self.autocomplete('reload');
+                }
+            });
             this.$root.caret(this.$root.val().length);
         }
     };

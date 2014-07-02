@@ -261,10 +261,9 @@ class Autocomplete(BrowserView):
 
     def search_content(self, query, portal_type, results):
         kwargs = {
-            'getId': { 'query': (query, self.next_query(query)),
-                       'range': 'min:max' },
+            'Title': query,
             'portal_type': portal_type,
-            'sort_on': 'id'
+            'sort_on': 'portal_type'
         }
         filter_context = self.request.form.get('filter_context')
         frozen_refs = self.request.form.get('frozen_refs')
@@ -292,7 +291,17 @@ class Autocomplete(BrowserView):
                 }
         catalog = getToolByName(self.context, 'portal_catalog')
         get_breadcrumb = BreadcrumbGetter(catalog)
+        # first we search by title
         brains = catalog.searchResults(**kwargs)
+        if len(brains) == 0:
+            # but if that gives no result (remember we write down IDs)
+            # we try the id.startswith thing
+            del kwargs['Title']
+            kwargs['getId'] = {
+                'query': (query, self.next_query(query)),
+                'range': 'min:max'
+            }
+            brains = catalog.searchResults(**kwargs)
         brains = brains[:self.MAX_RESULTS]
         for brain in brains:
             if brain['UID'] not in exclude_uuids:
