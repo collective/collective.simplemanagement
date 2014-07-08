@@ -292,7 +292,9 @@ class Autocomplete(BrowserView):
                     story = uuidToObject(item['uuid'])
                     project = get_project(story)
             if project is not None:
-                kwargs['portal_type'] = ('Story',)
+                kwargs['portal_type'] = tuple(
+                    t for t in kwargs['portal_type'] if t != 'Project'
+                )
                 kwargs['path'] = {
                     'query': '/'.join(project.getPhysicalPath())
                 }
