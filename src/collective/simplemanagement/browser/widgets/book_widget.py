@@ -265,6 +265,13 @@ class Autocomplete(BrowserView):
             'portal_type': portal_type,
             'sort_on': 'portal_type'
         }
+        # if we are searching a ticket, search the ID
+        if len(portal_type) == 1 and portal_type[0] == 'PoiIssue':
+            del kwargs['Title']
+            kwargs['getId'] = {
+                'query': (query, self.next_query(query)),
+                'range': 'min:max'
+            }
         filter_context = self.request.form.get('filter_context')
         frozen_refs = self.request.form.get('frozen_refs')
         exclude_uuids = set()
@@ -293,9 +300,10 @@ class Autocomplete(BrowserView):
         get_breadcrumb = BreadcrumbGetter(catalog)
         # first we search by title
         brains = catalog.searchResults(**kwargs)
-        if len(brains) == 0:
+        if len(brains) == 0 and 'Title' in kwargs:
             # but if that gives no result (remember we write down IDs)
-            # we try the id.startswith thing
+            # we try the id.startswith thing.
+            # we have a special case (tickets) where we already search by id
             del kwargs['Title']
             kwargs['getId'] = {
                 'query': (query, self.next_query(query)),
