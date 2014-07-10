@@ -163,8 +163,9 @@ class ParseActor(object):
                     )
                 )
             else:
-                unresolved[0]['value'] = (results[0].portal_type, results[0])
-                unresolved[1]['value'] = (results[1].portal_type, results[1])
+                result = results[0]
+                unresolved[0]['value'] = (result[0].portal_type, result[0])
+                unresolved[1]['value'] = (result[1].portal_type, result[1])
         elif len(unresolved) == 1:
             # single token, either project or story
             result = self.find(

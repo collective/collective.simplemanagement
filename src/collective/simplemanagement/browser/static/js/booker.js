@@ -222,7 +222,7 @@
                         this.$dropdown.show();
                     }
                     this.render_autocomplete();
-                    if(this.token[1].length > 1) {
+                    if(this.token[1].length > 0) {
                         this.autocomplete_get({
                             filter: JSON.stringify([
                                 this.token[0],
