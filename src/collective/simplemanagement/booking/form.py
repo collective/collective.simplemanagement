@@ -32,6 +32,16 @@ from ..browser.widgets.book_widget import ELECTRIC_CHARS
 from ..browser.widgets.book_widget import ELECTRIC_CHARS_FIELD
 
 
+def get_prefix(form_):
+    prefix = 'booking-contextless.'
+    if form_.context:
+        try:
+            prefix = 'booking-' + IUUID(form_.context) + '.'
+        except TypeError:
+            prefix = 'booking-nouid.'
+    return prefix
+
+
 class ParsingError(ValidationError):
 
     def doc(self):
@@ -83,8 +93,10 @@ class ParseActor(object):
         self.form = form_
         self.data = data
         self.errors = errors
+        references = data.get('references')
+        references = references if references else []
         self.references = [
-            (k, uuidToCatalogBrain(v)) for k, v in data.get('references', [])
+            (k, uuidToCatalogBrain(v)) for k, v in references
         ]
 
     def make_error(self, message):
@@ -352,7 +364,8 @@ class BookingForm(form.AddForm):
         self.actions['add'].addClass("allowMultiSubmit")
 
     def updateWidgets(self):
-        super(BookingForm, self).updateWidgets()
+        prefix = get_prefix(self)
+        super(BookingForm, self).updateWidgets(prefix=prefix)
         defaults = {
             'date': date.today()
         }
@@ -424,7 +437,8 @@ class EditForm(form.EditForm):
         return fields
 
     def updateWidgets(self):
-        super(EditForm, self).updateWidgets()
+        prefix = get_prefix(self)
+        super(EditForm, self).updateWidgets(prefix=prefix)
         for name, widget in self.widgets.items():
             if name == 'text':
                 widget.references_field = self.widgets['references'].name

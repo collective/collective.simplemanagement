@@ -347,15 +347,17 @@ body.portaltype-project .booking-text.ref-link.portaltype-project{
     width: 20em;
 }
 
-#content #booking-form input#form-widgets-time {
+#content #booking-form input[id$="time"] {
     width: 30px;
 }
 
-#content #booking-form .field[id$="references"] {
+#content #booking-form .field[id$="references"],
+#booking-form .field[id$="references"] {
     display: none;
 }
 
-#content #booking-form .field[id$="tags"] {
+#content #booking-form .field[id$="tags"],
+#booking-form .field[id$="tags"] {
     display: none;
 }
 

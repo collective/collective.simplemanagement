@@ -45,7 +45,8 @@
             height: '90%',
             config: {
                 onClose: function(el) {
-                    value.model.load();
+                    if((typeof value) !== 'undefined')
+                        value.model.load();
                 },
                 onBeforeLoad: function() {
                     var $overlay = this.getOverlay();
@@ -121,8 +122,8 @@
         });
 
         var init_dash_bk_form = function() {
-            $('.template-dashboard #booking_form').ajaxForm({
-                target: '#booking-form',
+            $('.template-dashboard #booking-form.booking-generic #booking_form').ajaxForm({
+                target: '#booking-form.booking-generic',
                 success: function() {
                     init_dash_bk_form();
                     sm.init_widgets();
