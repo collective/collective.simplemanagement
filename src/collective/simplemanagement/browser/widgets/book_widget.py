@@ -51,9 +51,26 @@ REGEXP = re.compile(
     )
 )
 
-TEMPLATE = ('<a class="booking-text ref-link portaltype-{class_}" '
-            'href="{url}">{tag}</a>')
-TEMPLATE_NOTFOUND = ('<em>{tag}</em>')
+LINK_REGEXP = re.compile(
+    r'((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|'
+    r'(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)'
+    r'((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#'
+    r'?(?:[\.\!\/\\\w]*))?)'
+)
+
+TEMPLATE = (u'<a class="booking-text ref-link portaltype-{class_}" '
+             'href="{url}">{tag}</a>')
+TEMPLATE_NOTFOUND = (u'<em>{tag}</em>')
+LINK_TEMPLATE = (u'<a class="booking-text ref-link external" href="{url}">'
+                  '{url}</a>')
+
+
+def extract_tags(text):
+    tags = set()
+    for m in REGEXP.finditer(text):
+        if ELECTRIC_CHARS[m.group(1)] is None:
+            tags.add(m.group(2))
+    return tags
 
 
 def format_text(booking, context=None):
@@ -98,6 +115,10 @@ def format_text(booking, context=None):
             return TEMPLATE.format(url=url, tag=tag, class_=css_class)
         return TEMPLATE_NOTFOUND.format(tag=tag)
     result = REGEXP.sub(format_tag, text)
+    result = LINK_REGEXP.sub(
+        lambda m: LINK_TEMPLATE.format(url=m.group(0)),
+        result
+    )
     return result
 
 
