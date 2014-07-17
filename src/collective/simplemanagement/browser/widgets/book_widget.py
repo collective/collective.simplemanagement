@@ -84,6 +84,10 @@ def format_text(booking, context=None):
     ]
 
     text = cgi.escape(booking.text)
+    text = LINK_REGEXP.sub(
+        lambda m: LINK_TEMPLATE.format(url=m.group(0)),
+        text
+    )
 
     def format_tag(m):
         tag = m.group(0)
@@ -115,10 +119,6 @@ def format_text(booking, context=None):
             return TEMPLATE.format(url=url, tag=tag, class_=css_class)
         return TEMPLATE_NOTFOUND.format(tag=tag)
     result = REGEXP.sub(format_tag, text)
-    result = LINK_REGEXP.sub(
-        lambda m: LINK_TEMPLATE.format(url=m.group(0)),
-        result
-    )
     return result
 
 
