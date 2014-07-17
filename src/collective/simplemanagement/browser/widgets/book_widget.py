@@ -1,3 +1,4 @@
+import cgi
 import re
 import json
 from urllib import urlencode
@@ -65,6 +66,8 @@ def format_text(booking, context=None):
         )
     ]
 
+    text = cgi.escape(booking.text)
+
     def format_tag(m):
         tag = m.group(0)
         url = None
@@ -94,7 +97,7 @@ def format_text(booking, context=None):
         if url:
             return TEMPLATE.format(url=url, tag=tag, class_=css_class)
         return TEMPLATE_NOTFOUND.format(tag=tag)
-    result = REGEXP.sub(format_tag, booking.text)
+    result = REGEXP.sub(format_tag, text)
     return result
 
 
