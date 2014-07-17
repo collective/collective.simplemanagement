@@ -131,7 +131,6 @@ def export_bookings(site):
         item['references'] = references
         if obj.getRelatedItems():
             print "%s has related items, skipping" % obj
-            continue
 
         try:
             json.dumps(item, cls=ExtendedJSONEncoder)
