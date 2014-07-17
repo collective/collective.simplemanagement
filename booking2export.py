@@ -130,13 +130,14 @@ def export_bookings(site):
         ]
         item['references'] = references
         if obj.getRelatedItems():
-            import pdb;pdb.set_trace()
+            print "%s has related items, skipping" % obj
+            continue
 
         try:
-            json.dumps(tojson, cls=ExtendedJSONEncoder)
+            json.dumps(item, cls=ExtendedJSONEncoder)
         except Exception, e:
-            print str(e)
-            import pdb;pdb.set_trace()
+            print "Can't serialize %s " % item, str(e)
+            continue
 
         tojson.append(item)
 
