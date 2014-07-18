@@ -188,10 +188,24 @@
                     <tal:role condition="contact/role">
                       (<span tal:replace="contact/role" />)
                     </tal:role>
-                    <a tal:condition="contact/email"
-                       tal:content="contact/email"
-                       tal:attributes="href contact/email" />
-                    <span tal:replace="contact/telephone" />
+                    <br />
+                    <tal:block
+                      condition="contact/email">
+                      <span class="email"
+                            tal:omit-tag=""
+                            i18n:translate="">email:</span>
+                      <a class="email"
+                         tal:condition="contact/email"
+                         tal:content="contact/email"
+                         tal:attributes="href contact/email" />
+                    </tal:block>
+                    <tal:block
+                      condition="contact/telephone">
+                      <span class="phone"
+                            tal:omit-tag=""
+                            i18n:translate="">phone:</span>
+                        <span tal:replace="contact/telephone" />
+                    </tal:block>
                   </li>
                 </ul>
 

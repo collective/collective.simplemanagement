@@ -82,7 +82,7 @@ class IProject(model.Schema):
 
     form.widget(customer_contact=DataGridFieldFactory)
     customer_contact = schema.List(
-        title=_(u"Customer contact"),
+        title=_(u"Customer contacts"),
         value_type=DictRow(
             title=u"Contact",
             schema=ICustomerContact

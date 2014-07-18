@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-06-29 11:36+0000\n"
+"POT-Creation-Date: 2014-07-18 15:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,7 +69,7 @@ msgstr ""
 msgid "(double click to select)"
 msgstr ""
 
-#: ../booking/form.py:375
+#: ../booking/form.py:389
 msgid "*ticket #tag activity"
 msgstr ""
 
@@ -77,11 +77,11 @@ msgstr ""
 msgid "<p>Here are collected all the issues relative to the project <em>${project_name}</em>.</p><p>If you found any problems, please report it here by clicking <em>New issue</em>.</p>"
 msgstr ""
 
-#: ../browser/widgets/book_widget.py:112
+#: ../browser/widgets/book_widget.py:136
 msgid "@project @story *ticket #tag activity"
 msgstr ""
 
-#: ../booking/form.py:386
+#: ../booking/form.py:400
 msgid "@story *ticket #tag activity"
 msgstr ""
 
@@ -91,7 +91,7 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: ../interfaces/project.py:35
+#: ../interfaces/project.py:45
 msgid "Active"
 msgstr ""
 
@@ -124,11 +124,11 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: ../booking/form.py:120
+#: ../booking/form.py:132
 msgid "Ambiguous reference \"%s\""
 msgstr ""
 
-#: ../booking/form.py:153
+#: ../booking/form.py:165
 msgid "Ambiguous references: \"%s\", \"%s\""
 msgstr ""
 
@@ -195,7 +195,7 @@ msgstr ""
 msgid "Booking listing"
 msgstr ""
 
-#: ../booking/form.py:404
+#: ../booking/form.py:418
 msgid "Booking succesfully deleted."
 msgstr ""
 
@@ -217,11 +217,11 @@ msgstr ""
 msgid "Budget"
 msgstr ""
 
-#: ../interfaces/project.py:74
+#: ../interfaces/project.py:93
 msgid "Budget (man days)"
 msgstr ""
 
-#: ../booking/form.py:458
+#: ../booking/form.py:473
 #: ../browser/forms/quickform.py:79
 #: ../browser/templates/compass_history.pt:50
 msgid "Cancel"
@@ -273,15 +273,20 @@ msgstr ""
 
 #: ../browser/project/templates/overview.pt:178
 #: ../browser/templates/compass.pt:264
-#: ../interfaces/project.py:70
+#: ../interfaces/project.py:80
 msgid "Customer"
+msgstr ""
+
+#: ../browser/project/templates/overview.pt:183
+#: ../interfaces/project.py:85
+msgid "Customer contacts"
 msgstr ""
 
 #: ../viewlets/projectinfo.py:51
 msgid "Dashboard"
 msgstr ""
 
-#: ../booking/form.py:403
+#: ../booking/form.py:417
 #: ../browser/forms/quickform.py:55
 msgid "Data successfully updated."
 msgstr ""
@@ -292,7 +297,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: ../interfaces/project.py:62
+#: ../interfaces/project.py:72
 msgid "Deadline"
 msgstr ""
 
@@ -304,7 +309,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: ../booking/form.py:464
+#: ../booking/form.py:479
 msgid "Delete booking"
 msgstr ""
 
@@ -368,7 +373,7 @@ msgstr ""
 msgid "Edit story"
 msgstr ""
 
-#: ../interfaces/project.py:39
+#: ../interfaces/project.py:49
 msgid "Effort (in man days)"
 msgstr ""
 
@@ -393,11 +398,11 @@ msgstr ""
 msgid "End Date:"
 msgstr ""
 
-#: ../interfaces/project.py:94
+#: ../interfaces/project.py:113
 msgid "End date"
 msgstr ""
 
-#: ../interfaces/project.py:119
+#: ../interfaces/project.py:138
 msgid "Environment"
 msgstr ""
 
@@ -421,7 +426,7 @@ msgstr ""
 msgid "Estimate"
 msgstr ""
 
-#: ../interfaces/project.py:78
+#: ../interfaces/project.py:97
 #: ../interfaces/story.py:25
 msgid "Estimate (man days)"
 msgstr ""
@@ -438,7 +443,7 @@ msgstr ""
 msgid "Existing project"
 msgstr ""
 
-#: ../interfaces/project.py:90
+#: ../interfaces/project.py:109
 msgid "Expected end date"
 msgstr ""
 
@@ -589,17 +594,17 @@ msgstr ""
 msgid "May"
 msgstr ""
 
-#: ../interfaces/project.py:129
+#: ../interfaces/project.py:148
 #: ../interfaces/story.py:77
 msgid "Milestone"
 msgstr ""
 
-#: ../browser/project/templates/overview.pt:197
-#: ../interfaces/project.py:124
+#: ../browser/project/templates/overview.pt:231
+#: ../interfaces/project.py:143
 msgid "Milestones"
 msgstr ""
 
-#: ../interfaces/project.py:125
+#: ../interfaces/project.py:144
 msgid "Milestones are the different phases of the project. Each milestone should formally define a self-sufficient deliverable, that can then be put into production."
 msgstr ""
 
@@ -607,11 +612,11 @@ msgstr ""
 msgid "Minimum plan length"
 msgstr ""
 
-#: ../booking/form.py:122
+#: ../booking/form.py:134
 msgid "Missing reference \"%s\""
 msgstr ""
 
-#: ../booking/form.py:160
+#: ../booking/form.py:172
 msgid "Missing references: \"%s\", \"%s\""
 msgstr ""
 
@@ -627,12 +632,12 @@ msgstr ""
 msgid "Move to project or story"
 msgstr ""
 
-#: ../booking/form.py:184
+#: ../booking/form.py:197
 msgid "Multiple conflicting '@' references"
 msgstr ""
 
 #: ../browser/templates/compass.pt:250
-#: ../interfaces/project.py:46
+#: ../interfaces/project.py:56
 msgid "Name"
 msgstr ""
 
@@ -652,12 +657,12 @@ msgstr ""
 msgid "No bookings were selected!"
 msgstr ""
 
-#: ../booking/form.py:402
+#: ../booking/form.py:416
 #: ../browser/forms/quickform.py:54
 msgid "No changes were applied."
 msgstr ""
 
-#: ../browser/widgets/book_widget.py:115
+#: ../browser/widgets/book_widget.py:139
 msgid "No completions"
 msgstr ""
 
@@ -679,7 +684,7 @@ msgid "No stories in this iteration. Add a new one or bring them in via the iter
 msgstr ""
 
 #: ../browser/project/templates/overview.pt:15
-#: ../interfaces/project.py:135
+#: ../interfaces/project.py:154
 msgid "Notes"
 msgstr ""
 
@@ -699,8 +704,8 @@ msgstr ""
 msgid "October"
 msgstr ""
 
-#: ../browser/project/templates/overview.pt:180
-#: ../interfaces/project.py:165
+#: ../browser/project/templates/overview.pt:214
+#: ../interfaces/project.py:184
 msgid "Operatives"
 msgstr ""
 
@@ -729,7 +734,7 @@ msgstr ""
 msgid "Planning"
 msgstr ""
 
-#: ../interfaces/project.py:147
+#: ../interfaces/project.py:166
 msgid "Priority"
 msgstr ""
 
@@ -747,8 +752,8 @@ msgstr ""
 msgid "Project Info"
 msgstr ""
 
-#: ../browser/project/templates/overview.pt:208
-#: ../interfaces/project.py:98
+#: ../browser/project/templates/overview.pt:242
+#: ../interfaces/project.py:117
 msgid "Project classifiers"
 msgstr ""
 
@@ -797,7 +802,7 @@ msgid "Report"
 msgstr ""
 
 #: ../browser/project/templates/overview.pt:84
-#: ../interfaces/project.py:109
+#: ../interfaces/project.py:128
 msgid "Repositories"
 msgstr ""
 
@@ -805,7 +810,7 @@ msgstr ""
 msgid "Reset filter"
 msgstr ""
 
-#: ../interfaces/project.py:173
+#: ../interfaces/project.py:192
 msgid "Resource"
 msgstr ""
 
@@ -821,7 +826,7 @@ msgstr ""
 msgid "Revisions"
 msgstr ""
 
-#: ../interfaces/project.py:23
+#: ../interfaces/project.py:33
 msgid "Role"
 msgstr ""
 
@@ -833,7 +838,7 @@ msgstr ""
 msgid "Sat"
 msgstr ""
 
-#: ../booking/form.py:439
+#: ../booking/form.py:454
 #: ../browser/forms/quickform.py:62
 #: ../browser/templates/compass.pt:49
 msgid "Save"
@@ -875,7 +880,7 @@ msgstr ""
 msgid "Snapshot deleted"
 msgstr ""
 
-#: ../interfaces/project.py:99
+#: ../interfaces/project.py:118
 msgid "Some keywords that describe the project and used technologies"
 msgstr ""
 
@@ -883,7 +888,7 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: ../interfaces/project.py:87
+#: ../interfaces/project.py:106
 msgid "Start date"
 msgstr ""
 
@@ -892,7 +897,7 @@ msgid "Start date:"
 msgstr ""
 
 #: ../browser/templates/ticketsmacros.pt:16
-#: ../interfaces/project.py:58
+#: ../interfaces/project.py:68
 msgid "Status"
 msgstr ""
 
@@ -933,11 +938,11 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: ../interfaces/project.py:110
+#: ../interfaces/project.py:129
 msgid "The HTTP URLs of the repositories (e.g. https://github.com/company/my.repository/)"
 msgstr ""
 
-#: ../interfaces/project.py:117
+#: ../interfaces/project.py:136
 msgid "The URLs of the various online environments (staging, production)"
 msgstr ""
 
@@ -961,11 +966,11 @@ msgstr ""
 msgid "The issues relative to ${project_name}"
 msgstr ""
 
-#: ../interfaces/project.py:79
+#: ../interfaces/project.py:98
 msgid "The man days required for completion, as initially estimated by the project manager"
 msgstr ""
 
-#: ../interfaces/project.py:75
+#: ../interfaces/project.py:94
 msgid "The man days that this project is paid for"
 msgstr ""
 
@@ -1017,7 +1022,7 @@ msgstr ""
 msgid "The user IDs of the people that are responsible to act on this story"
 msgstr ""
 
-#: ../interfaces/project.py:166
+#: ../interfaces/project.py:185
 msgid "The user IDs of those that have operative roles in this project (coders, designers, project managers, accounts etc.). Customers should not be included in this list.Adding someone here will add them automatically as managers to the default tracker."
 msgstr ""
 
@@ -1128,7 +1133,7 @@ msgid "Tue"
 msgstr ""
 
 #: ../browser/epic/templates/view.pt:27
-#: ../interfaces/project.py:48
+#: ../interfaces/project.py:58
 msgid "Type"
 msgstr ""
 
@@ -1136,11 +1141,11 @@ msgstr ""
 msgid "UID"
 msgstr ""
 
-#: ../interfaces/project.py:51
+#: ../interfaces/project.py:61
 msgid "URL"
 msgstr ""
 
-#: ../interfaces/project.py:116
+#: ../interfaces/project.py:135
 msgid "URLs"
 msgstr ""
 
@@ -1149,7 +1154,7 @@ msgstr ""
 msgid "Unassigned"
 msgstr ""
 
-#: ../interfaces/project.py:28
+#: ../interfaces/project.py:38
 #: ../interfaces/story.py:62
 msgid "User ID"
 msgstr ""
@@ -1184,7 +1189,7 @@ msgstr ""
 msgid "Warning delta"
 msgstr ""
 
-#: ../browser/widgets/book_widget.py:116
+#: ../browser/widgets/book_widget.py:140
 msgid "We found broken references. Please recheck your booking before submit."
 msgstr ""
 
@@ -1261,6 +1266,10 @@ msgstr ""
 msgid "e.g. 'World domination'"
 msgstr ""
 
+#: ../browser/project/templates/overview.pt:194
+msgid "email:"
+msgstr ""
+
 #. Default: "Estimate <small>at the beginning, by the project manager:</small>"
 #: ../browser/project/templates/overview.pt:165
 msgid "estimate_label"
@@ -1289,6 +1298,10 @@ msgstr ""
 
 #: ../browser/templates/compass_history.pt:117
 msgid "only my projects"
+msgstr ""
+
+#: ../browser/project/templates/overview.pt:204
+msgid "phone:"
 msgstr ""
 
 #: ../browser/templates/compass.pt:39
