@@ -1,5 +1,5 @@
 <metadata>
- <version>1012</version>
+ <version>1013</version>
  <dependencies>
   <dependency>profile-plone.app.dexterity:default</dependency>
   <dependency>profile-plone.app.relationfield:default</dependency>
@@ -7,5 +7,6 @@
   <dependency>profile-Products.Poi:default</dependency>
   <dependency>profile-collective.select2:default</dependency>
   <dependency>profile-collective.js.jqueryui:default</dependency>
+  <dependency>profile-collective.z3cform.datagridfield:default</dependency>
  </dependencies>
 </metadata>

@@ -125,4 +125,14 @@
       profile="collective.simplemanagement:default"
       />
 
+  <genericsetup:upgradeStep
+      title="Install collective.z3cform.datagridfield"
+      description=""
+      source="1012"
+      destination="1013"
+      handler=".upgrades.upgrade_to_1013"
+      sortkey="1"
+      profile="collective.simplemanagement:default"
+      />
+
 </configure>
