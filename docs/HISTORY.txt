@@ -7,7 +7,7 @@ Changelog
 - Add link to project and story in worklog booking details
   [gborelli]
 
-- Add customer_contact in IProject
+- Add customer_contact in IProject - and collective.z3cform.datagridfield dependency
   [gborelli]
 
 - Compass history improvements
