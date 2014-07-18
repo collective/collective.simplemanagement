@@ -226,7 +226,7 @@ class BookingStorage(Persistent):
     def reindex_catalog(self):
         self.mapping.clear()
         self.catalog.clear()
-        for booking in self.bookings:
+        for booking in self.bookings.values():
             booking.cat_id = self._get_next_cat_id()
             self.index(booking)
 
