@@ -4,6 +4,12 @@ Changelog
 1.0 (unreleased)
 ----------------
 
+- Add link to project and story in worklog booking details
+  [gborelli]
+
+- Add customer_contact in IProject
+  [gborelli]
+
 - Compass history improvements
   [gborelli]
 
