@@ -222,13 +222,23 @@ class WorklogBackend(WorklogBase):
         booking_details = []
         for booking in bookings_:
             project = api.booking.get_project(booking)
+            project_title = ''
+            project_url = ''
+            if project:
+                project_title = project.title
+                project_url = project.absolute_url()
             story = api.booking.get_story(booking)
+            story_title = ''
+            story_url = ''
+            if story:
+                story_title = story.title
+                story_url = story.absolute_url()
             booking_details.append({
                 'type': 'booking',
-                'project': project.title,
-                'project_url': project.absolute_url(),
-                'story': story.title,
-                'story_url': story.absolute_url(),
+                'project': project_title,
+                'project_url': project_url,
+                'story': story_title,
+                'story_url': story_url,
                 'booking': booking.text,
                 'hours': str(quantize(booking.time))
             })
