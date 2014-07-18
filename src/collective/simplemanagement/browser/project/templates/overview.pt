@@ -177,6 +177,26 @@
           <dl>
             <dt i18n:translate="">Customer</dt>
             <dd tal:content="context/customer"></dd>
+            <tal:customer_contact
+                define="ccs context/customer_contact"
+                condition="ccs">
+              <dt i18n:translate="">Customer contacts</dt>
+              <dd>
+                <ul>
+                  <li tal:repeat="contact ccs">
+                    <span tal:replace="contact/name" />
+                    <tal:role condition="contact/role">
+                      (<span tal:replace="contact/role" />)
+                    </tal:role>
+                    <a tal:condition="contact/email"
+                       tal:content="contact/email"
+                       tal:attributes="href contact/email" />
+                    <span tal:replace="contact/telephone" />
+                  </li>
+                </ul>
+
+              </dd>
+            </tal:customer_contact>
             <dt i18n:translate="">Operatives</dt>
             <dd>
               <ul>
