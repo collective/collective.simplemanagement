@@ -117,6 +117,8 @@
                             {},
                             function(data) {
                                 var row,
+                                    project_link = null,
+                                    story_link = null,
                                     content = self.details_template.clone();
                                 var tbody = content.find('table tbody');
                                 var row_template = tbody.find('tr').detach();
@@ -133,10 +135,15 @@
                                     row.find('td:eq(0)').empty();
                                     switch(data[i].type) {
                                     case "booking": {
-                                        row.find('td:eq(0)').text(
-                                            data[i].project);
-                                        row.find('td:eq(1)').text(
-                                            data[i].story);
+                                        project_link = $('<a target="_blank"></a>');
+                                        project_link.text(data[i].project);
+                                        project_link.attr('href', data[i].project_url);
+
+                                        story_link = $('<a target="_blank"></a>');
+                                        story_link.text(data[i].story);
+                                        story_link.attr('href', data[i].story_url);
+                                        row.find('td:eq(0)').append(project_link);
+                                        row.find('td:eq(1)').append(story_link);
                                         row.find('td:eq(2)').text(
                                             data[i].booking);
                                         row.find('td:eq(3)').text(

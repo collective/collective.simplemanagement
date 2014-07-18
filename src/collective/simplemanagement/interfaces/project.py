@@ -14,7 +14,17 @@ from plone.app.textfield import RichText
 from collective.select2.field import Select2MultiField
 from collective.select2.field import Select2Field
 
+from collective.z3cform.datagridfield import DataGridFieldFactory
+from collective.z3cform.datagridfield import DictRow
+
 from .. import _
+
+
+class ICustomerContact(Interface):
+    name = schema.TextLine(title=u"Name")
+    role = schema.TextLine(title=u"Role")
+    email = schema.TextLine(title=u"Email")
+    telephone = schema.TextLine(title=u"Telephone")
 
 
 class IResource(Interface):
@@ -68,6 +78,15 @@ class IProject(model.Schema):
 
     customer = schema.TextLine(
         title=_(u"Customer")
+    )
+
+    form.widget(customer_contact=DataGridFieldFactory)
+    customer_contact = schema.List(
+        title=_(u"Customer contact"),
+        value_type=DictRow(
+            title=u"Contact",
+            schema=ICustomerContact
+        )
     )
 
     budget = schema.Decimal(

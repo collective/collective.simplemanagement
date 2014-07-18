@@ -47,6 +47,7 @@ setup(
         'z3c.jbot',
         'zope.catalog',
         'zope.index',
+        'collective.z3cform.datagridfield'
     ],
     extras_require={
         'test': [

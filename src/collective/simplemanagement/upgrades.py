@@ -206,3 +206,11 @@ def upgrade_to_1012(context, logger=None):
         'collective.js.jqueryui.controlpanel.IJQueryUIPlugins.ui_autocomplete'
     )
     registry[key] = False
+
+
+def upgrade_to_1013(context, logger=None):
+    logger = getLogger(logger)
+    logger.info('Install collective.z3cform.datagridfield')
+
+    qi = getToolByName(context, 'portal_quickinstaller')
+    qi.installProduct('collective.z3cform.datagridfield')
