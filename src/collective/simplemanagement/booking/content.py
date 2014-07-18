@@ -107,7 +107,8 @@ class Booking(Persistent):
     def absolute_url(self):
         if self.__parent__ is not None:
             return self.__parent__.absolute_url() + '/' + self.uid
-        return plone.api.portal.get() + '/bookings/' + self.uid
+        portal = plone.api.portal.get()
+        return portal.absolute_url() + '/bookings/' + self.uid
 
     def getTypeInfo(self):
         # Returns a fake FTI

@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 
 from datetime import date
+from datetime import datetime
 from decimal import Decimal
 from zope.component import getUtility
 
@@ -127,7 +128,10 @@ def get_bookings(owner=None, references=None,
 
     dates = []
     for k in ('from_date', 'to_date'):
-        dates.append(kwargs.get(k))
+        date_ = kwargs.get(k)
+        if isinstance(date_, datetime):
+            date_ = date_.date()
+        dates.append(date_)
     if any(dates):
         query['date'] = tuple(dates)
 

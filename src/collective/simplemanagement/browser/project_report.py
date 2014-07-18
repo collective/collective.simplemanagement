@@ -77,9 +77,9 @@ class ReportView(DashboardMixin):
 
         bookings = self.get_bookings(ignore_userid=1)
         for booking in bookings:
-            for assignee in booking.assigned_to or []:
-                if assignee not in resources:
-                    resources.append(assignee)
+            assignee = booking.owner
+            if assignee not in resources:
+                resources.append(assignee)
         res = []
         # resources now contains user ids
         for userid in set(resources):
@@ -128,8 +128,8 @@ class ReportView(DashboardMixin):
             _bookings.append(AttrDict({
                 'date': self.context.toLocalizedTime(booking.date.isoformat()),
                 'time': booking.time,
-                'url': booking.getURL(),
-                'title': booking.Title,
+                'url': booking.absolute_url(),
+                'title': booking.Title(),
                 'user': api.users.get_user_details(
                     self.context,
                     booking.owner,

@@ -7,8 +7,11 @@ Changelog
 - Add link to project and story in worklog booking details
   [gborelli]
 
-- Add customer_contact in IProject - and collective.z3cform.datagridfield dependency
+- Add customer_contact in IProject and collective.z3cform.datagridfield dependency
   [gborelli]
+
+- Changed Booking system. Registered a centralized registry to store employees' booking instead of using Dexterity objects
+  [simahawk, simonedeponti]
 
 - Compass history improvements
   [gborelli]

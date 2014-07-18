@@ -57,9 +57,9 @@ class WorklogBase(BrowserView):
 
             bookings = api.booking.get_bookings(project=self.context)
             for booking in bookings:
-                for assignee in booking.assigned_to or []:
-                    if assignee not in resources:
-                        resources.append(assignee)
+                assignee = booking.owner
+                if assignee not in resources:
+                    resources.append(assignee)
         else:
             resources = api.users.get_employee_ids(self.context)
         for resource in resources:
