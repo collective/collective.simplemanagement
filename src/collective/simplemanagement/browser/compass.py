@@ -28,18 +28,20 @@ format_booking_value = lambda x: round(x / DAY_HOURS, 1)
 PRJ_URL_TEMPLATE = "{0}/report?month={1}&tab=synoptic&year={2}"
 USR_URL_TEMPLATE = "{0}/dashboard?employee={1}"
 
+
 def get_bookings(start, end):
-    end = DateTime(end.year, end.month, end.day, 23, 59, 59)
-    start = DateTime(start.year, start.month, start.day, 0, 0, 0)
+    end = datetime(end.year, end.month, end.day, 23, 59, 59)
+    start = datetime(start.year, start.month, start.day, 0, 0, 0)
     bookings = api.booking.get_bookings(from_date=start, to_date=end)
     results = {}
     for item in bookings:
-        obj = item.getObject()
-        project = api.content.get_project(obj)
-        uid = IUUID(project)
+        if item.project is None:
+            # we need project's booking, skip this
+            continue
+        uid = item.project
         if not uid in results:
             results[uid] = {}
-        creator = item.Creator
+        creator = item.owner
         if creator not in results[uid]:
             results[uid][creator] = 0
         results[uid][creator] += item.time
