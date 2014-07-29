@@ -21,10 +21,25 @@ from .. import _
 
 
 class ICustomerContact(Interface):
-    name = schema.TextLine(title=u"Name")
-    role = schema.TextLine(title=u"Role")
-    email = schema.TextLine(title=u"Email")
-    telephone = schema.TextLine(title=u"Telephone")
+    name = schema.TextLine(
+        title=u"Name"
+    )
+    role = schema.TextLine(
+        title=u"Role",
+        required=False
+    )
+    email = schema.TextLine(
+        title=u"Email",
+        required=False
+    )
+    telephone = schema.TextLine(
+        title=u"Telephone",
+        required=False
+    )
+    chat = schema.TextLine(
+        title=u"Chat",
+        required=False
+    )
 
 
 class IResource(Interface):

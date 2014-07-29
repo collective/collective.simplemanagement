@@ -3,6 +3,10 @@ Changelog
 
 1.0 (unreleased)
 ----------------
+
+- Improve customer_contact field
+  [gborelli]
+
 - Fix compass view's booking retrieval
   [simahawk]
 

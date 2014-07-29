@@ -206,6 +206,13 @@
                             i18n:translate="">phone:</span>
                         <span tal:replace="contact/telephone" />
                     </tal:block>
+                    <tal:block
+                      condition="contact/chat">
+                      <span class="chat"
+                            tal:omit-tag=""
+                            i18n:translate="">chat:</span>
+                        <span tal:replace="contact/chat" />
+                    </tal:block>
                   </li>
                 </ul>
 

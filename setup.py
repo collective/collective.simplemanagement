@@ -7,7 +7,7 @@ VERSION = '1.0'
 LONG_DESC = '\n'.join([
     open("README.rst").read(),
     open(os.path.join("docs", "CONTRIBUTORS.rst")).read(),
-    open(os.path.join("docs", "HISTORY.txt")).read(),
+    open("CHANGES.txt").read(),
 ])
 
 setup(
