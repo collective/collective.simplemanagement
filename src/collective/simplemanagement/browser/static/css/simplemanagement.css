@@ -1475,6 +1475,7 @@ input.effort {
 .compassview #peopleToolbox .thumbnail.employee span.effort.free {
     background: #f17e03;
 }
+
 .compassview .project > .info .effort {
     margin-top: 0.3em;
 }

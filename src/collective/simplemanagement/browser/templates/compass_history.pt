@@ -59,7 +59,9 @@
         </div>
         <div id="content-core" class="compassview historymode"
              tal:define="saved_by view/current_saved_by"
-             tal:attributes="data-list-keys-url view/list_keys_url">
+             tal:attributes="data-list-keys-url view/list_keys_url;
+                             data-employees data/employees;
+                             data-current-user data/current_user">
           <div class="control">
             <span i18n:translate="">Current revision saved by</span>
             <tal:saved_by condition="saved_by">
@@ -112,15 +114,19 @@
                 <label>
                   <input type="radio"
                          name="all_or_my_projects"
-                         value="my"
+                         value="employee"
                          data-bind="checked: filter" />
-                  <tal:u i18n:translate="">only my projects</tal:u>
+                  <tal:u i18n:translate="">only projects with</tal:u>
                 </label>
+                <select data-bind="enable: filter() == 'employee',
+                                   options: employees_vocabulary,
+                                   optionsText: 'label',
+                                   optionsValue: 'value',
+                                   value: employees_selected"></select>
               </div>
               <div class="container">
                 <tal:project repeat="project data/projects">
-                  <div tal:define="extraclass python:'mine' if view.is_my_project(project) else ''"
-                       tal:attributes="class string:project ${extraclass}">
+                  <div class="project" tal:attributes="data-uuid project/uid">
                     <div tal:attributes="class project/css_class">
                       <span tal:content="repeat/project/number">X</span>
                     </div>
