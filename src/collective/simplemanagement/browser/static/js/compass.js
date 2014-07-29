@@ -770,6 +770,17 @@
         this.employees_selected = ko.observable(current_user);
 
         var self = this;
+        this.filter_by_employee = function(id) {
+            var i, l, projects;
+            projects = self.employees[id].projects;
+            $('.project').hide();
+            if(projects.length > 0) {
+                for(i=0, l=projects.length; i<l; i++)
+                    $('.project[data-uuid="'+projects[i]+'"]').show();
+            }
+            else
+                $('.no-projects').show();
+        };
         this.filter.subscribe(function(value) {
             var selected_employee = self.employees_selected();
             if(value==='all') {
@@ -778,20 +789,12 @@
             }
             if(value==='employee') {
                 if(selected_employee)
-                    self.employees_selected(selected_employee);
+                    self.filter_by_employee(selected_employee);
             }
         });
         this.employees_selected.subscribe(function(value) {
-            var i, l, projects;
             if(self.filter() === 'employee') {
-                projects = self.employees[value].projects;
-                $('.project').hide();
-                if(projects.length > 0) {
-                    for(i=0, l=projects.length; i<l; i++)
-                        $('.project[data-uuid="'+projects[i]+'"]').show();
-                }
-                else
-                    $('.no-projects').show();
+                self.filter_by_employee(value);
             }
         });
         // TODO: this infinite scroller might have bugs,

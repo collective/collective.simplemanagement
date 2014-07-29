@@ -117,12 +117,12 @@
                          value="employee"
                          data-bind="checked: filter" />
                   <tal:u i18n:translate="">only projects with</tal:u>
-                  <select data-bind="enable: filter() == 'employee',
-                                     options: employees_vocabulary,
-                                     optionsText: 'label',
-                                     optionsValue: 'value',
-                                     value: employees_selected"></select>
                 </label>
+                <select data-bind="enable: filter() == 'employee',
+                                   options: employees_vocabulary,
+                                   optionsText: 'label',
+                                   optionsValue: 'value',
+                                   value: employees_selected"></select>
               </div>
               <div class="container">
                 <tal:project repeat="project data/projects">
