@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-07-18 15:28+0000\n"
+"POT-Creation-Date: 2014-07-29 08:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,11 +61,11 @@ msgstr ""
 msgid "(${hours} hours)"
 msgstr ""
 
-#: ../browser/compass.py:328
+#: ../browser/compass.py:330
 msgid "(double click to reset selection)"
 msgstr ""
 
-#: ../browser/compass.py:327
+#: ../browser/compass.py:329
 msgid "(double click to select)"
 msgstr ""
 
@@ -91,7 +91,7 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: ../interfaces/project.py:45
+#: ../interfaces/project.py:60
 msgid "Active"
 msgstr ""
 
@@ -132,7 +132,7 @@ msgstr ""
 msgid "Ambiguous references: \"%s\", \"%s\""
 msgstr ""
 
-#: ../browser/compass.py:306
+#: ../browser/compass.py:308
 msgid "An error has occurred, please <a href=\"{url}\">reload the page clicking here</a>"
 msgstr ""
 
@@ -217,7 +217,7 @@ msgstr ""
 msgid "Budget"
 msgstr ""
 
-#: ../interfaces/project.py:93
+#: ../interfaces/project.py:108
 msgid "Budget (man days)"
 msgstr ""
 
@@ -239,7 +239,7 @@ msgstr ""
 msgid "Change status"
 msgstr ""
 
-#: ../browser/compass.py:316
+#: ../browser/compass.py:318
 msgid "Changes saved"
 msgstr ""
 
@@ -273,12 +273,12 @@ msgstr ""
 
 #: ../browser/project/templates/overview.pt:178
 #: ../browser/templates/compass.pt:264
-#: ../interfaces/project.py:80
+#: ../interfaces/project.py:95
 msgid "Customer"
 msgstr ""
 
 #: ../browser/project/templates/overview.pt:183
-#: ../interfaces/project.py:85
+#: ../interfaces/project.py:100
 msgid "Customer contacts"
 msgstr ""
 
@@ -297,7 +297,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: ../interfaces/project.py:72
+#: ../interfaces/project.py:87
 msgid "Deadline"
 msgstr ""
 
@@ -321,7 +321,7 @@ msgstr ""
 msgid "Delete this snapshot"
 msgstr ""
 
-#: ../browser/compass.py:267
+#: ../browser/compass.py:269
 msgid "Deletion has been cancelled"
 msgstr ""
 
@@ -373,7 +373,7 @@ msgstr ""
 msgid "Edit story"
 msgstr ""
 
-#: ../interfaces/project.py:49
+#: ../interfaces/project.py:64
 msgid "Effort (in man days)"
 msgstr ""
 
@@ -398,11 +398,11 @@ msgstr ""
 msgid "End Date:"
 msgstr ""
 
-#: ../interfaces/project.py:113
+#: ../interfaces/project.py:128
 msgid "End date"
 msgstr ""
 
-#: ../interfaces/project.py:138
+#: ../interfaces/project.py:153
 msgid "Environment"
 msgstr ""
 
@@ -426,7 +426,7 @@ msgstr ""
 msgid "Estimate"
 msgstr ""
 
-#: ../interfaces/project.py:97
+#: ../interfaces/project.py:112
 #: ../interfaces/story.py:25
 msgid "Estimate (man days)"
 msgstr ""
@@ -443,7 +443,7 @@ msgstr ""
 msgid "Existing project"
 msgstr ""
 
-#: ../interfaces/project.py:109
+#: ../interfaces/project.py:124
 msgid "Expected end date"
 msgstr ""
 
@@ -594,17 +594,17 @@ msgstr ""
 msgid "May"
 msgstr ""
 
-#: ../interfaces/project.py:148
+#: ../interfaces/project.py:163
 #: ../interfaces/story.py:77
 msgid "Milestone"
 msgstr ""
 
-#: ../browser/project/templates/overview.pt:231
-#: ../interfaces/project.py:143
+#: ../browser/project/templates/overview.pt:238
+#: ../interfaces/project.py:158
 msgid "Milestones"
 msgstr ""
 
-#: ../interfaces/project.py:144
+#: ../interfaces/project.py:159
 msgid "Milestones are the different phases of the project. Each milestone should formally define a self-sufficient deliverable, that can then be put into production."
 msgstr ""
 
@@ -637,7 +637,7 @@ msgid "Multiple conflicting '@' references"
 msgstr ""
 
 #: ../browser/templates/compass.pt:250
-#: ../interfaces/project.py:56
+#: ../interfaces/project.py:71
 msgid "Name"
 msgstr ""
 
@@ -684,7 +684,7 @@ msgid "No stories in this iteration. Add a new one or bring them in via the iter
 msgstr ""
 
 #: ../browser/project/templates/overview.pt:15
-#: ../interfaces/project.py:154
+#: ../interfaces/project.py:169
 msgid "Notes"
 msgstr ""
 
@@ -704,8 +704,8 @@ msgstr ""
 msgid "October"
 msgstr ""
 
-#: ../browser/project/templates/overview.pt:214
-#: ../interfaces/project.py:184
+#: ../browser/project/templates/overview.pt:221
+#: ../interfaces/project.py:199
 msgid "Operatives"
 msgstr ""
 
@@ -734,11 +734,11 @@ msgstr ""
 msgid "Planning"
 msgstr ""
 
-#: ../interfaces/project.py:166
+#: ../interfaces/project.py:181
 msgid "Priority"
 msgstr ""
 
-#: ../browser/compass.py:317
+#: ../browser/compass.py:319
 msgid "Priority updated"
 msgstr ""
 
@@ -752,8 +752,8 @@ msgstr ""
 msgid "Project Info"
 msgstr ""
 
-#: ../browser/project/templates/overview.pt:242
-#: ../interfaces/project.py:117
+#: ../browser/project/templates/overview.pt:249
+#: ../interfaces/project.py:132
 msgid "Project classifiers"
 msgstr ""
 
@@ -802,7 +802,7 @@ msgid "Report"
 msgstr ""
 
 #: ../browser/project/templates/overview.pt:84
-#: ../interfaces/project.py:128
+#: ../interfaces/project.py:143
 msgid "Repositories"
 msgstr ""
 
@@ -810,7 +810,7 @@ msgstr ""
 msgid "Reset filter"
 msgstr ""
 
-#: ../interfaces/project.py:192
+#: ../interfaces/project.py:207
 msgid "Resource"
 msgstr ""
 
@@ -826,7 +826,7 @@ msgstr ""
 msgid "Revisions"
 msgstr ""
 
-#: ../interfaces/project.py:33
+#: ../interfaces/project.py:48
 msgid "Role"
 msgstr ""
 
@@ -876,11 +876,11 @@ msgstr ""
 msgid "Sinottica"
 msgstr ""
 
-#: ../browser/compass.py:261
+#: ../browser/compass.py:263
 msgid "Snapshot deleted"
 msgstr ""
 
-#: ../interfaces/project.py:118
+#: ../interfaces/project.py:133
 msgid "Some keywords that describe the project and used technologies"
 msgstr ""
 
@@ -888,7 +888,7 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: ../interfaces/project.py:106
+#: ../interfaces/project.py:121
 msgid "Start date"
 msgstr ""
 
@@ -897,7 +897,7 @@ msgid "Start date:"
 msgstr ""
 
 #: ../browser/templates/ticketsmacros.pt:16
-#: ../interfaces/project.py:68
+#: ../interfaces/project.py:83
 msgid "Status"
 msgstr ""
 
@@ -938,11 +938,11 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: ../interfaces/project.py:129
+#: ../interfaces/project.py:144
 msgid "The HTTP URLs of the repositories (e.g. https://github.com/company/my.repository/)"
 msgstr ""
 
-#: ../interfaces/project.py:136
+#: ../interfaces/project.py:151
 msgid "The URLs of the various online environments (staging, production)"
 msgstr ""
 
@@ -966,11 +966,11 @@ msgstr ""
 msgid "The issues relative to ${project_name}"
 msgstr ""
 
-#: ../interfaces/project.py:98
+#: ../interfaces/project.py:113
 msgid "The man days required for completion, as initially estimated by the project manager"
 msgstr ""
 
-#: ../interfaces/project.py:94
+#: ../interfaces/project.py:109
 msgid "The man days that this project is paid for"
 msgstr ""
 
@@ -1006,7 +1006,7 @@ msgstr ""
 msgid "The percentage (between 0 and 1) after which a deviation needs to be highlighted"
 msgstr ""
 
-#: ../browser/compass.py:325
+#: ../browser/compass.py:327
 msgid "The situation has been saved"
 msgstr ""
 
@@ -1022,7 +1022,7 @@ msgstr ""
 msgid "The user IDs of the people that are responsible to act on this story"
 msgstr ""
 
-#: ../interfaces/project.py:185
+#: ../interfaces/project.py:200
 msgid "The user IDs of those that have operative roles in this project (coders, designers, project managers, accounts etc.). Customers should not be included in this list.Adding someone here will add them automatically as managers to the default tracker."
 msgstr ""
 
@@ -1062,7 +1062,7 @@ msgstr ""
 msgid "This action cannot be undone. If you wish to proceed, click \"Delete\", else click \"Cancel\""
 msgstr ""
 
-#: ../browser/compass.py:318
+#: ../browser/compass.py:320
 msgid "This field is required"
 msgstr ""
 
@@ -1133,7 +1133,7 @@ msgid "Tue"
 msgstr ""
 
 #: ../browser/epic/templates/view.pt:27
-#: ../interfaces/project.py:58
+#: ../interfaces/project.py:73
 msgid "Type"
 msgstr ""
 
@@ -1141,11 +1141,11 @@ msgstr ""
 msgid "UID"
 msgstr ""
 
-#: ../interfaces/project.py:61
+#: ../interfaces/project.py:76
 msgid "URL"
 msgstr ""
 
-#: ../interfaces/project.py:135
+#: ../interfaces/project.py:150
 msgid "URLs"
 msgstr ""
 
@@ -1154,7 +1154,7 @@ msgstr ""
 msgid "Unassigned"
 msgstr ""
 
-#: ../interfaces/project.py:38
+#: ../interfaces/project.py:53
 #: ../interfaces/story.py:62
 msgid "User ID"
 msgstr ""
@@ -1224,7 +1224,7 @@ msgstr ""
 msgid "You have no bookings yet"
 msgstr ""
 
-#: ../browser/compass.py:319
+#: ../browser/compass.py:321
 msgid "You should insert a number here: e.g. 10.0"
 msgstr ""
 
@@ -1248,6 +1248,10 @@ msgstr ""
 
 #: ../browser/booking/templates/byline.pt:6
 msgid "by"
+msgstr ""
+
+#: ../browser/project/templates/overview.pt:211
+msgid "chat:"
 msgstr ""
 
 #: ../browser/templates/compass.pt:280
@@ -1321,47 +1325,47 @@ msgstr ""
 msgid "you must provide a get_object method"
 msgstr ""
 
-#: ../browser/compass.py:310
+#: ../browser/compass.py:312
 msgid "{name} is now a {role} in {project}"
 msgstr ""
 
-#: ../browser/compass.py:311
+#: ../browser/compass.py:313
 msgid "{name} should put {effort} man days in {project}"
 msgstr ""
 
-#: ../browser/compass.py:304
+#: ../browser/compass.py:306
 msgid "{person} has been added to {project}"
 msgstr ""
 
-#: ../browser/compass.py:305
+#: ../browser/compass.py:307
 msgid "{person} has been removed from {project}"
 msgstr ""
 
-#: ../browser/compass.py:322
+#: ../browser/compass.py:324
 msgid "{project} has been activated"
 msgstr ""
 
-#: ../browser/compass.py:324
+#: ../browser/compass.py:326
 msgid "{project} has been created"
 msgstr ""
 
-#: ../browser/compass.py:323
+#: ../browser/compass.py:325
 msgid "{project} has been deactivated"
 msgstr ""
 
-#: ../browser/compass.py:326
+#: ../browser/compass.py:328
 msgid "{project} is not valid"
 msgstr ""
 
-#: ../browser/compass.py:313
+#: ../browser/compass.py:315
 msgid "{project} will now require {effort} man days"
 msgstr ""
 
-#: ../browser/compass.py:302
+#: ../browser/compass.py:304
 msgid "{week} week"
 msgstr ""
 
-#: ../browser/compass.py:303
+#: ../browser/compass.py:305
 msgid "{week} weeks"
 msgstr ""
 
