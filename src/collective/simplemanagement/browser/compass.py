@@ -64,6 +64,23 @@ class History(api.views.Traversable, CompassMixIn):
         self.key = None
         self.data = None
 
+    def get_employees(self, project, employees):
+        for employee in project.get('people', []):
+            employee_id = employee.get('id')
+            if employee_id:
+                user_details = api.users.get_user_details(
+                    self.context,
+                    employee_id,
+                    portal_url=self.tools['portal_url'],
+                    portal_membership=self.tools['portal_membership']
+                )
+                if user_details:
+                    data = employees.setdefault(employee_id, {})
+                    data['name'] = user_details['fullname']
+                    projects = data.setdefault('projects', [])
+                    if not project['uid'] in projects:
+                        projects.append(project['uid'])
+
     def get_data(self):
         data = deepcopy(self.data)
 
@@ -75,6 +92,7 @@ class History(api.views.Traversable, CompassMixIn):
             return data
         data['plan_end'] = api.date.format(end)
         data['plan_start'] = api.date.format(start)
+        data['employees'] = {}
 
         bookings = get_bookings(start, end)
         i = 1
@@ -90,6 +108,7 @@ class History(api.views.Traversable, CompassMixIn):
                     continue
                 prj_uid = IUUID(project)
             prj_bookings = bookings.pop(prj_uid, {})
+            prj['uid'] = prj_uid
             prj['url'] = PRJ_URL_TEMPLATE.format(
                 project.absolute_url(),
                 start.month,
@@ -114,6 +133,7 @@ class History(api.views.Traversable, CompassMixIn):
                         'is_free': False,
                         'role': u''
                     })
+            self.get_employees(prj, data['employees'])
         if bookings:
             # add extra projects
             for k, people in bookings.items():
@@ -121,6 +141,7 @@ class History(api.views.Traversable, CompassMixIn):
                 pw = self.tools['portal_workflow']
                 status = pw.getStatusOf("project_workflow", obj)
                 new_prj = {
+                    'uid': k,
                     'id': '/'.join(obj.getPhysicalPath()),
                     'name': obj.title_or_id(),
                     'status': status['review_state'],
@@ -153,7 +174,14 @@ class History(api.views.Traversable, CompassMixIn):
                         )
                     })
                 data['projects'].append(new_prj)
+                self.get_employees(new_prj, data['employees'])
 
+        data['employees'] = json.dumps(data['employees'])
+        data['current_user'] = ''
+        if not plone.api.user.is_anonymous():
+            current = plone.api.user.get_current().getUserName()
+            if current in data['employees']:
+                data['current_user'] = current
         return data
 
     def get_effort_classes(self, person_data):
@@ -199,15 +227,6 @@ class History(api.views.Traversable, CompassMixIn):
             self.augment_user_data(data)
             return data
         return None
-
-    def is_my_project(self, project):
-        if plone.api.user.is_anonymous():
-            return False
-        me = plone.api.user.get_current().getUserName()
-        for person in project.get('people', []):
-            if person.get('id') == me:
-                return True
-        return False
 
     def compass_url(self):
         return self.context.absolute_url() + '/@@compass'

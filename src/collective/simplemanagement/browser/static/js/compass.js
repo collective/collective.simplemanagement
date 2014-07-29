@@ -751,23 +751,45 @@
         }
     };
 
-    compass.History = function(list_keys_url) {
+    compass.History = function(list_keys_url, employees, current_user) {
+        var employee_id;
         this.list_keys_url = list_keys_url;
+        this.employees = $.parseJSON(employees);
         this.keys = ko.observableArray([]);
         this.keys_count = null;
         this.loading = false;
         this.filter = ko.observable('all');
 
+        this.employees_vocabulary = [];
+        for(employee_id in this.employees) {
+            this.employees_vocabulary.push({
+                value: employee_id,
+                label: this.employees[employee_id].name
+            });
+        }
+        this.employees_selected = ko.observable(current_user);
+
         var self = this;
         this.filter.subscribe(function(value) {
+            var selected_employee = self.employees_selected();
             if(value==='all') {
                 $('.project').show();
                 $('.no-projects').hide();
             }
-            if(value==='my') {
+            if(value==='employee') {
+                if(selected_employee)
+                    self.employees_selected(selected_employee);
+            }
+        });
+        this.employees_selected.subscribe(function(value) {
+            var i, l, projects;
+            if(self.filter() === 'employee') {
+                projects = self.employees[value].projects;
                 $('.project').hide();
-                if($('.project.mine').length > 0)
-                    $('.project.mine').show();
+                if(projects.length > 0) {
+                    for(i=0, l=projects.length; i<l; i++)
+                        $('.project[data-uuid="'+projects[i]+'"]').show();
+                }
                 else
                     $('.no-projects').show();
             }
@@ -844,7 +866,9 @@
         $('.compassview.historymode').each(function() {
             var element = $(this);
             var app = new compass.History(
-                element.attr('data-list-keys-url'));
+                element.attr('data-list-keys-url'),
+                element.attr('data-employees'),
+                element.attr('data-current-user'));
             element.find('.delete').overlay();
             app.load();
             compass.apps.push(app);
