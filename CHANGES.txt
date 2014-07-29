@@ -4,6 +4,8 @@ Changelog
 1.0.2 (unreleased)
 ------------------
 
+Run msgfmt -o src/collective/simplemanagement/locales/it/LC_MESSAGES/collective.simplemanagement.mo src/collective/simplemanagement/locales/it/LC_MESSAGES/collective.simplemanagement.po
+
 - Added employee selection in compass history. [simone]
 
 
