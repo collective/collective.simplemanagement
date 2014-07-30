@@ -1,5 +1,6 @@
 import json
 import calendar
+import plone.api
 from decimal import Decimal
 from datetime import datetime, date, timedelta
 
@@ -47,6 +48,10 @@ class WorklogBase(BrowserView):
             'portal_groups': getToolByName(self.context, 'portal_groups')
         })
 
+    @property
+    def current_user_id(self):
+        return plone.api.user.get_current().getUserName()
+
     def resources(self):
         resources = []
         if IProject.providedBy(self.context):
@@ -62,6 +67,12 @@ class WorklogBase(BrowserView):
                     resources.append(assignee)
         else:
             resources = api.users.get_employee_ids(self.context)
+
+        # add current user id
+        current_user_id = self.current_user_id
+        if current_user_id not in resources:
+            resources.append(current_user_id)
+
         for resource in resources:
             yield api.users.get_user_details(
                 self.context, resource, **self.tools)
@@ -147,10 +158,12 @@ class WorklogBackend(WorklogBase):
 
     def monthly_bookings(self):
         settings = Settings()
+        # by default we display current user data
         resources = self.request.get(
             'resources',
-            [r['user_id'] for r in self.resources()]
+            self.current_user_id
         )
+
         if isinstance(resources, str):
             resources = [resources]
         (start, end), previous, current, next = self.get_month_data(settings)

@@ -28,16 +28,32 @@
                   class="resources"
                   action=""
                   tal:attributes="action string:${context/absolute_url}/@@worklog_backend">
-              <ul>
+              <ul tal:define="current_user_id view/current_user_id">
                 <li tal:repeat="resource view/resources">
                   <label for=""
                          tal:attributes="for string:worklog-resources-${resource/user_id}">
-                    <input type="radio"
-                           name="resources"
-                           id=""
-                           value=""
-                           tal:attributes="id string:worklog-resources-${resource/user_id};
-                                           value resource/user_id"/>
+                    <tal:current_user
+                      condition="python: resource['user_id'] == current_user_id">
+                      <input type="radio"
+                             name="resources"
+                             id=""
+                             value=""
+                             checked="1"
+                             tal:attributes="id string:worklog-resources-${resource/user_id};
+                                             value resource/user_id"/>
+                    </tal:current_user>
+
+                    <tal:other_user
+                      condition="python: resource['user_id'] != current_user_id">
+                      <input type="radio"
+                             name="resources"
+                             id=""
+                             value=""
+                             tal:attributes="id string:worklog-resources-${resource/user_id};
+                                             value resource/user_id"/>
+                    </tal:other_user>
+
+
                     <img tal:condition="resource/portrait"
                          tal:attributes="src resource/portrait;
                                          title resource/fullname;" />

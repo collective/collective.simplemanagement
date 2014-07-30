@@ -1,0 +1,5 @@
+1.0.2
+-----
+
+Run msgfmt -o src/collective/simplemanagement/locales/it/LC_MESSAGES/collective.simplemanagement.mo src/collective/simplemanagement/locales/it/LC_MESSAGES/collective.simplemanagement.po
+

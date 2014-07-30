@@ -1,10 +1,15 @@
 Changelog
 =========
 
-1.0.2 (unreleased)
+1.0.3 (unreleased)
 ------------------
 
-Run msgfmt -o src/collective/simplemanagement/locales/it/LC_MESSAGES/collective.simplemanagement.mo src/collective/simplemanagement/locales/it/LC_MESSAGES/collective.simplemanagement.po
+- Improve worklog, display and select current user on startup
+  [gborelli]
+
+
+1.0.2 (unreleased)
+------------------
 
 - Added employee selection in compass history. [simone]
 
