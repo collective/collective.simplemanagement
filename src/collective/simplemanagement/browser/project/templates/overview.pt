@@ -207,7 +207,7 @@
                         <span tal:replace="contact/telephone" />
                     </tal:block>
                     <tal:block
-                      condition="contact/chat">
+                      condition="contact/chat|nothing">
                       <span class="chat"
                             tal:omit-tag=""
                             i18n:translate="">chat:</span>
