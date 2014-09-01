@@ -1,9 +1,11 @@
 from .configure import DECIMAL_QUANT
 
 
-def encode(value, to_encoding='utf-8'):
+def encode(value, doseq=True, to_encoding='utf-8'):
+    if isinstance(value, (list, tuple)) and doseq:
+        return [encode(i) for i in value]
     if isinstance(value, unicode):
-        return value.encode('utf-8')
+        return value.encode(to_encoding)
     return value
 
 
