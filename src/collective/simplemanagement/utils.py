@@ -1,6 +1,12 @@
 from .configure import DECIMAL_QUANT
 
 
+def encode(value, to_encoding='utf-8'):
+    if isinstance(value, unicode):
+        return value.encode('utf-8')
+    return value
+
+
 def quantize(value):
     return value.quantize(DECIMAL_QUANT)
 

@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.0.4 (unreleased)
+------------------
+
+- Fix bug #85
+  [simone]
+
+
 1.0.3 (unreleased)
 ------------------
 

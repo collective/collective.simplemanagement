@@ -9,6 +9,8 @@ import datetime
 
 from Products.Five.browser import BrowserView
 
+from ...utils import encode
+
 CTYPES = {
     '.csv': 'text/csv'
 }
@@ -59,9 +61,9 @@ class ExportCSV(Mixin):
         """ Write header + lines within the CSV file """
         datafile = StringIO()
         writer = csv.writer(datafile)
-        header = self.get_header()
+        header = [encode(h) for h in self.get_header()]
         writer.writerow(header)
-        lines = self.get_lines()
+        lines = [encode(l) for l in self.get_lines()]
         map(writer.writerow, lines)
         data = datafile.getvalue()
         datafile.close()
