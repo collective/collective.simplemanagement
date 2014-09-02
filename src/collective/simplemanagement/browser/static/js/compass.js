@@ -759,6 +759,7 @@
         this.keys_count = null;
         this.loading = false;
         this.filter = ko.observable('all');
+        this.employee_total_effort = ko.observable(null);
 
         this.employees_vocabulary = [];
         for(employee_id in this.employees) {
@@ -772,6 +773,8 @@
         var self = this;
         this.filter_by_employee = function(id) {
             var i, l, projects;
+            self.employee_total_effort(
+                self.employees[id].total_effort);
             projects = self.employees[id].projects;
             $('.project').hide();
             if(projects.length > 0) {
@@ -786,10 +789,12 @@
             if(value==='all') {
                 $('.project').show();
                 $('.no-projects').hide();
+                self.employee_total_effort(null);
             }
             if(value==='employee') {
-                if(selected_employee)
+                if(selected_employee) {
                     self.filter_by_employee(selected_employee);
+                }
             }
         });
         this.employees_selected.subscribe(function(value) {

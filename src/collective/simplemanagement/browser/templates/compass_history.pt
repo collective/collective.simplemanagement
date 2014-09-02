@@ -123,6 +123,12 @@
                                    optionsText: 'label',
                                    optionsValue: 'value',
                                    value: employees_selected"></select>
+                <!-- ko if: employee_total_effort -->
+                <span class="counter">
+                  <span data-bind="text: employee_total_effort"></span>
+                  <tal:u i18n:translate="">man days for this employee</tal:u>
+                </span>
+                <!-- /ko -->
               </div>
               <div class="container">
                 <tal:project repeat="project data/projects">

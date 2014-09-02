@@ -80,6 +80,10 @@ class History(api.views.Traversable, CompassMixIn):
                     projects = data.setdefault('projects', [])
                     if not project['uid'] in projects:
                         projects.append(project['uid'])
+                    data['total_effort'] = (
+                        data.get('total_effort', 0.0) +
+                        float(employee.get('effort', u'0.0'))
+                    )
 
     def get_data(self):
         data = deepcopy(self.data)

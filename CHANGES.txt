@@ -4,7 +4,11 @@ Changelog
 1.0.4 (unreleased)
 ------------------
 
+..warning:: You must rebuild the mo files with msgfmt
+
 - Fix bug #85
+  [simone]
+- Added total count per resource in booking history.
   [simone]
 
 

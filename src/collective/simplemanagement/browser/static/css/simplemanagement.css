@@ -1842,6 +1842,20 @@ input.effort {
 
 #content .compassview.historymode .filter > * {
     padding-right: 0.5em;
+    display: inline-block;
+}
+
+#content .compassview.historymode .filter .counter {
+    background-color: #448cca;
+    padding: 2px 6px;
+    color: #fff;
+    border-radius: 3px;
+    margin-left: 5px;
+}
+
+#content .compassview.historymode .filter .counter span {
+    font-size: 110%;
+    font-weight: bold;
 }
 
 #peopleToolbox {
