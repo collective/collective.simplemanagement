@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2014-09-02 16:49+0000\n"
-"PO-Revision-Date: 2014-09-02 18:51+0200\n"
+"POT-Creation-Date: 2014-09-03 14:55+0000\n"
+"PO-Revision-Date: 2014-09-03 16:55+0200\n"
 "Last-Translator: Simone Deponti <simone.deponti@abstract.it>\n"
 "Language-Team: Italian <info@abstract.it>\n"
 "MIME-Version: 1.0\n"
@@ -269,7 +269,7 @@ msgid "Create or activate a project"
 msgstr "Crea o attiva un progetto"
 
 #: ../browser/templates/compass.pt:205
-#: ../browser/templates/compass_history.pt:190
+#: ../browser/templates/compass_history.pt:191
 msgid "Critical resources"
 msgstr "Risorse critiche"
 
@@ -657,7 +657,7 @@ msgstr "Nuovo progetto"
 msgid "No action was selected!"
 msgstr "Nessuna azione è stata selezionata!"
 
-#: ../browser/templates/compass_history.pt:176
+#: ../browser/templates/compass_history.pt:177
 msgid "No active projects."
 msgstr "Nessun progetto attivo."
 
@@ -1086,7 +1086,7 @@ msgstr "Non ci sono iterazioni future"
 msgid "There are no past iterations."
 msgstr "Non ci sono iterazioni passate."
 
-#: ../browser/templates/compass_history.pt:209
+#: ../browser/templates/compass_history.pt:210
 msgid "There are no saved compass plans."
 msgstr "Non esistono pianificazioni compass salvate."
 
@@ -1156,7 +1156,7 @@ msgid "Total"
 msgstr "Totale"
 
 #: ../browser/templates/compass.pt:199
-#: ../browser/templates/compass_history.pt:184
+#: ../browser/templates/compass_history.pt:185
 msgid "Total compass"
 msgstr "Totale del compass"
 
@@ -1301,6 +1301,10 @@ msgstr "da"
 msgid "chat:"
 msgstr "chat:"
 
+#: ../browser/templates/compass_history.pt:130
+msgid "done"
+msgstr "fatti"
+
 #: ../browser/templates/compass.pt:280
 msgid "e.g. '42.0'"
 msgstr "es.: '42.0'"
@@ -1335,7 +1339,7 @@ msgid "in this project"
 msgstr "in questo progetto"
 
 #: ../browser/templates/compass.pt:128
-#: ../browser/templates/compass_history.pt:149
+#: ../browser/templates/compass_history.pt:150
 msgid "man days"
 msgstr "giorni uomo"
 
@@ -1364,7 +1368,7 @@ msgid "to"
 msgstr "a"
 
 #: ../browser/templates/compass.pt:129
-#: ../browser/templates/compass_history.pt:150
+#: ../browser/templates/compass_history.pt:151
 msgid "to be done before"
 msgstr "da fare entro"
 

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-09-02 16:49+0000\n"
+"POT-Creation-Date: 2014-09-03 14:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -263,7 +263,7 @@ msgid "Create or activate a project"
 msgstr ""
 
 #: ../browser/templates/compass.pt:205
-#: ../browser/templates/compass_history.pt:190
+#: ../browser/templates/compass_history.pt:191
 msgid "Critical resources"
 msgstr ""
 
@@ -649,7 +649,7 @@ msgstr ""
 msgid "No action was selected!"
 msgstr ""
 
-#: ../browser/templates/compass_history.pt:176
+#: ../browser/templates/compass_history.pt:177
 msgid "No active projects."
 msgstr ""
 
@@ -1042,7 +1042,7 @@ msgstr ""
 msgid "There are no past iterations."
 msgstr ""
 
-#: ../browser/templates/compass_history.pt:209
+#: ../browser/templates/compass_history.pt:210
 msgid "There are no saved compass plans."
 msgstr ""
 
@@ -1107,7 +1107,7 @@ msgid "Total"
 msgstr ""
 
 #: ../browser/templates/compass.pt:199
-#: ../browser/templates/compass_history.pt:184
+#: ../browser/templates/compass_history.pt:185
 msgid "Total compass"
 msgstr ""
 
@@ -1254,6 +1254,10 @@ msgstr ""
 msgid "chat:"
 msgstr ""
 
+#: ../browser/templates/compass_history.pt:130
+msgid "done"
+msgstr ""
+
 #: ../browser/templates/compass.pt:280
 msgid "e.g. '42.0'"
 msgstr ""
@@ -1288,7 +1292,7 @@ msgid "in this project"
 msgstr ""
 
 #: ../browser/templates/compass.pt:128
-#: ../browser/templates/compass_history.pt:149
+#: ../browser/templates/compass_history.pt:150
 msgid "man days"
 msgstr ""
 
@@ -1317,7 +1321,7 @@ msgid "to"
 msgstr ""
 
 #: ../browser/templates/compass.pt:129
-#: ../browser/templates/compass_history.pt:150
+#: ../browser/templates/compass_history.pt:151
 msgid "to be done before"
 msgstr ""
 

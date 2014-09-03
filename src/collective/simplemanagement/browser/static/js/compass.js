@@ -760,6 +760,7 @@
         this.loading = false;
         this.filter = ko.observable('all');
         this.employee_total_effort = ko.observable(null);
+        this.employee_total_booking = ko.observable(null);
 
         this.employees_vocabulary = [];
         for(employee_id in this.employees) {
@@ -775,6 +776,8 @@
             var i, l, projects;
             self.employee_total_effort(
                 self.employees[id].total_effort);
+            self.employee_total_booking(
+                self.employees[id].booking);
             projects = self.employees[id].projects;
             $('.project').hide();
             if(projects.length > 0) {
@@ -790,6 +793,7 @@
                 $('.project').show();
                 $('.no-projects').hide();
                 self.employee_total_effort(null);
+                self.employee_total_booking(null);
             }
             if(value==='employee') {
                 if(selected_employee) {

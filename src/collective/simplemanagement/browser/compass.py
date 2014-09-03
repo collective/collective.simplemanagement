@@ -84,6 +84,7 @@ class History(api.views.Traversable, CompassMixIn):
                         data.get('total_effort', 0.0) +
                         float(employee.get('effort', u'0.0'))
                     )
+                    data['booking'] = employee.get('booking')
 
     def get_data(self):
         data = deepcopy(self.data)
