@@ -1365,6 +1365,13 @@ input[name="filter-people"] {
     -moz-transition: height 0.8s ease;
     -o-transition: height 0.8s ease;
 }
+.compassview .project.disabled {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(1);
+    filter: url(filters.svg#grayscale);
+    filter: gray;
+    position: relative;
+}
 .compassview .project.hidden {
     height: 0px;
     overflow: hidden;
@@ -1382,6 +1389,18 @@ input[name="filter-people"] {
     background-color: #777;
     height: 100%;
     text-align: center;
+}
+.compassview .project.disabled .disabled-notice {
+    position: absolute;
+    left: 40%;
+    top: 30%;
+    padding: 10px;
+    font-weight: bold;
+    background: #fff;
+    font-size: 200%;
+    z-index: 10;
+    color: #555;
+    border: 2px solid #555;
 }
 #content .compassview .project > .status-indicator a,
 #content .compassview .project > .status-indicator span {

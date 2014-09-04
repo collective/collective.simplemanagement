@@ -1,6 +1,16 @@
 Changelog
 =========
 
+1.0.5 (unreleased)
+------------------
+
+..warning:: You must rebuild the mo files with msgfmt
+
+- In compass history, deleted projects are shown in gray.
+  The reported values for them are not correct.
+  [simone]
+
+
 1.0.4 (unreleased)
 ------------------
 

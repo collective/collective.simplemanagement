@@ -113,9 +113,15 @@ class History(api.views.Traversable, CompassMixIn):
             else:
                 try:
                     project = portal.restrictedTraverse(prj['id'].encode())
+                    prj_uid = IUUID(project)
                 except:
-                    continue
-                prj_uid = IUUID(project)
+                    project = None
+                    prj_uid = None
+            if project is None:
+                prj['disabled'] = True
+                continue
+            else:
+                prj['disabled'] = False
             prj_bookings = bookings.pop(prj_uid, {})
             prj['uid'] = prj_uid
             prj['url'] = PRJ_URL_TEMPLATE.format(
@@ -147,9 +153,12 @@ class History(api.views.Traversable, CompassMixIn):
             # add extra projects
             for k, people in bookings.items():
                 obj = uuidToObject(k)
+                if obj is None:
+                    continue
                 pw = self.tools['portal_workflow']
                 status = pw.getStatusOf("project_workflow", obj)
                 new_prj = {
+                    'disabled': False,
                     'uid': k,
                     'id': '/'.join(obj.getPhysicalPath()),
                     'name': obj.title_or_id(),
