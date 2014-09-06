@@ -113,8 +113,8 @@
                         items matching your search terms.
                     </span>
 
-                    <dl class="actionMenu deactivated"
-                        tal:attributes="class python:view.show_advanced_search() and 'actionMenu activated' or 'actionMenu deactivated'">
+                    <dl class="actionMenu deactivated filtersAction"
+                        tal:attributes="class python:view.show_advanced_search() and 'filtersAction actionMenu activated' or 'filtersAction actionMenu deactivated'">
 
                       <dt class="actionMenuHeader">
                           <a href="#"
@@ -127,15 +127,13 @@
                       <dd class="actionMenuContent">
                           <div id="search-filter" i18n:domain="plone">
 
-                              <fieldset class="noborder"
-                                        tal:condition="view/allow_portal_types_filter">
+                              <fieldset class="noborder">
 
-                                  <legend i18n:translate="label_item_type">Item type</legend>
+                                  <legend i18n:translate="">Item state</legend>
 
-                                  <div class="field"
-                                       tal:define="portal_types portal/portal_types;
-                                                   types_list view/types_list;
-                                                   all_checked python:(len(types_list) == len(request.get('portal_type', []))) or first_call;
+                                  <div class="field review-state"
+                                       tal:define="review_states view/review_states;
+                                                   all_checked python:(len(review_states) == len(request.get('review_state', []))) or first_call;
                                                    toggle_select_state python:all_checked and 'true' or 'false';">
 
                                       <div class="formHelp"></div>
@@ -143,37 +141,34 @@
                                       <span class="optionsToggle">
                                           <input type="checkbox"
                                                  onchange=""
-                                                 name="pt_toggle"
+                                                 name="rs_toggle"
                                                  value="#"
-                                                 id="pt_toggle"
+                                                 id="rs_toggle"
                                                  class="noborder"
                                                  checked="checked"
                                                  tal:attributes="checked python:all_checked and 'checked' or '';
-                                                                 onchange string:javascript:toggleSelect(this, 'portal_type:list', ${toggle_select_state});"/>
+                                                                 onchange string:javascript:toggleSelect(this, 'review_state:list', ${toggle_select_state});"/>
 
-                                          <label for="pt_toggle"
+                                          <label for="rs_toggle"
                                                  i18n:translate="label_toggle"
                                                  >Select All/None
                                           </label>
                                       </span>
                                       <br />
-                                      <div style="float:left; margin-right: 2em;"
-                                           tal:define="typeLists python:context.createMultiColumnList(types_list, numCols=2, sort_on='self');"
-                                           tal:attributes="style python:isRTL and 'float: right;; margin-left: 2em;;' or 'float: left;; margin-right: 2em;;';"
-                                           tal:repeat="sublist typeLists">
-                                          <tal:items repeat="type sublist">
+                                      <div style="float:left; margin-right: 2em;">
+                                          <tal:items repeat="state review_states">
                                               <input type="checkbox"
-                                                     name="portal_type:list"
+                                                     name="review_state:list"
                                                      value="#"
                                                      class="noborder"
                                                      checked="checked"
-                                                     tal:attributes="value type;
-                                                                     id string:portal_type_${repeat/sublist/number}_${repeat/type/number};
-                                                                     checked python:((type in request.get('portal_type', [])) or first_call) and 'checked' or ''"/>
+                                                     tal:attributes="value state/name;
+                                                                     id string:review_state_${repeat/state/number};
+                                                                     checked python:((state['name'] in request.get('review_state', [])) or first_call) and 'checked' or ''"/>
                                               <label for=""
                                                      i18n:translate=""
-                                                     tal:attributes="for string:portal_type_${repeat/sublist/number}_${repeat/type/number}"
-                                                     tal:content="python: portal_types.getTypeInfo(type).Title()"
+                                                     tal:attributes="for string:review_state_${repeat/state/number}"
+                                                     tal:content="state/title"
                                                      />
                                               <br />
                                           </tal:items>
@@ -285,7 +280,8 @@
                                                    use_view_action site_properties/typesUseViewActionInListings|python:();
                                                    allowAnonymousViewAbout site_properties/allowAnonymousViewAbout;
                                                    show_about python:not isAnon or allowAnonymousViewAbout;">
-                          <ol class="searchResults">
+                          <ol class="searchResults"
+                              tal:attributes="start python: b_start + 1">
                               <tal:results repeat="item batch">
                                     <li>
                                       <span tal:attributes="class item/ContentTypeClass">
@@ -294,7 +290,7 @@
                                            tal:define="item_url item/getURL;
                                                        item_type item/PortalType"
                                            tal:attributes="href python:item_type in use_view_action and (item_url + '/view') or item_url;
-                                                           class string:state-${item/review_state}"
+                                                           class string:item state-${item/review_state}"
                                            tal:content="python:item.getDataOrigin().pretty_title_or_id()" />
                                       </span>
                                       <span class="discreet" i18n:domain="plone"

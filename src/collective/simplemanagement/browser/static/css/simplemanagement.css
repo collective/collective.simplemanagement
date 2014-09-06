@@ -1889,32 +1889,38 @@ input.effort {
 /* project states */
 #plone-contentmenu-workflow .state-planning,
 #content .compassview .project > .status-indicator.state-planning,
-#newProjectPopup .state-planning {
+#newProjectPopup .state-planning,
+.template-projects_overview .searchResults a.state-planning{
     background-color: #444;
 }
 #plone-contentmenu-workflow .state-offer,
 #content .compassview .project > .status-indicator.state-offer,
-#newProjectPopup .state-offer {
+#newProjectPopup .state-offer,
+.template-projects_overview .searchResults a.state-offer{
     background-color: #8dc73e;
 }
 #plone-contentmenu-workflow .state-development,
 #content .compassview .project > .status-indicator.state-development,
-#newProjectPopup .state-development {
+#newProjectPopup .state-development ,
+.template-projects_overview .searchResults a.state-development{
     background-color: #5ab71e;
 }
 #plone-contentmenu-workflow .state-maintenance,
 #content .compassview .project > .status-indicator.state-maintenance,
-#newProjectPopup .state-maintenance {
+#newProjectPopup .state-maintenance ,
+.template-projects_overview .searchResults a.state-maintenance{
     background-color: #448cca;
 }
 #plone-contentmenu-workflow .state-closed,
 #content .compassview .project > .status-indicator.state-closed,
-#newProjectPopup .state-closed {
+#newProjectPopup .state-closed,
+.template-projects_overview .searchResults a.state-closed{
     background-color: #eb9b12;
 }
 #plone-contentmenu-workflow .state-dead,
 #content .compassview .project > .status-indicator.state-dead,
-#newProjectPopup .state-dead {
+#newProjectPopup .state-dead,
+.template-projects_overview .searchResults a.state-dead{
     background-color: #540054;
 }
 
@@ -1923,7 +1929,13 @@ input.effort {
 #plone-contentmenu-workflow .state-development,
 #plone-contentmenu-workflow .state-maintenance,
 #plone-contentmenu-workflow .state-closed,
-#plone-contentmenu-workflow .state-dead {
+#plone-contentmenu-workflow .state-dead,
+.template-projects_overview .searchResults .state-planning,
+.template-projects_overview .searchResults .state-offer,
+.template-projects_overview .searchResults .state-development,
+.template-projects_overview .searchResults .state-maintenance,
+.template-projects_overview .searchResults .state-closed,
+.template-projects_overview .searchResults .state-dead{
     padding: 0px 0.5em;
     border-width: 0.1em;
     border-style: solid;
@@ -1931,25 +1943,32 @@ input.effort {
     border-radius: 0.5em;
 }
 
+.template-projects_overview .searchResults .state-planning,
 #plone-contentmenu-workflow .state-planning {
     border-color: #444;
 }
+.template-projects_overview .searchResults .state-offer,
 #plone-contentmenu-workflow .state-offer {
     border-color: #8dc73e;
 }
+.template-projects_overview .searchResults .state-development,
 #plone-contentmenu-workflow .state-development {
     border-color: #5ab71e;
 }
+.template-projects_overview .searchResults .state-maintanance,
 #plone-contentmenu-workflow .state-maintenance {
     border-color: #448cca;
 }
+.template-projects_overview .searchResults .state-closed,
 #plone-contentmenu-workflow .state-closed {
     border-color: #eb9b12;
 }
+.template-projects_overview .searchResults .state-dead,
 #plone-contentmenu-workflow .state-dead {
     border-color: #540054;
 }
-
+.template-projects_overview #content .searchResults a.item:hover{ color: #ddd !important;}
+.template-projects_overview #content .searchResults .documentLocation{ display: none }
 /* make spinner visible when overlay is opened */
 #ajax-spinner {
     z-index: 100000;
