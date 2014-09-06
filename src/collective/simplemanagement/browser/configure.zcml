@@ -109,4 +109,14 @@
     permission="zope2.View"
   />
 
+
+  <browser:page
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    name="projects_overview"
+    class=".projects_overview.ProjectsOverview"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+    template="templates/projects_overview.pt"
+  />
+
 </configure>
