@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2014-09-03 14:55+0000\n"
-"PO-Revision-Date: 2014-09-03 16:55+0200\n"
+"POT-Creation-Date: 2014-09-04 14:14+0000\n"
+"PO-Revision-Date: 2014-09-04 16:15+0200\n"
 "Last-Translator: Simone Deponti <simone.deponti@abstract.it>\n"
 "Language-Team: Italian <info@abstract.it>\n"
 "MIME-Version: 1.0\n"
@@ -65,11 +65,11 @@ msgstr "Booking di %(parent)s"
 msgid "(${hours} hours)"
 msgstr "(${hours} ore)"
 
-#: ../browser/compass.py:353
+#: ../browser/compass.py:367
 msgid "(double click to reset selection)"
 msgstr "(doppio click per azzerare selezione)"
 
-#: ../browser/compass.py:352
+#: ../browser/compass.py:366
 msgid "(double click to select)"
 msgstr "(doppio click per selezionare)"
 
@@ -142,7 +142,7 @@ msgstr "Referenza ambigua: \"%s\""
 msgid "Ambiguous references: \"%s\", \"%s\""
 msgstr "Referenze ambigue: \"%s\", \"%s\""
 
-#: ../browser/compass.py:331
+#: ../browser/compass.py:345
 msgid ""
 "An error has occurred, please <a href=\"{url}\">reload the page clicking "
 "here</a>"
@@ -246,7 +246,7 @@ msgstr "Cambia iterazione"
 msgid "Change status"
 msgstr "Cambia stato"
 
-#: ../browser/compass.py:341
+#: ../browser/compass.py:355
 msgid "Changes saved"
 msgstr "Modifiche salvate"
 
@@ -269,7 +269,7 @@ msgid "Create or activate a project"
 msgstr "Crea o attiva un progetto"
 
 #: ../browser/templates/compass.pt:205
-#: ../browser/templates/compass_history.pt:191
+#: ../browser/templates/compass_history.pt:199
 msgid "Critical resources"
 msgstr "Risorse critiche"
 
@@ -324,7 +324,7 @@ msgstr "Vuoi cancellare lo snapshot?"
 msgid "Delete this snapshot"
 msgstr "Cancella questo snapshot"
 
-#: ../browser/compass.py:292
+#: ../browser/compass.py:306
 msgid "Deletion has been cancelled"
 msgstr "Cancellazione annullata"
 
@@ -344,6 +344,10 @@ msgstr "Differenza"
 #: ../browser/epic/templates/view.pt:29
 msgid "Difference from initial"
 msgstr "Differenza dalla stima iniziale"
+
+#: ../browser/templates/compass_history.pt:142
+msgid "Disabled project"
+msgstr "Progetto eliminato"
 
 #: ../browser/project/templates/overview.pt:12 ../viewlets/projectinfo.py:42
 msgid "Documentation"
@@ -657,7 +661,7 @@ msgstr "Nuovo progetto"
 msgid "No action was selected!"
 msgstr "Nessuna azione è stata selezionata!"
 
-#: ../browser/templates/compass_history.pt:177
+#: ../browser/templates/compass_history.pt:185
 msgid "No active projects."
 msgstr "Nessun progetto attivo."
 
@@ -749,7 +753,7 @@ msgstr "Pianificazione"
 msgid "Priority"
 msgstr "Priorità"
 
-#: ../browser/compass.py:342
+#: ../browser/compass.py:356
 msgid "Priority updated"
 msgstr "Priorità aggiornata"
 
@@ -883,7 +887,7 @@ msgstr "Mostra minuti"
 msgid "Sinottica"
 msgstr "Sinottica"
 
-#: ../browser/compass.py:286
+#: ../browser/compass.py:300
 msgid "Snapshot deleted"
 msgstr "Snapshot cancellato"
 
@@ -1038,7 +1042,7 @@ msgstr ""
 "La percentuale (tra 0 e 1) dopo la quale la deviazione dal pianificato "
 "dev'essere evidenziata"
 
-#: ../browser/compass.py:350
+#: ../browser/compass.py:364
 msgid "The situation has been saved"
 msgstr "La situazione è stata salvata"
 
@@ -1086,7 +1090,7 @@ msgstr "Non ci sono iterazioni future"
 msgid "There are no past iterations."
 msgstr "Non ci sono iterazioni passate."
 
-#: ../browser/templates/compass_history.pt:210
+#: ../browser/templates/compass_history.pt:218
 msgid "There are no saved compass plans."
 msgstr "Non esistono pianificazioni compass salvate."
 
@@ -1110,7 +1114,7 @@ msgstr ""
 "Questa azione non potrà essere annullata. Se vuoi procedere clicca su "
 "\"Cancella\" altrimenti clicca su \"Annulla\""
 
-#: ../browser/compass.py:343
+#: ../browser/compass.py:357
 msgid "This field is required"
 msgstr "Questo campo è obbligatorio"
 
@@ -1156,7 +1160,7 @@ msgid "Total"
 msgstr "Totale"
 
 #: ../browser/templates/compass.pt:199
-#: ../browser/templates/compass_history.pt:185
+#: ../browser/templates/compass_history.pt:193
 msgid "Total compass"
 msgstr "Totale del compass"
 
@@ -1271,7 +1275,7 @@ msgstr "Worklog"
 msgid "You have no bookings yet"
 msgstr "Non hai alcun booking al momento"
 
-#: ../browser/compass.py:344
+#: ../browser/compass.py:358
 msgid "You should insert a number here: e.g. 10.0"
 msgstr "Devi inserire un numero: es. 10.0"
 
@@ -1301,7 +1305,7 @@ msgstr "da"
 msgid "chat:"
 msgstr "chat:"
 
-#: ../browser/templates/compass_history.pt:130
+#: ../browser/templates/compass_history.pt:131
 msgid "done"
 msgstr "fatti"
 
@@ -1339,7 +1343,7 @@ msgid "in this project"
 msgstr "in questo progetto"
 
 #: ../browser/templates/compass.pt:128
-#: ../browser/templates/compass_history.pt:150
+#: ../browser/templates/compass_history.pt:158
 msgid "man days"
 msgstr "giorni uomo"
 
@@ -1368,7 +1372,7 @@ msgid "to"
 msgstr "a"
 
 #: ../browser/templates/compass.pt:129
-#: ../browser/templates/compass_history.pt:151
+#: ../browser/templates/compass_history.pt:159
 msgid "to be done before"
 msgstr "da fare entro"
 
@@ -1380,46 +1384,46 @@ msgstr "mostra"
 msgid "you must provide a get_object method"
 msgstr "je devi daa er get_object aa sottoclasse, abbello!"
 
-#: ../browser/compass.py:335
+#: ../browser/compass.py:349
 msgid "{name} is now a {role} in {project}"
 msgstr "{name} è ora {role} in {project}"
 
-#: ../browser/compass.py:336
+#: ../browser/compass.py:350
 msgid "{name} should put {effort} man days in {project}"
 msgstr "{name} dovrà dedicare {effort} giorni su {project}"
 
-#: ../browser/compass.py:329
+#: ../browser/compass.py:343
 msgid "{person} has been added to {project}"
 msgstr "{person} è stato aggiunto a {project}"
 
-#: ../browser/compass.py:330
+#: ../browser/compass.py:344
 msgid "{person} has been removed from {project}"
 msgstr "{person} è stato rimosso da {project}"
 
-#: ../browser/compass.py:347
+#: ../browser/compass.py:361
 msgid "{project} has been activated"
 msgstr "{project} è stato attivato"
 
-#: ../browser/compass.py:349
+#: ../browser/compass.py:363
 msgid "{project} has been created"
 msgstr "{project} è stato creato"
 
-#: ../browser/compass.py:348
+#: ../browser/compass.py:362
 msgid "{project} has been deactivated"
 msgstr "{project} è stato disattivato"
 
-#: ../browser/compass.py:351
+#: ../browser/compass.py:365
 msgid "{project} is not valid"
 msgstr "{project} non è valido"
 
-#: ../browser/compass.py:338
+#: ../browser/compass.py:352
 msgid "{project} will now require {effort} man days"
 msgstr "{project} richiede {effort} giorni uomo"
 
-#: ../browser/compass.py:327
+#: ../browser/compass.py:341
 msgid "{week} week"
 msgstr "{week} settimana"
 
-#: ../browser/compass.py:328
+#: ../browser/compass.py:342
 msgid "{week} weeks"
 msgstr "{week} settimane"

@@ -135,7 +135,13 @@
               </div>
               <div class="container">
                 <tal:project repeat="project data/projects">
-                  <div class="project" tal:attributes="data-uuid project/uid">
+                  <div class="project"
+                       tal:define="extraclass python:'disabled' if project.get('disabled', False) else 'enabled'"
+                       tal:attributes="data-uuid project/uid;
+                                       class string:project ${extraclass}">
+                    <div class="disabled-notice"
+                         tal:condition="project/disabled"
+                         i18n:translate="">Disabled project</div>
                     <div tal:attributes="class project/css_class">
                       <span tal:content="repeat/project/number">X</span>
                     </div>

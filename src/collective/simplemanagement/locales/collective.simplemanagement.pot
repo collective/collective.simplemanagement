@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-09-03 14:55+0000\n"
+"POT-Creation-Date: 2014-09-04 14:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,11 +61,11 @@ msgstr ""
 msgid "(${hours} hours)"
 msgstr ""
 
-#: ../browser/compass.py:353
+#: ../browser/compass.py:367
 msgid "(double click to reset selection)"
 msgstr ""
 
-#: ../browser/compass.py:352
+#: ../browser/compass.py:366
 msgid "(double click to select)"
 msgstr ""
 
@@ -132,7 +132,7 @@ msgstr ""
 msgid "Ambiguous references: \"%s\", \"%s\""
 msgstr ""
 
-#: ../browser/compass.py:331
+#: ../browser/compass.py:345
 msgid "An error has occurred, please <a href=\"{url}\">reload the page clicking here</a>"
 msgstr ""
 
@@ -239,7 +239,7 @@ msgstr ""
 msgid "Change status"
 msgstr ""
 
-#: ../browser/compass.py:341
+#: ../browser/compass.py:355
 msgid "Changes saved"
 msgstr ""
 
@@ -263,7 +263,7 @@ msgid "Create or activate a project"
 msgstr ""
 
 #: ../browser/templates/compass.pt:205
-#: ../browser/templates/compass_history.pt:191
+#: ../browser/templates/compass_history.pt:199
 msgid "Critical resources"
 msgstr ""
 
@@ -321,7 +321,7 @@ msgstr ""
 msgid "Delete this snapshot"
 msgstr ""
 
-#: ../browser/compass.py:292
+#: ../browser/compass.py:306
 msgid "Deletion has been cancelled"
 msgstr ""
 
@@ -342,6 +342,10 @@ msgstr ""
 
 #: ../browser/epic/templates/view.pt:29
 msgid "Difference from initial"
+msgstr ""
+
+#: ../browser/templates/compass_history.pt:142
+msgid "Disabled project"
 msgstr ""
 
 #: ../browser/project/templates/overview.pt:12
@@ -649,7 +653,7 @@ msgstr ""
 msgid "No action was selected!"
 msgstr ""
 
-#: ../browser/templates/compass_history.pt:177
+#: ../browser/templates/compass_history.pt:185
 msgid "No active projects."
 msgstr ""
 
@@ -738,7 +742,7 @@ msgstr ""
 msgid "Priority"
 msgstr ""
 
-#: ../browser/compass.py:342
+#: ../browser/compass.py:356
 msgid "Priority updated"
 msgstr ""
 
@@ -876,7 +880,7 @@ msgstr ""
 msgid "Sinottica"
 msgstr ""
 
-#: ../browser/compass.py:286
+#: ../browser/compass.py:300
 msgid "Snapshot deleted"
 msgstr ""
 
@@ -1006,7 +1010,7 @@ msgstr ""
 msgid "The percentage (between 0 and 1) after which a deviation needs to be highlighted"
 msgstr ""
 
-#: ../browser/compass.py:350
+#: ../browser/compass.py:364
 msgid "The situation has been saved"
 msgstr ""
 
@@ -1042,7 +1046,7 @@ msgstr ""
 msgid "There are no past iterations."
 msgstr ""
 
-#: ../browser/templates/compass_history.pt:210
+#: ../browser/templates/compass_history.pt:218
 msgid "There are no saved compass plans."
 msgstr ""
 
@@ -1062,7 +1066,7 @@ msgstr ""
 msgid "This action cannot be undone. If you wish to proceed, click \"Delete\", else click \"Cancel\""
 msgstr ""
 
-#: ../browser/compass.py:343
+#: ../browser/compass.py:357
 msgid "This field is required"
 msgstr ""
 
@@ -1107,7 +1111,7 @@ msgid "Total"
 msgstr ""
 
 #: ../browser/templates/compass.pt:199
-#: ../browser/templates/compass_history.pt:185
+#: ../browser/templates/compass_history.pt:193
 msgid "Total compass"
 msgstr ""
 
@@ -1224,7 +1228,7 @@ msgstr ""
 msgid "You have no bookings yet"
 msgstr ""
 
-#: ../browser/compass.py:344
+#: ../browser/compass.py:358
 msgid "You should insert a number here: e.g. 10.0"
 msgstr ""
 
@@ -1254,7 +1258,7 @@ msgstr ""
 msgid "chat:"
 msgstr ""
 
-#: ../browser/templates/compass_history.pt:130
+#: ../browser/templates/compass_history.pt:131
 msgid "done"
 msgstr ""
 
@@ -1292,7 +1296,7 @@ msgid "in this project"
 msgstr ""
 
 #: ../browser/templates/compass.pt:128
-#: ../browser/templates/compass_history.pt:150
+#: ../browser/templates/compass_history.pt:158
 msgid "man days"
 msgstr ""
 
@@ -1321,7 +1325,7 @@ msgid "to"
 msgstr ""
 
 #: ../browser/templates/compass.pt:129
-#: ../browser/templates/compass_history.pt:151
+#: ../browser/templates/compass_history.pt:159
 msgid "to be done before"
 msgstr ""
 
@@ -1333,47 +1337,47 @@ msgstr ""
 msgid "you must provide a get_object method"
 msgstr ""
 
-#: ../browser/compass.py:335
+#: ../browser/compass.py:349
 msgid "{name} is now a {role} in {project}"
 msgstr ""
 
-#: ../browser/compass.py:336
+#: ../browser/compass.py:350
 msgid "{name} should put {effort} man days in {project}"
 msgstr ""
 
-#: ../browser/compass.py:329
+#: ../browser/compass.py:343
 msgid "{person} has been added to {project}"
 msgstr ""
 
-#: ../browser/compass.py:330
+#: ../browser/compass.py:344
 msgid "{person} has been removed from {project}"
 msgstr ""
 
-#: ../browser/compass.py:347
+#: ../browser/compass.py:361
 msgid "{project} has been activated"
 msgstr ""
 
-#: ../browser/compass.py:349
+#: ../browser/compass.py:363
 msgid "{project} has been created"
 msgstr ""
 
-#: ../browser/compass.py:348
+#: ../browser/compass.py:362
 msgid "{project} has been deactivated"
 msgstr ""
 
-#: ../browser/compass.py:351
+#: ../browser/compass.py:365
 msgid "{project} is not valid"
 msgstr ""
 
-#: ../browser/compass.py:338
+#: ../browser/compass.py:352
 msgid "{project} will now require {effort} man days"
 msgstr ""
 
-#: ../browser/compass.py:327
+#: ../browser/compass.py:341
 msgid "{week} week"
 msgstr ""
 
-#: ../browser/compass.py:328
+#: ../browser/compass.py:342
 msgid "{week} weeks"
 msgstr ""
 
