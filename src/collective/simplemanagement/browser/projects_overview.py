@@ -12,6 +12,7 @@ class ProjectsOverview(Search):
     allow_portal_types_filter = False
     # this allows for results with no query
     default_query = {'portal_type': 'Project'}
+    show_breadcrumbs = False
 
     _states_blacklist = ()
 

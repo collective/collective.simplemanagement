@@ -355,7 +355,8 @@
                                         Cropped description
                                       </p>
 
-                                      <cite class="documentLocation link-location"
+                                      <tal:breadcrumbs condition="view/show_breadcrumbs">
+                                        <cite class="documentLocation link-location"
                                             tal:define="breadcrumbs python: view.breadcrumbs(item);
                                                         is_rtl context/@@plone_portal_state/is_rtl;"
                                             tal:condition='breadcrumbs'>
@@ -380,7 +381,8 @@
                                                </tal:item>
                                           </span>
 
-                                      </cite>
+                                        </cite>
+                                      </tal:breadcrumbs>
 
                                     </li>
                               </tal:results>

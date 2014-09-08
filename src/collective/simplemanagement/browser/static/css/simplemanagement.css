@@ -1968,7 +1968,7 @@ input.effort {
     border-color: #540054;
 }
 .template-projects_overview #content .searchResults a.item:hover{ color: #ddd !important;}
-.template-projects_overview #content .searchResults .documentLocation{ display: none }
+
 /* make spinner visible when overlay is opened */
 #ajax-spinner {
     z-index: 100000;
