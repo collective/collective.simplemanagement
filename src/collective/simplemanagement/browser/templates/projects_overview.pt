@@ -269,6 +269,7 @@
       <metal:results tal:condition="batch"
                      tal:define="site_properties context/portal_properties/site_properties;
                                  use_view_action site_properties/typesUseViewActionInListings|python:();">
+        <div metal:use-macro="context/batch_macros/macros/navigation" />
         <table class="listing searchResults"
                tal:attributes="start python: b_start + 1">
 
