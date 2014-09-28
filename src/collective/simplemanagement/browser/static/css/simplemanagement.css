@@ -2148,3 +2148,5 @@ body.portaltype-booking #plone-contentmenu-actions {
     max-width: 960px;
 }
 .template-projects_overview form.searchPage table.listing{ width: 100% }
+.template-projects_overview form.searchPage table.listing .review_state,
+.template-projects_overview form.searchPage table.listing .modified{ width: 20% }

@@ -114,7 +114,7 @@
     name="projects_overview"
     class=".projects_overview.ProjectsOverview"
     layer="..interfaces.IBrowserLayer"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     template="templates/projects_overview.pt"
     menu="plone_displayviews"
     title="Projects overview"
@@ -125,7 +125,7 @@
     name="updated_projects_overview"
     class=".projects_overview.ProjectsOverview"
     layer="..interfaces.IBrowserLayer"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     template="templates/projects_overview_updated.pt"
   />
 
