@@ -1890,37 +1890,37 @@ input.effort {
 #plone-contentmenu-workflow .state-planning,
 #content .compassview .project > .status-indicator.state-planning,
 #newProjectPopup .state-planning,
-.template-projects_overview .searchResults a.state-planning{
+.template-projects_overview .searchResults .state-planning .title a{
     background-color: #444;
 }
 #plone-contentmenu-workflow .state-offer,
 #content .compassview .project > .status-indicator.state-offer,
 #newProjectPopup .state-offer,
-.template-projects_overview .searchResults a.state-offer{
+.template-projects_overview .searchResults .state-offer .title a{
     background-color: #8dc73e;
 }
 #plone-contentmenu-workflow .state-development,
 #content .compassview .project > .status-indicator.state-development,
 #newProjectPopup .state-development ,
-.template-projects_overview .searchResults a.state-development{
+.template-projects_overview .searchResults .state-development .title a{
     background-color: #5ab71e;
 }
 #plone-contentmenu-workflow .state-maintenance,
 #content .compassview .project > .status-indicator.state-maintenance,
 #newProjectPopup .state-maintenance ,
-.template-projects_overview .searchResults a.state-maintenance{
+.template-projects_overview .searchResults .state-maintenance .title a{
     background-color: #448cca;
 }
 #plone-contentmenu-workflow .state-closed,
 #content .compassview .project > .status-indicator.state-closed,
 #newProjectPopup .state-closed,
-.template-projects_overview .searchResults a.state-closed{
+.template-projects_overview .searchResults .state-closed .title a{
     background-color: #eb9b12;
 }
 #plone-contentmenu-workflow .state-dead,
 #content .compassview .project > .status-indicator.state-dead,
 #newProjectPopup .state-dead,
-.template-projects_overview .searchResults a.state-dead{
+.template-projects_overview .searchResults .state-dead .title a{
     background-color: #540054;
 }
 
@@ -1930,12 +1930,12 @@ input.effort {
 #plone-contentmenu-workflow .state-maintenance,
 #plone-contentmenu-workflow .state-closed,
 #plone-contentmenu-workflow .state-dead,
-.template-projects_overview .searchResults .state-planning,
-.template-projects_overview .searchResults .state-offer,
-.template-projects_overview .searchResults .state-development,
-.template-projects_overview .searchResults .state-maintenance,
-.template-projects_overview .searchResults .state-closed,
-.template-projects_overview .searchResults .state-dead{
+.template-projects_overview .searchResults .state-planning .title a,
+.template-projects_overview .searchResults .state-offer .title a,
+.template-projects_overview .searchResults .state-development .title a,
+.template-projects_overview .searchResults .state-maintenance .title a,
+.template-projects_overview .searchResults .state-closed .title a,
+.template-projects_overview .searchResults .state-dead .title a{
     padding: 0px 0.5em;
     border-width: 0.1em;
     border-style: solid;
@@ -1943,31 +1943,32 @@ input.effort {
     border-radius: 0.5em;
 }
 
-.template-projects_overview .searchResults .state-planning,
+.template-projects_overview .searchResults .state-planning .title a,
 #plone-contentmenu-workflow .state-planning {
     border-color: #444;
 }
-.template-projects_overview .searchResults .state-offer,
+.template-projects_overview .searchResults .state-offer .title a,
 #plone-contentmenu-workflow .state-offer {
     border-color: #8dc73e;
 }
-.template-projects_overview .searchResults .state-development,
+.template-projects_overview .searchResults .state-development .title a,
 #plone-contentmenu-workflow .state-development {
     border-color: #5ab71e;
 }
-.template-projects_overview .searchResults .state-maintanance,
+.template-projects_overview .searchResults .state-maintanance .title a,
 #plone-contentmenu-workflow .state-maintenance {
     border-color: #448cca;
 }
-.template-projects_overview .searchResults .state-closed,
+.template-projects_overview .searchResults .state-closed .title a,
 #plone-contentmenu-workflow .state-closed {
     border-color: #eb9b12;
 }
-.template-projects_overview .searchResults .state-dead,
+.template-projects_overview .searchResults .state-dead .title a,
 #plone-contentmenu-workflow .state-dead {
     border-color: #540054;
 }
-.template-projects_overview #content .searchResults a.item:hover{ color: #ddd !important;}
+.template-projects_overview #content .searchResults .item .title a:hover{
+    color: #ddd !important;}
 
 /* make spinner visible when overlay is opened */
 #ajax-spinner {
@@ -2141,4 +2142,9 @@ body.portaltype-booking #plone-contentmenu-actions {
     min-height: 2.05em;
 }
 
-.template-projects_overview .input-group{ float: right; }
+.template-projects_overview form.searchPage .input-group{ float: right; }
+.template-projects_overview form.searchPage{
+    margin: 0 auto;
+    max-width: 960px;
+}
+.template-projects_overview form.searchPage table.listing{ width: 100% }

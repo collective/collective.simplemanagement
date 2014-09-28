@@ -109,7 +109,6 @@
     permission="zope2.View"
   />
 
-
   <browser:page
     for="*"
     name="projects_overview"
@@ -119,6 +118,15 @@
     template="templates/projects_overview.pt"
     menu="plone_displayviews"
     title="Projects overview"
+  />
+
+  <browser:page
+    for="*"
+    name="updated_projects_overview"
+    class=".projects_overview.ProjectsOverview"
+    layer="..interfaces.IBrowserLayer"
+    permission="zope2.View"
+    template="templates/projects_overview_updated.pt"
   />
 
 </configure>

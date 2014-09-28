@@ -32,6 +32,7 @@ setup(
     install_requires=[
         'setuptools',
         'lxml',
+        'ordereddict',
         'Products.CMFPlone',
         'plone.app.collection',
         'plone.app.dexterity [relations]',
