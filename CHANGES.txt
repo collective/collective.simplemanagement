@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.6 (unreleased)
+1.0.6 (2014-09-30)
 ------------------
 
 - In the short_uuid indexer there was a problem when a user
@@ -10,7 +10,7 @@ Changelog
   but fails in retrieving the UUID for check (should quit) [simone]
 
 
-1.0.5 (unreleased)
+1.0.5 (1970-01-01)
 ------------------
 
 ..warning:: You must rebuild the mo files with msgfmt
@@ -25,7 +25,7 @@ Changelog
   [simahawk]
 
 
-1.0.4 (unreleased)
+1.0.4 (1970-01-01)
 ------------------
 
 ..warning:: You must rebuild the mo files with msgfmt
@@ -36,20 +36,20 @@ Changelog
   [simone]
 
 
-1.0.3 (unreleased)
+1.0.3 (1970-01-01)
 ------------------
 
 - Improve worklog, display and select current user on startup
   [gborelli]
 
 
-1.0.2 (unreleased)
+1.0.2 (1970-01-01)
 ------------------
 
 - Added employee selection in compass history. [simone]
 
 
-1.0 (unreleased)
+1.0 (1970-01-01)
 ----------------
 
 - Improve customer_contact field
