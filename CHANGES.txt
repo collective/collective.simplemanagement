@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.0.6 (unreleased)
+------------------
+
+- In the short_uuid indexer there was a problem when a user
+  has only a partial view of catalog:
+  correctly identifies a value as being already taken
+  but fails in retrieving the UUID for check (should quit) [simone]
+
+
 1.0.5 (unreleased)
 ------------------
 
