@@ -96,7 +96,7 @@ def short_uuid(obj):
                 same_short = portal_catalog.searchResults(
                     short_uuid=short_uuid_
                 )
-                if same_short[0]['UID'] == uuid:
+                if len(same_short) > 0 and same_short[0]['UID'] == uuid:
                     return short_uuid_
             else:
                 return short_uuid_
