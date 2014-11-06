@@ -1,7 +1,10 @@
-from urllib import unquote
+#-*- coding: utf-8 -*-
+
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.layout.viewlets import common as base
 
+from ..interfaces import IStory
+from ..interfaces import IIteration
 from ..configure import DOCUMENTS_ID
 from ..configure import TRACKER_ID
 from .. import api
@@ -68,9 +71,17 @@ class ProjectInfo(base.ViewletBase):
             },
             {
                 'url': "%s/@@report" % info['project_url'],
-                'title': _(u'Report')
+                'title': _(u'Project Report')
             },
         ]
+
+        for iface in (IIteration, IStory):
+            if iface.providedBy(self.context):
+                buttons.append({
+                    'url': "%s/@@report" % self.context.absolute_url(),
+                    'title': _(u'Report')
+                })
+                break
 
         if not info['is_project']:
             buttons.insert(0, {

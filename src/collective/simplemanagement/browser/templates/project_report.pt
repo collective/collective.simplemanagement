@@ -19,18 +19,12 @@
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
-        <h1 class="documentFirstHeading"
-            i18n:translate="">
-          Project report</h1>
-        <tal:block condition="not: view/is_project">
-          <h3 class="documentFirstHeading"
-              i18n:translate="">
-            Story: <span i18n:name="storyname"
-                           class="storyname"
-                           tal:content="context/Title"
-                           />
-          </h3>
-        </tal:block>
+        <h1 class="documentFirstHeading">
+          <span i18n:translate="">Project report</span>
+           <tal:block condition="not: view/is_project">
+            <span class="sep">/</span> <span tal:content="context/Title" />
+          </tal:block>
+        </h1>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
         <div id="content-core">

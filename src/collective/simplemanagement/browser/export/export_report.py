@@ -2,10 +2,10 @@
 
 from .tocsv import ExportCSV
 
-from ..project_report import ReportView
+from ..project_report import ProjectReportView
 
 
-class ExportReportCSV(ExportCSV, ReportView):
+class ExportReportCSV(ExportCSV, ProjectReportView):
     """  export @@report view results to CSV
     """
 

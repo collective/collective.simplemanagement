@@ -12,7 +12,7 @@ from dashboard import DashboardMixin
 from worklog import MONTHS
 
 
-class ReportView(DashboardMixin):
+class ProjectReportView(DashboardMixin):
     """ a report view for projects and stories
     """
 
@@ -110,8 +110,10 @@ class ReportView(DashboardMixin):
     def get_bookings(self, date_range=None, ignore_userid=False):
         if date_range is None:
             date_range = self._date_range
+        # get references
+        refs = api.booking.get_references_by_context(self.context)
         data = dict(
-            project=self.context,
+            references=refs,
             from_date=date_range[0],
             to_date=date_range[1],
         )
@@ -192,3 +194,15 @@ class ReportView(DashboardMixin):
         """
         # TODO: handle rounding
         return self.format_number(value * 8)
+
+
+class IterationReportView(ProjectReportView):
+
+    def total_estimated(self):
+        return self.context.estimate
+
+
+class StoryReportView(ProjectReportView):
+
+    def total_estimated(self):
+        return self.context.estimate

@@ -71,12 +71,29 @@
     permission="simplemanagement.ManageProject"
   />
 
-
   <!-- Report view -->
   <browser:page
     for="..interfaces.IReportable"
     name="report"
-    class=".project_report.ReportView"
+    class=".project_report.ProjectReportView"
+    layer="..interfaces.IBrowserLayer"
+    template="templates/project_report.pt"
+    permission="simplemanagement.ManageProject"
+  />
+
+  <browser:page
+    for="..interfaces.IIteration"
+    name="report"
+    class=".project_report.IterationReportView"
+    layer="..interfaces.IBrowserLayer"
+    template="templates/project_report.pt"
+    permission="simplemanagement.ManageProject"
+  />
+
+  <browser:page
+    for="..interfaces.IStory"
+    name="report"
+    class=".project_report.StoryReportView"
     layer="..interfaces.IBrowserLayer"
     template="templates/project_report.pt"
     permission="simplemanagement.ManageProject"

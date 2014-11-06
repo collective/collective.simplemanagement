@@ -14,6 +14,7 @@ from Products.CMFPlone.utils import safe_unicode
 from ..configure import Settings
 from ..interfaces import IProject
 from ..interfaces import IStory
+from ..interfaces import IIteration
 from ..interfaces import IBookingStorage
 from ..utils import quantize
 from .content import get_project as get_project_from_context
@@ -140,6 +141,19 @@ def get_bookings(owner=None, references=None,
 
     storage = get_storage()
     return storage.query(query, sort_on=sort_on, reverse=reverse)
+
+
+def get_references_by_context(context):
+    """ get references values by context
+    """
+    refs = []
+    for iface in (IProject, IStory):
+        if iface.providedBy(context):
+            refs = [IUUID(context)]
+            break
+    if IIteration.providedBy(context):
+        refs = [x['UID'] for x in context.stories()]
+    return refs
 
 
 def get_timings(context, portal_catalog=None):
