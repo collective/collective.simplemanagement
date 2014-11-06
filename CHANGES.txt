@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.0.7 (Unreleased)
+------------------
+
+- Fix report view results by context (story, iteration)
+- Add contextual report button
+  [simahawk]
+
+
 1.0.6 (2014-09-30)
 ------------------
 
