@@ -1,7 +1,14 @@
 Changelog
 =========
 
-1.0.7 (Unreleased)
+1.0.8 (unreleased)
+------------------
+
+- Removed some useless memoizations,
+  better handling of caching in some occurrences. [simone]
+
+
+1.0.7 (2014-11-18)
 ------------------
 
 - Fix report view results by context (story, iteration)

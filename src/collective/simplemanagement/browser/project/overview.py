@@ -101,7 +101,7 @@ class Overview(View):
             operatives = []
 
         for i in operatives:
-            yield  {
+            yield {
                 'role': self.get_role(i.role),
                 'user': api.users.get_user_details(self.context, i.user_id)
             }

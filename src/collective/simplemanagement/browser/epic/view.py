@@ -5,7 +5,7 @@ from zc.relation.interfaces import ICatalog
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 
-from plone.memoize.instance import memoize
+from plone.memoize.view import memoize
 
 from ...interfaces import IEpic, IStory
 from ...configure import Settings

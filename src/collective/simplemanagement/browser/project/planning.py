@@ -2,7 +2,7 @@ from datetime import date
 
 from plone.app.uuid.utils import uuidToObject
 from plone.uuid.interfaces import IUUID
-from plone.memoize.instance import memoize
+from plone.memoize.view import memoize
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 
@@ -58,15 +58,12 @@ class Planning(BrowserView):
 
 class Stories(BrowserView):
 
-    @memoize
     def uuid(self):
         return self.request['iteration']
 
-    @memoize
     def widget_id(self):
         return self.request['widget_id']
 
-    @memoize
     def iteration(self):
         return uuidToObject(self.uuid())
 
