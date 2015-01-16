@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.9 (Unreleased)
+------------------
+
+- Enable booking bar view everywhere to fix @@dashboard view
+  [simahawk]
+
 1.0.8 (2015-01-05)
 ------------------
 
