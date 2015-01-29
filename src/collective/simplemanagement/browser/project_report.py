@@ -205,4 +205,4 @@ class IterationReportView(ProjectReportView):
 class StoryReportView(ProjectReportView):
 
     def total_estimated(self):
-        return self.context.estimate
+        return self.context.estimate / 8

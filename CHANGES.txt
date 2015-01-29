@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 - Enable booking bar view everywhere to fix @@dashboard view
+- Fix total estimates into @@report view on story
   [simahawk]
 
 1.0.8 (2015-01-05)
