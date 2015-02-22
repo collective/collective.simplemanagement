@@ -1,18 +1,15 @@
 import datetime
 
-from Acquisition import aq_inner
-
 from zope.security import checkPermission
 from zope.component import getMultiAdapter
 
-from z3c.form.interfaces import IFormLayer
-
 from plone.memoize.instance import memoize as instance_memoize
-from plone.z3cform import z2
 from plone.uuid.interfaces import IUUID
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import base_hasattr
 from Products.Five.browser import BrowserView
+from Products.Poi.browser.tracker import ACTIVE_STATES as TICKETS_ACTIVE_STATES
 
 from ..configure import Settings
 from ..interfaces import IUserStoriesListing
@@ -167,6 +164,8 @@ class TicketsMixIn(object):
 
 class DashboardView(DashboardMixin, TicketsMixIn):
 
+    trackers_forlder_id = 'trackers'
+
     def __init__(self, context, request):
         super(DashboardMixin, self).__init__(context, request)
         if not self.is_project:
@@ -213,3 +212,30 @@ class DashboardView(DashboardMixin, TicketsMixIn):
             helpers = getMultiAdapter((booking, self.request), name='helpers')
             results.append(helpers.info())
         return results
+
+    def trackers(self):
+        """ get global generic trackers
+        from `trackers` folder, if any.
+        """
+        if not base_hasattr(self.context, self.trackers_forlder_id):
+            return []
+        trackers_folder = getattr(self.context, self.trackers_forlder_id)
+        pc = self.tools['portal_catalog']
+        query = {
+            'portal_type': 'PoiTracker',
+            'sort_on': 'modified',
+            'sort_order': 'descending',
+            'path': '/'.join(trackers_folder.getPhysicalPath())
+        }
+        results = pc.searchResults(query)
+        return results
+
+    def my_issues_search_url(self):
+        """ get relative search url for tickets assigned to current user.
+        """
+        url = ''.join([
+            'poi_issue_search?state=',
+            '&amp;state='.join(TICKETS_ACTIVE_STATES),
+            '&amp;responsible=%s' % self.user.getId()
+        ])
+        return url

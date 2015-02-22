@@ -39,20 +39,29 @@
             <tal:booking_bar tal:content="structure context/@@booking_bar" />
           </div>
 
-          <div id="overview">
+          <div id="overview"
+               tal:define="projects view/projects;
+                           tickets  view/tickets;
+                           bookings view/bookings;
+                           trackers view/trackers;">
             <ul class="tabs">
               <li><a href="dashboard#stories"
-                i18n:translate="">Stories</a></li>
+                i18n:translate=""
+                tal:condition="projects">Stories</a></li>
               <li><a href="dashboard#tickets"
-                i18n:translate="">Tickets</a></li>
+                i18n:translate=""
+                tal:condition="tickets">Tickets</a></li>
               <li><a href="dashboard#bookings"
-                i18n:translate="">Booking</a></li>
+                i18n:translate=""
+                tal:condition="bookings">Booking</a></li>
+              <li><a href="dashboard#bookings"
+                i18n:translate=""
+                tal:condition="trackers">Trackers</a></li>
             </ul>
             <div class="panes">
               <!-- Stories pane -->
               <div id="stories-wrapper"
-                  class="pane"
-                  tal:define="projects view/projects">
+                  class="pane" tal:condition="projects">
 
                 <div id="projects"
                   tal:condition="not: projects">
@@ -124,7 +133,7 @@
 
               <!-- Tickets pane -->
               <div id="tickets-wrapper" class="pane"
-                tal:define="results view/tickets">
+                tal:condition="tickets">
 
                 <p class="label" i18n:translate="">
                   Found
@@ -133,7 +142,7 @@
                   ticket/s
                 </p>
 
-                <div class="project" tal:repeat="project results">
+                <div class="project" tal:repeat="project tickets">
                   <h2>
                     <span>
                       <a tal:attributes="href project/url">
@@ -151,25 +160,9 @@
 
               <!-- Booking History pane -->
               <div id="booking-wrapper" class="pane"
-                   tal:define="bookings view/bookings">
+                   tal:condition="bookings">
 
-                <div tal:condition="not: bookings">
-                  <span class="label"
-                    i18n:translate=""
-                    tal:condition="employee_details">
-                    <span tal:replace="employee_details/fullname"
-                      i18n:name="username" />
-                    have no bookings yet
-                  </span>
-
-                  <span class="label"
-                    i18n:translate=""
-                    tal:condition="not: employee_details">
-                    You have no bookings yet</span>
-                </div>
-
-                <table class="listing"
-                  tal:condition="bookings">
+                <table class="listing">
                   <thead>
                     <tr>
                       <th i18n:translate="">Date</th>
@@ -192,6 +185,38 @@
                   </tbody>
                 </table>
 
+              </div>
+
+              <!-- Trackers pane -->
+              <div id="trackers-wrapper" class="pane"
+                   tal:condition="trackers">
+
+                <table class="listing">
+                  <thead>
+                    <tr>
+                      <th i18n:translate="">Title</th>
+                    </tr>
+                  </thead>
+                   <tbody>
+                    <tr tal:repeat="tracker trackers">
+                      <td>
+                         <a title="View tracker"
+                           i18n:attributes="title"
+                           tal:attributes="href tracker/getURL">
+                          <span i18n:translate="">Tracker title</span>
+                        </a>
+                      </td>
+                      <td>
+                        <a title="View issues assigned to me in this tracker"
+                           class="btn"
+                           i18n:attributes="title"
+                           tal:attributes="href string:${tracker/getURL}/${view/my_issues_search_url}">
+                          <span i18n:translate="">View my issues</span>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
             </div>
