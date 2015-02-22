@@ -42,11 +42,15 @@
           </div>
 
           <div id="overview"
-               tal:define="projects view/projects;
+               tal:define="my_projects view/my_projects;
+                           projects view/projects;
                            tickets  view/tickets;
                            bookings view/bookings;
                            trackers view/trackers;">
             <ul class="tabs">
+              <li><a href="dashboard#my-projects"
+                i18n:translate=""
+                tal:condition="my_projects">My projects</a></li>
               <li><a href="dashboard#stories"
                 i18n:translate=""
                 tal:condition="projects">Stories</a></li>
@@ -56,11 +60,44 @@
               <li><a href="dashboard#bookings"
                 i18n:translate=""
                 tal:condition="bookings">Booking</a></li>
-              <li><a href="dashboard#bookings"
+              <li><a href="dashboard#trackers"
                 i18n:translate=""
                 tal:condition="trackers">Trackers</a></li>
             </ul>
             <div class="panes">
+              <!-- my projects -->
+              <div id="my-projects-wrapper"
+                  class="pane" tal:condition="my_projects">
+
+                <div id="my-projects">
+                   <span class="label"
+                    i18n:translate="">
+                    This is a complete list of projects I have access to.</span>
+                  <table class="listing">
+                    <thead>
+                      <tr>
+                        <th i18n:translate="">Title</th>
+                      </tr>
+                    </thead>
+                     <tbody>
+                      <tr tal:repeat="item my_projects">
+                        <td>
+                           <a title="View project"
+                             i18n:attributes="title"
+                             tal:attributes="href item/getURL">
+                            <span i18n:translate=""
+                                  tal:content="item/Title">Proj title</span>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <a class="view-more"
+                     i18n:translate=""
+                     tal:attributes="href string:${context/absolute_url}/projects_overview">View all in projects overview</a>
+                </div>
+
+              </div>
               <!-- Stories pane -->
               <div id="stories-wrapper"
                   class="pane" tal:condition="projects">

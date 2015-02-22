@@ -1,10 +1,15 @@
+# -*- coding: utf-8 -*-
+
 import datetime
+from time import time
 
 from zope.security import checkPermission
 from zope.component import getMultiAdapter
 
 from plone.memoize.instance import memoize as instance_memoize
+from plone.memoize import ram
 from plone.uuid.interfaces import IUUID
+from plone.app.layout.navigation.interfaces import INavigationRoot
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import base_hasattr
@@ -16,6 +21,24 @@ from ..interfaces import IUserStoriesListing
 from ..interfaces import IProject
 from ..utils import AttrDict
 from .. import api
+
+REFRESH_EVERY = 600
+
+
+def _my_projs_cache_key(method, self):
+    """
+    """
+    portal_state = getMultiAdapter(
+        (self.context, self.request), name=u'plone_portal_state')
+
+    member = portal_state.member()
+    roles = member and member.getRoles() or ['Anonymous', ]
+    context_url = self.context.absolute_url()
+    return hash((
+        context_url,
+        '-'.join(sorted(roles)),
+        time() // REFRESH_EVERY
+    ))
 
 
 class DashboardMixin(BrowserView):
@@ -167,7 +190,7 @@ class TicketsMixIn(object):
 
 class DashboardView(DashboardMixin, TicketsMixIn):
 
-    trackers_forlder_id = 'trackers'
+    trackers_folder_id = 'trackers'
 
     def __init__(self, context, request):
         super(DashboardMixin, self).__init__(context, request)
@@ -220,9 +243,9 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         """ get global generic trackers
         from `trackers` folder, if any.
         """
-        if not base_hasattr(self.context, self.trackers_forlder_id):
+        if not base_hasattr(self.context, self.trackers_folder_id):
             return []
-        trackers_folder = getattr(self.context, self.trackers_forlder_id)
+        trackers_folder = getattr(self.context, self.trackers_folder_id)
         pc = self.tools['portal_catalog']
         query = {
             'portal_type': 'PoiTracker',
@@ -242,3 +265,18 @@ class DashboardView(DashboardMixin, TicketsMixIn):
             '&amp;responsible=%s' % self.user.getId()
         ])
         return url
+
+    @ram.cache(_my_projs_cache_key)
+    def my_projects(self):
+        """ get projects current user can see
+        """
+        if not INavigationRoot.providedBy(self.context):
+            return []
+        pc = self.tools['portal_catalog']
+        query = {
+            'portal_type': 'Project',
+            'sort_on': 'modified',
+            'sort_order': 'descending',
+        }
+        results = pc.searchResults(query)
+        return results[:10]
