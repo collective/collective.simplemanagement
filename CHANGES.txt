@@ -7,6 +7,7 @@ Changelog
 - Add `my trackers` listing to dashboard view
 - Add `my projects` listing to dashboard view
 - Make `projects overview` visible to members
+- Add some caching to dashboard listing 
   [simahawk]
 
 

@@ -38,6 +38,7 @@ def _cache_key(method, self, timing=REFRESH_EVERY):
         time() // timing
     ))
 
+
 def _ram_cache_key_600sec(method, self):
     """
     """
