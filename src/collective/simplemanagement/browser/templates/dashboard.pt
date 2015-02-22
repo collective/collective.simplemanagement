@@ -62,7 +62,7 @@
                 tal:condition="bookings">Booking</a></li>
               <li><a href="dashboard#trackers"
                 i18n:translate=""
-                tal:condition="trackers">Trackers</a></li>
+                tal:condition="trackers">My Trackers</a></li>
             </ul>
             <div class="panes">
               <!-- my projects -->
