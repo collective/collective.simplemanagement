@@ -203,7 +203,8 @@
                          <a title="View tracker"
                            i18n:attributes="title"
                            tal:attributes="href tracker/getURL">
-                          <span i18n:translate="">Tracker title</span>
+                          <span i18n:translate=""
+                                tal:content="tracker/Title">Tracker title</span>
                         </a>
                       </td>
                       <td>
