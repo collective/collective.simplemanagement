@@ -11,6 +11,7 @@
       <role name="Site Administrator"/>
       <role name="PM"/>
       <role name="Employee"/>
+      <role name="Customer"/>
     </permission>
 
     <permission name="Simplemanagement: Manage project" acquire="False">

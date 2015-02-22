@@ -90,6 +90,9 @@ class DashboardMixin(BrowserView):
             user_id = self.user.getId()
         return user_id
 
+    def can_add_booking(self):
+        return checkPermission('simplemanagement.AddBooking', self.context)
+
 
 class TicketsMixIn(object):
 

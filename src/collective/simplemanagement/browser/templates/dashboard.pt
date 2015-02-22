@@ -35,7 +35,9 @@
               use-macro="context/simpemanagement-macros/employee-form" />
           </tal:pm>
 
-          <div id="booking-form" class="clearfix inline-form booking-generic">
+          <div id="booking-form"
+               class="clearfix inline-form booking-generic"
+               tal:condition="view/can_add_booking">
             <tal:booking_bar tal:content="structure context/@@booking_bar" />
           </div>
 
