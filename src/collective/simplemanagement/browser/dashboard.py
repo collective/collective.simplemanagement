@@ -25,9 +25,7 @@ from .. import api
 REFRESH_EVERY = 600
 
 
-def _my_projs_cache_key(method, self):
-    """
-    """
+def _cache_key(method, self, timing=REFRESH_EVERY):
     portal_state = getMultiAdapter(
         (self.context, self.request), name=u'plone_portal_state')
 
@@ -37,8 +35,25 @@ def _my_projs_cache_key(method, self):
     return hash((
         context_url,
         '-'.join(sorted(roles)),
-        time() // REFRESH_EVERY
+        time() // timing
     ))
+
+def _ram_cache_key_600sec(method, self):
+    """
+    """
+    return _cache_key(method, self, 600)
+
+
+def _ram_cache_key_900sec(method, self):
+    """
+    """
+    return _cache_key(method, self, 900)
+
+
+def _ram_cache_key_1800sec(method, self):
+    """
+    """
+    return _cache_key(method, self, 1800)
 
 
 class DashboardMixin(BrowserView):
@@ -170,6 +185,7 @@ class TicketsMixIn(object):
             'project': self.get_project_details(item)
         }
 
+    @ram.cache(_ram_cache_key_600sec)
     def tickets(self):
         projects = {}
         for item in self._get_tickets():
@@ -197,6 +213,7 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         if not self.is_project:
             request.set('disable_border', 1)
 
+    @ram.cache(_ram_cache_key_600sec)
     def projects(self):
         projects = {}
         project_states = ['development', 'maintenance']
@@ -220,6 +237,7 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         projects.sort(key=lambda x: x['priority'])
         return projects
 
+    @ram.cache(_ram_cache_key_600sec)
     def bookings(self):
         user_id = self._get_employee_filter()
         project = None
@@ -239,10 +257,13 @@ class DashboardView(DashboardMixin, TicketsMixIn):
             results.append(helpers.info())
         return results
 
+    @ram.cache(_ram_cache_key_900sec)
     def trackers(self):
         """ get global generic trackers
         from `trackers` folder, if any.
         """
+        if not INavigationRoot.providedBy(self.context):
+            return []
         if not base_hasattr(self.context, self.trackers_folder_id):
             return []
         trackers_folder = getattr(self.context, self.trackers_folder_id)
@@ -266,7 +287,7 @@ class DashboardView(DashboardMixin, TicketsMixIn):
         ])
         return url
 
-    @ram.cache(_my_projs_cache_key)
+    @ram.cache(_ram_cache_key_1800sec)
     def my_projects(self):
         """ get projects current user can see
         """
