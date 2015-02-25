@@ -1,7 +1,12 @@
 Changelog
 =========
 
-1.1.0 (unreleased)
+1.1.1 (unreleased)
+------------------
+
+- Nothing changed yet
+
+1.1.0 (2015-02-25)
 ------------------
 
 - Add `my trackers` listing to dashboard view
