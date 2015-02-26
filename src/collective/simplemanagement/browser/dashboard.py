@@ -31,9 +31,11 @@ def _cache_key(method, self, timing=REFRESH_EVERY):
 
     member = portal_state.member()
     roles = member and member.getRoles() or ['Anonymous', ]
+    userid = member and member.getId() or 'nouser'
     context_url = self.context.absolute_url()
     return hash((
         context_url,
+        userid,
         '-'.join(sorted(roles)),
         time() // timing
     ))
