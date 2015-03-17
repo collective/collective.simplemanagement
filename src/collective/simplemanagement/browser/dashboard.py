@@ -193,6 +193,10 @@ class TicketsMixIn(object):
         projects = {}
         for item in self._get_tickets():
             ticket = self._format_ticket(item)
+            if 'project' not in ticket.keys():
+                # we don't care about tickets
+                # without project here
+                continue
             prj = ticket.pop('project')
             if not projects.get(prj['UID']):
                 projects[prj['UID']] = prj
