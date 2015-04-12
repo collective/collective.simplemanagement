@@ -22,6 +22,7 @@ class View(BrowserView):
 
     DATE_FORMAT = '%d/%m/%Y'
     show_form = True
+    default_send_to = 'team@abstract.it'
 
     def __call__(self, send_email=False):
         if self.request.get('send_email') and not send_email:
@@ -89,7 +90,7 @@ class View(BrowserView):
     def send_email(self):
         mailhost = plone.api.portal.get_tool('MailHost')
         pprops = plone.api.portal.get_tool('portal_properties')
-        mto = self.request.get('send_to')
+        mto = self.request.get('send_to', self.default_send_to)
         mfrom = pprops.email_from_address
         msubject = _(u"Abstract Team Done This") \
             + ' ' + self.current_date_display

@@ -20,7 +20,7 @@
       <input type="submit" name="search" class="standalone" value="Search" />
       <input id="send_to" name="send_to"
              class="email"
-             tal:attributes="value request/email|string:team@abstract.it"/>
+             tal:attributes="value request/email|view/default_send_to"/>
       <input type="submit" name="send_email" class="standalone" value="Send email" />
     </form>
 
