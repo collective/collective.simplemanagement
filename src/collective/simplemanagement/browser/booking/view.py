@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from urllib import urlencode
 
 from zope.interface import implementer
@@ -111,12 +111,12 @@ class ListingView(BrowserView):
         return result
 
     def clear_url_for(self, tag, tags):
-        new = [ t for t in tags if t != tag ]
-        rq  = {
+        new = [t for t in tags if t != tag]
+        rq = {
             f: v for f, v in self.request.form.items() if f != 'tags'
         }
         rq['tags:list'] = new
-        return self.form_action() + '?' +  urlencode(rq, doseq=True)
+        return self.form_action() + '?' + urlencode(rq, doseq=True)
 
     def info_for(self, booking):
         booking = self.context.publishTraverse(self.request, booking.uid)
@@ -144,11 +144,11 @@ class IHelpers(Interface):
         """ return edit url for viewing booking
         """
 
-    def format_text(context=None):
+    def format_text(context=None): # noqa
         """ formatted text for booking
         """
 
-    def info(context=None):
+    def info(context=None): # noqa
         """ booking info for view rendering
         """
 
@@ -186,9 +186,8 @@ class Helpers(BrowserView):
             book_widget.format_text(self.context, context=context)
         )
 
-    def info(self, context=None):
+    def info(self, context=None, user_details=True):
         context = plone.api.portal.get()
-        user_details = api.users.get_user_details(context, self.context.owner)
         booking = {
             'url': self.view_url(),
             'edit_url': self.edit_url(),
@@ -198,11 +197,13 @@ class Helpers(BrowserView):
             'time': self.context.time,
             'date': context.toLocalizedTime(self.context.date.isoformat()),
             'date2': api.date.timeago(self.context.date),
-            'creator': user_details,
             'can_edit': self.can_edit(),
             'project': api.booking.get_project(self.context),
-            'story': api.booking.get_story(self.context)
+            'story': api.booking.get_story(self.context),
+            'creator': self.context.owner,
         }
+        if user_details:
+            user_details = api.users.get_user_details(context,
+                                                      self.context.owner)
+            booking['creator'] = user_details
         return booking
-
-

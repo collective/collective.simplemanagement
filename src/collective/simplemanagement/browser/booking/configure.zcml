@@ -80,43 +80,61 @@
     />
 
   <browser:viewlet
-      for="...interfaces.IBooking"
-      name="plone.belowcontenttitle.documentbyline"
-      manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
-      class=".view.DocumentBylineViewlet"
-      permission="zope2.View"
-      />
+    for="...interfaces.IBooking"
+    name="plone.belowcontenttitle.documentbyline"
+    manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
+    class=".view.DocumentBylineViewlet"
+    permission="zope2.View"
+    />
 
   <browser:page
-      for="*"
-      name="booking_bar"
-      class=".booking_bar.BookingBarView"
-      permission="simplemanagement.AddBooking"
-      layer="...interfaces.IBrowserLayer"
-      />
+    for="*"
+    name="booking_bar"
+    class=".booking_bar.BookingBarView"
+    permission="simplemanagement.AddBooking"
+    layer="...interfaces.IBrowserLayer"
+    />
 
   <browser:page
-      for=".traverse.IBookingContainer"
-      name="batch-intermediate"
-      class=".batch.BatchIntermediate"
-      permission="simplemanagement.ManageProject"
-      layer="...interfaces.IBrowserLayer"
-      />
+    for=".traverse.IBookingContainer"
+    name="batch-intermediate"
+    class=".batch.BatchIntermediate"
+    permission="simplemanagement.ManageProject"
+    layer="...interfaces.IBrowserLayer"
+    />
 
   <browser:page
-      for=".traverse.IBookingContainer"
-      name="batch-transfer"
-      class=".batch.TransferView"
-      permission="simplemanagement.ManageProject"
-      layer="...interfaces.IBrowserLayer"
-      />
+    for=".traverse.IBookingContainer"
+    name="batch-transfer"
+    class=".batch.TransferView"
+    permission="simplemanagement.ManageProject"
+    layer="...interfaces.IBrowserLayer"
+    />
 
   <browser:page
-      for=".traverse.IBookingContainer"
-      name="batch-replace"
-      class=".batch.ReplaceView"
-      permission="simplemanagement.ManageProject"
-      layer="...interfaces.IBrowserLayer"
-      />
+    for=".traverse.IBookingContainer"
+    name="batch-replace"
+    class=".batch.ReplaceView"
+    permission="simplemanagement.ManageProject"
+    layer="...interfaces.IBrowserLayer"
+    />
+
+  <browser:page
+    for="*"
+    name="idonethis"
+    class=".idonethis.View"
+    template="templates/idonethis.pt"
+    permission="simplemanagement.AddBooking"
+    layer="...interfaces.IBrowserLayer"
+    />
+
+  <browser:page
+    for="*"
+    name="idonethis-content"
+    class=".idonethis.View"
+    template="templates/idonethis-content.pt"
+    permission="simplemanagement.AddBooking"
+    layer="...interfaces.IBrowserLayer"
+    />
 
 </configure>

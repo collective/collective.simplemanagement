@@ -2150,3 +2150,41 @@ body.portaltype-booking #plone-contentmenu-actions {
 .template-projects_overview form.searchPage table.listing{ width: 100% }
 .template-projects_overview form.searchPage table.listing .review_state,
 .template-projects_overview form.searchPage table.listing .modified{ width: 20% }
+
+
+#idonethis-view {
+    margin: 0 auto;
+    width: 80%;
+}
+#idonethis-view h1{
+    font-size: 2.4em;
+}
+#idonethis-view form{
+    margin: 1em 0;
+}
+#idonethis-view .listing h3{
+    font-size: 1.6em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #ddd;
+}
+#idonethis-view .listing .ref-link.portaltype-project,
+#idonethis-view .listing .ref-link.portaltype-story{
+    display: none;
+}
+#idonethis-view .listing .user-bookings{
+    overflow: hidden;
+    border-bottom: 1px solid;
+    margin-bottom: 1em;
+}
+#idonethis-view .listing .user-bookings:last-child{
+    border-bottom: none;
+}
+#idonethis-view .listing .item {
+    font-size: 1.4em;
+}
+#idonethis-view .listing .item p{
+    font-weight: bold;
+}
+#idonethis-view .listing .item p a,
+#idonethis-view .listing .item p span{ font-weight: normal }
+

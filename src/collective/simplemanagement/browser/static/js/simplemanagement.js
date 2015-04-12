@@ -145,6 +145,8 @@
             $(this).remove();
         });
 
+        $('.date.datepicker').datepicker();
+
     });
 
 }(jQuery));

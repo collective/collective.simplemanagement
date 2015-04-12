@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.simplemanagement">
+
+<body>
+
+  <div id="idonethis-view">
+
+    <h1 class="documentFirstHeading" i18n:translate="">iDoneThis</h1>
+
+    <form tal:condition="view/show_form"
+          method="GET" class="documentByLine"
+          tal:attributes="action string:${context/absolute_url}/${view/__name__}">
+      <input id="by_date" name="by_date"
+             class="date datepicker"
+             tal:attributes="value view/current_date_display"/>
+      <input type="submit" name="search" class="standalone" value="Search" />
+      <input id="send_to" name="send_to"
+             class="email"
+             tal:attributes="value request/email|string:team@abstract.it"/>
+      <input type="submit" name="send_email" class="standalone" value="Send email" />
+    </form>
+
+    <h2 tal:condition="not: view/show_form"
+        tal:content="view/current_date_display" />
+
+    <div class="listing"
+       tal:define="data view/data;
+                   users data/users;
+                   bookings data/bookings;">
+      <tal:user repeat="user users/values">
+        <div class="user"
+             tal:define="user_bookings python: bookings[user.user_id]">
+          <h3 tal:content="user/fullname">Johnny Glamour</h3>
+          <div class="user-bookings">
+            <tal:bkng repeat="booking user_bookings">
+              <div class="row item">
+                <div class="cell position-0 width-12">
+                  <p i18n:translate="">
+                    for
+                    <a
+                      i18n:name="project"
+                      class="project"
+                      tal:content="booking/project/Title"
+                      tal:attributes="href booking/project/absolute_url"
+                      />,
+                    done
+                    <span class="time" tal:content="booking/time" /> hours
+                    to
+                    <span class="text" tal:content="structure booking/text" />
+                  </p>
+                </div>
+                <div class="cell position-12 width-2">
+                  <a class="view-link" tal:attributes="href booking/url">View</a>
+                  <a class="edit-link"
+                     tal:condition="booking/can_edit"
+                     tal:attributes="href booking/edit_url">Edit</a>
+                </div>
+              </div>
+            </tal:bkng>
+          </div>
+        </div>
+      </tal:user>
+    </div>
+
+  </div>
+
+</body>
+</html>
