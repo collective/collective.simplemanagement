@@ -7,7 +7,7 @@
 
 <body>
 
-  <link href="columns.css" />
+ <!--  <link href="columns.css" />
   <style>
 #idonethis-view {
     margin: 0 auto;
@@ -44,7 +44,7 @@
 }
 #idonethis-view .listing .item p a,
 #idonethis-view .listing .item p span{ font-weight: normal }
-  </style>
+  </style> -->
 
   <div id="idonethis-view">
 
