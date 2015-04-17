@@ -25,7 +25,9 @@ class View(BrowserView):
     default_send_to = 'team@abstract.it'
 
     def __call__(self, send_email=False):
-        if self.request.get('send_email') and not send_email:
+        if self.request.get('send_email') \
+                and not send_email \
+                and not self.request.get('search'):
             self.send_email()
         return super(View, self).__call__()
 

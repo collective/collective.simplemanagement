@@ -13,12 +13,15 @@
 
     <form tal:condition="view/show_form"
           method="GET" class="documentByLine"
-          tal:attributes="action string:${context/absolute_url}/${view/__name__}">
+          tal:attributes="action string:${context/absolute_url}/idonethis">
       <input id="by_date" name="by_date"
+             type="text"
              class="date datepicker"
              tal:attributes="value view/current_date_display"/>
       <input type="submit" name="search" class="standalone" value="Search" />
-      <input id="send_to" name="send_to"
+      <input id="send_to"
+             type="text"
+             name="send_to"
              class="email"
              tal:attributes="value request/email|view/default_send_to"/>
       <input type="submit" name="send_email" class="standalone" value="Send email" />
