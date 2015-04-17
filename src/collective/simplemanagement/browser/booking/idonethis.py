@@ -13,6 +13,7 @@ from Products.Five.browser import BrowserView
 
 from ... import _
 from ... import api
+from ... import mail_utils
 # from ..widgets import book_widget
 
 
@@ -99,4 +100,6 @@ class View(BrowserView):
         view = self.context.restrictedTraverse('@@idonethis-content')
         view.show_form = False
         html = view(send_email=True)
+        html = mail_utils.prepare_email_content(
+            html, mfrom, mto, msubject)
         mailhost.send(html, mto, mfrom, msubject)
