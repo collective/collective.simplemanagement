@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.1.2 (Unreleased)
+------------------
+
+- Add `iDoneThis` like view accessibile via `/@@idonethis`
+- Improve booking text widget: add option `drop_chars` to discard elements on demand
+- Fix dashboard caching
+  [simahawk]
+
 1.1.1 (2015-02-26)
 ------------------
 
