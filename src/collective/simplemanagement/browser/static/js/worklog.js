@@ -144,7 +144,7 @@
                                         story_link.attr('href', data[i].story_url);
                                         row.find('td:eq(0)').append(project_link);
                                         row.find('td:eq(1)').append(story_link);
-                                        row.find('td:eq(2)').text(
+                                        row.find('td:eq(2)').html(
                                             data[i].booking);
                                         row.find('td:eq(3)').text(
                                             data[i].hours);

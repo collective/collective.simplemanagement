@@ -5,18 +5,18 @@ from decimal import Decimal
 from datetime import datetime, date, timedelta
 
 from zope.interface import implements
-from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from zope.publisher.interfaces import IPublishTraverse, NotFound
 from Products.Five.browser import BrowserView
 from plone.memoize.instance import memoize as instance_memoize
 
 from .. import api
-from .. import messageFactory as _
+from .. import messageFactory as _ # noqa
 from ..interfaces import IProject
 from ..configure import ONE_DAY, ONE_WEEK, Settings
 
 from ..utils import AttrDict, quantize
+from .widgets import book_widget
 
 
 MONTHS = (
@@ -107,7 +107,7 @@ class WorklogBackend(WorklogBase):
         self.resource_id = None
         self.date = None
 
-    def publishTraverse(self, request, name):
+    def publishTraverse(self, request, name): # noqa
         if self.resource_id is None:
             self.resource_id = name
         elif self.date is None:
@@ -217,8 +217,9 @@ class WorklogBackend(WorklogBase):
             },
             'current': {
                 'value': '%s-%s' % current,
-                'title': u'%s <small>%d</small>' % (_translate(MONTHS[current[1] - 1]),
-                                                    current[0])
+                'title': u'%s <small>%d</small>' % (
+                    _translate(MONTHS[current[1] - 1]),
+                    current[0])
             },
             'next': {
                 'value': '%s-%s' % next,
@@ -252,7 +253,7 @@ class WorklogBackend(WorklogBase):
                 'project_url': project_url,
                 'story': story_title,
                 'story_url': story_url,
-                'booking': booking.text,
+                'booking': book_widget.format_text(booking, drop_chars=['@']),
                 'hours': str(quantize(booking.time))
             })
         return json.dumps(booking_details)

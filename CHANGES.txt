@@ -6,6 +6,7 @@ Changelog
 
 - Add `iDoneThis` like view accessibile via `/@@idonethis`
 - Improve booking text widget: add option `drop_chars` to discard elements on demand
+- Fix booking description in worklog
 - Fix dashboard caching
   [simahawk]
 
