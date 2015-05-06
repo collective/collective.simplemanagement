@@ -2167,10 +2167,6 @@ body.portaltype-booking #plone-contentmenu-actions {
     margin-bottom: 0.5em;
     border-bottom: 1px solid #ddd;
 }
-#idonethis-view .listing .ref-link.portaltype-project,
-#idonethis-view .listing .ref-link.portaltype-story{
-    display: none;
-}
 #idonethis-view .listing .user-bookings{
     overflow: hidden;
     border-bottom: 1px solid;

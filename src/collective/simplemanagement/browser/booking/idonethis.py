@@ -10,11 +10,11 @@ import plone.api
 
 from Products.Five.browser import BrowserView
 # from Products.CMFPlone.utils import safe_unicode
+from Products.statusmessages.interfaces import IStatusMessage
 
 from ... import _
 from ... import api
 from ... import mail_utils
-# from ..widgets import book_widget
 
 
 class View(BrowserView):
@@ -83,8 +83,9 @@ class View(BrowserView):
                                                        booking.owner)
                 users[booking.owner] = user_info
                 bookings[booking.owner] = []
-            bookings[booking.owner].append(
-                helpers.info(user_details=False))
+
+            info = helpers.info(user_details=False, drop_refs_links=True)
+            bookings[booking.owner].append(info)
         return {
             'bookings': bookings,
             'users': users,
@@ -103,3 +104,11 @@ class View(BrowserView):
         html = mail_utils.prepare_email_content(
             html, mfrom, mto, msubject)
         mailhost.send(html, mto, mfrom, msubject)
+        msg = _('Email sent.')
+        messages = IStatusMessage(self.request)
+        messages.add(msg, type="info")
+        url = self.context.absolute_url() + '/@@idonethis'
+        if self.request.get('QUERY_STRING'):
+            qstring = self.request['QUERY_STRING'].split('&send_email')[0]
+            url += '?' + qstring
+        self.request.response.redirect(url)

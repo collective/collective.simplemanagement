@@ -186,13 +186,16 @@ class Helpers(BrowserView):
             book_widget.format_text(self.context, context=context)
         )
 
-    def info(self, context=None, user_details=True):
+    def info(self, context=None, user_details=True, drop_refs_links=False):
+        drop_chars = drop_refs_links and ['@'] or []
         context = plone.api.portal.get()
         booking = {
             'url': self.view_url(),
             'edit_url': self.edit_url(),
             'text': safe_unicode(
-                book_widget.format_text(self.context, context=context)
+                book_widget.format_text(self.context,
+                                        context=context,
+                                        drop_chars=drop_chars)
             ),
             'time': self.context.time,
             'date': context.toLocalizedTime(self.context.date.isoformat()),

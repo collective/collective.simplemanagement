@@ -7,45 +7,6 @@
 
 <body>
 
- <!--  <link href="columns.css" />
-  <style>
-#idonethis-view {
-    margin: 0 auto;
-    width: 80%;
-}
-#idonethis-view h1{
-    font-size: 2.4em;
-}
-#idonethis-view form{
-    display: none;
-}
-#idonethis-view .listing h3{
-    font-size: 1.6em;
-    margin-bottom: 0.5em;
-    border-bottom: 1px solid #ddd;
-}
-#idonethis-view .listing .ref-link.portaltype-project,
-#idonethis-view .listing .ref-link.portaltype-story{
-    display: none;
-}
-#idonethis-view .listing .user-bookings{
-    overflow: hidden;
-    border-bottom: 1px solid;
-    margin-bottom: 1em;
-}
-#idonethis-view .listing .user-bookings:last-child{
-    border-bottom: none;
-}
-#idonethis-view .listing .item {
-    font-size: 1.4em;
-}
-#idonethis-view .listing .item p{
-    font-weight: bold;
-}
-#idonethis-view .listing .item p a,
-#idonethis-view .listing .item p span{ font-weight: normal }
-  </style> -->
-
   <div id="idonethis-view">
 
     <h1 class="documentFirstHeading" i18n:translate="">iDoneThis</h1>
@@ -76,6 +37,7 @@
       <tal:user repeat="user users/values">
         <div class="user"
              tal:define="user_bookings python: bookings[user.user_id]">
+          <br tal:condition="python: not view.show_form and repeat['user'].index > 0" />
           <h3 tal:content="user/fullname">Johnny Glamour</h3>
           <div class="user-bookings">
             <tal:bkng repeat="booking user_bookings">
@@ -90,12 +52,18 @@
                       tal:attributes="href booking/project/absolute_url"
                       />,
                     done
-                    <span class="time" tal:content="booking/time" /> hours
+                    <span
+                      i18n:name="time"
+                      class="time"
+                      tal:content="booking/time" /> hours
                     to
-                    <span class="text" tal:content="structure booking/text" />
+                    <span
+                      i18n:name="text"
+                      class="text"
+                      tal:content="structure booking/text" />
                   </p>
                 </div>
-                <div class="cell position-12 width-2">
+                <div class="cell position-12 width-2 links" tal:condition="view/show_form">
                   <a class="view-link" tal:attributes="href booking/url">View</a>
                   <a class="edit-link"
                      tal:condition="booking/can_edit"

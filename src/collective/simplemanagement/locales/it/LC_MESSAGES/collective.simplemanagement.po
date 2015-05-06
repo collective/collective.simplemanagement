@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2014-09-04 14:14+0000\n"
-"PO-Revision-Date: 2014-09-04 16:15+0200\n"
+"POT-Creation-Date: 2015-05-06 13:50+0000\n"
+"PO-Revision-Date: 2015-05-06 15:52+0100\n"
 "Last-Translator: Simone Deponti <simone.deponti@abstract.it>\n"
 "Language-Team: Italian <info@abstract.it>\n"
 "MIME-Version: 1.0\n"
@@ -19,13 +19,13 @@ msgstr ""
 "Domain: collective.simplemanagement\n"
 "Language: it\n"
 "X-Is-Fallback-For: it-it it-ch it-sm it-hr it-si\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../browser/project/templates/overview.pt:162
 msgid "${budget} man days"
 msgstr "${budget} giorni uomo"
 
-#: ../browser/templates/project_report.pt:100
+#: ../browser/templates/project_report.pt:94
 msgid "${days} days"
 msgstr "${days} giorni"
 
@@ -33,7 +33,7 @@ msgstr "${days} giorni"
 msgid "${initial_estimate} man days"
 msgstr "${initial_estimate} giorni uomo"
 
-#: ../browser/templates/project_report.pt:146
+#: ../browser/templates/project_report.pt:140
 msgid "${month_total} h"
 msgstr "${month_total} h"
 
@@ -53,15 +53,11 @@ msgstr "${story} spostata in ${iteration}"
 msgid "${username} dashboard"
 msgstr "Dashboard di ${username}"
 
-#: ../browser/templates/dashboard.pt:160
-msgid "${username} have no bookings yet"
-msgstr "${username} non ha alcun booking al momento"
-
 #: ../browser/booking/traverse.py:116
 msgid "%(parent)s's bookings"
 msgstr "Booking di %(parent)s"
 
-#: ../browser/templates/project_report.pt:104
+#: ../browser/templates/project_report.pt:98
 msgid "(${hours} hours)"
 msgstr "(${hours} ore)"
 
@@ -88,7 +84,7 @@ msgstr ""
 "un qualcisasi problema, segnalalo qui cliccando sul pulsante <em>Genera una "
 "nuova richiesta</em>.</p>"
 
-#: ../browser/widgets/book_widget.py:136
+#: ../browser/widgets/book_widget.py:139
 msgid "@project @story *ticket #tag activity"
 msgstr "@progetto @storia *ticket #tag attività"
 
@@ -96,9 +92,13 @@ msgstr "@progetto @storia *ticket #tag attività"
 msgid "@story *ticket #tag activity"
 msgstr "@storia *ticket #tag attività"
 
+#: ../browser/booking/idonethis.py:100
+msgid "Abstract Team Done This"
+msgstr ""
+
 #: ../browser/booking/templates/list.pt:52
 #: ../browser/iteration/templates/macros.pt:76
-#: ../browser/templates/dashboard.pt:92
+#: ../browser/templates/dashboard.pt:140
 msgid "Actions"
 msgstr "Azioni"
 
@@ -130,7 +130,7 @@ msgstr "Aggiungi Booking"
 msgid "Add new project"
 msgstr "Aggiungi progetto"
 
-#: ../browser/templates/project_report.pt:56
+#: ../browser/templates/project_report.pt:50
 msgid "All"
 msgstr "Tutti"
 
@@ -187,15 +187,15 @@ msgid "August"
 msgstr "Agosto"
 
 #: ../browser/project/planning.py:23
-#: ../browser/project/templates/backlog.pt:11 ../viewlets/projectinfo.py:59
+#: ../browser/project/templates/backlog.pt:11 ../viewlets/projectinfo.py:62
 msgid "Backlog"
 msgstr "Backlog"
 
-#: ../browser/templates/dashboard.pt:111
+#: ../browser/templates/dashboard.pt:159
 msgid "Book time"
 msgstr "Fai booking"
 
-#: ../browser/templates/dashboard.pt:48 ../browser/templates/macros.pt:67
+#: ../browser/templates/dashboard.pt:60 ../browser/templates/macros.pt:67
 #: ../profiles/default/types/Booking.xml
 msgid "Booking"
 msgstr "Booking"
@@ -213,7 +213,7 @@ msgid "Booking was succesfully added!"
 msgstr "Il booking è stato aggiunto!"
 
 #: ../browser/booking/traverse.py:114 ../profiles/default/actions.xml
-#: ../viewlets/projectinfo.py:55
+#: ../viewlets/projectinfo.py:58
 msgid "Bookings"
 msgstr "Booking"
 
@@ -286,7 +286,7 @@ msgstr "Cliente"
 msgid "Customer contacts"
 msgstr "Contatti Cliente"
 
-#: ../viewlets/projectinfo.py:51
+#: ../viewlets/projectinfo.py:54
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -328,12 +328,12 @@ msgstr "Cancella questo snapshot"
 msgid "Deletion has been cancelled"
 msgstr "Cancellazione annullata"
 
-#: ../browser/templates/macros.pt:66 ../browser/templates/project_report.pt:46
+#: ../browser/templates/macros.pt:66 ../browser/templates/project_report.pt:40
 #: ../browser/templates/worklog.pt:133
 msgid "Details"
 msgstr "Dettagli"
 
-#: ../browser/templates/project_report.pt:125
+#: ../browser/templates/project_report.pt:119
 msgid "Diff:"
 msgstr "Diff:"
 
@@ -349,7 +349,7 @@ msgstr "Differenza dalla stima iniziale"
 msgid "Disabled project"
 msgstr "Progetto eliminato"
 
-#: ../browser/project/templates/overview.pt:12 ../viewlets/projectinfo.py:42
+#: ../browser/project/templates/overview.pt:12 ../viewlets/projectinfo.py:45
 msgid "Documentation"
 msgstr "Documentazione"
 
@@ -362,7 +362,7 @@ msgid "Documents folder"
 msgstr "Cartella documentazione"
 
 #: ../browser/iteration/templates/macros.pt:81
-#: ../browser/templates/dashboard.pt:91 ../browser/templates/macros.pt:173
+#: ../browser/templates/dashboard.pt:139 ../browser/templates/macros.pt:173
 msgid "Done"
 msgstr "Fatto"
 
@@ -379,7 +379,11 @@ msgstr "Modifica storia"
 msgid "Effort (in man days)"
 msgstr "Effort (in giorni uomo)"
 
-#: ../browser/templates/project_report.pt:242 ../sharing.py:14
+#: ../browser/booking/idonethis.py:108
+msgid "Email sent."
+msgstr "Email inviata."
+
+#: ../browser/templates/project_report.pt:236 ../sharing.py:14
 msgid "Employee"
 msgstr "Impiegato"
 
@@ -434,7 +438,7 @@ msgstr "Stima (in giorni uomo)"
 msgid "Estimate (man hours)"
 msgstr "Stima (in ore uomo)"
 
-#: ../browser/templates/project_report.pt:95
+#: ../browser/templates/project_report.pt:89
 msgid "Estimated"
 msgstr "Stimato"
 
@@ -466,7 +470,7 @@ msgstr "Filtra i risultati per impiegato"
 msgid "Folder where projects will be creted"
 msgstr "Cartella dove saranno creati i progetti"
 
-#: ../browser/templates/dashboard.pt:131
+#: ../browser/templates/dashboard.pt:179
 msgid "Found ${n_ticket} ticket/s"
 msgstr "Trovato/i ${n_ticket} ticket"
 
@@ -478,7 +482,7 @@ msgstr "Ven"
 msgid "From"
 msgstr "Da"
 
-#: ../viewlets/projectinfo.py:78
+#: ../viewlets/projectinfo.py:89
 msgid "Go to Project"
 msgstr "Vai al progetto"
 
@@ -532,8 +536,8 @@ msgstr "Ora inizio"
 msgid "Hour stop"
 msgstr "Ora fine"
 
-#: ../browser/templates/dashboard.pt:176
-#: ../browser/templates/project_report.pt:243
+#: ../browser/templates/dashboard.pt:208
+#: ../browser/templates/project_report.pt:237
 #: ../browser/templates/worklog.pt:77
 msgid "Hours"
 msgstr "Ore"
@@ -546,7 +550,7 @@ msgstr "Identificativo del gruppo che contiene tutti gli impiegati"
 msgid "Initial estimate"
 msgstr "Stima iniziale"
 
-#: ../browser/templates/dashboard.pt:107
+#: ../browser/templates/dashboard.pt:155
 msgid "Insert bookings"
 msgstr "Inserici booking"
 
@@ -583,7 +587,7 @@ msgstr "Ultimi documenti"
 msgid "Last modified"
 msgstr "Ultima modifica"
 
-#: ../browser/templates/project_report.pt:241
+#: ../browser/templates/project_report.pt:235
 msgid "Log"
 msgstr "Log"
 
@@ -649,6 +653,14 @@ msgstr "Sposta in progetto o storia"
 msgid "Multiple conflicting '@' references"
 msgstr "Referenze '@' multiple e conflittuali"
 
+#: ../browser/templates/dashboard.pt:63
+msgid "My Trackers"
+msgstr "I miei tracker"
+
+#: ../browser/templates/dashboard.pt:51
+msgid "My projects"
+msgstr "I miei progetti"
+
 #: ../browser/templates/compass.pt:250 ../interfaces/project.py:71
 msgid "Name"
 msgstr "Nome"
@@ -673,7 +685,7 @@ msgstr "Nessun booking è stato selezionato!"
 msgid "No changes were applied."
 msgstr "Nessuna modifica effettuata."
 
-#: ../browser/widgets/book_widget.py:139
+#: ../browser/widgets/book_widget.py:142
 msgid "No completions"
 msgstr "Nessun completamento trovato."
 
@@ -745,7 +757,7 @@ msgstr "Persone"
 msgid "Plan from"
 msgstr "Piano da"
 
-#: ../profiles/default/actions.xml ../viewlets/projectinfo.py:67
+#: ../profiles/default/actions.xml ../viewlets/projectinfo.py:70
 msgid "Planning"
 msgstr "Pianificazione"
 
@@ -765,6 +777,10 @@ msgstr "Progetto"
 #: ../browser/project/templates/overview.pt:14
 msgid "Project Info"
 msgstr "Info progetto"
+
+#: ../viewlets/projectinfo.py:74
+msgid "Project Report"
+msgstr "Report Progetto"
 
 #: ../browser/project/templates/overview.pt:249 ../interfaces/project.py:132
 msgid "Project classifiers"
@@ -786,7 +802,7 @@ msgstr "Progetto o storia in cui trasferire i booking"
 msgid "Project portlet"
 msgstr "Portlet progetto"
 
-#: ../browser/templates/project_report.pt:22
+#: ../browser/templates/project_report.pt:23
 msgid "Project report"
 msgstr "Report progetto"
 
@@ -810,7 +826,7 @@ msgstr "Rimuovi"
 msgid "Replace tags"
 msgstr "Sostituisci tag"
 
-#: ../viewlets/projectinfo.py:71
+#: ../viewlets/projectinfo.py:82
 msgid "Report"
 msgstr "Report"
 
@@ -883,7 +899,7 @@ msgstr "Mostra"
 msgid "Show minutes"
 msgstr "Mostra minuti"
 
-#: ../browser/templates/project_report.pt:41
+#: ../browser/templates/project_report.pt:35
 msgid "Sinottica"
 msgstr "Sinottica"
 
@@ -915,19 +931,15 @@ msgstr "Stato"
 msgid "Status changed"
 msgstr "Stato cambiato"
 
-#: ../browser/epic/templates/view.pt:65 ../browser/templates/dashboard.pt:44
+#: ../browser/epic/templates/view.pt:65 ../browser/templates/dashboard.pt:54
 msgid "Stories"
 msgstr "Storie"
 
 #: ../browser/booking/templates/view.pt:34
 #: ../browser/iteration/templates/macros.pt:78
-#: ../browser/templates/dashboard.pt:88
+#: ../browser/templates/dashboard.pt:136
 msgid "Story"
 msgstr "Storia"
-
-#: ../browser/templates/project_report.pt:28
-msgid "Story: ${storyname}"
-msgstr "Storia: ${storyname}"
 
 #: ../browser/templates/worklog.pt:120
 msgid "Sun"
@@ -1094,11 +1106,11 @@ msgstr "Non ci sono iterazioni passate."
 msgid "There are no saved compass plans."
 msgstr "Non esistono pianificazioni compass salvate."
 
-#: ../browser/templates/dashboard.pt:63
+#: ../browser/templates/dashboard.pt:111
 msgid "There are not stories assigned to ${username}"
 msgstr "Non ci sono storie assegnate a ${username}"
 
-#: ../browser/templates/dashboard.pt:66
+#: ../browser/templates/dashboard.pt:114
 msgid "There are not stories assigned to you."
 msgstr "Non ci sono storie assegnate a te."
 
@@ -1118,11 +1130,15 @@ msgstr ""
 msgid "This field is required"
 msgstr "Questo campo è obbligatorio"
 
-#: ../browser/templates/dashboard.pt:74
+#: ../browser/templates/dashboard.pt:122
 msgid "This is a complete list of active stories in active projects."
 msgstr ""
 "Questa è la lista completa delle storie attive all'interno dei progetti "
 "attivi."
+
+#: ../browser/templates/dashboard.pt:73
+msgid "This is a complete list of projects I have access to."
+msgstr "Questa é una lista completa dei progetti a cui hai accesso."
 
 #: ../browser/project/templates/overview.pt:24
 msgid "This project doesn't contain any documents"
@@ -1132,7 +1148,7 @@ msgstr "Il progetto non contiene nessun documento"
 msgid "Thu"
 msgstr "Gio"
 
-#: ../browser/templates/dashboard.pt:46
+#: ../browser/templates/dashboard.pt:57
 msgid "Tickets"
 msgstr "Ticket"
 
@@ -1146,7 +1162,7 @@ msgstr "Ora"
 msgid "Time spent"
 msgstr "Ore spese"
 
-#: ../browser/templates/dashboard.pt:177
+#: ../browser/templates/dashboard.pt:79
 #: ../browser/templates/ticketsmacros.pt:13 ../interfaces/quickform.py:9
 msgid "Title"
 msgstr "Titolo"
@@ -1155,7 +1171,7 @@ msgstr "Titolo"
 msgid "To"
 msgstr "A"
 
-#: ../browser/templates/project_report.pt:267
+#: ../browser/templates/project_report.pt:261
 msgid "Total"
 msgstr "Totale"
 
@@ -1173,7 +1189,7 @@ msgstr "Totale trovati"
 msgid "Totals"
 msgstr "Totali"
 
-#: ../viewlets/projectinfo.py:47
+#: ../viewlets/projectinfo.py:50
 msgid "Tracker"
 msgstr "Tracker"
 
@@ -1231,15 +1247,35 @@ msgstr "Vedi tutti i bookings"
 msgid "View all bookings..."
 msgstr "Vedi tutti i bookings..."
 
+#: ../browser/templates/dashboard.pt:95
+msgid "View all in projects overview"
+msgstr "Mostra tutti i progetti"
+
 #: ../browser/templates/macros.pt:61
 msgid "View details"
 msgstr "Visualizza i dettagli"
+
+#: ../browser/templates/dashboard.pt:250
+msgid "View issues assigned to me in this tracker"
+msgstr "Mostra ticket di questo tracker assegnati a me"
+
+#: ../browser/templates/dashboard.pt:254
+msgid "View my issues"
+msgstr "Mostra i miei ticket"
+
+#: ../browser/templates/dashboard.pt:85
+msgid "View project"
+msgstr "Mostra progetto"
+
+#: ../browser/templates/dashboard.pt:242
+msgid "View tracker"
+msgstr "Mostra tracker"
 
 #: ../interfaces/settings.py:14
 msgid "Warning delta"
 msgstr "Warning delta"
 
-#: ../browser/widgets/book_widget.py:140
+#: ../browser/widgets/book_widget.py:143
 msgid "We found broken references. Please recheck your booking before submit."
 msgstr ""
 "Abbiamo trovato delle referenze non risolte. Ti preghiamo di controllare e "
@@ -1253,11 +1289,11 @@ msgstr "Mer"
 msgid "Week"
 msgstr "Settimana"
 
-#: ../browser/templates/project_report.pt:155
+#: ../browser/templates/project_report.pt:149
 msgid "Week ${weekno}:"
 msgstr "Settimana ${weekno}:"
 
-#: ../browser/templates/project_report.pt:91
+#: ../browser/templates/project_report.pt:85
 msgid "Work summary"
 msgstr "Riassunto del lavoro"
 
@@ -1266,12 +1302,11 @@ msgid "Working week days"
 msgstr "Giorni lavorativi a settimana"
 
 #: ../browser/templates/worklog.pt:18 ../profiles/default/actions.xml
-#: ../viewlets/projectinfo.py:63
+#: ../viewlets/projectinfo.py:66
 msgid "Worklog"
 msgstr "Worklog"
 
-#: ../browser/templates/dashboard.pt:165
-#: ../browser/templates/project_report.pt:230
+#: ../browser/templates/project_report.pt:224
 msgid "You have no bookings yet"
 msgstr "Non hai alcun booking al momento"
 
@@ -1291,6 +1326,14 @@ msgstr "Aggiungi una nuova iterazione"
 #: ../browser/templates/compass_history.pt:112
 msgid "all projects"
 msgstr "tutti i progetti"
+
+#: ../browser/projects_overview.py:58
+msgid "alphabetically"
+msgstr "alfabeticamente"
+
+#: ../browser/projects_overview.py:64
+msgid "alphabetically (inv)"
+msgstr "alfabeticamente (inv)"
 
 #. Default: "Budget <small>as is by offer:</small>"
 #: ../browser/project/templates/overview.pt:161
@@ -1338,6 +1381,14 @@ msgstr "Stima <small>iniziale, effettuata dal project manager:</small>"
 msgid "filtered by:"
 msgstr "filtrato per:"
 
+#: ../browser/booking/templates/idonethis-content.pt:60
+msgid "for ${project}, done ${time} hours to ${text}"
+msgstr "per ${project}, dedicato ${time} ore a ${text}"
+
+#: ../browser/booking/templates/idonethis-content.pt:12
+msgid "iDoneThis"
+msgstr ""
+
 #: ../browser/templates/compass.pt:151
 msgid "in this project"
 msgstr "in questo progetto"
@@ -1354,6 +1405,10 @@ msgstr "giorni uomo come"
 #: ../browser/templates/compass_history.pt:129
 msgid "man days for this employee"
 msgstr "giorni uomo per la risorsa"
+
+#: ../browser/projects_overview.py:51
+msgid "modified (inv)"
+msgstr "modificato (inv)"
 
 #: ../browser/project/templates/overview.pt:62
 msgid "modified:"
@@ -1376,7 +1431,7 @@ msgstr "a"
 msgid "to be done before"
 msgstr "da fare entro"
 
-#: ../browser/templates/dashboard.pt:188
+#: ../browser/templates/dashboard.pt:220
 msgid "view"
 msgstr "mostra"
 

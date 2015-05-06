@@ -73,16 +73,16 @@ def extract_tags(text):
     return tags
 
 
-def format_text(booking, context=None):
+def format_text(booking, context=None, drop_chars=[]):
     """ return formatted text for booking.
-    It renders booking text as rich text with links to resources
+    It renders booking text as rich text with links to resources.
+    :param drop_chars: list for specifying matchin elements to drop
     """
     references = [
         r for r in (
             booking.references if booking.references is not None else []
         )
     ]
-
     text = cgi.escape(booking.text)
     text = LINK_REGEXP.sub(
         lambda m: LINK_TEMPLATE.format(url=m.group(0)),
@@ -102,24 +102,27 @@ def format_text(booking, context=None):
                 'tags:list': [m.group(2)]
             }, True)
         else:
-            object_ = None
-            try:
-                ref = references.pop(0)
-                object_ = uuidToObject(ref[1])
-            except IndexError:
-                pass
-            finally:
-                if object_ is None:
-                    if ref is not None:
-                        references.insert(0, ref)
-                else:
-                    css_class = ref[0].lower()
-                    url = object_.absolute_url()
+            if m.group(1) not in drop_chars:
+                object_ = None
+                try:
+                    ref = references.pop(0)
+                    object_ = uuidToObject(ref[1])
+                except IndexError:
+                    pass
+                finally:
+                    if object_ is None:
+                        if ref is not None:
+                            references.insert(0, ref)
+                    else:
+                        css_class = ref[0].lower()
+                        url = object_.absolute_url()
         if url:
             return TEMPLATE.format(url=url, tag=tag, class_=css_class)
+        if m.group(1) in drop_chars:
+            return ''
         return TEMPLATE_NOTFOUND.format(tag=tag)
     result = REGEXP.sub(format_tag, text)
-    return result
+    return result.strip()
 
 
 class BookWidget(HTMLTextInputWidget, Widget):
