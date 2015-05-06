@@ -84,9 +84,9 @@
                         <td>
                            <a title="View project"
                              i18n:attributes="title"
-                             tal:attributes="href item/getURL">
+                             tal:attributes="href item/url">
                             <span i18n:translate=""
-                                  tal:content="item/Title">Proj title</span>
+                                  tal:content="item/title">Proj title</span>
                           </a>
                         </td>
                       </tr>
@@ -241,16 +241,16 @@
                       <td>
                          <a title="View tracker"
                            i18n:attributes="title"
-                           tal:attributes="href tracker/getURL">
+                           tal:attributes="href tracker/url">
                           <span i18n:translate=""
-                                tal:content="tracker/Title">Tracker title</span>
+                                tal:content="tracker/title">Tracker title</span>
                         </a>
                       </td>
                       <td>
                         <a title="View issues assigned to me in this tracker"
                            class="btn"
                            i18n:attributes="title"
-                           tal:attributes="href string:${tracker/getURL}/${view/my_issues_search_url}">
+                           tal:attributes="href string:${tracker/url}/${view/my_issues_search_url}">
                           <span i18n:translate="">View my issues</span>
                         </a>
                       </td>

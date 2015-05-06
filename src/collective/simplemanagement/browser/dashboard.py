@@ -264,6 +264,13 @@ class DashboardView(DashboardMixin, TicketsMixIn):
             results.append(helpers.info())
         return results
 
+    def _brain_to_cacheable_value(self, brain):
+        return AttrDict({
+            'title': brain.Title,
+            'url': brain.getURL(),
+            'id': brain.getId,
+        })
+
     @ram.cache(_ram_cache_key_900sec)
     def trackers(self):
         """ get global generic trackers
@@ -281,7 +288,10 @@ class DashboardView(DashboardMixin, TicketsMixIn):
             'sort_order': 'descending',
             'path': '/'.join(trackers_folder.getPhysicalPath())
         }
-        results = pc.searchResults(query)
+        brains = pc.searchResults(query)
+        results = []
+        for brain in brains[:10]:
+            results.append(self._brain_to_cacheable_value(brain))
         return results
 
     def my_issues_search_url(self):
@@ -306,5 +316,8 @@ class DashboardView(DashboardMixin, TicketsMixIn):
             'sort_on': 'modified',
             'sort_order': 'descending',
         }
-        results = pc.searchResults(query)
-        return results[:10]
+        brains = pc.searchResults(query)
+        results = []
+        for brain in brains[:10]:
+            results.append(self._brain_to_cacheable_value(brain))
+        return results
