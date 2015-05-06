@@ -46,10 +46,18 @@
                   <p i18n:translate="">
                     for
                     <a
+                      tal:condition="booking/project"
                       i18n:name="project"
                       class="project"
                       tal:content="booking/project/Title"
                       tal:attributes="href booking/project/absolute_url"
+                      />
+                    <a
+                      tal:condition="python: not booking.get('project') and booking.get('story')"
+                      i18n:name="story"
+                      class="story"
+                      tal:content="booking/story/Title"
+                      tal:attributes="href booking/story/absolute_url"
                       />,
                     done
                     <span
