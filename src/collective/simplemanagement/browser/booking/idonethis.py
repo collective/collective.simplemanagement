@@ -84,7 +84,9 @@ class View(BrowserView):
                 users[booking.owner] = user_info
                 bookings[booking.owner] = []
 
-            info = helpers.info(user_details=False, drop_refs_links=True)
+            info = helpers.info(user_details=False,
+                                drop_refs_links=True,
+                                minimal=True)
             bookings[booking.owner].append(info)
         return {
             'bookings': bookings,

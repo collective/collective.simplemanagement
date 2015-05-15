@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-05-06 18:28+0000\n"
+"POT-Creation-Date: 2015-05-15 10:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,7 +81,7 @@ msgstr ""
 msgid "@story *ticket #tag activity"
 msgstr ""
 
-#: ./../browser/booking/idonethis.py:99
+#: ./../browser/booking/idonethis.py:127
 msgid "Abstract Team Done This"
 msgstr ""
 
@@ -381,7 +381,7 @@ msgstr ""
 msgid "Effort (in man days)"
 msgstr ""
 
-#: ./../browser/booking/idonethis.py:107
+#: ./../browser/booking/idonethis.py:135
 msgid "Email sent."
 msgstr ""
 
@@ -1334,8 +1334,12 @@ msgstr ""
 msgid "filtered by:"
 msgstr ""
 
-#: ./../browser/booking/templates/idonethis-content.pt:68
-msgid "for ${project} ${story}, done ${time} hours to ${text}"
+#: ./../browser/booking/templates/idonethis-content.pt:60
+msgid "for ${project} dedicated ${time} hours to ${text}"
+msgstr ""
+
+#: ./../browser/booking/templates/idonethis-content.pt:79
+msgid "for ${story} dedicated ${time} hours to ${text}"
 msgstr ""
 
 #: ./../browser/booking/templates/idonethis-content.pt:12

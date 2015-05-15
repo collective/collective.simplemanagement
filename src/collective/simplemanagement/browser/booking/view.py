@@ -186,25 +186,30 @@ class Helpers(BrowserView):
             book_widget.format_text(self.context, context=context)
         )
 
-    def info(self, context=None, user_details=True, drop_refs_links=False):
+    def info(self, context=None, user_details=True,
+             drop_refs_links=False,
+             minimal=False):
         drop_chars = drop_refs_links and ['@'] or []
         context = plone.api.portal.get()
         booking = {
-            'url': self.view_url(),
-            'edit_url': self.edit_url(),
             'text': safe_unicode(
                 book_widget.format_text(self.context,
                                         context=context,
                                         drop_chars=drop_chars)
             ),
             'time': self.context.time,
-            'date': context.toLocalizedTime(self.context.date.isoformat()),
-            'date2': api.date.timeago(self.context.date),
-            'can_edit': self.can_edit(),
             'project': api.booking.get_project(self.context),
             'story': api.booking.get_story(self.context),
             'creator': self.context.owner,
         }
+        if not minimal:
+            booking.update({
+                'url': self.view_url(),
+                'date': context.toLocalizedTime(self.context.date.isoformat()),
+                'date2': api.date.timeago(self.context.date),
+                'can_edit': self.can_edit(),
+                'edit_url': self.edit_url(),
+            })
         if user_details:
             user_details = api.users.get_user_details(context,
                                                       self.context.owner)

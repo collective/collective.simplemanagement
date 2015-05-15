@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2015-05-06 18:28+0000\n"
-"PO-Revision-Date: 2015-05-06 20:29+0100\n"
+"POT-Creation-Date: 2015-05-15 10:57+0000\n"
+"PO-Revision-Date: 2015-05-15 13:01+0100\n"
 "Last-Translator: Simone Deponti <simone.deponti@abstract.it>\n"
 "Language-Team: Italian <info@abstract.it>\n"
 "MIME-Version: 1.0\n"
@@ -92,7 +92,7 @@ msgstr "@progetto @storia *ticket #tag attività"
 msgid "@story *ticket #tag activity"
 msgstr "@storia *ticket #tag attività"
 
-#: ../browser/booking/idonethis.py:99
+#: ../browser/booking/idonethis.py:127
 msgid "Abstract Team Done This"
 msgstr ""
 
@@ -379,7 +379,7 @@ msgstr "Modifica storia"
 msgid "Effort (in man days)"
 msgstr "Effort (in giorni uomo)"
 
-#: ../browser/booking/idonethis.py:107
+#: ../browser/booking/idonethis.py:135
 msgid "Email sent."
 msgstr "Email inviata."
 
@@ -1381,9 +1381,13 @@ msgstr "Stima <small>iniziale, effettuata dal project manager:</small>"
 msgid "filtered by:"
 msgstr "filtrato per:"
 
-#: ../browser/booking/templates/idonethis-content.pt:68
-msgid "for ${project} ${story}, done ${time} hours to ${text}"
-msgstr "per ${project} ${story}, dedicato ${time} ore a ${text}"
+#: ../browser/booking/templates/idonethis-content.pt:60
+msgid "for ${project} dedicated ${time} hours to ${text}"
+msgstr "per ${project} dedicato ${time} ore a ${text}"
+
+#: ../browser/booking/templates/idonethis-content.pt:79
+msgid "for ${story} dedicated ${time} hours to ${text}"
+msgstr "per ${story} dedicato ${time} ore a ${text}"
 
 #: ../browser/booking/templates/idonethis-content.pt:12
 msgid "iDoneThis"

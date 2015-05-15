@@ -19,12 +19,14 @@
              class="date datepicker"
              tal:attributes="value view/current_date_display"/>
       <input type="submit" name="search" class="standalone" value="Search" />
-      <input id="send_to"
-             type="text"
-             name="send_to"
-             class="email"
-             tal:attributes="value request/send_to|view/default_send_to"/>
-      <input type="submit" name="send_email" class="standalone" value="Send email" />
+      <div class="pull-right">
+        <input id="send_to"
+               type="text"
+               name="send_to"
+               class="email"
+               tal:attributes="value request/send_to|view/default_send_to"/>
+        <input type="submit" name="send_email" class="standalone" value="Send email" />
+      </div>
     </form>
 
     <h2 tal:condition="not: view/show_form"
@@ -43,23 +45,15 @@
             <tal:bkng repeat="booking user_bookings">
               <div class="row item">
                 <div class="cell position-0 width-12">
-                  <p i18n:translate="">
+                  <p i18n:translate="" tal:condition="booking/project">
                     for
                     <a
-                      tal:condition="booking/project"
                       i18n:name="project"
                       class="project"
                       tal:content="booking/project/Title"
                       tal:attributes="href booking/project/absolute_url"
                       />
-                    <a
-                      tal:condition="python: not booking.get('project') and booking.get('story')"
-                      i18n:name="story"
-                      class="story"
-                      tal:content="booking/story/Title"
-                      tal:attributes="href booking/story/absolute_url"
-                      />,
-                    done
+                    dedicated
                     <span
                       i18n:name="time"
                       class="time"
@@ -70,12 +64,25 @@
                       class="text"
                       tal:content="structure booking/text" />
                   </p>
-                </div>
-                <div class="cell position-12 width-2 links" tal:condition="view/show_form">
-                  <a class="view-link" tal:attributes="href booking/url">View</a>
-                  <a class="edit-link"
-                     tal:condition="booking/can_edit"
-                     tal:attributes="href booking/edit_url">Edit</a>
+                  <p i18n:translate="" tal:condition="not:booking/project">
+                    for
+                    <a
+                      i18n:name="story"
+                      class="story"
+                      tal:content="booking/story/Title"
+                      tal:attributes="href booking/story/absolute_url"
+                      />
+                    dedicated
+                    <span
+                      i18n:name="time"
+                      class="time"
+                      tal:content="booking/time" /> hours
+                    to
+                    <span
+                      i18n:name="text"
+                      class="text"
+                      tal:content="structure booking/text" />
+                  </p>
                 </div>
               </div>
             </tal:bkng>
