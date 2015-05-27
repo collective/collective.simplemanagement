@@ -49,7 +49,7 @@ class ExportProjectsReportCSV(ExportCSV):
                 start_date,
                 expected_end_date,
                 end_date,
-                obj.initial_estimate,
+                obj.initial_estimate.to_integral(),
                 quantize(estimate).to_integral(),
                 quantize(bookings).to_integral()
             )
