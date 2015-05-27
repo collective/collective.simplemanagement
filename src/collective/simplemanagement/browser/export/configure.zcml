@@ -12,4 +12,12 @@
     permission="simplemanagement.ManageProject"
     />
 
+  <browser:page
+    for="*"
+    name="export-projects-csv"
+    class=".export_projects.ExportProjectsReportCSV"
+    layer="...interfaces.IBrowserLayer"
+    permission="simplemanagement.ManageProject"
+    />
+
 </configure>
