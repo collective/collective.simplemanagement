@@ -12,7 +12,7 @@ class ExportProjectsReportCSV(ExportCSV):
 
     filename_prefix = 'projects-report-'
     header = ('name', 'link', 'review_state', 'start', 'estimate_end',
-              'effective_end', 'estimate_days', 'effective_days', 'bookings')
+              'effective_end', 'budget_days', 'effective_days', 'bookings')
 
     default_query = {
         'portal_type': 'Project',
@@ -49,7 +49,7 @@ class ExportProjectsReportCSV(ExportCSV):
                 start_date,
                 expected_end_date,
                 end_date,
-                obj.initial_estimate.to_integral(),
+                obj.budget.to_integral(),
                 quantize(estimate).to_integral(),
                 quantize(bookings).to_integral()
             )
