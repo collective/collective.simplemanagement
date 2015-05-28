@@ -33,8 +33,8 @@ class ExportProjectsReportCSV(ExportCSV):
         for project in projects:
             obj = project.getObject()
             timings = get_timings(obj)
-            estimate = (timings['estimate'] > 0) and timings['estimate']/24 or zero
-            bookings = (timings['resource_time'] > 0) and timings['resource_time']/24 or zero
+            estimate = (timings['estimate'] > 0) and timings['estimate']/8 or zero
+            bookings = (timings['resource_time'] > 0) and timings['resource_time']/8 or zero
             start_date = obj.prj_start_date and self.date_isoformat(
                 obj.prj_start_date) or None
             expected_end_date = obj.prj_expected_end_date and self.date_isoformat(
