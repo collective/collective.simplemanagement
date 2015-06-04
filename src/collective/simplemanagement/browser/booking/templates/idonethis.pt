@@ -11,7 +11,7 @@
 
 <body>
 
-<metal:content-core fill-slot="main">
+<metal:content-core fill-slot="content">
     <div tal:replace="structure context/@@idonethis-content" />
 </metal:content-core>
 

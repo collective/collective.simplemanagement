@@ -2159,6 +2159,10 @@ body.portaltype-booking #plone-contentmenu-actions {
 #idonethis-view h1{
     font-size: 2.4em;
 }
+#idonethis-view .forms{
+    overflow: hidden;
+    margin-bottom: 2em;
+}
 #idonethis-view form{
     margin: 1em 0;
 }
@@ -2180,8 +2184,10 @@ body.portaltype-booking #plone-contentmenu-actions {
 }
 #idonethis-view .listing .item p{
     font-weight: bold;
+    line-height: 1.4em;
 }
 #idonethis-view .listing .item p a,
 #idonethis-view .listing .item p span{ font-weight: normal }
 
+.pull-left{ float: left }
 .pull-right{ float: right }

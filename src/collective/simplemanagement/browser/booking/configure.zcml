@@ -137,4 +137,20 @@
     layer="...interfaces.IBrowserLayer"
     />
 
+  <browser:page
+    for="*"
+    name="idonethis-sendemail"
+    class=".idonethis.SendEmail"
+    permission="simplemanagement.AddBooking"
+    layer="...interfaces.IBrowserLayer"
+    />
+
+  <browser:page
+    for="*"
+    name="idonethis-cron"
+    class=".idonethis.CronView"
+    permission="simplemanagement.AddBooking"
+    layer="...interfaces.IBrowserLayer"
+    />
+
 </configure>

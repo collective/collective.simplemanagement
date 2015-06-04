@@ -11,23 +11,29 @@
 
     <h1 class="documentFirstHeading" i18n:translate="">iDoneThis</h1>
 
-    <form tal:condition="view/show_form"
-          method="GET" class="documentByLine"
-          tal:attributes="action string:${context/absolute_url}/idonethis">
-      <input id="by_date" name="by_date"
-             type="text"
-             class="date datepicker"
-             tal:attributes="value view/current_date_display"/>
-      <input type="submit" name="search" class="standalone" value="Search" />
-      <div class="pull-right">
+    <div class="forms" tal:condition="view/show_form">
+      <form method="GET" class="pull-left"
+            tal:attributes="action string:${context/absolute_url}/idonethis">
+        <input id="by_date" name="by_date"
+               type="text"
+               class="date datepicker"
+               tal:attributes="value view/current_date_display"/>
+        <input type="submit" name="search" class="standalone" value="Search" />
+      </form>
+      <form method="GET" class="pull-right"
+            tal:attributes="action string:${context/absolute_url}/idonethis-sendemail">
+        <input type="hidden" name="status_message" value="1" />
+        <input id="by_date" name="by_date"
+               type="hidden"
+               tal:attributes="value view/current_date_display"/>
         <input id="send_to"
                type="text"
                name="send_to"
                class="email"
                tal:attributes="value request/send_to|view/default_send_to"/>
         <input type="submit" name="send_email" class="standalone" value="Send email" />
-      </div>
-    </form>
+      </form>
+    </div>
 
     <h2 tal:condition="not: view/show_form"
         tal:content="view/current_date_display" />
@@ -36,7 +42,7 @@
        tal:define="data view/data;
                    users data/users;
                    bookings data/bookings;">
-      <tal:user repeat="user users/values">
+      <tal:user repeat="user users">
         <div class="user"
              tal:define="user_bookings python: bookings[user.user_id]">
           <br tal:condition="python: not view.show_form and repeat['user'].index > 0" />
@@ -44,7 +50,7 @@
           <div class="user-bookings">
             <tal:bkng repeat="booking user_bookings">
               <div class="row item">
-                <div class="cell position-0 width-12">
+                <div class="cell position-0 width-16">
                   <p i18n:translate="" tal:condition="booking/project">
                     for
                     <a

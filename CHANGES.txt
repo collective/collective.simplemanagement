@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.1.5 (2015-06-04)
+------------------
+
+- Improve iDoneThis performance and add specific view for cron
+  [simahawk]
+
 1.1.4 (2015-05-28)
 ------------------
 - Add projects report view
