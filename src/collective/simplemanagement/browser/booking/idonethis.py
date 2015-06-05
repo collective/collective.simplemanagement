@@ -27,7 +27,7 @@ class View(BrowserView):
 
     DATE_FORMAT = '%d/%m/%Y'
     show_form = True
-    default_send_to = 'team@abstract.it'
+    default_send_to = 'Team <team@abstract.it>'
 
     @property
     def today(self):
@@ -122,7 +122,7 @@ class SendEmail(View):
             mailhost = plone.api.portal.get_tool('MailHost')
             pprops = plone.api.portal.get_tool('portal_properties')
             mto = self.request.get('send_to', self.default_send_to)
-            mfrom = pprops.email_from_address
+            mfrom = 'SM <{}>'.format(pprops.email_from_address)
             msubject = _(u"Abstract Team Done This") \
                 + ' ' + self.current_date_display
             html = mail_utils.prepare_email_content(

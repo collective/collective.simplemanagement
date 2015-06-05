@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.1.6 (2015-06-05)
+------------------
+
+- Fix email headers to be acceptable by any mail client or mailing list service
+  [simahawk]
+
 1.1.5 (2015-06-04)
 ------------------
 
